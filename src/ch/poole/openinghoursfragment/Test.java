@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class Test extends SherlockFragmentActivity {
 
@@ -24,7 +22,7 @@ public class Test extends SherlockFragmentActivity {
 	    }
 	    ft.commit();
 
-        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance("12:01-13:02, 14:00 , 10:00-sunset , 11:01-45:00/46 ; 12-16 closed \"ein test\" ; Mo, We 12:01-13:02 ; Apr-Sep 10:01-13:03, Dec 13:03-21:01");
+        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance("2010-2100 12:01-13:02, 14:00 , 10:00-sunset , 11:01-45:00/46 ; 12-16 closed \"ein test\" ; Mo, We 12:01-13:02 ; Apr-Sep 10:01-13:03, Dec 13:03-21:01");
         openingHoursDialog.show(fm, "fragment_openinghours");
 	}
 }
