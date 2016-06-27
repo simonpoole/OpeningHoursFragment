@@ -4,5 +4,24 @@
     <string name="app_name">OpeningHoursFragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="sunrise">sunrise</string>
+  	<string name="sunset">sunset</string>
+  	<string name="dawn">dawn</string>
+  	<string name="dusk">dusk</string>
+  	
+  	<string name="monday">Mo</string>
+  	<string name="tuesday">Tu</string>
+  	<string name="wednesday">We</string>
+  	<string name="thursday">Th</string>
+  	<string name="friday">Fr</string>
+  	<string name="saturday">Sa</string>
+  	<string name="sunday">Su</string>
 
+  	<string-array name="events" translatable="false">
+  	    <item>@string/sunrise</item>
+  	    <item>@string/sunset</item>
+  	    <item>@string/dawn</item>
+  	    <item>@string/dusk</item>
+  	</string-array>
 </resources>

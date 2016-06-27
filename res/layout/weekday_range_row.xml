@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="0dp"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical" >
+
+   <include layout="@layout/divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/checkBoxContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/textMo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/monday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxMo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/textMo"
+                android:tag="Mo" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxMo"
+                android:layout_toRightOf="@id/checkBoxMo"
+                android:tag="Tu" />
+
+            <CheckBox
+                android:id="@+id/checkBoxWe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxTu"
+                android:layout_toRightOf="@id/checkBoxTu"
+                android:tag="We" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxWe"
+                android:layout_toRightOf="@id/checkBoxWe"
+                android:tag="Th" />
+
+            <CheckBox
+                android:id="@+id/checkBoxFr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxTh"
+                android:layout_toRightOf="@id/checkBoxTh"
+                android:tag="Fr" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxFr"
+                android:layout_toRightOf="@id/checkBoxFr"
+                android:tag="Sa" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/checkBoxSa"
+                android:layout_toRightOf="@id/checkBoxSa"
+                android:tag="Su" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxTu"
+                android:layout_alignLeft="@id/checkBoxTu"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/tuesday" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxWe"
+                android:layout_alignLeft="@id/checkBoxWe"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/wednesday" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxTh"
+                android:layout_alignLeft="@id/checkBoxTh"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/thursday" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxFr"
+                android:layout_alignLeft="@id/checkBoxFr"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/friday" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxSa"
+                android:layout_alignLeft="@id/checkBoxSa"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/saturday" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/checkBoxSu"
+                android:layout_alignLeft="@id/checkBoxSu"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="6dp"
+                android:text="@string/sunday" />
+        </RelativeLayout>
+
+        <include layout="@layout/menu" />
+    </LinearLayout>
+
+</LinearLayout>

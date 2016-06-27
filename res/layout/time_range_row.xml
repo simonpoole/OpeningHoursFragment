@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="0dp"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical" >
+
+    <include layout="@layout/divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <com.appyvet.rangebar.RangeBar
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/timebar"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            custom:pinMaxFont="10sp"
+            custom:pinMinFont="10sp"
+            custom:pinRadius="14sp"
+            custom:temporaryPins="false"
+            custom:tickEnd="1440"
+            custom:tickInterval="5"
+            custom:tickStart="0"
+            custom:visibleTickInterval="12" 
+            custom:connectingLineColor="?attr/colorAccent"
+            custom:selectorColor="?attr/colorAccent"
+            custom:rangeBarColor="?attr/colorAccent"
+            custom:pinColor="?attr/colorAccent" />
+
+        <include layout="@layout/menu" />
+    </LinearLayout>
+
+</LinearLayout>
