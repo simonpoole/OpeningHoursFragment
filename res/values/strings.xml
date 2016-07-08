@@ -2,13 +2,19 @@
 <resources>
 
     <string name="app_name">OpeningHoursFragment</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Save">Save</string>
+    
+    <string name="group_header">Group %1$s</string>
     
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>
   	<string name="dawn">dawn</string>
   	<string name="dusk">dusk</string>
+  	
+  	<string name="public_holidays">Public holidays</string>
+  	<string name="school_holidays">School holidays</string>
+  	
   	
   	<string name="monday">Mo</string>
   	<string name="tuesday">Tu</string>

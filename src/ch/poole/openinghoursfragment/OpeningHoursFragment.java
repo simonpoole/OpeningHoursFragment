@@ -14,12 +14,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ActionMenuView;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.text.Editable;
 import android.text.Spannable;
@@ -27,12 +28,14 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -73,6 +76,11 @@ public class OpeningHoursFragment extends DialogFragment {
 	private ArrayList<Rule> rules;
 	
 	private EditText text;
+	
+	private OnSaveListener saveListener = null;
+	
+	private TemplateListener templateListener = null;
+	
 
 	List<String> weekDays = Arrays.asList("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su");
 
@@ -102,12 +110,16 @@ public class OpeningHoursFragment extends DialogFragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		Log.d(DEBUG_TAG, "onAttach");
-		// try {
-		// mListener = (OnPresetSelectedListener) activity;
-		// } catch (ClassCastException e) {
-		// throw new ClassCastException(activity.toString() + " must implement
-		// OnPresetSelectedListener");
-		// }
+        try {
+            saveListener = (OnSaveListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnSaveListener");
+        }
+        try {
+            templateListener = (TemplateListener) activity;
+        } catch (ClassCastException e) {
+            // optional
+        }
 	}
 
 	@Override
@@ -125,16 +137,16 @@ public class OpeningHoursFragment extends DialogFragment {
 	  return dialog;
 	}
 	
+	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		LinearLayout openingHoursLayout = null;
 
 		// Inflate the layout for this fragment
 		// this.inflater = inflater;
 		Context context =  new ContextThemeWrapper(getActivity(), R.style.Base_AlertDialog_AppCompat_Light);
 		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
+		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
 		// if (savedInstanceState != null) {
 		// Log.d(DEBUG_TAG,"Restoring from saved state");
@@ -148,6 +160,22 @@ public class OpeningHoursFragment extends DialogFragment {
 		// }
 		buildLayout(openingHoursLayout, openingHoursValue);
 
+		// add callbacks for the buttons
+		AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
+		cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dismiss();				
+			}});
+		
+		AppCompatButton save = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);
+		save.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				saveListener.save(text.getText().toString());	
+				dismiss();
+			}});
+		
 		return openingHoursLayout;
 	}
 
@@ -171,7 +199,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						public void run() {				
 							OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(text.getText().toString().getBytes()));
 							try {
-								rules = parser.rules();
+								rules = parser.rules(false);
 								buildForm(sv,rules);
 								removeHighlight(text);
 							} catch (ParseException pex) {
@@ -197,7 +225,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			
 			OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
 			try {
-				rules = parser.rules();
+				rules = parser.rules(false);
 				buildForm(sv,rules);
 				removeHighlight(text);
 			} catch (ParseException pex) {
@@ -232,11 +260,12 @@ public class OpeningHoursFragment extends DialogFragment {
 	 */
 	private void removeHighlight(EditText text) {
 		int pos = text.getSelectionStart();
+		int prevLen = text.length();
 		text.removeTextChangedListener(watcher); // avoid infinite loop
 		String t = Util.rulesToOpeningHoursString(rules);
 		text.setText(t);
 		// text.setText(text.getText().toString());
-		text.setSelection(Math.min(pos,text.length()));
+		text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos,text.length()));
 		text.addTextChangedListener(watcher);
 	}
 
@@ -244,6 +273,7 @@ public class OpeningHoursFragment extends DialogFragment {
 
 		sv.removeAllViews();
 		LinearLayout ll = new LinearLayout(getActivity());
+		ll.setPadding(0, 0, 0, dpToPixels(64));
 		ll.setOrientation(LinearLayout.VERTICAL);
 		// LinearLayout.LayoutParams layoutParams = new
 		// LinearLayout.LayoutParams(
@@ -273,11 +303,11 @@ public class OpeningHoursFragment extends DialogFragment {
 				if (first) { // everything except days and times should be
 					// the same and only needs to be displayed
 					// once
-					LinearLayout ruleHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
-					TextView header = (TextView) ruleHeader.findViewById(R.id.header);
-					header.setText("Rule " + n);
-					addStandardMenuItems(ruleHeader);
-					ll.addView(ruleHeader);
+					LinearLayout groupHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
+					TextView header = (TextView) groupHeader.findViewById(R.id.header);
+					header.setText(getActivity().getString(R.string.group_header, n));
+					addStandardMenuItems(groupHeader);
+					ll.addView(groupHeader);
 					String comment = r.getComment();
 					if (comment != null && comment.length() > 0) {
 						TextView tv = new TextView(getActivity());
@@ -291,7 +321,6 @@ public class OpeningHoursFragment extends DialogFragment {
 					;
 					ll.addView(yearLayout);
 					if (years != null && years.size() > 0) {
-						StringBuffer b = new StringBuffer();
 						for (YearRange yr : years) {
 							// NumberPicker np1 =
 							// getYearPicker(yr.getStartYear());
@@ -340,20 +369,6 @@ public class OpeningHoursFragment extends DialogFragment {
 						tv.setText(b.toString());
 						ll.addView(tv);
 					}
-					// holiday list
-					ArrayList<Holiday> holidays = r.getHolidays();
-					if (holidays != null && holidays.size() > 0) {
-						StringBuffer b = new StringBuffer();
-						for (Holiday hd : holidays) {
-							b.append(hd.toString());
-							if (holidays.get(holidays.size() - 1) != hd) {
-								b.append(",");
-							}
-						}
-						TextView tv = new TextView(getActivity());
-						tv.setText(b.toString());
-						ll.addView(tv);
-					}
 					// modifier
 					RuleModifier modifier = r.getModifier();
 					if (modifier != null && modifier.getModifier() != null && modifier.getModifier().length() > 0) {
@@ -371,6 +386,23 @@ public class OpeningHoursFragment extends DialogFragment {
 				}
 
 				// days and times will be different per rule
+				// are supposedly pseudo days
+				// holiday list
+				ArrayList<Holiday> holidays = r.getHolidays();
+				if (holidays != null && holidays.size() > 0) {
+					for (Holiday hd : holidays) {
+						LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
+						TextView tv = (TextView) holidayRow.findViewById(R.id.holiday);
+						if (hd.getType()==Holiday.Type.PH) {
+							tv.setText(R.string.public_holidays);
+							tv.setTag(Holiday.Type.PH);
+						} else {
+							tv.setText(R.string.school_holidays);
+							tv.setTag(Holiday.Type.SH);
+						}
+						ll.addView(holidayRow);
+					}
+				}
 				// day list
 				ArrayList<WeekDayRange> days = r.getDays();
 				if (days != null && days.size() > 0) {
@@ -397,200 +429,199 @@ public class OpeningHoursFragment extends DialogFragment {
 				}
 				// times
 				ArrayList<TimeSpan> times = r.getTimes();
-				if (times != null && times.size() > 0) {
-					StringBuffer b = new StringBuffer();
-					for (final TimeSpan ts : times) {
-						boolean hasStartEvent = ts.getStartEvent() != null;
-						boolean hasEndEvent = ts.getEndEvent() != null;
-						boolean extendedTime = ts.getEnd() > 1440;
-						if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
-								&& !extendedTime) {
-							Log.d(DEBUG_TAG, "t-t " + ts.toString());
-							LinearLayout timeRangeRow = (LinearLayout) inflater.inflate(R.layout.time_range_row,
-									null);
-							RangeBar timeBar = (RangeBar) timeRangeRow.findViewById(R.id.timebar);
-							int start = ts.getStart();
-							int end = ts.getEnd();
-							if (start >= 360) {
-								timeBar.setTickStart(360);
-							}
-							if ((start % 5 > 0) || (end % 5 > 0)) { // need
-								// minute
-								// granularity
-								timeBar.setTickInterval(1);
-								timeBar.setVisibleTickInterval(60);
-							}
-							timeBar.setRangePinsByValue(start, end);
-							timeBar.setPinTextFormatter(timeFormater);
-							timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setStart(toMins(leftPinValue));
-									ts.setEnd(toMins(rightPinValue));
-									updateString();
-								}});
-							addStandardMenuItems(timeRangeRow);
-							ll.addView(timeRangeRow);
-						} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
-								&& extendedTime) {
-							Log.d(DEBUG_TAG, "t-x " + ts.toString());
-							LinearLayout timeExtendedRangeRow = (LinearLayout) inflater
-									.inflate(R.layout.time_extended_range_row, null);
-							RangeBar timeBar = (RangeBar) timeExtendedRangeRow.findViewById(R.id.timebar);
-							RangeBar extendedTimeBar = (RangeBar) timeExtendedRangeRow
-									.findViewById(R.id.extendedTimebar);
-							int start = ts.getStart();
-							int end = ts.getEnd();
-							if ((start % 5 > 0) || (end % 5 > 0)) { // need
-								// minute
-								// granularity
-								timeBar.setTickInterval(1);
-								timeBar.setVisibleTickInterval(60);
-								extendedTimeBar.setTickInterval(1);
-								extendedTimeBar.setVisibleTickInterval(60);
-							}
-							timeBar.setRangePinsByValue(0, start);
-							timeBar.setPinTextFormatter(timeFormater);
-							timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setStart(toMins(rightPinValue));
-									updateString();
-								}});
-							extendedTimeBar.setRangePinsByValue(1440, end);
-							extendedTimeBar.setPinTextFormatter(timeFormater);
-							extendedTimeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setEnd(toMins(rightPinValue));
-									updateString();
-								}});
-							addStandardMenuItems(timeExtendedRangeRow);
-							ll.addView(timeExtendedRangeRow);
-						} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
-							Log.d(DEBUG_TAG, "pot " + ts.toString());
-							LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row,
-									null);
-							RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
-							timeBar.setPinTextFormatter(timeFormater);
-							int start = ts.getStart();
-							timeBar.setConnectingLineEnabled(false);
-							if (start % 5 > 0) { // need minute granularity
-								timeBar.setTickInterval(1);
-								timeBar.setVisibleTickInterval(60);
-							}
-							timeBar.setRangePinsByValue(0, start);
-							
-							timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setStart(toMins(rightPinValue));
-									updateString();
-								}});
-							Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-							endEvent.setVisibility(View.GONE);
-							addStandardMenuItems(timeEventRow);
-							ll.addView(timeEventRow);
-						} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
-							Log.d(DEBUG_TAG, "t-e " + ts.toString());
-							LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row,
-									null);
-							RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
-							timeBar.setPinTextFormatter(timeFormater);
-							int start = ts.getStart();
-							if (start % 5 > 0) { // need minute granularity
-								timeBar.setTickInterval(1);
-								timeBar.setVisibleTickInterval(60);
-							}
-							timeBar.setRangePinsByValue(0, start);
-							timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setStart(toMins(rightPinValue));
-									updateString();
-								}});
-							Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-							endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
-									.getPosition(ts.getEndEvent().getEvent()));
-							addStandardMenuItems(timeEventRow);
-							ll.addView(timeEventRow);
-						} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
-							Log.d(DEBUG_TAG, "e-t " + ts.toString());
-							LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_start_event_row,
-									null);
-							RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
-							int end = ts.getEnd();
-							if (end > 0) {
-								timeBar.setPinTextFormatter(timeFormater);
-								if (end >= 360) {
-									timeBar.setTickStart(360);
-								}
-								if (end % 5 > 0) { // need minute granularity
-									timeBar.setTickInterval(1);
-									timeBar.setVisibleTickInterval(60);
-								}
-								timeBar.setRangePinsByValue(0, end);
-								timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-									@Override
-									public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-											int rightPinIndex, String leftPinValue, String rightPinValue) {
-										ts.setEnd(toMins(rightPinValue));
-										updateString();
-									}});
-							} else {
-								timeBar.setVisibility(View.GONE);
-							}
-							Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-							startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
-									.getPosition(ts.getStartEvent().getEvent()));
-							addStandardMenuItems(timeEventRow);
-							ll.addView(timeEventRow);
-						} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
-							Log.d(DEBUG_TAG, "e-e " + ts.toString());
-							LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row,
-									null);
-							Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-							startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
-									.getPosition(ts.getStartEvent().getEvent()));
-							Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-							endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
-									.getPosition(ts.getEndEvent().getEvent()));
-							ll.addView(timeEventRow);
-						} else if (ts.isOpenEnded() && !hasStartEvent) {
-							Log.d(DEBUG_TAG, "t- " + ts.toString());
-							LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row,
-									null);
-							RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
-							timeBar.setPinTextFormatter(timeFormater);
-							int start = ts.getStart();
-							if (start % 5 > 0) { // need minute granularity
-								timeBar.setTickInterval(1);
-								timeBar.setVisibleTickInterval(60);
-							}
-							timeBar.setRangePinsByValue(0, start);
-							timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
-								@Override
-								public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
-										int rightPinIndex, String leftPinValue, String rightPinValue) {
-									ts.setStart(toMins(rightPinValue));
-									updateString();
-								}});
-							Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-							endEvent.setVisibility(View.GONE);
-							addStandardMenuItems(timeEventRow);
-							ll.addView(timeEventRow);
-						} else {
-							Log.d(DEBUG_TAG, "? " + ts.toString());
-							TextView tv = new TextView(getActivity());
-							tv.setText(ts.toString());
-							ll.addView(tv);
-						}
+				addTimeSpanUIs(ll, times);
+			}
+		}
+	}
+	
+	private void addTimeSpanUIs(LinearLayout ll, ArrayList<TimeSpan> times) {
+		if (times != null && times.size() > 0) {
+			Log.d(DEBUG_TAG, "#time spans " + times.size());
+			for (final TimeSpan ts : times) {
+				boolean hasStartEvent = ts.getStartEvent() != null;
+				boolean hasEndEvent = ts.getEndEvent() != null;
+				boolean extendedTime = ts.getEnd() > 1440;
+				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
+						&& !extendedTime) {
+					Log.d(DEBUG_TAG, "t-t " + ts.toString());
+					LinearLayout timeRangeRow = (LinearLayout) inflater.inflate(R.layout.time_range_row, null);
+					RangeBar timeBar = (RangeBar) timeRangeRow.findViewById(R.id.timebar);
+					int start = ts.getStart();
+					int end = ts.getEnd();
+					if (start >= 360) {
+						timeBar.setTickStart(360);
 					}
+					if ((start % 5 > 0) || (end % 5 > 0)) { // need
+						// minute
+						// granularity
+						timeBar.setTickInterval(1);
+						timeBar.setVisibleTickInterval(60);
+					}
+					timeBar.setRangePinsByValue(start, end);
+					timeBar.setPinTextFormatter(timeFormater);
+					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setStart(toMins(leftPinValue));
+							ts.setEnd(toMins(rightPinValue));
+							updateString();
+						}});
+					addStandardMenuItems(timeRangeRow);
+					ll.addView(timeRangeRow);
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
+						&& extendedTime) {
+					Log.d(DEBUG_TAG, "t-x " + ts.toString());
+					LinearLayout timeExtendedRangeRow = (LinearLayout) inflater
+							.inflate(R.layout.time_extended_range_row, null);
+					RangeBar timeBar = (RangeBar) timeExtendedRangeRow.findViewById(R.id.timebar);
+					RangeBar extendedTimeBar = (RangeBar) timeExtendedRangeRow
+							.findViewById(R.id.extendedTimebar);
+					int start = ts.getStart();
+					int end = ts.getEnd();
+					if ((start % 5 > 0) || (end % 5 > 0)) { // need
+						// minute
+						// granularity
+						timeBar.setTickInterval(1);
+						timeBar.setVisibleTickInterval(60);
+						extendedTimeBar.setTickInterval(1);
+						extendedTimeBar.setVisibleTickInterval(60);
+					}
+					timeBar.setRangePinsByValue(0, start);
+					timeBar.setPinTextFormatter(timeFormater);
+					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setStart(toMins(rightPinValue));
+							updateString();
+						}});
+					extendedTimeBar.setRangePinsByValue(1440, end);
+					extendedTimeBar.setPinTextFormatter(timeFormater);
+					extendedTimeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setEnd(toMins(rightPinValue));
+							updateString();
+						}});
+					addStandardMenuItems(timeExtendedRangeRow);
+					ll.addView(timeExtendedRangeRow);
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
+					Log.d(DEBUG_TAG, "pot " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row, null);
+					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
+					timeBar.setPinTextFormatter(timeFormater);
+					int start = ts.getStart();
+					timeBar.setConnectingLineEnabled(false);
+					if (start % 5 > 0) { // need minute granularity
+						timeBar.setTickInterval(1);
+						timeBar.setVisibleTickInterval(60);
+					}
+					timeBar.setRangePinsByValue(0, start);
+					
+					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setStart(toMins(rightPinValue));
+							updateString();
+						}});
+					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					endEvent.setVisibility(View.GONE);
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
+				} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
+					Log.d(DEBUG_TAG, "t-e " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row, null);
+					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
+					timeBar.setPinTextFormatter(timeFormater);
+					int start = ts.getStart();
+					if (start % 5 > 0) { // need minute granularity
+						timeBar.setTickInterval(1);
+						timeBar.setVisibleTickInterval(60);
+					}
+					timeBar.setRangePinsByValue(0, start);
+					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setStart(toMins(rightPinValue));
+							updateString();
+						}});
+					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
+							.getPosition(ts.getEndEvent().getEvent()));
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
+				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
+					Log.d(DEBUG_TAG, "e-t " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_start_event_row, null);
+					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
+					int end = ts.getEnd();
+					if (end > 0) {
+						timeBar.setPinTextFormatter(timeFormater);
+						if (end >= 360) {
+							timeBar.setTickStart(360);
+						}
+						if (end % 5 > 0) { // need minute granularity
+							timeBar.setTickInterval(1);
+							timeBar.setVisibleTickInterval(60);
+						}
+						timeBar.setRangePinsByValue(0, end);
+						timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+							@Override
+							public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+									int rightPinIndex, String leftPinValue, String rightPinValue) {
+								ts.setEnd(toMins(rightPinValue));
+								updateString();
+							}});
+					} else {
+						timeBar.setVisibility(View.GONE);
+					}
+					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
+					startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
+							.getPosition(ts.getStartEvent().getEvent()));
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
+				} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
+					Log.d(DEBUG_TAG, "e-e " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
+					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
+							.getPosition(ts.getStartEvent().getEvent()));
+					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
+							.getPosition(ts.getEndEvent().getEvent()));
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
+				} else if (ts.isOpenEnded() && !hasStartEvent) {
+					Log.d(DEBUG_TAG, "t- " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row, null);
+					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
+					timeBar.setPinTextFormatter(timeFormater);
+					int start = ts.getStart();
+					if (start % 5 > 0) { // need minute granularity
+						timeBar.setTickInterval(1);
+						timeBar.setVisibleTickInterval(60);
+					}
+					timeBar.setRangePinsByValue(0, start);
+					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						@Override
+						public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
+								int rightPinIndex, String leftPinValue, String rightPinValue) {
+							ts.setStart(toMins(rightPinValue));
+							updateString();
+						}});
+					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					endEvent.setVisibility(View.GONE);
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
+				} else {
+					Log.d(DEBUG_TAG, "? " + ts.toString());
+					TextView tv = new TextView(getActivity());
+					tv.setText(ts.toString());
+					ll.addView(tv);
 				}
 			}
 		}
@@ -600,7 +631,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
 		Menu menu = amv.getMenu();
 		MenuItem mi = menu.add("Delete");
-		MenuCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		return menu;
 	}
 	
@@ -608,10 +639,11 @@ public class OpeningHoursFragment extends DialogFragment {
 		@Override
 		public void run() {
 			int pos = text.getSelectionStart();
+			int prevLen = text.length();
 			text.removeTextChangedListener(watcher);
 			String oh = Util.rulesToOpeningHoursString(rules);
 			text.setText(oh);
-			text.setSelection(Math.min(pos,text.length()));
+			text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos,text.length()));
 			text.addTextChangedListener(watcher);
 		}
 	};
@@ -758,5 +790,10 @@ public class OpeningHoursFragment extends DialogFragment {
 			Log.d(DEBUG_TAG, "got null view in getView");
 		}
 		return null;
+	}
+	
+	private int dpToPixels(int dp) {
+		Resources r = getResources();
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
 	}
 }

@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-public class Test extends AppCompatActivity {
+public class Test extends AppCompatActivity implements OnSaveListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +26,11 @@ public class Test extends AppCompatActivity {
 
         OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance("2010-2100 12:01-13:02, 14:00 , 10:00-sunset , 13:00+, 11:01-45:00/46, dawn-dusk, sunrise+ ; 12-16 closed \"ein test\" ; Mo, We 12:01-13:02 ; Apr-Sep 10:01-13:03, Dec 13:03-21:01");
         openingHoursDialog.show(fm, "fragment_openinghours");
+	}
+
+	@Override
+	public void save(String openingHours) {
+		Log.d("TEST", "save got " + openingHours);
+		
 	}
 }

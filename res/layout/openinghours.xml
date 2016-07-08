@@ -24,10 +24,10 @@
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
+            android:background="?attr/colorPrimary"
             android:hint="oh string"
             android:inputType="textNoSuggestions"
-            android:singleLine="true"
-            android:background="?attr/colorPrimary" />
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,11 +37,50 @@
         android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
-        <ScrollView
-            android:id="@+id/openinghours_view"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </ScrollView>
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <ScrollView
+                android:id="@+id/openinghours_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" 
+                >
+            </ScrollView>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="top"
+                android:clickable="true"
+                android:src="@drawable/ic_add_white_36dp"
+                app:backgroundTint="?attr/colorAccent"
+                app:fabSize="mini"
+                app:useCompatPadding="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/Cancel" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/save"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/Save" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
