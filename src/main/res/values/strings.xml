@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">OpeningHoursFragment</string>
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
     

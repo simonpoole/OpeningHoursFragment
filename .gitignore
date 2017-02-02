@@ -2,3 +2,5 @@
 /gen/
 /libs/
 /.classpath
+/.gradle/
+/build/

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string translatable="false" name="app_name">OpeningHoursFragment</string>
+    <string translatable="false" name="app_version">0.0.0</string>
+    <string translatable="false" name="app_name_version">OpeningHoursFragment 0.0.0</string>
+</resources>

@@ -1,0 +1,169 @@
+// Top-level build file where you can add
+// configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        mavenCentral()
+       jcenter()
+	 maven { url 'https://dl.bintray.com/content/simonpoole/div' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+    }
+}
+
+allprojects {
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven { url 'https://dl.bintray.com/content/simonpoole/div' }
+		
+	}
+}
+
+// Project level build file starts here
+apply plugin: 'eclipse'
+apply plugin: 'com.android.application'
+
+
+eclipse {
+    classpath {
+        plusConfigurations += [ configurations.compile, configurations.testCompile, configurations.androidTestCompile ]
+
+        file {
+            beforeMerged { classpath ->
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/main/java", "bin"))
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/test/java", "bin"))
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/androidTest/java", "bin"))
+                // Hardcoded to use debug configuration
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/r/debug", "bin"))
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/buildConfig/debug", "bin"))
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/aidl/debug", "bin"))
+            }
+
+            whenMerged { classpath ->
+                def aars = []
+                classpath.entries.each { dep ->
+                    if (dep.path.toString().endsWith(".aar")) {
+                        def explodedDir = new File(projectDir, "build/intermediates/exploded-aar/" + dep.moduleVersion.group + "/" + dep.moduleVersion.name + "/" + dep.moduleVersion.version + "/jars/")
+                        if (explodedDir.exists()) {
+                            explodedDir.eachFileRecurse(groovy.io.FileType.FILES) {
+                                if (it.getName().endsWith("jar")) {
+                                    def aarJar = new org.gradle.plugins.ide.eclipse.model.Library(fileReferenceFactory.fromFile(it))
+                                    aarJar.sourcePath = dep.sourcePath
+                                    aars.add(aarJar)
+                                }
+                            }
+                        } else {
+                            println "Warning: Missing " + explodedDir
+                        }
+                    }
+                }
+                classpath.entries.removeAll { it.path.endsWith(".aar") }
+                classpath.entries.addAll(aars)
+
+                def androidJar = new org.gradle.plugins.ide.eclipse.model.Library(
+                    fileReferenceFactory.fromPath("${android.sdkDirectory}/platforms/" + android.compileSdkVersion + "/android.jar"))
+                classpath.entries.add(androidJar)
+            }
+        }
+    }
+}
+
+eclipseClasspath.dependsOn "generateDebugSources"
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion project.getMinSdkVersion()
+        targetSdkVersion project.getTargetSdkVersion()
+        versionCode project.getVersionCode()
+        versionName "${project.getVersionName()}"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+    
+    lintOptions {
+        // checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+ext {
+    supportLibVersion = "23.3.0"
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibVersion"
+    compile "com.android.support:preference-v7:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
+    compile "com.android.support:support-annotations:23.4.0"
+    // compile "com.android.support:support-annotations:24.0.0"    compile "com.adobe.xmp:xmpcore:5.1.2"
+    compile "ch.poole:OpeningHoursParser:0.1.2"
+    compile "ch.poole:ConditionalRestrictionParser:0.1.11"
+    compile "ch.poole:rangebar:0.0.1"
+    
+    // Unit tests
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.10.19"
+
+    // Instrumentation tests
+    // androidTestCompile "com.android.support:support-annotations:24.0.0"
+    androidTestCompile "com.android.support:support-annotations:23.4.0"
+    androidTestCompile "com.android.support.test:runner:0.5"
+    androidTestCompile "com.android.support.test:rules:0.5"
+    androidTestCompile "org.hamcrest:hamcrest-library:1.3"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+        
+ 
+    // androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
+}
+
+
+int getMinSdkVersion() {
+    def xml = getXmlFromFile("${android.sourceSets.main.manifest.srcFile}")
+    return xml.'uses-sdk'.@'android:minSdkVersion'.toInteger()
+}
+
+int getTargetSdkVersion() {
+    def xml = getXmlFromFile("${android.sourceSets.main.manifest.srcFile}")
+    return xml.'uses-sdk'.@'android:targetSdkVersion'.toInteger()
+}
+
+int getVersionCode() {
+    def xml = getXmlFromFile("${android.sourceSets.main.manifest.srcFile}")
+    return xml.@'android:versionCode'.toInteger()
+}
+
+String getVersionName() {
+    def xml = getXmlFromFile("${android.sourceSets.main.res.srcDirs[0]}/values/appname.xml")
+    def versionName = xml.string.find { it.@name == 'app_version' }.toString()
+    if (versionName == null || versionName.length() == 0) {
+        throw new NullPointerException("Failure extracting version name.")
+    }
+    return versionName
+}
+
+def getXmlFromFile(String xmlFilePath) {
+    def xml = new XmlSlurper().parse(new File(xmlFilePath))
+    if (xml == null) {
+        throw new NullPointerException("Failure reading from " + xmlFilePath)
+    }
+    return xml;
+}
