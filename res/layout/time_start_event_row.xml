@@ -27,7 +27,7 @@
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events" />
 
-            <com.appyvet.rangebar.RangeBar
+            <ch.poole.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/timebar"
                 android:layout_width="fill_parent"

@@ -24,13 +24,13 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 	    }
 	    ft.commit();
 
-        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance("2010-2100 12:01-13:02, 14:00 , 10:00-sunset , 13:00+, 11:01-45:00/46, dawn-dusk, sunrise+ ; 12-16 closed \"ein test\" ; Mo, We 12:01-13:02 ; Apr-Sep 10:01-13:03, Dec 13:03-21:01");
+        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance("opening_hours","2010-2100 12:01-13:02, 14:00 , 10:00-sunset , 13:00+, 11:01-45:00/46, dawn-dusk, sunrise+ ; 12-16 closed \"ein test\" ; Mo, We 12:01-13:02 ; Apr-Sep 10:01-13:03, Dec 13:03-21:01");
         openingHoursDialog.show(fm, "fragment_openinghours");
 	}
 
 	@Override
-	public void save(String openingHours) {
-		Log.d("TEST", "save got " + openingHours);
+	public void save(String key, String openingHours) {
+		Log.d("TEST", "save got " + openingHours + " for key " + key);
 		
 	}
 }

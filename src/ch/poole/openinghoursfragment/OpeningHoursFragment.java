@@ -6,10 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import com.appyvet.rangebar.RangeBar;
-import com.appyvet.rangebar.RangeBar.OnRangeBarChangeListener;
-import com.appyvet.rangebar.RangeBar.PinTextFormatter;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -50,6 +46,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.MonthDayRange;
 import ch.poole.openinghoursparser.OpeningHoursParser;
@@ -62,14 +59,23 @@ import ch.poole.openinghoursparser.Util;
 import ch.poole.openinghoursparser.WeekDayRange;
 import ch.poole.openinghoursparser.WeekRange;
 import ch.poole.openinghoursparser.YearRange;
+import ch.poole.rangebar.RangeBar;
+import ch.poole.rangebar.RangeBar.OnRangeBarChangeListener;
+import ch.poole.rangebar.RangeBar.PinTextFormatter;
 
 public class OpeningHoursFragment extends DialogFragment {
+
+	private static final String VALUE_KEY = "value";
+
+	private static final String KEY_KEY = "key";
 
 	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
 	private LayoutInflater inflater = null;
 
 	private TextWatcher watcher;
+	
+	private String key;
 	
 	private String openingHoursValue;
 	
@@ -83,6 +89,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 
 	List<String> weekDays = Arrays.asList("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su");
+	
+	List<String> months = Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 
 	static PinTextFormatter timeFormater = new PinTextFormatter() {
 		@Override
@@ -94,11 +102,12 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	/**
 	 */
-	static public OpeningHoursFragment newInstance(String value) {
+	static public OpeningHoursFragment newInstance(String key,String value) {
 		OpeningHoursFragment f = new OpeningHoursFragment();
 
 		Bundle args = new Bundle();
-		args.putSerializable("value", value);
+		args.putSerializable(KEY_KEY, key);
+		args.putSerializable(VALUE_KEY, value);
 
 		f.setArguments(args);
 		// f.setShowsDialog(true);
@@ -148,16 +157,14 @@ public class OpeningHoursFragment extends DialogFragment {
 		
 		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
-		// if (savedInstanceState != null) {
-		// Log.d(DEBUG_TAG,"Restoring from saved state");
-		// parents = (HashMap<Long, String>)
-		// savedInstanceState.getSerializable("PARENTS");
-		// } else if (savedParents != null ) {
-		// Log.d(DEBUG_TAG,"Restoring from instance variable");
-		// parents = savedParents;
-		// } else {
-		openingHoursValue = getArguments().getString("value");
-		// }
+		if (savedInstanceState != null) {
+			Log.d(DEBUG_TAG,"Restoring from saved state");
+			key = savedInstanceState.getString(KEY_KEY);
+			openingHoursValue = savedInstanceState.getString(VALUE_KEY);
+		} else {
+			key = getArguments().getString(KEY_KEY);
+			openingHoursValue = getArguments().getString(VALUE_KEY);
+		}
 		buildLayout(openingHoursLayout, openingHoursValue);
 
 		// add callbacks for the buttons
@@ -172,7 +179,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		save.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				saveListener.save(text.getText().toString());	
+				saveListener.save(key,text.getText().toString());	
 				dismiss();
 			}});
 		
@@ -182,7 +189,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	/**
 	 * 
 	 * @param openingHoursLayout
-	 * @param openingHoursValue2
+	 * @param openingHoursValue
 	 */
 	private void buildLayout(LinearLayout openingHoursLayout, String openingHoursValue) {
 		text = (EditText) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
@@ -247,7 +254,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		int c = pex.currentToken.next.beginColumn-1; // starts at 1
 		int pos = text.getSelectionStart();
 		Spannable spannable = new SpannableString(text.getText());
-		spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c,Math.min(c+1,spannable.length()-1)), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c,Math.min(c+1,spannable.length())), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		text.removeTextChangedListener(watcher); // avoid infinite loop
 		text.setText(spannable, TextView.BufferType.SPANNABLE);
 		text.setSelection(Math.min(pos,spannable.length()));
@@ -358,16 +365,58 @@ public class OpeningHoursFragment extends DialogFragment {
 					// month day list
 					ArrayList<MonthDayRange> monthdays = r.getMonthdays();
 					if (monthdays != null && monthdays.size() > 0) {
-						StringBuffer b = new StringBuffer();
 						for (MonthDayRange md : monthdays) {
-							b.append(md.toString());
-							if (monthdays.get(monthdays.size() - 1) != md) {
-								b.append(",");
-							}
+							// check if this is just a month range or real dates
+							DateWithOffset start = md.getStartDate();
+							boolean startIsDate = start.getDay() > -1 || start.getVarDate() != null;
+							DateWithOffset end = md.getEndDate();
+							
+//							boolean endIsDate = end != null && (end.getDay() > -1 || end.getVarDate() != null);
+//							if (!startIsDate) { // month range
+								LinearLayout monthRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
+								
+								if (start.getYear() > 0) {
+									EditText startYear = (EditText) monthRangeRow.findViewById(R.id.startYear);
+									startYear.setText(start.getYear());
+								}
+								if (start.getMonth() != null) {
+									Spinner startMonth = (Spinner) monthRangeRow.findViewById(R.id.startMonth);
+									startMonth.setSelection(months.indexOf(start.getMonth()));
+								}
+								
+								if (end != null) {
+									if (end.getYear() > 0) {
+										EditText endYear = (EditText) monthRangeRow.findViewById(R.id.endYear);
+										endYear.setText(end.getYear());
+									}
+									if (end.getMonth() != null) {
+										Spinner endMonth = (Spinner) monthRangeRow.findViewById(R.id.endMonth);
+										endMonth.setSelection(months.indexOf(end.getMonth()));
+									}
+								}
+								
+								
+								
+//								RelativeLayout checkBoxContainer = (RelativeLayout) monthRangeRow
+//										.findViewById(R.id.checkBoxContainer);
+//								checkMonth(checkBoxContainer, start.getMonth());
+//								if (end != null && end.getMonth()!=null) {
+//									int startIndex = months.indexOf(start.getMonth())+1;
+//									int endIndex = months.indexOf(end.getMonth());
+//									Log.d(DEBUG_TAG, "start month " + start.getMonth() + " " + startIndex + " endDay " + end.getMonth() + " " + endIndex);
+//									for (int i = startIndex; i <= endIndex; i++) {
+//										checkMonth(checkBoxContainer, months.get(i));
+//									}
+//								}
+								// setWeekDayListeners(checkBoxContainer, days);
+								addStandardMenuItems(monthRangeRow);
+								ll.addView(monthRangeRow);
+//							} else { // date range
+//								TextView tv = new TextView(getActivity());
+//								tv.setText(md.toString());
+//								ll.addView(tv);
+//							}
 						}
-						TextView tv = new TextView(getActivity());
-						tv.setText(b.toString());
-						ll.addView(tv);
 					}
 					// modifier
 					RuleModifier modifier = r.getModifier();
@@ -681,6 +730,17 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
+	private void checkMonth(RelativeLayout container, String month) {
+		Log.d(DEBUG_TAG, "checking " + month);
+		for (int i = 0; i < container.getChildCount(); i++) {
+			View v = container.getChildAt(i);
+			if ((v instanceof CheckBox || v instanceof AppCompatCheckBox) && ((String) v.getTag()).equals(month)) {
+				((CheckBox) v).setChecked(true);
+				return;
+			}
+		}
+	}
+	
 	private void setWeekDayListeners(final RelativeLayout container, final ArrayList<WeekDayRange> days) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
@@ -714,34 +774,18 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-
-	@SuppressLint("NewApi")
-	NumberPicker getYearPicker(int year) {
-		NumberPicker np = new NumberPicker(getActivity());
-		np.setMinValue(1900);
-		np.setMaxValue(3000);
-		np.setValue(year);
-		np.setFormatter(new NumberPicker.Formatter() {
-			@Override
-			public String format(int value) {
-				return String.format(Locale.US,"%04d", value);
-			}
-		});
-		return np;
-	}
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		Log.d(DEBUG_TAG, "onSaveInstanceState");
-		// outState.putSerializable("PARENTS", savedParents);
+	   	outState.putSerializable(KEY_KEY, key);
+    	outState.putSerializable(VALUE_KEY, text.getText().toString());
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		Log.d(DEBUG_TAG, "onPause");
-		// savedParents = getParentRelationMap();
 	}
 
 	@Override
