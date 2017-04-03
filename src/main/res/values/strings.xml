@@ -5,6 +5,7 @@
     <string name="Save">Save</string>
     
     <string name="group_header">Group %1$s</string>
+    <string name="rule_header">Rule %1$s</string>
     
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>

@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -291,6 +292,19 @@ public class OpeningHoursFragment extends DialogFragment {
 		// layoutParams.setMargins(20, 20, 20, 20);
 		// ll.setLayoutParams(layoutParams);
 		sv.addView(ll);
+		//
+
+		if (false) { // group mode
+			ArrayList<ArrayList<Rule>> mergeableRules = Util.getMergeableRules(rules);
+			for (ArrayList<Rule> ruleList : mergeableRules) {	
+				addRules(true, ruleList, ll);
+			}
+		} else {
+			addRules(false, rules, ll);
+		}
+	}
+
+	private void addRules(boolean groupMode, ArrayList<Rule> rules, LinearLayout ll) {
 		// some standard static elements
 		TextView dash = new TextView(getActivity());
 		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 0.0f);
@@ -301,104 +315,99 @@ public class OpeningHoursFragment extends DialogFragment {
 		comma.setLayoutParams(params);
 		comma.setText(",");
 		comma.setGravity(Gravity.CENTER_VERTICAL);
-		//
-
-
-		ArrayList<ArrayList<Rule>> mergeableRules = Util.getMergeableRules(rules);
-		int n = 1;
-		for (ArrayList<Rule> ruleList : mergeableRules) {
-			boolean first = true;
-			for (Rule r : ruleList) {
-				if (first) { // everything except days and times should be
-					// the same and only needs to be displayed
-					// once
-					LinearLayout groupHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
-					TextView header = (TextView) groupHeader.findViewById(R.id.header);
-					header.setText(getActivity().getString(R.string.group_header, n));
-					addStandardMenuItems(groupHeader);
-					ll.addView(groupHeader);
-					String comment = r.getComment();
-					if (comment != null && comment.length() > 0) {
-						TextView tv = new TextView(getActivity());
-						tv.setText(comment);
-						ll.addView(tv);
-					}
-					// year range list
-					ArrayList<YearRange> years = r.getYears();
-					LinearLayout yearLayout = new LinearLayout(getActivity());
-					yearLayout.setOrientation(LinearLayout.HORIZONTAL);
-					;
-					ll.addView(yearLayout);
-					if (years != null && years.size() > 0) {
-						for (YearRange yr : years) {
-							// NumberPicker np1 =
-							// getYearPicker(yr.getStartYear());
-							EditText np1 = new EditText(getActivity());
-							np1.setText(Integer.toString(yr.getStartYear()));
-							int endYear = yr.getEndYear();
-							if (endYear < 0) {
-								endYear = yr.getStartYear();
-							}
-							// NumberPicker np2 = getYearPicker(endYear);
-							EditText np2 = new EditText(getActivity());
-							np2.setText(Integer.toString(endYear));
-							yearLayout.addView(np1);
-							yearLayout.addView(dash);
-							yearLayout.addView(np2);
-							if (years.get(years.size() - 1) != yr) {
-								yearLayout.addView(comma);
-							}
+		
+		boolean first = true;
+		int headerCount = 1;
+		for (Rule r:rules) {
+			if (first) { // everything except days and times should be
+						 // the same and only needs to be displayed
+						 // once in groupMode, in normal mode this is 
+				         // always true
+				LinearLayout groupHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
+				TextView header = (TextView) groupHeader.findViewById(R.id.header);
+				header.setText(getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
+				addStandardMenuItems(groupHeader, null);
+				ll.addView(groupHeader);
+				String comment = r.getComment();
+				if (comment != null && comment.length() > 0) {
+					TextView tv = new TextView(getActivity());
+					tv.setText(comment);
+					ll.addView(tv);
+				}
+				// year range list
+				ArrayList<YearRange> years = r.getYears();
+				LinearLayout yearLayout = new LinearLayout(getActivity());
+				yearLayout.setOrientation(LinearLayout.HORIZONTAL);
+				;
+				ll.addView(yearLayout);
+				if (years != null && years.size() > 0) {
+					for (YearRange yr : years) {
+						// NumberPicker np1 =
+						// getYearPicker(yr.getStartYear());
+						EditText np1 = new EditText(getActivity());
+						np1.setText(Integer.toString(yr.getStartYear()));
+						int endYear = yr.getEndYear();
+						if (endYear < 0) {
+							endYear = yr.getStartYear();
+						}
+						// NumberPicker np2 = getYearPicker(endYear);
+						EditText np2 = new EditText(getActivity());
+						np2.setText(Integer.toString(endYear));
+						yearLayout.addView(np1);
+						yearLayout.addView(dash);
+						yearLayout.addView(np2);
+						if (years.get(years.size() - 1) != yr) {
+							yearLayout.addView(comma);
 						}
 					}
-					// week list
-					ArrayList<WeekRange> weeks = r.getWeeks();
-					if (weeks != null && weeks.size() > 0) {
-						StringBuffer b = new StringBuffer();
-						for (WeekRange wr : weeks) {
-							b.append(wr.toString());
-							if (weeks.get(weeks.size() - 1) != wr) {
-								b.append(",");
-							}
+				}
+				// week list
+				ArrayList<WeekRange> weeks = r.getWeeks();
+				if (weeks != null && weeks.size() > 0) {
+					StringBuffer b = new StringBuffer();
+					for (WeekRange wr : weeks) {
+						b.append(wr.toString());
+						if (weeks.get(weeks.size() - 1) != wr) {
+							b.append(",");
 						}
-						TextView tv = new TextView(getActivity());
-						tv.setText(b.toString());
-						ll.addView(tv);
 					}
-					// month day list
-					ArrayList<MonthDayRange> monthdays = r.getMonthdays();
-					if (monthdays != null && monthdays.size() > 0) {
-						for (MonthDayRange md : monthdays) {
-							// check if this is just a month range or real dates
-							DateWithOffset start = md.getStartDate();
-							boolean startIsDate = start.getDay() > -1 || start.getVarDate() != null;
-							DateWithOffset end = md.getEndDate();
-							
+					TextView tv = new TextView(getActivity());
+					tv.setText(b.toString());
+					ll.addView(tv);
+				}
+				// month day list
+				ArrayList<MonthDayRange> monthdays = r.getMonthdays();
+				if (monthdays != null && monthdays.size() > 0) {
+					for (MonthDayRange md : monthdays) {
+						// check if this is just a month range or real dates
+						DateWithOffset start = md.getStartDate();
+						boolean startIsDate = start.getDay() > -1 || start.getVarDate() != null;
+						DateWithOffset end = md.getEndDate();
+						
 //							boolean endIsDate = end != null && (end.getDay() > -1 || end.getVarDate() != null);
 //							if (!startIsDate) { // month range
-								LinearLayout monthRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
-								
-								if (start.getYear() > 0) {
-									EditText startYear = (EditText) monthRangeRow.findViewById(R.id.startYear);
-									startYear.setText(start.getYear());
+							LinearLayout monthRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
+							
+							if (start.getYear() > 0) {
+								EditText startYear = (EditText) monthRangeRow.findViewById(R.id.startYear);
+								startYear.setText(start.getYear());
+							}
+							if (start.getMonth() != null) {
+								Spinner startMonth = (Spinner) monthRangeRow.findViewById(R.id.startMonth);
+								startMonth.setSelection(months.indexOf(start.getMonth()));
+							}
+							
+							if (end != null) {
+								if (end.getYear() > 0) {
+									EditText endYear = (EditText) monthRangeRow.findViewById(R.id.endYear);
+									endYear.setText(end.getYear());
 								}
-								if (start.getMonth() != null) {
-									Spinner startMonth = (Spinner) monthRangeRow.findViewById(R.id.startMonth);
-									startMonth.setSelection(months.indexOf(start.getMonth()));
+								if (end.getMonth() != null) {
+									Spinner endMonth = (Spinner) monthRangeRow.findViewById(R.id.endMonth);
+									endMonth.setSelection(months.indexOf(end.getMonth()));
 								}
-								
-								if (end != null) {
-									if (end.getYear() > 0) {
-										EditText endYear = (EditText) monthRangeRow.findViewById(R.id.endYear);
-										endYear.setText(end.getYear());
-									}
-									if (end.getMonth() != null) {
-										Spinner endMonth = (Spinner) monthRangeRow.findViewById(R.id.endMonth);
-										endMonth.setSelection(months.indexOf(end.getMonth()));
-									}
-								}
-								
-								
-								
+							}
+							
 //								RelativeLayout checkBoxContainer = (RelativeLayout) monthRangeRow
 //										.findViewById(R.id.checkBoxContainer);
 //								checkMonth(checkBoxContainer, start.getMonth());
@@ -410,106 +419,31 @@ public class OpeningHoursFragment extends DialogFragment {
 //										checkMonth(checkBoxContainer, months.get(i));
 //									}
 //								}
-								// setWeekDayListeners(checkBoxContainer, days);
-								addStandardMenuItems(monthRangeRow);
-								ll.addView(monthRangeRow);
+							// setWeekDayListeners(checkBoxContainer, days);
+							addStandardMenuItems(monthRangeRow, null);
+							ll.addView(monthRangeRow);
 //							} else { // date range
 //								TextView tv = new TextView(getActivity());
 //								tv.setText(md.toString());
 //								ll.addView(tv);
 //							}
-						}
-					}
-					// Modifier
-					final RuleModifier rm = r.getModifier();
-					if (rm != null) {
-						LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
-						final Spinner modifier = (Spinner)modifierLayout.findViewById(R.id.modifer);
-						setSpinnerInitialValue(modifier, rm.getModifier());
-						setSpinnerListener(modifier, new SetValue() {
-							@Override
-							public void set(String value) {
-								rm.setModifier(value);
-							}
-						});
-						EditText modifierComment = (EditText)modifierLayout.findViewById(R.id.comment);
-						modifierComment.setText(rm.getComment());
-						modifierComment.addTextChangedListener(new TextWatcher() {
-							@Override
-							public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-							}
-
-							@Override
-							public void onTextChanged(CharSequence s, int start, int before, int count) {
-							}
-
-							@Override
-							public void afterTextChanged(Editable s) {
-								rm.setComment(s.toString());
-								updateString();
-							}		
-						});
-						addStandardMenuItems(modifierLayout);
-						ll.addView(modifierLayout);
-					}
-					first = false;
-					n++;
-				}
-
-				// days and times will be different per rule
-				// are supposedly pseudo days
-				// holiday list
-				ArrayList<Holiday> holidays = r.getHolidays();
-				if (holidays != null && holidays.size() > 0) {
-					for (Holiday hd : holidays) {
-						LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
-						TextView tv = (TextView) holidayRow.findViewById(R.id.holiday);
-						if (hd.getType()==Holiday.Type.PH) {
-							tv.setText(R.string.public_holidays);
-							tv.setTag(Holiday.Type.PH);
-						} else {
-							tv.setText(R.string.school_holidays);
-							tv.setTag(Holiday.Type.SH);
-						}
-						ll.addView(holidayRow);
 					}
 				}
-				// day list
-				ArrayList<WeekDayRange> days = r.getDays();
-				if (days != null && days.size() > 0) {
-					LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-					RelativeLayout checkBoxContainer = (RelativeLayout) weekDayRow
-							.findViewById(R.id.checkBoxContainer);
-					for (WeekDayRange d : days) {
-						String startDay = d.getStartDay();
-						String endDay = d.getEndDay();
-						if (endDay == null) {
-							checkWeekDay(checkBoxContainer, startDay);
-						} else {
-							int startIndex = weekDays.indexOf(startDay);
-							int endIndex = weekDays.indexOf(endDay);
-							Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
-							for (int i = startIndex; i <= endIndex; i++) {
-								checkWeekDay(checkBoxContainer, weekDays.get(i));
-							}
+				// Modifier
+				final RuleModifier rm = r.getModifier();
+				if (rm != null) {
+					LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
+					final Spinner modifier = (Spinner)modifierLayout.findViewById(R.id.modifier);
+					setSpinnerInitialValue(modifier, rm.getModifier());
+					setSpinnerListener(modifier, new SetValue() {
+						@Override
+						public void set(String value) {
+							rm.setModifier(value);
 						}
-					}
-					setWeekDayListeners(checkBoxContainer, days);
-					addStandardMenuItems(weekDayRow);
-					ll.addView(weekDayRow);
-				}
-				// times
-				ArrayList<TimeSpan> times = r.getTimes();
-				addTimeSpanUIs(ll, times);
-				
-				//comments
-				String comment = r.getComment();
-				if (comment != null && !"".equals(comment)) {
-					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
-					EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
-					commentComment.setText(comment);
-					final Rule finalRule = r;
-					commentComment.addTextChangedListener(new TextWatcher() {
+					});
+					EditText modifierComment = (EditText)modifierLayout.findViewById(R.id.comment);
+					modifierComment.setText(rm.getComment());
+					modifierComment.addTextChangedListener(new TextWatcher() {
 						@Override
 						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 						}
@@ -520,18 +454,116 @@ public class OpeningHoursFragment extends DialogFragment {
 
 						@Override
 						public void afterTextChanged(Editable s) {
-							finalRule.setComment(s.toString());
+							rm.setComment(s.toString());
 							updateString();
 						}		
 					});
-					addStandardMenuItems(intervalLayout);
-					ll.addView(intervalLayout);
+					addStandardMenuItems(modifierLayout, null);
+					ll.addView(modifierLayout);
 				}
+				if (groupMode) {
+					first = false;
+				} 
+				headerCount++;
+			}
+
+			// days and times will be different per rule
+			// are supposedly pseudo days
+			// holiday list
+			ArrayList<Holiday> holidays = r.getHolidays();
+			if (holidays != null && holidays.size() > 0) {
+				for (Holiday hd : holidays) {
+					LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
+					TextView tv = (TextView) holidayRow.findViewById(R.id.holiday);
+					if (hd.getType()==Holiday.Type.PH) {
+						tv.setText(R.string.public_holidays);
+						tv.setTag(Holiday.Type.PH);
+					} else {
+						tv.setText(R.string.school_holidays);
+						tv.setTag(Holiday.Type.SH);
+					}
+					ll.addView(holidayRow);
+				}
+			}
+			// day list
+			ArrayList<WeekDayRange> days = r.getDays();
+			if (days != null && days.size() > 0) {
+				LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
+				RelativeLayout checkBoxContainer = (RelativeLayout) weekDayRow
+						.findViewById(R.id.checkBoxContainer);
+				for (WeekDayRange d : days) {
+					String startDay = d.getStartDay();
+					String endDay = d.getEndDay();
+					if (endDay == null) {
+						checkWeekDay(checkBoxContainer, startDay);
+					} else {
+						int startIndex = weekDays.indexOf(startDay);
+						int endIndex = weekDays.indexOf(endDay);
+						Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
+						for (int i = startIndex; i <= endIndex; i++) {
+							checkWeekDay(checkBoxContainer, weekDays.get(i));
+						}
+					}
+				}
+				setWeekDayListeners(checkBoxContainer, days);
+				addStandardMenuItems(weekDayRow, null);
+				ll.addView(weekDayRow);
+			}
+			// times
+			ArrayList<TimeSpan> times = r.getTimes();
+			addTimeSpanUIs(ll, times);
+			
+			//comments
+			String comment = r.getComment();
+			if (comment != null && !"".equals(comment)) {
+				LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
+				EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
+				commentComment.setText(comment);
+				final Rule finalRule = r;
+				commentComment.addTextChangedListener(new TextWatcher() {
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+					}
+
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+					}
+
+					@Override
+					public void afterTextChanged(Editable s) {
+						finalRule.setComment(s.toString());
+						updateString();
+					}		
+				});
+				addStandardMenuItems(intervalLayout, null);
+				ll.addView(intervalLayout);
 			}
 		}
 	}
 	
-	private void addTimeSpanUIs(LinearLayout ll, ArrayList<TimeSpan> times) {
+	
+	interface Delete {
+		void delete();
+	}
+	
+	private class DeleteTimeSpan implements Delete {
+		final ArrayList<TimeSpan> times;
+		final TimeSpan ts;
+		
+		DeleteTimeSpan(final ArrayList<TimeSpan> times, final TimeSpan ts) {
+			this.times = times;
+			this.ts = ts;
+		}
+		
+		@Override
+		public void delete() {
+			times.remove(ts);
+			updateString();
+			watcher.afterTextChanged(null); // hack to force rebuild of form
+		}
+	}
+	
+	private void addTimeSpanUIs(LinearLayout ll, final ArrayList<TimeSpan> times) {
 		if (times != null && times.size() > 0) {
 			Log.d(DEBUG_TAG, "#time spans " + times.size());
 			for (final TimeSpan ts : times) {
@@ -539,8 +571,12 @@ public class OpeningHoursFragment extends DialogFragment {
 				boolean hasEndEvent = ts.getEndEvent() != null;
 				boolean extendedTime = ts.getEnd() > 1440;
 				boolean hasInterval = ts.getInterval() > 0;
-				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
-						&& !extendedTime) {
+				if (ts.isTwentyfourseven()) {
+					Log.d(DEBUG_TAG, "24/7 " + ts.toString());
+					LinearLayout twentyFourSeven = (LinearLayout) inflater.inflate(R.layout.twentyfourseven, null);
+					Menu menu = addStandardMenuItems(twentyFourSeven, new DeleteTimeSpan(times, ts));
+					ll.addView(twentyFourSeven);
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && !extendedTime) {
 					Log.d(DEBUG_TAG, "t-t " + ts.toString());
 					LinearLayout timeRangeRow = (LinearLayout) inflater.inflate(R.layout.time_range_row, null);
 					RangeBar timeBar = (RangeBar) timeRangeRow.findViewById(R.id.timebar);
@@ -549,12 +585,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					if (start >= 360) {
 						timeBar.setTickStart(360);
 					}
-					if ((start % 5 > 0) || (end % 5 > 0)) { // need
-						// minute
-						// granularity
-						timeBar.setTickInterval(1);
-						timeBar.setVisibleTickInterval(60);
-					}
+					setGranuarlty(timeBar, start, end);
 					timeBar.setRangePinsByValue(start, end);
 					timeBar.setPinTextFormatter(timeFormater);
 					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
@@ -565,10 +596,9 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setEnd(toMins(rightPinValue));
 							updateString();
 						}});
-					addStandardMenuItems(timeRangeRow);
+					addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeRangeRow);
-				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
-						&& extendedTime) {
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && extendedTime) {
 					Log.d(DEBUG_TAG, "t-x " + ts.toString());
 					LinearLayout timeExtendedRangeRow = (LinearLayout) inflater
 							.inflate(R.layout.time_extended_range_row, null);
@@ -577,14 +607,8 @@ public class OpeningHoursFragment extends DialogFragment {
 							.findViewById(R.id.extendedTimebar);
 					int start = ts.getStart();
 					int end = ts.getEnd();
-					if ((start % 5 > 0) || (end % 5 > 0)) { // need
-						// minute
-						// granularity
-						timeBar.setTickInterval(1);
-						timeBar.setVisibleTickInterval(60);
-						extendedTimeBar.setTickInterval(1);
-						extendedTimeBar.setVisibleTickInterval(60);
-					}
+					setGranuarlty(timeBar, start, end);
+					setGranuarlty(extendedTimeBar, start, end);
 					timeBar.setRangePinsByValue(0, start);
 					timeBar.setPinTextFormatter(timeFormater);
 					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
@@ -603,7 +627,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setEnd(toMins(rightPinValue));
 							updateString();
 						}});
-					addStandardMenuItems(timeExtendedRangeRow);
+					addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeExtendedRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
 					Log.d(DEBUG_TAG, "pot " + ts.toString());
@@ -612,10 +636,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					timeBar.setPinTextFormatter(timeFormater);
 					int start = ts.getStart();
 					timeBar.setConnectingLineEnabled(false);
-					if (start % 5 > 0) { // need minute granularity
-						timeBar.setTickInterval(1);
-						timeBar.setVisibleTickInterval(60);
-					}
+					setGranuarlty(timeBar, start, 0);
 					timeBar.setRangePinsByValue(0, start);
 					
 					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
@@ -627,7 +648,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
 					Log.d(DEBUG_TAG, "t-e " + ts.toString());
@@ -635,10 +656,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
 					timeBar.setPinTextFormatter(timeFormater);
 					int start = ts.getStart();
-					if (start % 5 > 0) { // need minute granularity
-						timeBar.setTickInterval(1);
-						timeBar.setVisibleTickInterval(60);
-					}
+					setGranuarlty(timeBar, start, 0);
 					timeBar.setRangePinsByValue(0, start);
 					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
 						@Override
@@ -655,7 +673,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getEndEvent().setEvent(value);
 						}
 					});
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-t " + ts.toString());
@@ -678,10 +696,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							}
 						}
 						bar.setPinTextFormatter(timeFormater);
-						if (end % 5 > 0) { // need minute granularity
-							bar.setTickInterval(1);
-							bar.setVisibleTickInterval(60);
-						}
+						setGranuarlty(bar, 0, end);
 						bar.setRangePinsByValue(start,end);
 						bar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
 							@Override
@@ -702,7 +717,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getStartEvent().setEvent(value);
 						}
 					});
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-e " + ts.toString());
@@ -723,7 +738,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getEndEvent().setEvent(value);
 						}
 					});
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && !hasStartEvent) {
 					Log.d(DEBUG_TAG, "t- " + ts.toString());
@@ -731,10 +746,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
 					timeBar.setPinTextFormatter(timeFormater);
 					int start = ts.getStart();
-					if (start % 5 > 0) { // need minute granularity
-						timeBar.setTickInterval(1);
-						timeBar.setVisibleTickInterval(60);
-					}
+					setGranuarlty(timeBar, start, 0);
 					timeBar.setRangePinsByValue(0, start);
 					timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
 						@Override
@@ -745,7 +757,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && hasStartEvent) {
 					Log.d(DEBUG_TAG, "e- " + ts.toString());
@@ -760,7 +772,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					addStandardMenuItems(timeEventRow);
+					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					ll.addView(timeEventRow);
 				} else {
 					Log.d(DEBUG_TAG, "? " + ts.toString());
@@ -787,10 +799,19 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}		
 					});
-					addStandardMenuItems(intervalLayout);
+					addStandardMenuItems(intervalLayout, null);
 					ll.addView(intervalLayout);
 				}
 			}
+		}
+	}
+
+	private void setGranuarlty(RangeBar bar, int start, int end) {
+		if ((start % 5 > 0) || (end % 5 > 0)) { // need
+			// minute
+			// granularity
+			bar.setTickInterval(1);
+			bar.setVisibleTickInterval(60);
 		}
 	}
 
@@ -816,10 +837,19 @@ public class OpeningHoursFragment extends DialogFragment {
 		});
 	}
 	
-	private Menu addStandardMenuItems(LinearLayout row) {
+	private Menu addStandardMenuItems(LinearLayout row, final Delete listener) {
 		ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
 		Menu menu = amv.getMenu();
 		MenuItem mi = menu.add("Delete");
+		mi.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				if (listener != null) {
+					listener.delete();
+				}
+				return true;
+			}
+		});
 		MenuItemCompat.setShowAsAction(mi,MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		return menu;
 	}
