@@ -328,11 +328,30 @@ public class OpeningHoursFragment extends DialogFragment {
 				header.setText(getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
 				addStandardMenuItems(groupHeader, null);
 				ll.addView(groupHeader);
+				//comments
 				String comment = r.getComment();
-				if (comment != null && comment.length() > 0) {
-					TextView tv = new TextView(getActivity());
-					tv.setText(comment);
-					ll.addView(tv);
+				if (comment != null && !"".equals(comment)) {
+					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
+					EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
+					commentComment.setText(comment);
+					final Rule finalRule = r;
+					commentComment.addTextChangedListener(new TextWatcher() {
+						@Override
+						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						}
+
+						@Override
+						public void onTextChanged(CharSequence s, int start, int before, int count) {
+						}
+
+						@Override
+						public void afterTextChanged(Editable s) {
+							finalRule.setComment(s.toString());
+							updateString();
+						}		
+					});
+					addStandardMenuItems(intervalLayout, null);
+					ll.addView(intervalLayout);
 				}
 				// year range list
 				ArrayList<YearRange> years = r.getYears();
@@ -512,32 +531,6 @@ public class OpeningHoursFragment extends DialogFragment {
 			// times
 			ArrayList<TimeSpan> times = r.getTimes();
 			addTimeSpanUIs(ll, times);
-			
-			//comments
-			String comment = r.getComment();
-			if (comment != null && !"".equals(comment)) {
-				LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
-				EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
-				commentComment.setText(comment);
-				final Rule finalRule = r;
-				commentComment.addTextChangedListener(new TextWatcher() {
-					@Override
-					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-					}
-
-					@Override
-					public void onTextChanged(CharSequence s, int start, int before, int count) {
-					}
-
-					@Override
-					public void afterTextChanged(Editable s) {
-						finalRule.setComment(s.toString());
-						updateString();
-					}		
-				});
-				addStandardMenuItems(intervalLayout, null);
-				ll.addView(intervalLayout);
-			}
 		}
 	}
 	
