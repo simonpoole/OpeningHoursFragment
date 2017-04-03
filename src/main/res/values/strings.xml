@@ -14,7 +14,6 @@
   	<string name="public_holidays">Public holidays</string>
   	<string name="school_holidays">School holidays</string>
   	
-  	
   	<string name="monday">Mo</string>
   	<string name="tuesday">Tu</string>
   	<string name="wednesday">We</string>
@@ -35,6 +34,11 @@
   	<string name="october">Oct</string>
   	<string name="november">Nov</string>
   	<string name="december">Dec</string>
+  	
+  	<string name="open">open</string>
+ 	<string name="closed">closed</string>
+  	<string name="off">off</string>
+    <string name="unknown">unknown</string>
   	
   	<string-array name="months" translatable="false">
   	    <item>@string/january</item>
@@ -101,4 +105,11 @@
   	    <item>@string/dawn</item>
   	    <item>@string/dusk</item>
   	</string-array>
+  	
+  	<string-array name="modifiers" translatable="false">
+  	   <item>@string/open</item>
+ 	   <item>@string/closed</item>
+  	   <item>@string/off</item>
+       <item>@string/unknown</item>
+    </string-array>
 </resources>

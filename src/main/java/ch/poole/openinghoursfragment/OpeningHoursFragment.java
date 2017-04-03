@@ -34,6 +34,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -418,17 +420,37 @@ public class OpeningHoursFragment extends DialogFragment {
 //							}
 						}
 					}
-					// modifier
-					RuleModifier modifier = r.getModifier();
-					if (modifier != null && modifier.getModifier() != null && modifier.getModifier().length() > 0) {
-						TextView tv = new TextView(getActivity());
-						tv.setText(modifier.getModifier());
-						ll.addView(tv);
-					}
-					if (modifier != null && modifier.getComment() != null && modifier.getComment().length() > 0) {
-						TextView tv = new TextView(getActivity());
-						tv.setText(modifier.getComment());
-						ll.addView(tv);
+					// Modifier
+					final RuleModifier rm = r.getModifier();
+					if (rm != null) {
+						LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
+						final Spinner modifier = (Spinner)modifierLayout.findViewById(R.id.modifer);
+						setSpinnerInitialValue(modifier, rm.getModifier());
+						setSpinnerListener(modifier, new SetValue() {
+							@Override
+							public void set(String value) {
+								rm.setModifier(value);
+							}
+						});
+						EditText modifierComment = (EditText)modifierLayout.findViewById(R.id.comment);
+						modifierComment.setText(rm.getComment());
+						modifierComment.addTextChangedListener(new TextWatcher() {
+							@Override
+							public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+							}
+
+							@Override
+							public void onTextChanged(CharSequence s, int start, int before, int count) {
+							}
+
+							@Override
+							public void afterTextChanged(Editable s) {
+								rm.setComment(s.toString());
+								updateString();
+							}		
+						});
+						addStandardMenuItems(modifierLayout);
+						ll.addView(modifierLayout);
 					}
 					first = false;
 					n++;
@@ -479,6 +501,32 @@ public class OpeningHoursFragment extends DialogFragment {
 				// times
 				ArrayList<TimeSpan> times = r.getTimes();
 				addTimeSpanUIs(ll, times);
+				
+				//comments
+				String comment = r.getComment();
+				if (comment != null && !"".equals(comment)) {
+					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
+					EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
+					commentComment.setText(comment);
+					final Rule finalRule = r;
+					commentComment.addTextChangedListener(new TextWatcher() {
+						@Override
+						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						}
+
+						@Override
+						public void onTextChanged(CharSequence s, int start, int before, int count) {
+						}
+
+						@Override
+						public void afterTextChanged(Editable s) {
+							finalRule.setComment(s.toString());
+							updateString();
+						}		
+					});
+					addStandardMenuItems(intervalLayout);
+					ll.addView(intervalLayout);
+				}
 			}
 		}
 	}
@@ -490,6 +538,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				boolean hasStartEvent = ts.getStartEvent() != null;
 				boolean hasEndEvent = ts.getEndEvent() != null;
 				boolean extendedTime = ts.getEnd() > 1440;
+				boolean hasInterval = ts.getInterval() > 0;
 				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0
 						&& !extendedTime) {
 					Log.d(DEBUG_TAG, "t-t " + ts.toString());
@@ -599,8 +648,13 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
-							.getPosition(ts.getEndEvent().getEvent()));
+					setSpinnerInitialValue(endEvent, ts.getEndEvent().getEvent());
+					setSpinnerListener(endEvent, new SetValue() {
+						@Override
+						public void set(String value) {
+							ts.getEndEvent().setEvent(value);
+						}
+					});
 					addStandardMenuItems(timeEventRow);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
@@ -629,19 +683,34 @@ public class OpeningHoursFragment extends DialogFragment {
 						timeBar.setVisibility(View.GONE);
 					}
 					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-					startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
-							.getPosition(ts.getStartEvent().getEvent()));
+					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent());
+					setSpinnerListener(startEvent, new SetValue() {
+						@Override
+						public void set(String value) {
+							ts.getStartEvent().setEvent(value);
+						}
+					});
 					addStandardMenuItems(timeEventRow);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-e " + ts.toString());
 					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
-					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					startEvent.setSelection(((ArrayAdapter<String>) startEvent.getAdapter())
-							.getPosition(ts.getStartEvent().getEvent()));
+					final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
+					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent());
+					setSpinnerListener(startEvent, new SetValue() {
+						@Override
+						public void set(String value) {
+							ts.getStartEvent().setEvent(value);
+						}
+					});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
-							.getPosition(ts.getEndEvent().getEvent()));
+					setSpinnerInitialValue(endEvent, ts.getEndEvent().getEvent());
+					setSpinnerListener(endEvent, new SetValue() {
+						@Override
+						public void set(String value) {
+							ts.getEndEvent().setEvent(value);
+						}
+					});
 					addStandardMenuItems(timeEventRow);
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && !hasStartEvent) {
@@ -666,14 +735,73 @@ public class OpeningHoursFragment extends DialogFragment {
 					endEvent.setVisibility(View.GONE);
 					addStandardMenuItems(timeEventRow);
 					ll.addView(timeEventRow);
+				} else if (ts.isOpenEnded() && hasStartEvent) {
+					Log.d(DEBUG_TAG, "e- " + ts.toString());
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
+					final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
+					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent());
+					setSpinnerListener(startEvent, new SetValue() {
+						@Override
+						public void set(String value) {
+							ts.getStartEvent().setEvent(value);
+						}
+					});
+					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
+					endEvent.setVisibility(View.GONE);
+					addStandardMenuItems(timeEventRow);
+					ll.addView(timeEventRow);
 				} else {
 					Log.d(DEBUG_TAG, "? " + ts.toString());
 					TextView tv = new TextView(getActivity());
 					tv.setText(ts.toString());
 					ll.addView(tv);
 				}
+				if (hasInterval) {
+					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.interval, null);
+					EditText interval = (EditText)intervalLayout.findViewById(R.id.interval);
+					interval.setText(Integer.toString(ts.getInterval()));
+					interval.addTextChangedListener(new TextWatcher() {
+						@Override
+						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						}
+
+						@Override
+						public void onTextChanged(CharSequence s, int start, int before, int count) {
+						}
+
+						@Override
+						public void afterTextChanged(Editable s) {
+							ts.setInterval(Integer.parseInt(s.toString()));
+							updateString();
+						}		
+					});
+					addStandardMenuItems(intervalLayout);
+					ll.addView(intervalLayout);
+				}
 			}
 		}
+	}
+
+	private void setSpinnerInitialValue(Spinner endEvent, String value) {
+		endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
+				.getPosition(value));
+	}
+
+	interface SetValue {
+		void set(String value);
+	}
+	
+	private void setSpinnerListener(final Spinner spinner, final SetValue listener) {
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				listener.set((String) spinner.getAdapter().getItem(position));
+				updateString();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
 	}
 	
 	private Menu addStandardMenuItems(LinearLayout row) {
