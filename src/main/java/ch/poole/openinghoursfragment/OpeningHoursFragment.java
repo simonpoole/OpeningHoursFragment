@@ -221,7 +221,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					};
 					text.removeCallbacks(rebuild);
-					text.postDelayed(rebuild, 500);
+					text.postDelayed(rebuild, 1000);
 				}
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -661,18 +661,29 @@ public class OpeningHoursFragment extends DialogFragment {
 					Log.d(DEBUG_TAG, "e-t " + ts.toString());
 					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_start_event_row, null);
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
+					RangeBar extendedTimeBar = (RangeBar) timeEventRow.findViewById(R.id.extendedTimebar);
 					int end = ts.getEnd();
 					if (end > 0) {
-						timeBar.setPinTextFormatter(timeFormater);
-						if (end >= 360) {
-							timeBar.setTickStart(360);
+						int start = 0;
+						RangeBar bar = timeBar;
+						if (extendedTime) {
+							timeBar.setVisibility(View.GONE);
+							bar = extendedTimeBar;
+							start = 1440;
+						} else {
+							extendedTimeBar.setVisibility(View.GONE);
+							if (end >= 360) {
+								bar.setTickStart(360);
+								start = 360;
+							}
 						}
+						bar.setPinTextFormatter(timeFormater);
 						if (end % 5 > 0) { // need minute granularity
-							timeBar.setTickInterval(1);
-							timeBar.setVisibleTickInterval(60);
+							bar.setTickInterval(1);
+							bar.setVisibleTickInterval(60);
 						}
-						timeBar.setRangePinsByValue(0, end);
-						timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
+						bar.setRangePinsByValue(start,end);
+						bar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
 							@Override
 							public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,
 									int rightPinIndex, String leftPinValue, String rightPinValue) {
@@ -681,6 +692,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							}});
 					} else {
 						timeBar.setVisibility(View.GONE);
+						extendedTimeBar.setVisibility(View.GONE);
 					}
 					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
 					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent());

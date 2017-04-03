@@ -13,17 +13,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:layout_weight="1">
 
             <Spinner
                 android:id="@+id/startEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events" />
 
@@ -34,8 +34,9 @@
                 android:layout_height="72dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_weight="1"
-                custom:connectToRight="true"
+                android:layout_toRightOf="@id/startEvent"
+                android:layout_alignParentTop="true"
+                custom:connectToRight="false"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorAccent"
                 custom:pinMinFont="10sp"
@@ -48,7 +49,30 @@
                 custom:tickInterval="5"
                 custom:tickStart="0"
                 custom:visibleTickInterval="12" />
-        </LinearLayout>
+                
+            <ch.poole.rangebar.RangeBar
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/extendedTimebar"
+                android:layout_width="fill_parent"
+                android:layout_height="72dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/startEvent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                custom:connectingLineColor="?attr/colorAccent"
+                custom:pinColor="?attr/colorAccent"
+                custom:pinMaxFont="10sp"
+                custom:pinMinFont="10sp"
+                custom:pinRadius="14sp"
+                custom:rangeBar="false"
+                custom:rangeBarColor="?attr/colorAccent"
+                custom:selectorColor="?attr/colorAccent"
+                custom:temporaryPins="false"
+                custom:tickEnd="2880"
+                custom:tickInterval="5"
+                custom:tickStart="1440"
+                custom:visibleTickInterval="12" />
+        </RelativeLayout>
 
         <include layout="@layout/menu" />
     </LinearLayout>
