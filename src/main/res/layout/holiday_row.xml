@@ -12,17 +12,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/holiday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:tag="PH"
-            android:text="Public Holiday" />
-
-        <include layout="@layout/menu" />
-
+        <RelativeLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="1" >
+       		<Spinner
+            	android:id="@+id/holidays"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignParentLeft="true"
+            	android:paddingLeft="0dp"
+            	android:drawSelectorOnTop="true"
+            	android:entries="@array/holidays_entries" 
+          		/>
+       		<EditText
+            	android:id="@+id/offset"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignParentRight="true"
+            	android:layout_weight="1" 
+            	android:inputType="number|none"
+            	android:minEms="2"
+            	android:maxEms="2"
+				android:maxLength="3"
+				android:digits="+-0123456789" />
+			<TextView
+        		android:id="@+id/offset_label"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_toLeftOf="@id/offset"
+            	android:layout_centerVertical="true"
+            	android:text="Offset (+-days)" />
+			</RelativeLayout>
+		<include layout="@layout/menu" />
     </LinearLayout>
-
+    
 </LinearLayout>

@@ -12,21 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
+        
+        <LinearLayout
+        	android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <Spinner
+          	<Spinner
                 android:id="@+id/startEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events" />
-
+                
             <ch.poole.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/timebar"
@@ -48,15 +53,13 @@
                 custom:tickEnd="1440"
                 custom:tickInterval="5"
                 custom:tickStart="0"
-                custom:visibleTickInterval="12" />
-                
+                custom:visibleTickInterval="12" />    
+            </RelativeLayout>
             <ch.poole.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/extendedTimebar"
                 android:layout_width="fill_parent"
                 android:layout_height="72dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/startEvent"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
                 custom:connectingLineColor="?attr/colorAccent"
@@ -72,7 +75,7 @@
                 custom:tickInterval="5"
                 custom:tickStart="1440"
                 custom:visibleTickInterval="12" />
-        </RelativeLayout>
+        	</LinearLayout>
 
         <include layout="@layout/menu" />
     </LinearLayout>

@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -318,7 +319,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		
 		boolean first = true;
 		int headerCount = 1;
-		for (Rule r:rules) {
+		for (final Rule r:rules) {
 			if (first) { // everything except days and times should be
 						 // the same and only needs to be displayed
 						 // once in groupMode, in normal mode this is 
@@ -334,50 +335,77 @@ public class OpeningHoursFragment extends DialogFragment {
 					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.comment, null);
 					EditText commentComment = (EditText)intervalLayout.findViewById(R.id.comment);
 					commentComment.setText(comment);
-					final Rule finalRule = r;
-					commentComment.addTextChangedListener(new TextWatcher() {
+					setTextWatcher(commentComment, new SetValue() {
 						@Override
-						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						public void set(String value) {
+							r.setComment(value);
 						}
-
-						@Override
-						public void onTextChanged(CharSequence s, int start, int before, int count) {
-						}
-
-						@Override
-						public void afterTextChanged(Editable s) {
-							finalRule.setComment(s.toString());
-							updateString();
-						}		
 					});
 					addStandardMenuItems(intervalLayout, null);
 					ll.addView(intervalLayout);
 				}
 				// year range list
-				ArrayList<YearRange> years = r.getYears();
-				LinearLayout yearLayout = new LinearLayout(getActivity());
-				yearLayout.setOrientation(LinearLayout.HORIZONTAL);
-				;
-				ll.addView(yearLayout);
+				final ArrayList<YearRange> years = r.getYears();
 				if (years != null && years.size() > 0) {
-					for (YearRange yr : years) {
+					for (final YearRange yr : years) {
 						// NumberPicker np1 =
 						// getYearPicker(yr.getStartYear());
-						EditText np1 = new EditText(getActivity());
-						np1.setText(Integer.toString(yr.getStartYear()));
-						int endYear = yr.getEndYear();
-						if (endYear < 0) {
-							endYear = yr.getStartYear();
-						}
+						LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
+						EditText startYearEdit = (EditText)yearLayout.findViewById(R.id.start_year);
+						startYearEdit.setText(Integer.toString(yr.getStartYear()));
+						setTextWatcher(startYearEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int year = -1;
+								try {
+									year = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								yr.setStartYear(year);
+							}
+						});
+						
 						// NumberPicker np2 = getYearPicker(endYear);
-						EditText np2 = new EditText(getActivity());
-						np2.setText(Integer.toString(endYear));
-						yearLayout.addView(np1);
-						yearLayout.addView(dash);
-						yearLayout.addView(np2);
-						if (years.get(years.size() - 1) != yr) {
-							yearLayout.addView(comma);
+						EditText endYearEdit = (EditText)yearLayout.findViewById(R.id.end_year);
+						int endYear = yr.getEndYear();
+						if (endYear > 0) {
+							endYearEdit.setText(Integer.toString(endYear));
 						}
+						setTextWatcher(endYearEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int year = -1;
+								try {
+									year = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								yr.setEndYear(year);
+							}
+						});
+						EditText yearIntervalEdit = (EditText)yearLayout.findViewById(R.id.interval);
+						if (yr.getInterval() > 0) {
+							yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
+						}
+						setTextWatcher(yearIntervalEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int interval = 0;
+								try {
+									interval = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								yr.setInterval(interval);
+							}
+						});
+						addStandardMenuItems(yearLayout, new Delete() {
+							@Override
+							public void delete() {
+								years.remove(yr);
+								updateString();
+								watcher.afterTextChanged(null); // hack to force rebuild of form
+							}
+						});
+						ll.addView(yearLayout);
 					}
 				}
 				// week list
@@ -462,20 +490,11 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					EditText modifierComment = (EditText)modifierLayout.findViewById(R.id.comment);
 					modifierComment.setText(rm.getComment());
-					modifierComment.addTextChangedListener(new TextWatcher() {
+					setTextWatcher(modifierComment, new SetValue() {
 						@Override
-						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						public void set(String value) {
+							rm.setComment(value);
 						}
-
-						@Override
-						public void onTextChanged(CharSequence s, int start, int before, int count) {
-						}
-
-						@Override
-						public void afterTextChanged(Editable s) {
-							rm.setComment(s.toString());
-							updateString();
-						}		
 					});
 					addStandardMenuItems(modifierLayout, null);
 					ll.addView(modifierLayout);
@@ -489,17 +508,40 @@ public class OpeningHoursFragment extends DialogFragment {
 			// days and times will be different per rule
 			// are supposedly pseudo days
 			// holiday list
-			ArrayList<Holiday> holidays = r.getHolidays();
+			final ArrayList<Holiday> holidays = r.getHolidays();
 			if (holidays != null && holidays.size() > 0) {
-				for (Holiday hd : holidays) {
+				for (final Holiday hd : holidays) {
 					LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
-					TextView tv = (TextView) holidayRow.findViewById(R.id.holiday);
-					if (hd.getType()==Holiday.Type.PH) {
-						tv.setText(R.string.public_holidays);
-						tv.setTag(Holiday.Type.PH);
-					} else {
-						tv.setText(R.string.school_holidays);
-						tv.setTag(Holiday.Type.SH);
+					Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
+					setSpinnerInitialEntryValue(holidaysSpinner, hd.getType().name());
+					setSpinnerListenerEntryValues(holidaysSpinner, new SetValue() {
+						@Override
+						public void set(String value) {
+							hd.setType(Holiday.Type.valueOf(value));
+						}
+					});
+					addStandardMenuItems(holidayRow,  new Delete() {
+						@Override
+						public void delete() {
+							holidays.remove(hd);
+							updateString();
+							watcher.afterTextChanged(null); // hack to force rebuild of form
+						}
+					});
+					if (hd.getOffset() != 0) {
+						EditText offset = (EditText) holidayRow.findViewById(R.id.offset);
+						offset.setText(Integer.toString(hd.getOffset()));
+						setTextWatcher(offset, new SetValue() {
+							@Override
+							public void set(String value) {
+								int offset = 0;
+								try {
+									offset = Integer.parseInt(value);
+								} catch (NumberFormatException nfex){
+								}
+								hd.setOffset(offset);
+							}
+						});
 					}
 					ll.addView(holidayRow);
 				}
@@ -534,6 +576,23 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
+	private void setTextWatcher(final EditText edit, final SetValue listener) {
+		edit.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				listener.set(s.toString());
+				updateString();
+			}		
+		});
+	}
 	
 	interface Delete {
 		void delete();
@@ -777,22 +836,18 @@ public class OpeningHoursFragment extends DialogFragment {
 					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.interval, null);
 					EditText interval = (EditText)intervalLayout.findViewById(R.id.interval);
 					interval.setText(Integer.toString(ts.getInterval()));
-					interval.addTextChangedListener(new TextWatcher() {
+					setTextWatcher(interval, new SetValue() {
 						@Override
-						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						public void set(String value) {
+							int interval = 0;
+							try {
+								interval = Integer.parseInt(value);
+							} catch (NumberFormatException nfex) {
+							}
+							ts.setInterval(interval);
 						}
-
-						@Override
-						public void onTextChanged(CharSequence s, int start, int before, int count) {
-						}
-
-						@Override
-						public void afterTextChanged(Editable s) {
-							ts.setInterval(Integer.parseInt(s.toString()));
-							updateString();
-						}		
 					});
-					addStandardMenuItems(intervalLayout, null);
+					// addStandardMenuItems(intervalLayout, null);
 					ll.addView(intervalLayout);
 				}
 			}
@@ -808,8 +863,8 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setSpinnerInitialValue(Spinner endEvent, String value) {
-		endEvent.setSelection(((ArrayAdapter<String>) endEvent.getAdapter())
+	private void setSpinnerInitialValue(Spinner spinner, String value) {
+		spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter())
 				.getPosition(value));
 	}
 
@@ -821,8 +876,37 @@ public class OpeningHoursFragment extends DialogFragment {
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				listener.set((String) spinner.getAdapter().getItem(position));
+				listener.set((String) spinner.getItemAtPosition(position));
 				updateString();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
+	}
+	
+	private void setSpinnerInitialEntryValue(Spinner spinner, String value) {
+		Resources res = getResources();
+		final TypedArray values = res.obtainTypedArray(R.array.holidays_values);
+		for (int i=0;i<values.length();i++) {
+			if (value.equals(values.getString(i))) {
+				spinner.setSelection(i);
+				break;
+			}
+		}
+		values.recycle();
+	}
+	
+	private void setSpinnerListenerEntryValues(final Spinner spinner, final SetValue listener) {
+		final Resources res = getResources();
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				final TypedArray selectedValues = res.obtainTypedArray(R.array.holidays_values);
+				listener.set(selectedValues.getString(position));
+				updateString();
+				selectedValues.recycle();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {

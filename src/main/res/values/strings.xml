@@ -7,6 +7,9 @@
     <string name="group_header">Group %1$s</string>
     <string name="rule_header">Rule %1$s</string>
     
+    <string name="interval_minutes">Interval (minutes)</string>
+    <string name="interval_years">Interval (years)</string>
+    
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>
   	<string name="dawn">dawn</string>
@@ -112,5 +115,15 @@
  	   <item>@string/closed</item>
   	   <item>@string/off</item>
        <item>@string/unknown</item>
+    </string-array>
+    
+     <string-array name="holidays_entries" translatable="false">
+  	   	<item>@string/public_holidays</item>
+ 		<item>@string/school_holidays</item>
+    </string-array>
+    
+    <string-array name="holidays_values" translatable="false">
+  	   	<item>PH</item>
+ 		<item>SH</item>
     </string-array>
 </resources>
