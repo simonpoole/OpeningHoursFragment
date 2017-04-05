@@ -52,6 +52,7 @@ import android.widget.TextView;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.MonthDayRange;
+import ch.poole.openinghoursparser.Nth;
 import ch.poole.openinghoursparser.OpeningHoursParser;
 import ch.poole.openinghoursparser.ParseException;
 import ch.poole.openinghoursparser.Rule;
@@ -222,7 +223,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					};
 					text.removeCallbacks(rebuild);
-					text.postDelayed(rebuild, 1000);
+					text.postDelayed(rebuild, 500);
 				}
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -606,23 +607,43 @@ public class OpeningHoursFragment extends DialogFragment {
 			ArrayList<WeekDayRange> days = r.getDays();
 			if (days != null && days.size() > 0) {
 				LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-				RelativeLayout checkBoxContainer = (RelativeLayout) weekDayRow
-						.findViewById(R.id.checkBoxContainer);
+				RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
+				boolean justOne = false;
 				for (WeekDayRange d : days) {
 					String startDay = d.getStartDay();
 					String endDay = d.getEndDay();
 					if (endDay == null) {
-						checkWeekDay(checkBoxContainer, startDay);
+						checkWeekDay(weekDayContainer, startDay);
 					} else {
 						int startIndex = weekDays.indexOf(startDay);
 						int endIndex = weekDays.indexOf(endDay);
 						Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
 						for (int i = startIndex; i <= endIndex; i++) {
-							checkWeekDay(checkBoxContainer, weekDays.get(i));
+							checkWeekDay(weekDayContainer, weekDays.get(i));
 						}
 					}
+					List<Nth>nths = d.getNths();
+					if (nths != null && !nths.isEmpty()) {
+						justOne = true;
+						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
+						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
+						for (Nth nth:nths) {
+							Log.d(DEBUG_TAG,"adding nth " + nth.toString());
+							int startNth = nth.getStartNth();
+							int endNth = nth.getEndNth();
+							if (endNth < 1) {
+								checkNth(nthContainer, startNth);
+							} else {
+								for (int i=startNth;i<= endNth; i++) {
+									checkNth(nthContainer, i);
+								}
+							}
+						}
+						setNthListeners(nthContainer, nths);
+						weekDayRow.addView(nthLayout);
+					}
 				}
-				setWeekDayListeners(checkBoxContainer, days);
+				setWeekDayListeners(weekDayContainer, days, justOne);
 				addStandardMenuItems(weekDayRow, null);
 				ll.addView(weekDayRow);
 			}
@@ -1044,22 +1065,89 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void setWeekDayListeners(final RelativeLayout container, final ArrayList<WeekDayRange> days) {
+	private void checkNth(RelativeLayout container, int nth) {
+		Log.d(DEBUG_TAG, "checking " + nth);
+		for (int i = 0; i < container.getChildCount(); i++) {
+			View v = container.getChildAt(i);
+			if ((v instanceof CheckBox || v instanceof AppCompatCheckBox) && ((String) v.getTag()).equals(Integer.toString(nth))) {
+				((CheckBox) v).setChecked(true);
+				return;
+			}
+		}
+	}
+
+	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final boolean justOne) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				days.clear();
-				WeekDayRange range = null;
+				if (justOne) { // Nth exists	
+					if  (isChecked) { 
+						WeekDayRange range = days.get(0);
+						for (int i = 0; i < container.getChildCount(); i++) {
+							final View c = container.getChildAt(i);
+							if ((c instanceof CheckBox || c instanceof AppCompatCheckBox) && !c.equals(buttonView)) {
+								((CheckBox)c).setChecked(false);
+							}
+						}
+						range.setStartDay((String) buttonView.getTag());
+					} else { // hack alert
+						for (int i = 0; i < container.getChildCount(); i++) {
+							final View c = container.getChildAt(i);
+							if ((c instanceof CheckBox || c instanceof AppCompatCheckBox)) {
+								if (((CheckBox)c).isChecked()) {
+									return;
+								}
+							} 
+						}
+						((CheckBox)buttonView).setChecked(true);
+					}
+				} else {	
+					days.clear();
+					WeekDayRange range = null;
+					for (int i = 0; i < container.getChildCount(); i++) {
+						final View c = container.getChildAt(i);
+						if (c instanceof CheckBox || c instanceof AppCompatCheckBox) {
+							if (((CheckBox)c).isChecked()) {
+								if (range == null) {
+									range = new WeekDayRange();
+									range.setStartDay((String) c.getTag());
+									days.add(range);
+								} else {
+									range.setEndDay((String) c.getTag());
+								}
+							} else {
+								range = null;
+							} 
+						}
+					}
+				}
+				updateString();
+			}};
+			
+		for (int i = 0; i < container.getChildCount(); i++) {
+			final View v = container.getChildAt(i);
+			if (v instanceof CheckBox || v instanceof AppCompatCheckBox) {
+				((CheckBox) v).setOnCheckedChangeListener(listener);
+			}
+		}
+	}
+
+	private void setNthListeners(final RelativeLayout container, final List<Nth> nth) {
+		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				nth.clear();
+				Nth range = null;
 				for (int i = 0; i < container.getChildCount(); i++) {
 					final View c = container.getChildAt(i);
 					if (c instanceof CheckBox || c instanceof AppCompatCheckBox) {
 						if (((CheckBox)c).isChecked()) {
 							if (range == null) {
-								range = new WeekDayRange();
-								range.setStartDay((String) c.getTag());
-								days.add(range);
+								range = new Nth();
+								range.setStartNth(Integer.parseInt((String) c.getTag()));
+								nth.add(range);
 							} else {
-								range.setEndDay((String) c.getTag());
+								range.setEndNth(Integer.parseInt((String) c.getTag()));
 							}
 						} else {
 							range = null;
@@ -1077,6 +1165,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

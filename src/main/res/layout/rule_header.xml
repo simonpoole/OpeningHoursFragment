@@ -48,18 +48,21 @@
             	android:layout_height="wrap_content"
             	android:layout_width="wrap_content"
             	android:enabled="true"
+            	android:textSize="8dp"
             	android:text="Normal" />
         	<RadioButton
             	android:id="@+id/replace_rule"
             	android:layout_height="wrap_content"
             	android:layout_width="wrap_content"
             	android:enabled="true"
+            	android:textSize="8dp"
             	android:text="Replace" />
        		<RadioButton
             	android:id="@+id/fallback_rule"
             	android:layout_height="wrap_content"
             	android:layout_width="wrap_content"
             	android:enabled="true"
+            	android:textSize="8dp"
             	android:text="Fallback" />
          
          </RadioGroup>
