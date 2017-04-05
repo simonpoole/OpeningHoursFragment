@@ -19,17 +19,51 @@
         android:layout_marginTop="0dp"
         android:orientation="horizontal" >
 
+		<RelativeLayout
+		 	android:layout_weight="1"
+		 	android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+		>
+			
         <TextView
             android:id="@+id/header"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:textColor="?attr/colorAccent" />
+         
+         <RadioGroup
+        	android:id="@+id/rule_type_group"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentRight="true"
+        	android:layout_centerVertical="true"
+        	android:orientation="horizontal" >
 
+        	<RadioButton
+            	android:id="@+id/normal_rule"
+            	android:layout_height="wrap_content"
+            	android:layout_width="wrap_content"
+            	android:enabled="true"
+            	android:text="Normal" />
+        	<RadioButton
+            	android:id="@+id/replace_rule"
+            	android:layout_height="wrap_content"
+            	android:layout_width="wrap_content"
+            	android:enabled="true"
+            	android:text="Replace" />
+       		<RadioButton
+            	android:id="@+id/fallback_rule"
+            	android:layout_height="wrap_content"
+            	android:layout_width="wrap_content"
+            	android:enabled="true"
+            	android:text="Fallback" />
+         
+         </RadioGroup>
+		</RelativeLayout>
          <include layout="@layout/menu" />
     </LinearLayout>
 

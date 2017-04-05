@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -45,7 +44,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.NumberPicker;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -305,7 +304,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void addRules(boolean groupMode, ArrayList<Rule> rules, LinearLayout ll) {
+	private void addRules(boolean groupMode, final ArrayList<Rule> rules, LinearLayout ll) {
 		// some standard static elements
 		TextView dash = new TextView(getActivity());
 		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 0.0f);
@@ -327,7 +326,64 @@ public class OpeningHoursFragment extends DialogFragment {
 				LinearLayout groupHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
 				TextView header = (TextView) groupHeader.findViewById(R.id.header);
 				header.setText(getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
-				addStandardMenuItems(groupHeader, null);
+				RadioButton normal = (RadioButton)groupHeader.findViewById(R.id.normal_rule);
+				if (!r.isReplace() && !r.isFallBack()) {
+					normal.setChecked(true);
+				}
+				normal.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						RadioButton rb = (RadioButton)v;
+						if (rb.isChecked()) {
+							r.setFallBack(false);
+							r.setReplace(false);
+							updateString();
+							watcher.afterTextChanged(null);
+						}
+					}
+				});
+				RadioButton replace = (RadioButton)groupHeader.findViewById(R.id.replace_rule);
+				if (r.isReplace()) {
+					replace.setChecked(true);
+				}
+				replace.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						RadioButton rb = (RadioButton)v;
+						if (rb.isChecked()) {
+							r.setFallBack(false);
+							r.setReplace(true);
+							updateString();
+							watcher.afterTextChanged(null);
+						}
+					}
+				});
+				RadioButton fallback = (RadioButton)groupHeader.findViewById(R.id.fallback_rule);
+				if (r.isFallBack()) {
+					fallback.setChecked(true);
+				}
+				fallback.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						RadioButton rb = (RadioButton)v;
+						if (rb.isChecked()) {
+							r.setFallBack(true);
+							r.setReplace(false);
+							rules.remove(r); // move to last position
+							rules.add(r);
+							updateString();
+							watcher.afterTextChanged(null);
+						}
+					}
+				});
+				addStandardMenuItems(groupHeader, new Delete() {
+					@Override
+					public void delete() {
+						rules.remove(r);
+						updateString();
+						watcher.afterTextChanged(null); // hack to force rebuild of form
+					}
+				});
 				ll.addView(groupHeader);
 				//comments
 				String comment = r.getComment();
