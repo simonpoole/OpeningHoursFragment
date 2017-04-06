@@ -1,10 +1,14 @@
-// Top-level build file where you can add
-// configuration options common to all sub-projects/modules.
 
 // Project level build file starts here
+plugins {
+  id "com.jfrog.bintray" version "1.7.1"
+  id "org.sonarqube" version "2.2"
+}
+
 apply plugin: 'eclipse'
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "jacoco"
 
 eclipse {
     classpath {
@@ -147,4 +151,34 @@ def getXmlFromFile(String xmlFilePath) {
         throw new NullPointerException("Failure reading from " + xmlFilePath)
     }
     return xml;
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            group "ch.poole"
+            artifactId "OpeningHoursFragment"
+            version "0.0.3"
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    configurations = ['archives']
+    pkg {
+        repo = 'osm'
+        name = 'OpeningHoursFragment'
+        licenses = ['BSD 3-Clause']
+        vcsUrl = 'https://github.com/simonpoole/OpeningHoursFragment.git'
+        version {
+        	name = '0.0.3'
+			released  = new Date()
+			gpg {
+				sign = true //Determines whether to GPG sign the files. The default is false
+				passphrase = System.getenv('BINTRAY_PASSPHRASE')
+			}
+        }
+    }
 }
