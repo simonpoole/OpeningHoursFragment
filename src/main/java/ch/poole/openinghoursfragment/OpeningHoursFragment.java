@@ -296,7 +296,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		//
 
 		if (false) { // group mode
-			ArrayList<ArrayList<Rule>> mergeableRules = Util.getMergeableRules(rules);
+			List<ArrayList<Rule>> mergeableRules = Util.getMergeableRules(rules);
 			for (ArrayList<Rule> ruleList : mergeableRules) {	
 				addRules(true, ruleList, ll);
 			}
@@ -401,6 +401,19 @@ public class OpeningHoursFragment extends DialogFragment {
 					addStandardMenuItems(intervalLayout, null);
 					ll.addView(intervalLayout);
 				}
+				if (r.isTwentyfourseven()) {
+					Log.d(DEBUG_TAG, "24/7 " + r.toString());
+					LinearLayout twentyFourSeven = (LinearLayout) inflater.inflate(R.layout.twentyfourseven, null);
+					Menu menu = addStandardMenuItems(twentyFourSeven, new Delete() {
+						@Override
+						public void delete() {
+							r.setTwentyfourseven(false);
+							updateString();
+							watcher.afterTextChanged(null); // hack to force rebuild of form
+						}
+					});
+					ll.addView(twentyFourSeven);
+				} 
 				// year range list
 				final ArrayList<YearRange> years = r.getYears();
 				if (years != null && years.size() > 0) {
@@ -700,12 +713,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				boolean hasEndEvent = ts.getEndEvent() != null;
 				boolean extendedTime = ts.getEnd() > 1440;
 				boolean hasInterval = ts.getInterval() > 0;
-				if (ts.isTwentyfourseven()) {
-					Log.d(DEBUG_TAG, "24/7 " + ts.toString());
-					LinearLayout twentyFourSeven = (LinearLayout) inflater.inflate(R.layout.twentyfourseven, null);
-					Menu menu = addStandardMenuItems(twentyFourSeven, new DeleteTimeSpan(times, ts));
-					ll.addView(twentyFourSeven);
-				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && !extendedTime) {
+				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && !extendedTime) {
 					Log.d(DEBUG_TAG, "t-t " + ts.toString());
 					LinearLayout timeRangeRow = (LinearLayout) inflater.inflate(R.layout.time_range_row, null);
 					RangeBar timeBar = (RangeBar) timeRangeRow.findViewById(R.id.timebar);
