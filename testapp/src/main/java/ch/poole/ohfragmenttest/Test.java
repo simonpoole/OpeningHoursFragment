@@ -1,6 +1,4 @@
-package ch.poole.openinghoursfragment;
-
-
+package ch.poole.ohfragmenttest;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import ch.poole.openinghoursfragment.OnSaveListener;
+import ch.poole.openinghoursfragment.OpeningHoursFragment;
+
 
 public class Test extends AppCompatActivity implements OnSaveListener {
 
