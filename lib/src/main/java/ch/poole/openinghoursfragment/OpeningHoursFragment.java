@@ -418,40 +418,17 @@ public class OpeningHoursFragment extends DialogFragment {
 				final ArrayList<YearRange> years = r.getYears();
 				if (years != null && years.size() > 0) {
 					for (final YearRange yr : years) {
-						// NumberPicker np1 =
-						// getYearPicker(yr.getStartYear());
 						LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
-						EditText startYearEdit = (EditText)yearLayout.findViewById(R.id.start_year);
-						startYearEdit.setText(Integer.toString(yr.getStartYear()));
-						setTextWatcher(startYearEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int year = -1;
-								try {
-									year = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								yr.setStartYear(year);
-							}
-						});
+						final int startYear = yr.getStartYear();
+						final TextView startYearView = (TextView)yearLayout.findViewById(R.id.start_year);
+						startYearView.setText(Integer.toString(startYear));
 						
-						// NumberPicker np2 = getYearPicker(endYear);
-						EditText endYearEdit = (EditText)yearLayout.findViewById(R.id.end_year);
-						int endYear = yr.getEndYear();
+						final TextView endYearView = (TextView)yearLayout.findViewById(R.id.end_year);
+						final int endYear = yr.getEndYear();
 						if (endYear > 0) {
-							endYearEdit.setText(Integer.toString(endYear));
+							endYearView.setText(Integer.toString(endYear));
 						}
-						setTextWatcher(endYearEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int year = -1;
-								try {
-									year = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								yr.setEndYear(year);
-							}
-						});
+					
 						EditText yearIntervalEdit = (EditText)yearLayout.findViewById(R.id.interval);
 						if (yr.getInterval() > 0) {
 							yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
@@ -475,6 +452,31 @@ public class OpeningHoursFragment extends DialogFragment {
 								watcher.afterTextChanged(null); // hack to force rebuild of form
 							}
 						});
+						
+						LinearLayout range = (LinearLayout)yearLayout.findViewById(R.id.range);
+						range.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								RangePicker.showDialog(getActivity(), R.string.year_range, 1990, 2030, startYear, endYear,
+									new SetRangeListener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void setRange(int start, int end) {
+											yr.setStartYear(start);
+											startYearView.setText(Integer.toString(start));
+											yr.setEndYear(end);
+											if (end >= 0) {
+												endYearView.setText(Integer.toString(end));
+											} else {
+												endYearView.setText("");
+											}
+											updateString();
+										}
+									}
+								);
+							}
+						});
 						ll.addView(yearLayout);
 					}
 				}
@@ -482,40 +484,17 @@ public class OpeningHoursFragment extends DialogFragment {
 				final ArrayList<WeekRange> weeks = r.getWeeks();
 				if (weeks != null && weeks.size() > 0) {
 					for (final WeekRange w : weeks) {
-						// NumberPicker np1 =
-						// getYearPicker(yr.getStartYear());
 						LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
-						EditText startWeekEdit = (EditText)weekLayout.findViewById(R.id.start_week);
-						startWeekEdit.setText(Integer.toString(w.getStartWeek()));
-						setTextWatcher(startWeekEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int week = -1;
-								try {
-									week = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								w.setStartWeek(week);
-							}
-						});
+						final TextView startWeekView = (TextView)weekLayout.findViewById(R.id.start_week);
+						final int startWeek = w.getStartWeek();
+						startWeekView.setText(Integer.toString(startWeek));
 
-						// NumberPicker np2 = getYearPicker(endYear);
-						EditText endWeekEdit = (EditText)weekLayout.findViewById(R.id.end_week);
-						int endWeek = w.getEndWeek();
+						final TextView endWeekView = (TextView)weekLayout.findViewById(R.id.end_week);
+						final int endWeek = w.getEndWeek();
 						if (endWeek > 0) {
-							endWeekEdit.setText(Integer.toString(endWeek));
+							endWeekView.setText(Integer.toString(endWeek));
 						}
-						setTextWatcher(endWeekEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int week = -1;
-								try {
-									week = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								w.setEndWeek(week);
-							}
-						});
+						
 						EditText weekIntervalEdit = (EditText)weekLayout.findViewById(R.id.interval);
 						if (w.getInterval() > 0) {
 							weekIntervalEdit.setText(Integer.toString(w.getInterval()));
@@ -537,6 +516,31 @@ public class OpeningHoursFragment extends DialogFragment {
 								weeks.remove(w);
 								updateString();
 								watcher.afterTextChanged(null); // hack to force rebuild of form
+							}
+						});
+						
+						LinearLayout range = (LinearLayout)weekLayout.findViewById(R.id.range);
+						range.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								RangePicker.showDialog(getActivity(), R.string.week_range, 0, 53, startWeek, endWeek,
+									new SetRangeListener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void setRange(int start, int end) {
+											w.setStartWeek(start);
+											startWeekView.setText(Integer.toString(start));
+											w.setEndWeek(end);
+											if (end >= 0) {
+												endWeekView.setText(Integer.toString(end));
+											} else {
+												endWeekView.setText("");
+											}
+											updateString();
+										}
+									}
+								);
 							}
 						});
 						ll.addView(weekLayout);

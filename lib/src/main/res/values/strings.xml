@@ -11,6 +11,9 @@
     <string name="interval_years">Interval (years)</string>
     <string name="interval_weeks">Interval (weeks)</string>
     
+    <string name="week_range">Week range</string>
+    <string name="year_range">Year range</string>
+    
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>
   	<string name="dawn">dawn</string>

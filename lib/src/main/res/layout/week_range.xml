@@ -23,33 +23,40 @@
             	android:layout_alignParentLeft="true"
             	android:layout_centerVertical="true"
             	android:text="Weeks" />
-    		<EditText
-    			android:id="@+id/start_week"
+            <LinearLayout
+            	android:id="@+id/range"
             	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_toRightOf="@id/label"
-            	android:inputType="number|none"
-            	android:minEms="2"
-            	android:maxEms="2"
-				android:maxLength="2"
-				android:digits="0123456789" />
-			<TextView
-        		android:id="@+id/hyphen"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_toRightOf="@id/start_week"
-            	android:layout_centerVertical="true"
-            	android:text=" - " />
-           	<EditText
-    			android:id="@+id/end_week"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_toRightOf="@id/hyphen"
-            	android:inputType="number|none"
-            	android:minEms="2"
-            	android:maxEms="2"
-				android:maxLength="2"
-				android:digits="0123456789" />
+    			android:layout_height="wrap_content" 
+    			android:layout_toRightOf="@id/label"
+    			android:layout_centerVertical="true"
+    			android:paddingLeft="12dp"
+    			android:clickable="true" >
+    			<TextView
+    				android:id="@+id/start_week"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
+            		android:gravity="right"
+            		android:minEms="1"
+            		android:maxEms="2"/>
+				<TextView
+        			android:id="@+id/hyphen"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text=" - " />
+           		<TextView
+    				android:id="@+id/end_week"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
+            		android:gravity="right"
+            		android:minEms="1"
+            		android:maxEms="2"/>
+            	<ImageView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:src="@drawable/ic_action_edit_holo_light"/>
+			</LinearLayout>
 			<EditText
             	android:id="@+id/interval"
             	android:layout_width="wrap_content"

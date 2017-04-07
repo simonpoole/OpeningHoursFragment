@@ -103,6 +103,7 @@ dependencies {
     compile "ch.poole:OpeningHoursParser:0.2.0"
     compile "ch.poole:ConditionalRestrictionParser:0.1.11"
     compile "ch.poole:rangebar:0.0.1"
+    compile 'cn.carbswang.android:NumberPickerView:1.1.1'
     
     // Unit tests
     testCompile "junit:junit:4.12"
