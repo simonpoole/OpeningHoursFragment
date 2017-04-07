@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -100,7 +101,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		@Override
 		public String getText(String value) {
 			int minutes = Integer.valueOf(value);
-			return String.format("%02d", minutes / 60) + ":" + String.format("%02d", minutes % 60);
+			return String.format(Locale.US,"%02d", minutes / 60) + ":" + String.format(Locale.US,"%02d", minutes % 60);
 		}
 	};
 
@@ -251,8 +252,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	/**
 	 * Highlight the position of a parse error
-	 * @param text
-	 * @param pex
+	 * @param text he EditTExt the string is displayed in
+	 * @param pex the ParseException to use
 	 */
 	private void highlightParseError(EditText text, ParseException pex) {
 		int c = pex.currentToken.next.beginColumn-1; // starts at 1
@@ -266,8 +267,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 	
 	/**
-	 * Remove all highlighting
-	 * @param text
+	 * Remove all parse error highlighting
+	 * @param text the EditTExt the string is displayed in
 	 */
 	private void removeHighlight(EditText text) {
 		int pos = text.getSelectionStart();
@@ -281,7 +282,6 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 
 	private synchronized void buildForm(ScrollView sv, ArrayList<Rule> rules) {
-
 		sv.removeAllViews();
 		LinearLayout ll = new LinearLayout(getActivity());
 		ll.setPadding(0, 0, 0, dpToPixels(64));
@@ -479,18 +479,68 @@ public class OpeningHoursFragment extends DialogFragment {
 					}
 				}
 				// week list
-				ArrayList<WeekRange> weeks = r.getWeeks();
+				final ArrayList<WeekRange> weeks = r.getWeeks();
 				if (weeks != null && weeks.size() > 0) {
-					StringBuffer b = new StringBuffer();
-					for (WeekRange wr : weeks) {
-						b.append(wr.toString());
-						if (weeks.get(weeks.size() - 1) != wr) {
-							b.append(",");
+					for (final WeekRange w : weeks) {
+						// NumberPicker np1 =
+						// getYearPicker(yr.getStartYear());
+						LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
+						EditText startWeekEdit = (EditText)weekLayout.findViewById(R.id.start_week);
+						startWeekEdit.setText(Integer.toString(w.getStartWeek()));
+						setTextWatcher(startWeekEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int week = -1;
+								try {
+									week = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								w.setStartWeek(week);
+							}
+						});
+
+						// NumberPicker np2 = getYearPicker(endYear);
+						EditText endWeekEdit = (EditText)weekLayout.findViewById(R.id.end_week);
+						int endWeek = w.getEndWeek();
+						if (endWeek > 0) {
+							endWeekEdit.setText(Integer.toString(endWeek));
 						}
+						setTextWatcher(endWeekEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int week = -1;
+								try {
+									week = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								w.setEndWeek(week);
+							}
+						});
+						EditText weekIntervalEdit = (EditText)weekLayout.findViewById(R.id.interval);
+						if (w.getInterval() > 0) {
+							weekIntervalEdit.setText(Integer.toString(w.getInterval()));
+						}
+						setTextWatcher(weekIntervalEdit, new SetValue() {
+							@Override
+							public void set(String value) {
+								int interval = 0;
+								try {
+									interval = Integer.parseInt(value);
+								} catch (NumberFormatException nfex) {
+								}
+								w.setInterval(interval);
+							}
+						});
+						addStandardMenuItems(weekLayout, new Delete() {
+							@Override
+							public void delete() {
+								weeks.remove(w);
+								updateString();
+								watcher.afterTextChanged(null); // hack to force rebuild of form
+							}
+						});
+						ll.addView(weekLayout);
 					}
-					TextView tv = new TextView(getActivity());
-					tv.setText(b.toString());
-					ll.addView(tv);
 				}
 				// month day list
 				ArrayList<MonthDayRange> monthdays = r.getMonthdays();

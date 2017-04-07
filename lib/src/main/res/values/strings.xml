@@ -9,6 +9,7 @@
     
     <string name="interval_minutes">Interval (minutes)</string>
     <string name="interval_years">Interval (years)</string>
+    <string name="interval_weeks">Interval (weeks)</string>
     
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>

@@ -22,34 +22,33 @@
             	android:layout_height="wrap_content"
             	android:layout_alignParentLeft="true"
             	android:layout_centerVertical="true"
-            	android:text="Years" />
+            	android:text="Weeks" />
     		<EditText
-    			android:id="@+id/start_year"
+    			android:id="@+id/start_week"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_toRightOf="@id/label"
             	android:inputType="number|none"
-            	android:minEms="3"
-            	android:maxEms="3"
-				android:maxLength="4"
+            	android:minEms="2"
+            	android:maxEms="2"
+				android:maxLength="2"
 				android:digits="0123456789" />
 			<TextView
         		android:id="@+id/hyphen"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
-            	android:layout_toRightOf="@id/start_year"
+            	android:layout_toRightOf="@id/start_week"
             	android:layout_centerVertical="true"
             	android:text=" - " />
            	<EditText
-    			android:id="@+id/end_year"
+    			android:id="@+id/end_week"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_toRightOf="@id/hyphen"
- 
             	android:inputType="number|none"
-            	android:minEms="3"
-            	android:maxEms="3"
-				android:maxLength="4"
+            	android:minEms="2"
+            	android:maxEms="2"
+				android:maxLength="2"
 				android:digits="0123456789" />
 			<EditText
             	android:id="@+id/interval"
@@ -67,7 +66,7 @@
             	android:layout_height="wrap_content"
             	android:layout_toLeftOf="@id/interval"
             	android:layout_centerVertical="true"
-            	android:text="@string/interval_years" />
+            	android:text="@string/interval_weeks" />
   
 			</RelativeLayout>
         <include layout="@layout/menu" />
