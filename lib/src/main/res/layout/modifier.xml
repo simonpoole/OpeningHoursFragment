@@ -29,6 +29,7 @@
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_toRightOf="@id/modifier_label"
+            	android:layout_alignBottom="@id/modifier_label"
             	android:paddingLeft="10dp"
             	android:drawSelectorOnTop="true"
             	android:entries="@array/modifiers" />

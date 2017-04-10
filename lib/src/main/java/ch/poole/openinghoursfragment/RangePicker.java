@@ -32,6 +32,7 @@ import ch.poole.openinghoursfragment.R;
  */
 public class RangePicker extends DialogFragment
 {
+	public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 	
 	private static final String LISTENER = "listener";
 
@@ -117,8 +118,8 @@ public class RangePicker extends DialogFragment
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
     {
     	int title = getArguments().getInt(TITLE);
-    	int min = getArguments().getInt(MIN);
-    	int max = getArguments().getInt(MAX);
+    	final int min = getArguments().getInt(MIN);
+    	final int max = getArguments().getInt(MAX);
     	int startCurrent = getArguments().getInt(START_CURRENT);
     	int endCurrent = getArguments().getInt(END_CURRENT);
     	final SetRangeListener listener = (SetRangeListener) getArguments().getSerializable(LISTENER);
@@ -134,30 +135,37 @@ public class RangePicker extends DialogFragment
 		builder.setView(layout);
 		
 		String[] startValues = new String[max-min+1];
-		for (int i=0;i<startValues.length;i++) {
-			startValues[i] = Integer.toString(min + i);
+		for (int i=min;i<=max;i++) {
+			startValues[i-min] = Integer.toString(i);
 		}
 		final NumberPickerView npvStart = (NumberPickerView)layout.findViewById(R.id.start);
 		npvStart.setDisplayedValues(startValues);
-	   	npvStart.setMinValue(0);
-	   	npvStart.setMaxValue(max-min);
+	   	npvStart.setMinValue(min);
+	   	npvStart.setMaxValue(max);
 	   	npvStart.setValue(startCurrent);
 	   	
 		String[] endValues = new String[max-min+2];
 		endValues[0]="-";
-		for (int i=1;i<endValues.length;i++) {
-			endValues[i] = Integer.toString(min + i);
+		for (int i=min;i<=max;i++) {
+			endValues[i-min+1] = Integer.toString(i);
 		}
 		final NumberPickerView npvEnd = (NumberPickerView)layout.findViewById(R.id.end);
 		npvEnd.setDisplayedValues(endValues);
-	   	npvEnd.setMinValue(-1);
-	   	npvEnd.setMaxValue(max-min);
+	   	npvEnd.setMinValue(min-1);
+	   	npvEnd.setMaxValue(max);
+	   	if (endCurrent == NOTHING_SELECTED) {
+	   		endCurrent = min-1;
+	   	}
 	   	npvEnd.setValue(endCurrent);
 
 		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				listener.setRange(npvStart.getValue(),npvEnd.getValue());
+				int endValue = npvEnd.getValue();
+				if (endValue == min-1) {
+					endValue=NOTHING_SELECTED;
+				}
+				listener.setRange(npvStart.getValue(),endValue);
 			}
 		});
 		builder.setNeutralButton(android.R.string.cancel, null);
