@@ -1,7 +1,5 @@
 package ch.poole.openinghoursfragment;
 
-import java.util.Arrays;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -19,10 +17,7 @@ import android.support.v7.app.AppCompatDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
-import ch.poole.openinghoursfragment.R;
 
 // import de.blau.android.util.ThemeUtils;
 

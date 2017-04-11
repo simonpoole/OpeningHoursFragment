@@ -2,7 +2,6 @@ package ch.poole.openinghoursfragment;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -77,6 +76,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private static final String VALUE_KEY = "value";
 
 	private static final String KEY_KEY = "key";
+	
+	private static final String STYLE_KEY = "style";
 
 	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
@@ -87,6 +88,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private String key;
 	
 	private String openingHoursValue;
+	
+	private int styleRes = 0;
 	
 	private ArrayList<Rule> rules;
 	
@@ -110,12 +113,13 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	/**
 	 */
-	static public OpeningHoursFragment newInstance(String key,String value) {
+	static public OpeningHoursFragment newInstance(String key,String value, int style) {
 		OpeningHoursFragment f = new OpeningHoursFragment();
 
 		Bundle args = new Bundle();
 		args.putSerializable(KEY_KEY, key);
 		args.putSerializable(VALUE_KEY, value);
+		args.putInt(STYLE_KEY, style);
 
 		f.setArguments(args);
 		// f.setShowsDialog(true);
@@ -157,22 +161,26 @@ public class OpeningHoursFragment extends DialogFragment {
 	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		// Inflate the layout for this fragment
-		// this.inflater = inflater;
-		Context context =  new ContextThemeWrapper(getActivity(), R.style.Base_AlertDialog_AppCompat_Light);
-		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
-		
 		if (savedInstanceState != null) {
 			Log.d(DEBUG_TAG,"Restoring from saved state");
 			key = savedInstanceState.getString(KEY_KEY);
 			openingHoursValue = savedInstanceState.getString(VALUE_KEY);
+			styleRes = savedInstanceState.getInt(STYLE_KEY);
 		} else {
 			key = getArguments().getString(KEY_KEY);
 			openingHoursValue = getArguments().getString(VALUE_KEY);
+			styleRes = getArguments().getInt(STYLE_KEY);
 		}
+		if (styleRes == 0) {
+			styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
+		}
+		
+		Context context =  new ContextThemeWrapper(getActivity(), styleRes);
+		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
+		
+
 		buildLayout(openingHoursLayout, openingHoursValue);
 
 		// add callbacks for the buttons
@@ -768,11 +776,33 @@ public class OpeningHoursFragment extends DialogFragment {
 				}
 			}
 			// day list
-			List<WeekDayRange> days = r.getDays();
+			final List<WeekDayRange> days = r.getDays();
 			if (days != null && days.size() > 0) {
-				LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-				RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
+				final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
+				final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
 				boolean justOne = false;
+				Menu menu = addStandardMenuItems(weekDayRow, new Delete() {
+					@Override
+					public void delete() {
+						r.setDays(null);
+						updateString();
+						watcher.afterTextChanged(null); // hack to force rebuild of form
+					}
+				});
+				// menu item will be enabled/disabled depending on number of days etc. 
+				MenuItem nthMenuItem = menu.add("Add occurance in month");
+				nthMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
+						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
+						setNthListeners(nthContainer, days.get(0));
+						weekDayRow.addView(nthLayout);
+						item.setEnabled(false);
+						return true;
+					}
+				});
+
 				for (WeekDayRange d : days) {
 					WeekDay startDay = d.getStartDay();
 					WeekDay endDay = d.getEndDay();
@@ -789,6 +819,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					List<Nth>nths = d.getNths();
 					if (nths != null && !nths.isEmpty()) {
 						justOne = true;
+						nthMenuItem.setEnabled(false);
 						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
 						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
 						for (Nth nth:nths) {
@@ -803,25 +834,29 @@ public class OpeningHoursFragment extends DialogFragment {
 								}
 							}
 						}
-						setNthListeners(nthContainer, nths);
+						setNthListeners(nthContainer, d);
 						weekDayRow.addView(nthLayout);
 					}
 				}
-				setWeekDayListeners(weekDayContainer, days, justOne);
-				addStandardMenuItems(weekDayRow, new Delete() {
-					@Override
-					public void delete() {
-						r.setDays(null);
-						updateString();
-						watcher.afterTextChanged(null); // hack to force rebuild of form
-					}
-				});
+				
+				setWeekDayListeners(weekDayContainer, days, justOne, nthMenuItem);
+				nthMenuItem.setEnabled(justOneDay(days) && !justOne);
 				ll.addView(weekDayRow);
 			}
 			// times
 			List<TimeSpan> times = r.getTimes();
 			addTimeSpanUIs(ll, times);
 		}
+	}
+	
+	/**
+	 * Check if just one day is in the ranges
+	 * 
+	 * @param ranges
+	 * @return
+	 */
+	private boolean justOneDay(List<WeekDayRange> ranges) {
+		return ranges.size()==1 && ranges.get(0).getEndDay()==null;
 	}
 	
 	private void setTextWatcher(final EditText edit, final SetValue listener) {
@@ -1252,7 +1287,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	private Menu addStandardMenuItems(LinearLayout row, final Delete listener) {
 		ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
 		Menu menu = amv.getMenu();
-		MenuItem mi = menu.add("Delete");
+		MenuItem mi = menu.add(Menu.NONE, Menu.NONE, Menu.CATEGORY_SECONDARY, "Delete");
 		mi.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
@@ -1334,7 +1369,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final boolean justOne) {
+	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final boolean justOne, final MenuItem nthMenuItem) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1378,6 +1413,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							} 
 						}
 					}
+					nthMenuItem.setEnabled(justOneDay(days));
 				}
 				updateString();
 			}};
@@ -1390,11 +1426,17 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setNthListeners(final RelativeLayout container, final List<Nth> nth) {
+	private void setNthListeners(final RelativeLayout container, final WeekDayRange days) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				nth.clear();
+				List<Nth> nths = days.getNths();
+				if (nths==null) {
+					nths = new ArrayList<Nth>();
+					days.setNths(nths);
+				} else {
+					nths.clear();
+				}
 				Nth range = null;
 				for (int i = 0; i < container.getChildCount(); i++) {
 					final View c = container.getChildAt(i);
@@ -1403,7 +1445,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							if (range == null) {
 								range = new Nth();
 								range.setStartNth(Integer.parseInt((String) c.getTag()));
-								nth.add(range);
+								nths.add(range);
 							} else {
 								range.setEndNth(Integer.parseInt((String) c.getTag()));
 							}
@@ -1430,6 +1472,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		Log.d(DEBUG_TAG, "onSaveInstanceState");
 	   	outState.putSerializable(KEY_KEY, key);
     	outState.putSerializable(VALUE_KEY, text.getText().toString());
+    	outState.putInt(STYLE_KEY, styleRes);
 	}
 
 	@Override

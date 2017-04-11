@@ -15,7 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:descendantFocusability="beforeDescendants"
+  		android:focusableInTouchMode="true"
+        >
 
         <EditText
             android:id="@+id/openinghours_string_edit"
@@ -72,14 +75,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="@string/Cancel" />
+                android:text="@string/Cancel"
+                android:textColor="?attr/colorAccent"
+                android:backgroundTint="?attr/colorPrimary" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/save"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="@string/Save" />
+                android:text="@string/Save" 
+                android:textColor="?attr/colorAccent" 
+                android:backgroundTint="?attr/colorPrimary" />
         </LinearLayout>
     </LinearLayout>
 
