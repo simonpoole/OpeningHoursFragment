@@ -21,14 +21,14 @@
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_alignParentLeft="true"
-            	android:layout_centerVertical="true"
+            	android:layout_alignParentTop="true"
             	android:text="Weeks" />
             <LinearLayout
             	android:id="@+id/range"
             	android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
     			android:layout_toRightOf="@id/label"
-    			android:layout_centerVertical="true"
+    			android:layout_alignParentTop="true"
     			android:paddingLeft="12dp"
     			android:clickable="true" >
     			<TextView
@@ -57,24 +57,28 @@
             		android:layout_height="wrap_content"
             		android:src="@drawable/ic_action_edit_holo_light"/>
 			</LinearLayout>
-			<EditText
-            	android:id="@+id/interval"
+			<LinearLayout
+				android:id="@+id/interval_container"
             	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_alignParentRight="true"
-            	android:inputType="number|none"
-            	android:minEms="2"
-            	android:maxEms="2"
-				android:maxLength="2"
-				android:digits="0123456789" />
-        	<TextView
-        		android:id="@+id/interval_label"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_toLeftOf="@id/interval"
-            	android:layout_centerVertical="true"
-            	android:text="@string/interval_weeks" />
-  
+    			android:layout_height="wrap_content"
+    			android:layout_alignParentLeft="true"
+    			android:layout_below="@id/range"
+				>
+				<TextView
+        			android:id="@+id/interval_label"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="@string/interval_weeks" />
+				<EditText
+            		android:id="@+id/interval"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:inputType="number|none"
+            		android:minEms="2"
+            		android:maxEms="2"
+					android:maxLength="2"
+					android:digits="0123456789" />
+  			</LinearLayout>
 			</RelativeLayout>
         <include layout="@layout/menu" />
         </LinearLayout>

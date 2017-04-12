@@ -110,6 +110,31 @@
                 android:layout_alignTop="@id/text1"
                 android:paddingLeft="12dp"
                 android:text="5." />
+                
+ 			<LinearLayout
+ 				android:id="@+id/offset_container"
+ 				android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/checkBox1"
+            	android:layout_alignParentLeft="true"
+            	android:orientation="horizontal"
+            	>
+            	<TextView
+        			android:id="@+id/offset_label"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"          	
+            		android:text="Offset (+-days)" />
+       			<EditText
+            		android:id="@+id/offset"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:inputType="number|none"
+            		android:minEms="2"
+            		android:maxEms="2"
+					android:maxLength="3"
+					android:digits="+-0123456789" />
+
+            </LinearLayout>            
 
         </RelativeLayout>
  		<include layout="@layout/menu" />

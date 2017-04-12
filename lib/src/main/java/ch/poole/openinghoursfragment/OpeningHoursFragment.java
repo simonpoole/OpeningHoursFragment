@@ -435,26 +435,36 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
-				if (r.getDays() == null || r.getDays().isEmpty()) {
-					MenuItem addWeekdayRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add week day range");
-					addWeekdayRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-						@Override
-						public boolean onMenuItemClick(MenuItem item) {
-							List<WeekDayRange>wd = r.getDays();
-							if (wd==null) {
-								r.setDays(new ArrayList<WeekDayRange>());
-								wd = r.getDays();
-							}
-							WeekDayRange d = new WeekDayRange();
+				
+				MenuItem addWeekdayRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add week day range");
+				addWeekdayRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<WeekDayRange>wd = r.getDays();
+						if (wd==null) {
+							r.setDays(new ArrayList<WeekDayRange>());
+							wd = r.getDays();
+						} 
+						WeekDayRange d = new WeekDayRange();
+						if (wd.isEmpty()) {
 							d.setStartDay("Mo");
 							d.setEndDay("Su");
-							wd.add(d);
-							updateString();
-							watcher.afterTextChanged(null);
-							return true;
-						}	
-					});
-				}
+						} else {
+							// add a single day with nth
+							d.setStartDay("Mo");
+							List<Nth>nths = new ArrayList<Nth>();
+							Nth nth = new Nth();
+							nth.setStartNth(1);
+							nths.add(nth);
+							d.setNths(nths);
+						}
+						wd.add(d);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+
 				final View typeView = groupHeader.findViewById(R.id.rule_type_group);
 				MenuItem showRuleType = menu.add("Show rule type");
 				showRuleType.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -780,11 +790,16 @@ public class OpeningHoursFragment extends DialogFragment {
 			if (days != null && days.size() > 0) {
 				final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
 				final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
-				boolean justOne = false;
+				
 				Menu menu = addStandardMenuItems(weekDayRow, new Delete() {
 					@Override
 					public void delete() {
-						r.setDays(null);
+						List<WeekDayRange> temp = new ArrayList<WeekDayRange>(days);
+						for (WeekDayRange d:temp) {
+							if (d.getNths()==null) {
+								days.remove(d);
+							}
+						}
 						updateString();
 						watcher.afterTextChanged(null); // hack to force rebuild of form
 					}
@@ -803,22 +818,43 @@ public class OpeningHoursFragment extends DialogFragment {
 					}
 				});
 
+				List<WeekDayRange>normal = new ArrayList<WeekDayRange>();
+				List<WeekDayRange>withNth = new ArrayList<WeekDayRange>();
 				for (WeekDayRange d : days) {
-					WeekDay startDay = d.getStartDay();
-					WeekDay endDay = d.getEndDay();
-					if (endDay == null) {
-						checkWeekDay(weekDayContainer, startDay.toString());
+					if (d.getNths()==null || d.getNths().isEmpty()) {
+						normal.add(d);
 					} else {
-						int startIndex = startDay.ordinal();
-						int endIndex = endDay.ordinal();
-						Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
-						for (int i = startIndex; i <= endIndex; i++) {
-							checkWeekDay(weekDayContainer, weekDays.get(i));
+						withNth.add(d);
+					}
+				}
+						
+				if (!normal.isEmpty()) {
+					for (WeekDayRange d : normal) {
+						WeekDay startDay = d.getStartDay();
+						WeekDay endDay = d.getEndDay();
+						if (endDay == null) {
+							checkWeekDay(weekDayContainer, startDay.toString());
+						} else {
+							int startIndex = startDay.ordinal();
+							int endIndex = endDay.ordinal();
+							Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
+							for (int i = startIndex; i <= endIndex; i++) {
+								checkWeekDay(weekDayContainer, weekDays.get(i));
+							}
 						}
 					}
-					List<Nth>nths = d.getNths();
-					if (nths != null && !nths.isEmpty()) {
-						justOne = true;
+					setWeekDayListeners(weekDayContainer, days, normal, false, nthMenuItem);
+					nthMenuItem.setEnabled(justOneDay(normal));
+					ll.addView(weekDayRow);
+				}
+				
+				if (!withNth.isEmpty()) {
+					for (final WeekDayRange d : withNth) {
+						final LinearLayout weekDayRowNth = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
+						final RelativeLayout weekDayContainerNth = (RelativeLayout) weekDayRowNth.findViewById(R.id.weekDayContainer);
+						WeekDay startDay = d.getStartDay();
+						List<Nth>nths = d.getNths();
+						checkWeekDay(weekDayContainerNth, startDay.toString());
 						nthMenuItem.setEnabled(false);
 						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
 						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
@@ -834,15 +870,37 @@ public class OpeningHoursFragment extends DialogFragment {
 								}
 							}
 						}
+						setWeekDayListeners(weekDayContainerNth, days, withNth, true, nthMenuItem);
 						setNthListeners(nthContainer, d);
-						weekDayRow.addView(nthLayout);
-					}
+						weekDayRowNth.addView(nthLayout);
+						menu = addStandardMenuItems(weekDayRowNth, new Delete() {
+							@Override
+							public void delete() {
+								days.remove(d);
+								updateString();
+								watcher.afterTextChanged(null); // hack to force rebuild of form
+							}
+						});
+						// FIXME hide when not in use
+						EditText offset = (EditText) nthLayout.findViewById(R.id.offset);
+						offset.setText(Integer.toString(d.getOffset()));
+						setTextWatcher(offset, new SetValue() {
+							@Override
+							public void set(String value) {
+								int offset = 0;
+								try {
+									offset = Integer.parseInt(value);
+								} catch (NumberFormatException nfex){
+								}
+								d.setOffset(offset);
+							}
+						});
+							
+						ll.addView(weekDayRowNth);
+					}		
 				}
-				
-				setWeekDayListeners(weekDayContainer, days, justOne, nthMenuItem);
-				nthMenuItem.setEnabled(justOneDay(days) && !justOne);
-				ll.addView(weekDayRow);
 			}
+
 			// times
 			List<TimeSpan> times = r.getTimes();
 			addTimeSpanUIs(ll, times);
@@ -1369,7 +1427,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final boolean justOne, final MenuItem nthMenuItem) {
+	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final List<WeekDayRange> inContainer, final boolean justOne, final MenuItem nthMenuItem) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1395,7 +1453,12 @@ public class OpeningHoursFragment extends DialogFragment {
 						((CheckBox)buttonView).setChecked(true);
 					}
 				} else {	
-					days.clear();
+					List<WeekDayRange>temp = new ArrayList<WeekDayRange>(days);
+					for (WeekDayRange d:temp) {
+						if (d.getNths() == null) {
+							days.remove(d);
+						}
+					}
 					WeekDayRange range = null;
 					for (int i = 0; i < container.getChildCount(); i++) {
 						final View c = container.getChildAt(i);
