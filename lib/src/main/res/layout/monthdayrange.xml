@@ -14,63 +14,78 @@
         android:orientation="horizontal" >
 
         <RelativeLayout
+        	android:id="@+id/daterange_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:layout_weight="1" >
 
-            <EditText
-                android:id="@+id/startYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:hint="Year" />
-
-            <Spinner
-                android:id="@+id/startMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/startYear"
-                android:layout_toRightOf="@id/startYear"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/months" />
-            
-             <Spinner
-                android:id="@+id/startMonthDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/startMonth"
-                android:layout_toRightOf="@id/startMonth"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/monthdays" />
-            
-            <EditText
-                android:id="@+id/endYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/startYear"
-                android:hint="Year" />
-
-            <Spinner
-                android:id="@+id/endMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/startMonth"
-                android:layout_alignTop="@id/endYear"
-                android:layout_below="@id/startMonth"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/months" />
-            
-             <Spinner
-                 android:id="@+id/endMonthDay"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignTop="@id/endMonth"
-                 android:layout_below="@id/startMonthDay"
-                 android:layout_alignLeft="@id/startMonthDay"
-                 android:drawSelectorOnTop="true"
-                 android:entries="@array/monthdays" />
-
+			<LinearLayout 
+				android:id="@+id/startDate"
+				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content" 
+    			android:layout_alignParentLeft="true"
+    			android:layout_alignParentTop="true"
+				>
+            	<TextView
+                	android:id="@+id/startYear"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	/>
+				<TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text=" - " />
+            	<TextView
+                	android:id="@+id/startMonth"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+               	 	/>
+            	<TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text=" - " />
+            	<TextView
+                	android:id="@+id/startMonthDay"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	/>
+			</LinearLayout>
+  
+			<LinearLayout 
+				android:id="@+id/endDate"
+				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content" 
+    			android:layout_toRightOf="@id/startDate"
+    			android:layout_alignParentTop="true"
+				>
+            	<TextView
+                	android:id="@+id/endYear"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	/>
+				<TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text=" - " />
+            	<TextView
+                	android:id="@+id/endMonth"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+               	 	/>
+            	<TextView
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text=" - " />
+            	<TextView
+                	android:id="@+id/endMonthDay"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	/>
+               	<ImageView
+            		android:layout_width="wrap_content"
+           			android:layout_height="wrap_content"
+           			android:src="@drawable/ic_action_edit_holo_light"/>
+			</LinearLayout>
         </RelativeLayout>
 
         <include layout="@layout/menu" />

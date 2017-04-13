@@ -464,6 +464,26 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
+				
+				MenuItem addDateRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add date range");
+				addDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<MonthDayRange>mdr = r.getMonthdays();
+						if (mdr==null) {
+							r.setMonthdays(new ArrayList<MonthDayRange>());
+							mdr = r.getMonthdays();
+						} 
+						MonthDayRange dateRange = new MonthDayRange();
+						DateWithOffset dwo = new DateWithOffset();
+						dwo.setMonth(Month.JAN);
+						dateRange.setStartDate(dwo);
+						mdr.add(dateRange);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
 
 				final View typeView = groupHeader.findViewById(R.id.rule_type_group);
 				MenuItem showRuleType = menu.add("Show rule type");
@@ -648,8 +668,7 @@ public class OpeningHoursFragment extends DialogFragment {
 												endWeekView.setText("");
 												w.setEndWeek(WeekRange.UNDEFINED_WEEK);
 											}
-											updateString();
-											
+											updateString();			
 										}
 									}
 								);
@@ -658,58 +677,76 @@ public class OpeningHoursFragment extends DialogFragment {
 						ll.addView(weekLayout);
 					}
 				}
-				// month day list
-				List<MonthDayRange> monthdays = r.getMonthdays();
-				if (monthdays != null && monthdays.size() > 0) {
-					for (MonthDayRange md : monthdays) {
+				// date range list
+				final List<MonthDayRange> dateRanges = r.getMonthdays();
+				if (dateRanges != null && dateRanges.size() > 0) {
+					for (final MonthDayRange dateRange : dateRanges) {
 						// check if this is just a month range or real dates
-						DateWithOffset start = md.getStartDate();
-						boolean startIsDate = start.getDay() > -1 || start.getVarDate() != null;
-						DateWithOffset end = md.getEndDate();
-						
-//							boolean endIsDate = end != null && (end.getDay() > -1 || end.getVarDate() != null);
-//							if (!startIsDate) { // month range
-							LinearLayout monthRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
-							
-							if (start.getYear() > 0) {
-								EditText startYear = (EditText) monthRangeRow.findViewById(R.id.startYear);
-								startYear.setText(start.getYear());
-							}
-							if (start.getMonth() != null) {
-								Spinner startMonth = (Spinner) monthRangeRow.findViewById(R.id.startMonth);
-								startMonth.setSelection(months.indexOf(start.getMonth()));
-							}
-							
-							if (end != null) {
-								if (end.getYear() > 0) {
-									EditText endYear = (EditText) monthRangeRow.findViewById(R.id.endYear);
-									endYear.setText(end.getYear());
+						final DateWithOffset start = dateRange.getStartDate();
+						final DateWithOffset end = dateRange.getEndDate();
+						if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
+							final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
+							setDateRangeValues(start, end, dateRangeRow);
+
+							RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
+							dateRangeLayout.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									// need to reget values from w
+									//									int tempEndWeek = w.getEndWeek();
+									//									if (tempEndWeek == WeekRange.UNDEFINED_WEEK) {
+									//										tempEndWeek = RangePicker.NOTHING_SELECTED;
+									//		
+									int tempEndYear = YearRange.UNDEFINED_YEAR;
+									Month tempEndMonth = null;
+									int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
+
+									if (end != null) {
+										tempEndYear = end.getYear();
+										tempEndMonth = end.getMonth();
+										tempEndDay = end.getDay();
+									}
+									DateRangePicker.showDialog(getActivity(), R.string.week_range, 
+											start.getYear(), start.getMonth(), start.getDay(),
+											tempEndYear, tempEndMonth, tempEndDay,
+											new SetDateRangeListener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void setDateRange(int startYear, Month startMonth, int startDay, int endYear, Month endMonth, int endDay) {
+											start.setYear(startYear);
+											start.setMonth(startMonth);
+											start.setDay(startDay);
+											DateWithOffset tempDwo = end;
+											if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+												tempDwo = new DateWithOffset();
+												dateRange.setEndDate(tempDwo);
+											}
+											if (tempDwo != null) {
+												tempDwo.setYear(endYear);
+												tempDwo.setMonth(endMonth);
+												tempDwo.setDay(endDay);
+											}
+											setDateRangeValues(start, dateRange.getEndDate(), dateRangeRow);
+											updateString();
+										}
+									}
+											);
 								}
-								if (end.getMonth() != null) {
-									Spinner endMonth = (Spinner) monthRangeRow.findViewById(R.id.endMonth);
-									endMonth.setSelection(months.indexOf(end.getMonth()));
+							});
+							addStandardMenuItems(dateRangeRow, new Delete() {
+								@Override
+								public void delete() {
+									dateRanges.remove(dateRange);
+									if (dateRanges.isEmpty()) {
+										r.setMonthdays(null);
+									}
+									updateString();
+									watcher.afterTextChanged(null); // hack to force rebuild of form
 								}
-							}
-							
-//								RelativeLayout checkBoxContainer = (RelativeLayout) monthRangeRow
-//										.findViewById(R.id.checkBoxContainer);
-//								checkMonth(checkBoxContainer, start.getMonth());
-//								if (end != null && end.getMonth()!=null) {
-//									int startIndex = months.indexOf(start.getMonth())+1;
-//									int endIndex = months.indexOf(end.getMonth());
-//									Log.d(DEBUG_TAG, "start month " + start.getMonth() + " " + startIndex + " endDay " + end.getMonth() + " " + endIndex);
-//									for (int i = startIndex; i <= endIndex; i++) {
-//										checkMonth(checkBoxContainer, months.get(i));
-//									}
-//								}
-							// setWeekDayListeners(checkBoxContainer, days);
-							addStandardMenuItems(monthRangeRow, null);
-							ll.addView(monthRangeRow);
-//							} else { // date range
-//								TextView tv = new TextView(getActivity());
-//								tv.setText(md.toString());
-//								ll.addView(tv);
-//							}
+							});
+							ll.addView(dateRangeRow);
+						}
 					}
 				}
 				// Modifier
@@ -735,6 +772,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					addStandardMenuItems(modifierLayout, null);
 					ll.addView(modifierLayout);
 				}
+
+				// only used in group mode
 				if (groupMode) {
 					first = false;
 				} 
@@ -904,6 +943,46 @@ public class OpeningHoursFragment extends DialogFragment {
 			// times
 			List<TimeSpan> times = r.getTimes();
 			addTimeSpanUIs(ll, times);
+		}
+	}
+
+	private void setDateRangeValues(final DateWithOffset start, final DateWithOffset end, LinearLayout monthRangeRow) {
+		TextView startYearView = (TextView) monthRangeRow.findViewById(R.id.startYear);
+		if (start.getYear() != YearRange.UNDEFINED_YEAR) {
+			startYearView.setText(Integer.toString(start.getYear()));
+		} else {
+			startYearView.setText("");
+		}
+		TextView startMonthView = (TextView) monthRangeRow.findViewById(R.id.startMonth);
+		if (start.getMonth() != null) {
+			startMonthView.setText(getResources().getStringArray(R.array.months)[start.getMonth().ordinal()]);
+		}
+		TextView startDayView = (TextView) monthRangeRow.findViewById(R.id.startMonthDay);
+		if (start.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
+			startDayView.setText(Integer.toString(start.getDay()));
+		} else {
+			startDayView.setText("");
+		}
+
+		if (end != null) {
+			TextView yearView = (TextView) monthRangeRow.findViewById(R.id.endYear);
+			if (end.getYear() != YearRange.UNDEFINED_YEAR) {				
+				yearView.setText(Integer.toString(end.getYear()));
+			} else {
+				yearView.setText("");
+			}
+			TextView endMonthView = (TextView) monthRangeRow.findViewById(R.id.endMonth);
+			if (end.getMonth() != null) {
+				endMonthView.setText(getResources().getStringArray(R.array.months)[end.getMonth().ordinal()]);
+			} else {
+				endMonthView.setText("");
+			}
+			TextView endDayView = (TextView) monthRangeRow.findViewById(R.id.endMonthDay);
+			if (end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
+				endDayView.setText(Integer.toString(end.getDay()));
+			} else {
+				endDayView.setText("");
+			}
 		}
 	}
 	
