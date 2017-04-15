@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jacoco"
 
-version = '0.0.7'
+version = '0.0.8'
 def libName = "OpeningHoursFragment"
 
 eclipse {
@@ -104,9 +104,9 @@ dependencies {
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:support-annotations:23.4.0"
     // compile "com.android.support:support-annotations:24.0.0"    compile "com.adobe.xmp:xmpcore:5.1.2"
-    compile "ch.poole:OpeningHoursParser:0.3.6"
+    compile "ch.poole:OpeningHoursParser:0.4.1"
     compile "ch.poole:ConditionalRestrictionParser:0.1.11"
-    compile "ch.poole:rangebar:0.0.5"
+    compile "ch.poole:rangebar:0.0.7"
     compile 'cn.carbswang.android:NumberPickerView:1.1.1'
     
     // Unit tests

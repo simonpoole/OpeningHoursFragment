@@ -54,7 +54,7 @@ import android.widget.TextView;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.Month;
-import ch.poole.openinghoursparser.MonthDayRange;
+import ch.poole.openinghoursparser.DateRange;
 import ch.poole.openinghoursparser.Nth;
 import ch.poole.openinghoursparser.OpeningHoursParser;
 import ch.poole.openinghoursparser.ParseException;
@@ -469,12 +469,12 @@ public class OpeningHoursFragment extends DialogFragment {
 				addDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
-						List<MonthDayRange>mdr = r.getMonthdays();
+						List<DateRange>mdr = r.getMonthdays();
 						if (mdr==null) {
-							r.setMonthdays(new ArrayList<MonthDayRange>());
+							r.setMonthdays(new ArrayList<DateRange>());
 							mdr = r.getMonthdays();
 						} 
-						MonthDayRange dateRange = new MonthDayRange();
+						DateRange dateRange = new DateRange();
 						DateWithOffset dwo = new DateWithOffset();
 						dwo.setMonth(Month.JAN);
 						dateRange.setStartDate(dwo);
@@ -678,9 +678,9 @@ public class OpeningHoursFragment extends DialogFragment {
 					}
 				}
 				// date range list
-				final List<MonthDayRange> dateRanges = r.getMonthdays();
+				final List<DateRange> dateRanges = r.getMonthdays();
 				if (dateRanges != null && dateRanges.size() > 0) {
-					for (final MonthDayRange dateRange : dateRanges) {
+					for (final DateRange dateRange : dateRanges) {
 						// check if this is just a month range or real dates
 						final DateWithOffset start = dateRange.getStartDate();
 						final DateWithOffset end = dateRange.getEndDate();
@@ -691,12 +691,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
 							dateRangeLayout.setOnClickListener(new OnClickListener() {
 								@Override
-								public void onClick(View v) {
-									// need to reget values from w
-									//									int tempEndWeek = w.getEndWeek();
-									//									if (tempEndWeek == WeekRange.UNDEFINED_WEEK) {
-									//										tempEndWeek = RangePicker.NOTHING_SELECTED;
-									//		
+								public void onClick(View v) {		
 									int tempEndYear = YearRange.UNDEFINED_YEAR;
 									Month tempEndMonth = null;
 									int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
@@ -706,7 +701,7 @@ public class OpeningHoursFragment extends DialogFragment {
 										tempEndMonth = end.getMonth();
 										tempEndDay = end.getDay();
 									}
-									DateRangePicker.showDialog(getActivity(), R.string.week_range, 
+									DateRangePicker.showDialog(getActivity(), R.string.date_range, 
 											start.getYear(), start.getMonth(), start.getDay(),
 											tempEndYear, tempEndMonth, tempEndDay,
 											new SetDateRangeListener() {
@@ -730,8 +725,7 @@ public class OpeningHoursFragment extends DialogFragment {
 											setDateRangeValues(start, dateRange.getEndDate(), dateRangeRow);
 											updateString();
 										}
-									}
-											);
+									});
 								}
 							});
 							addStandardMenuItems(dateRangeRow, new Delete() {
@@ -769,7 +763,14 @@ public class OpeningHoursFragment extends DialogFragment {
 							rm.setComment(value);
 						}
 					});
-					addStandardMenuItems(modifierLayout, null);
+					addStandardMenuItems(modifierLayout, new Delete() {
+						@Override
+						public void delete() {
+							r.setModifier(null);
+							updateString();
+							watcher.afterTextChanged(null); // hack to force rebuild of form
+						}
+					});
 					ll.addView(modifierLayout);
 				}
 

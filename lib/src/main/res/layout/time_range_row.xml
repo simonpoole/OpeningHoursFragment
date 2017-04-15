@@ -25,6 +25,7 @@
             custom:pinMinFont="10sp"
             custom:pinRadius="14sp"
             custom:temporaryPins="false"
+            custom:dragOnly="true"
             custom:tickEnd="1440"
             custom:tickInterval="5"
             custom:tickStart="0"

@@ -36,6 +36,7 @@
                 custom:rangeBarColor="?attr/colorAccent"
                 custom:selectorColor="?attr/colorAccent"
                 custom:temporaryPins="false"
+                custom:dragOnly="true"
                 custom:tickEnd="1440"
                 custom:tickInterval="5"
                 custom:tickStart="0"

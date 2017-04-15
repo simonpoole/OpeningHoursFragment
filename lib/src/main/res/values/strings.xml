@@ -11,6 +11,7 @@
     <string name="interval_years">Interval (years)</string>
     <string name="interval_weeks">Interval (weeks)</string>
     
+    <string name="date_range">Date range</string>
     <string name="week_range">Week range</string>
     <string name="year_range">Year range</string>
     
