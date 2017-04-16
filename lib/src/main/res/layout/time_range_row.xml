@@ -33,7 +33,8 @@
             custom:connectingLineColor="?attr/colorAccent"
             custom:selectorColor="?attr/colorAccent"
             custom:rangeBarColor="?attr/colorAccent"
-            custom:pinColor="?attr/colorAccent" />
+            custom:pinColor="?attr/colorPrimary"
+            custom:textColor="@android:color/black" />
 
         <include layout="@layout/menu" />
     </LinearLayout>

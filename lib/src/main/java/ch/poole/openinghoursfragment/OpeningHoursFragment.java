@@ -685,7 +685,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						final DateWithOffset start = dateRange.getStartDate();
 						final DateWithOffset end = dateRange.getEndDate();
 						if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
-							final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.monthdayrange, null);
+							final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.daterange, null);
 							setDateRangeValues(start, end, dateRangeRow);
 
 							RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
@@ -1289,6 +1289,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		end = Math.round(((float)end)/interval)*interval;
 		timeBar.setTickInterval(interval);
 		timeBar.setRangePinsByValue(start, end);
+		timeBar.setVisibleTickInterval(60/interval);
 	}
 
 	private void addTickMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
@@ -1362,12 +1363,12 @@ public class OpeningHoursFragment extends DialogFragment {
 			// 5 minute
 			// granularity
 			bar.setTickInterval(5);
-			bar.setVisibleTickInterval(60);
+			bar.setVisibleTickInterval(12);
 		} else {
 			// 15 minute
 			// granularity
 			bar.setTickInterval(15);
-			bar.setVisibleTickInterval(60);
+			bar.setVisibleTickInterval(4);
 		}
 	}
 
