@@ -17,7 +17,8 @@
         	android:id="@+id/daterange_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:layout_weight="1" >
+            android:layout_weight="1" 
+            android:layout_gravity="center_vertical" >
 
 			<LinearLayout 
 				android:id="@+id/startDate"
@@ -30,63 +31,84 @@
                 	android:id="@+id/startYear"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                 	/>
 				<TextView
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
             		android:text=" - " />
             	<TextView
                 	android:id="@+id/startMonth"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                	 	/>
             	<TextView
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
             		android:text=" - " />
             	<TextView
                 	android:id="@+id/startMonthDay"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                 	/>
 			</LinearLayout>
-  
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/startDate"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="@string/to"
+               	 />
 			<LinearLayout 
 				android:id="@+id/endDate"
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
-    			android:layout_toRightOf="@id/startDate"
+    			android:layout_toRightOf="@id/to"
     			android:layout_alignParentTop="true"
 				>
             	<TextView
                 	android:id="@+id/endYear"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                 	/>
 				<TextView
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
             		android:text=" - " />
             	<TextView
                 	android:id="@+id/endMonth"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                	 	/>
             	<TextView
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
             		android:text=" - " />
             	<TextView
                 	android:id="@+id/endMonthDay"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
+                	android:textColor="?attr/colorAccent"
                 	/>
-               	<ImageView
-            		android:layout_width="wrap_content"
-           			android:layout_height="wrap_content"
-           			android:baselineAlignBottom="true"
-           			android:src="@drawable/ic_action_edit_holo_light"/>
 			</LinearLayout>
+			<ImageView
+            	android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:layout_toRightOf="@id/endDate"
+           		android:baselineAlignBottom="true"
+           		android:tint="?attr/colorAccent"
+           		android:src="@drawable/ic_action_edit_holo_light"/>
         </RelativeLayout>
 
         <include layout="@layout/menu" />

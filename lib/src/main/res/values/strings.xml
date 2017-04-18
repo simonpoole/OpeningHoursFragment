@@ -15,6 +15,10 @@
     <string name="week_range">Week range</string>
     <string name="year_range">Year range</string>
     
+    <string name="twentyfourseven">24 hours, 7 days a week</string>
+    
+    <string name="to">to</string>
+    
     <string name="sunrise">sunrise</string>
   	<string name="sunset">sunset</string>
   	<string name="dawn">dawn</string>
