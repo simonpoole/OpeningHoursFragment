@@ -19,63 +19,76 @@
     
     <string name="to">to</string>
     
-    <string name="sunrise">sunrise</string>
-  	<string name="sunset">sunset</string>
-  	<string name="dawn">dawn</string>
-  	<string name="dusk">dusk</string>
+    <string name="oh_sunrise" translatable="false">sunrise</string>
+  	<string name="oh_sunset" translatable="false">sunset</string>
+  	<string name="oh_dawn" translatable="false">dawn</string>
+  	<string name="oh_dusk" translatable="false">dusk</string>
+  	
+  	<string name="sunrise">Sunrise</string>
+  	<string name="sunset">Sunset</string>
+  	<string name="dawn">Dawn</string>
+  	<string name="dusk">Dusk</string>
   	
   	<string name="public_holidays">Public holidays</string>
   	<string name="school_holidays">School holidays</string>
   	
-  	<string name="monday">Mo</string>
-  	<string name="tuesday">Tu</string>
-  	<string name="wednesday">We</string>
-  	<string name="thursday">Th</string>
-  	<string name="friday">Fr</string>
-  	<string name="saturday">Sa</string>
-  	<string name="sunday">Su</string>
-
-  	<string name="january">Jan</string>
-  	<string name="february">Feb</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Apr</string>
-  	<string name="may">May</string>
-  	<string name="june">Jun</string>
-  	<string name="july">Jul</string>
-  	<string name="august">Aug</string>
-  	<string name="september">Sep</string>
-  	<string name="october">Oct</string>
-  	<string name="november">Nov</string>
-  	<string name="december">Dec</string>
+  	<string name="oh_monday" translatable="false">Mo</string>
+  	<string name="oh_tuesday" translatable="false">Tu</string>
+  	<string name="oh_wednesday" translatable="false">We</string>
+  	<string name="oh_thursday" translatable="false">Th</string>
+  	<string name="oh_friday" translatable="false">Fr</string>
+  	<string name="oh_saturday" translatable="false">Sa</string>
+  	<string name="oh_sunday" translatable="false">Su</string>
   	
-  	<string name="open">open</string>
- 	<string name="closed">closed</string>
-  	<string name="off">off</string>
-    <string name="unknown">unknown</string>
+  	<string name="monday_short">Mo</string>
+  	<string name="tuesday_short">Tu</string>
+  	<string name="wednesday_short">We</string>
+  	<string name="thursday_short">Th</string>
+  	<string name="friday_short">Fr</string>
+  	<string name="saturday_short">Sa</string>
+  	<string name="sunday_short">Su</string>
+
+  	<string name="oh_january" translatable="false">Jan</string>
+  	<string name="oh_february" translatable="false">Feb</string>
+  	<string name="oh_march" translatable="false">Mar</string>
+  	<string name="oh_april" translatable="false">Apr</string>
+  	<string name="oh_may" translatable="false">May</string>
+  	<string name="oh_june" translatable="false">Jun</string>
+  	<string name="oh_july" translatable="false">Jul</string>
+  	<string name="oh_august" translatable="false">Aug</string>
+  	<string name="oh_september" translatable="false">Sep</string>
+  	<string name="oh_october" translatable="false">Oct</string>
+  	<string name="oh_november" translatable="false">Nov</string>
+  	<string name="oh_december" translatable="false">Dec</string>
+  	
+  	<string name="oh_open" translatable="false">open</string>
+ 	<string name="oh_closed" translatable="false">closed</string>
+  	<string name="oh_off" translatable="false">off</string>
+    <string name="oh_unknown" translatable="false">unknown</string>
   	
   	<string-array name="months" translatable="false">
-  	    <item>@string/january</item>
-  	    <item>@string/february</item>
-  	    <item>@string/march</item>
-  	    <item>@string/april</item>
-  	    <item>@string/may</item>
-  	    <item>@string/june</item>
-  	    <item>@string/july</item>
-        <item>@string/august</item>
-  	    <item>@string/september</item>
-  	    <item>@string/october</item>
-  	    <item>@string/november</item>
-  	    <item>@string/december</item>
+  	    <item>@string/oh_january</item>
+  	    <item>@string/oh_february</item>
+  	    <item>@string/oh_march</item>
+  	    <item>@string/oh_april</item>
+  	    <item>@string/oh_may</item>
+  	    <item>@string/oh_june</item>
+  	    <item>@string/oh_july</item>
+        <item>@string/oh_august</item>
+  	    <item>@string/oh_september</item>
+  	    <item>@string/oh_october</item>
+  	    <item>@string/oh_november</item>
+  	    <item>@string/oh_december</item>
   	</string-array>
   	
   	<string-array name="weekdays" translatable="false">
-  	    <item>@string/monday</item>
-  	    <item>@string/tuesday</item>
-  	    <item>@string/wednesday</item>
-  	    <item>@string/thursday</item>
-  	    <item>@string/friday</item>
-  	    <item>@string/saturday</item>
-        <item>@string/sunday</item>
+  	    <item>@string/oh_monday</item>
+  	    <item>@string/oh_tuesday</item>
+  	    <item>@string/oh_wednesday</item>
+  	    <item>@string/oh_thursday</item>
+  	    <item>@string/oh_friday</item>
+  	    <item>@string/oh_saturday</item>
+        <item>@string/oh_sunday</item>
   	</string-array>
   	
   	<string-array name="monthdays" translatable="false">
@@ -112,7 +125,14 @@
         <item>31</item>
   	</string-array>
   	
-  	<string-array name="events" translatable="false">
+  	<string-array name="events_values" translatable="false">
+  	    <item>@string/oh_sunrise</item>
+  	    <item>@string/oh_sunset</item>
+  	    <item>@string/oh_dawn</item>
+  	    <item>@string/oh_dusk</item>
+  	</string-array>
+  	
+  	  	<string-array name="events_entries" translatable="false">
   	    <item>@string/sunrise</item>
   	    <item>@string/sunset</item>
   	    <item>@string/dawn</item>
@@ -120,10 +140,10 @@
   	</string-array>
   	
   	<string-array name="modifiers" translatable="false">
-  	   <item>@string/open</item>
- 	   <item>@string/closed</item>
-  	   <item>@string/off</item>
-       <item>@string/unknown</item>
+  	   <item>@string/oh_open</item>
+ 	   <item>@string/oh_closed</item>
+  	   <item>@string/oh_off</item>
+       <item>@string/oh_unknown</item>
     </string-array>
     
      <string-array name="holidays_entries" translatable="false">

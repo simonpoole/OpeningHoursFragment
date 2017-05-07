@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events" />
+                android:entries="@array/events_values" />
 
             <Spinner
                 android:id="@+id/endEvent"
@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events" />
+                android:entries="@array/events_values" />
         </LinearLayout>
 
         <include layout="@layout/menu" />

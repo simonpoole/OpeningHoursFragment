@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events" />
+                android:entries="@array/events_values" />
         </LinearLayout>
 
         <include layout="@layout/menu" />

@@ -31,7 +31,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events" />
+                android:entries="@array/events_values" />
                 
             <ch.poole.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
