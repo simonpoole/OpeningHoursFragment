@@ -32,6 +32,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="2"
                 	/>
 				<TextView
             		android:layout_width="wrap_content"
@@ -43,8 +44,10 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="1"
                	 	/>
             	<TextView
+            	    android:id="@+id/startMonthDayDelimiter"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:textColor="?attr/colorAccent"
@@ -54,6 +57,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="1"
                 	/>
 			</LinearLayout>
             <TextView
@@ -62,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/startDate"
                 android:layout_alignParentTop="true"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
                 android:text="@string/to"
                	 />
 			<LinearLayout 
@@ -78,6 +82,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="2"
                 	/>
 				<TextView
             		android:layout_width="wrap_content"
@@ -89,8 +94,10 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="1"
                	 	/>
             	<TextView
+            	    android:id="@+id/endMonthDayDelimiter"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:textColor="?attr/colorAccent"
@@ -100,6 +107,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:textColor="?attr/colorAccent"
+                	android:minEms="1"
                 	/>
 			</LinearLayout>
 			<ImageView

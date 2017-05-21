@@ -19,6 +19,10 @@
     
     <string name="to">to</string>
     
+    <string name="oh_easter" translatable="false">easter</string>
+    
+    <string name="easter">Easter</string>
+    
     <string name="oh_sunrise" translatable="false">sunrise</string>
   	<string name="oh_sunset" translatable="false">sunset</string>
   	<string name="oh_dawn" translatable="false">dawn</string>
@@ -123,6 +127,14 @@
   	    <item>29</item>
         <item>30</item>
         <item>31</item>
+  	</string-array>
+  	
+  	<string-array name="vardate_values" translatable="false">
+  	    <item>@string/oh_easter</item>
+  	</string-array>
+  	
+  	<string-array name="vardate_entries" translatable="false">
+  	    <item>@string/easter</item>
   	</string-array>
   	
   	<string-array name="events_values" translatable="false">
