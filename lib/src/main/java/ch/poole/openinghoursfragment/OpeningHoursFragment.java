@@ -53,6 +53,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import ch.poole.openinghoursparser.DateWithOffset;
+import ch.poole.openinghoursparser.Event;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.DateRange;
@@ -65,6 +66,7 @@ import ch.poole.openinghoursparser.TimeSpan;
 import ch.poole.openinghoursparser.TokenMgrError;
 import ch.poole.openinghoursparser.Util;
 import ch.poole.openinghoursparser.VarDate;
+import ch.poole.openinghoursparser.VariableTime;
 import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.WeekDayRange;
 import ch.poole.openinghoursparser.WeekRange;
@@ -419,7 +421,8 @@ public class OpeningHoursFragment extends DialogFragment {
 						watcher.afterTextChanged(null); // hack to force rebuild of form
 					}
 				});
-				MenuItem addTimespan = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add time span");
+				SubMenu timespanMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, "Add time span ...");
+				MenuItem addTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - time");
 				addTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -438,6 +441,90 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
+				MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - extended time");
+				addExtendedTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						t.setStart(0);
+						t.setEnd(2880);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Var. time - time");
+				addVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						VariableTime vt = new VariableTime();
+						vt.setEvent(Event.DAWN);
+						t.setStartEvent(vt);
+						t.setEnd(1440);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - var. time");
+				addTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						t.setStart(360);
+						VariableTime vt = new VariableTime();
+						vt.setEvent(Event.DUSK);
+						t.setEndEvent(vt);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addVarTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Var. time - var. time");
+				addVarTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						VariableTime startVt = new VariableTime();
+						startVt.setEvent(Event.DAWN);
+						t.setStartEvent(startVt);;
+						VariableTime endVt = new VariableTime();
+						endVt.setEvent(Event.DUSK);
+						t.setEndEvent(endVt);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+							
 				MenuItem addWeekdayRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add week day range");
 				addWeekdayRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override

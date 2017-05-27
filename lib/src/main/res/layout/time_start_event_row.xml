@@ -13,12 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
         
-        <LinearLayout
-        	android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical" >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,9 +21,9 @@
           	<Spinner
                 android:id="@+id/startEvent"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_values" />
                 
@@ -40,8 +34,8 @@
                 android:layout_height="72dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_toRightOf="@id/startEvent"
-                android:layout_alignParentTop="true"
+                android:layout_below="@id/startEvent"
+                android:layout_alignParentLeft="true"
                 custom:connectToRight="false"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorPrimary"
@@ -57,7 +51,7 @@
                 custom:tickInterval="5"
                 custom:tickStart="0"
                 custom:visibleTickInterval="12" />    
-            </RelativeLayout>
+            
             <ch.poole.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/extendedTimebar"
@@ -65,6 +59,8 @@
                 android:layout_height="72dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
+                android:layout_below="@id/timebar"
+                android:layout_alignParentLeft="true"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorPrimary"
                 custom:textColor="@android:color/black"
@@ -80,7 +76,7 @@
                 custom:tickInterval="5"
                 custom:tickStart="1440"
                 custom:visibleTickInterval="12" />
-        	</LinearLayout>
+        	</RelativeLayout>
 
         <include layout="@layout/menu" />
     </LinearLayout>
