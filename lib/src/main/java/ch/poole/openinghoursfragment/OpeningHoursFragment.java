@@ -55,6 +55,7 @@ import android.widget.TextView;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Event;
 import ch.poole.openinghoursparser.Holiday;
+import ch.poole.openinghoursparser.Holiday.Type;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.DateRange;
 import ch.poole.openinghoursparser.Nth;
@@ -62,6 +63,7 @@ import ch.poole.openinghoursparser.OpeningHoursParser;
 import ch.poole.openinghoursparser.ParseException;
 import ch.poole.openinghoursparser.Rule;
 import ch.poole.openinghoursparser.RuleModifier;
+import ch.poole.openinghoursparser.RuleModifier.Modifier;
 import ch.poole.openinghoursparser.TimeSpan;
 import ch.poole.openinghoursparser.TokenMgrError;
 import ch.poole.openinghoursparser.Util;
@@ -267,7 +269,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			add.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream("Mo-Su 6:00-20:00".getBytes()));
+					OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream("Mo 6:00-20:00".getBytes()));
 					List<Rule> rules2 = null;
 					try {
 						rules2 = parser.rules(false);
@@ -288,6 +290,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	/**
 	 * Highlight the position of a parse error
+	 * 
 	 * @param text he EditTExt the string is displayed in
 	 * @param pex the ParseException to use
 	 */
@@ -304,6 +307,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	/**
 	 * Remove all parse error highlighting
+	 * 
 	 * @param text the EditTExt the string is displayed in
 	 */
 	private void removeHighlight(EditText text) {
@@ -364,7 +368,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				TextView header = (TextView) groupHeader.findViewById(R.id.header);
 				header.setText(getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
 				RadioButton normal = (RadioButton)groupHeader.findViewById(R.id.normal_rule);
-				if (!r.isReplace() && !r.isFallBack()) {
+				if (!r.isAdditive() && !r.isFallBack()) {
 					normal.setChecked(true);
 				}
 				normal.setOnClickListener(new OnClickListener() {
@@ -373,23 +377,23 @@ public class OpeningHoursFragment extends DialogFragment {
 						RadioButton rb = (RadioButton)v;
 						if (rb.isChecked()) {
 							r.setFallBack(false);
-							r.setReplace(false);
+							r.setAdditive(false);
 							updateString();
 							watcher.afterTextChanged(null);
 						}
 					}
 				});
-				RadioButton replace = (RadioButton)groupHeader.findViewById(R.id.replace_rule);
-				if (r.isReplace()) {
-					replace.setChecked(true);
+				RadioButton additive = (RadioButton)groupHeader.findViewById(R.id.additive_rule);
+				if (r.isAdditive()) {
+					additive.setChecked(true);
 				}
-				replace.setOnClickListener(new OnClickListener() {
+				additive.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						RadioButton rb = (RadioButton)v;
 						if (rb.isChecked()) {
 							r.setFallBack(false);
-							r.setReplace(true);
+							r.setAdditive(true);
 							updateString();
 							watcher.afterTextChanged(null);
 						}
@@ -405,7 +409,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						RadioButton rb = (RadioButton)v;
 						if (rb.isChecked()) {
 							r.setFallBack(true);
-							r.setReplace(false);
+							r.setAdditive(false);
 							rules.remove(r); // move to last position
 							rules.add(r);
 							updateString();
@@ -413,6 +417,8 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					}
 				});
+				
+				// add menu items for rules
 				Menu menu = addStandardMenuItems(groupHeader, new Delete() {
 					@Override
 					public void delete() {
@@ -421,8 +427,41 @@ public class OpeningHoursFragment extends DialogFragment {
 						watcher.afterTextChanged(null); // hack to force rebuild of form
 					}
 				});
-				SubMenu timespanMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, "Add time span ...");
-				MenuItem addTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - time");
+				
+				if (r.getModifier()==null) {
+					MenuItem addModifierAndComment =menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_modifier_comment);
+					addModifierAndComment.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							RuleModifier modifier = new RuleModifier();
+							modifier.setModifier(Modifier.CLOSED);
+							r.setModifier(modifier);
+							updateString();
+							watcher.afterTextChanged(null);
+							return true;
+						}	
+					});
+				}
+								
+				MenuItem addHoliday=menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_holiday);
+				addHoliday.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<Holiday>holidays = r.getHolidays();
+						if (holidays==null) {
+							r.setHolidays(new ArrayList<Holiday>());
+							holidays = r.getHolidays();
+						}
+						Holiday holiday = new Holiday();
+						holiday.setType(Type.PH);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				SubMenu timespanMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.timespan_menu);
+				MenuItem addTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_time);
 				addTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -441,7 +480,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - extended time");
+				MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_extended_time);
 				addExtendedTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -460,7 +499,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Var. time - time");
+				MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_time);
 				addVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -481,7 +520,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Time - var. time");
+				MenuItem addTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
 				addTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -502,7 +541,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addVarTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Var. time - var. time");
+				MenuItem addVarTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_variable_time);
 				addVarTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -525,7 +564,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 							
-				MenuItem addWeekdayRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Add week day range");
+				MenuItem addWeekdayRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.week_day_range);
 				addWeekdayRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -537,7 +576,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						WeekDayRange d = new WeekDayRange();
 						if (wd.isEmpty()) {
 							d.setStartDay("Mo");
-							d.setEndDay("Su");
+							// d.setEndDay("Su"); a single day is better from an UI pov
 						} else {
 							// add a single day with nth
 							d.setStartDay("Mo");
@@ -554,8 +593,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				SubMenu dateRangeMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, "Add date range ...");
-				MenuItem addDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Date - Date");
+				SubMenu dateRangeMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.daterange_menu);
+				MenuItem addDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
 				addDateDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -574,7 +613,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
-				MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Variable date - Date");
+				MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
 				addVarDateDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -593,7 +632,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
-				MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Date - Variable date");
+				MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
 				addDateVarDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -615,7 +654,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
-				MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, "Variable date - Variable date");
+				MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
 				addVarDateVarDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -637,17 +676,90 @@ public class OpeningHoursFragment extends DialogFragment {
 						return true;
 					}	
 				});
-
-				final View typeView = groupHeader.findViewById(R.id.rule_type_group);
-				MenuItem showRuleType = menu.add("Show rule type");
-				showRuleType.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				
+				MenuItem addYearRange=menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_year_range);
+				addYearRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
-						typeView.setVisibility(View.VISIBLE);;
-						groupHeader.invalidate();
+						List<YearRange>years = r.getYears();
+						if (years==null) {
+							r.setYears(new ArrayList<YearRange>());
+							years = r.getYears();
+						}
+						YearRange yearRange = new YearRange();
+						yearRange.setStartYear(2000);
+						years.add(yearRange);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addWeekRange=menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_week_range);
+				addYearRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<WeekRange>weeks = r.getWeeks();
+						if (weeks==null) {
+							r.setWeeks(new ArrayList<WeekRange>());
+							weeks = r.getWeeks();
+						}
+						WeekRange weekRange = new WeekRange();
+						weekRange.setStartWeek(1);
+						weeks.add(weekRange);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				if (!r.equals(rules.get(0))) { // don't show this for the first rule as it is meaningless
+					final View typeView = groupHeader.findViewById(R.id.rule_type_group);
+					MenuItem showRuleType = menu.add(R.string.rule_type);
+					showRuleType.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							typeView.setVisibility(View.VISIBLE);;
+							groupHeader.invalidate();
+							return true;
+						}
+					});
+					MenuItem moveUp = menu.add(R.string.move_up);
+					moveUp.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							int current = rules.indexOf(r);
+							if (current < 0) { // not found shouldn't happen
+								Log.e(DEBUG_TAG,"Rule missing from list!");
+								return true;
+							}
+							rules.remove(current);
+							rules.add(Math.max(0, current-1), r);
+							updateString();
+							watcher.afterTextChanged(null);
+							return true;
+						}
+					});
+				}
+				if (!r.equals(rules.get(rules.size()-1))) {
+				MenuItem moveDown = menu.add(R.string.move_down);
+				moveDown.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						int current = rules.indexOf(r);
+						if (current < 0) { // not found shouldn't happen
+							Log.e(DEBUG_TAG,"Rule missing from list!");
+							return true;
+						}
+						int size = rules.size();
+						rules.remove(current);
+						rules.add(Math.min(size-1, current+1), r);
+						updateString();
+						watcher.afterTextChanged(null);
 						return true;
 					}
 				});
+				}
 				ll.addView(groupHeader);
 				//comments
 				String comment = r.getComment();
@@ -1080,7 +1192,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					}
 				});
 				// menu item will be enabled/disabled depending on number of days etc. 
-				MenuItem nthMenuItem = menu.add("Add occurance in month");
+				MenuItem nthMenuItem = menu.add(R.string.occurrence_in_month);
 				nthMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -1549,9 +1661,9 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	private void addTickMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
 
-		final MenuItem item15 = menu.add("Switch to 15 minute ticks");
-		final MenuItem item5 = menu.add("Switch to 5 minute ticks");
-		final MenuItem item1 = menu.add("Switch to 1 minute ticks");
+		final MenuItem item15 = menu.add(R.string.ticks_15_minute);
+		final MenuItem item5 = menu.add(R.string.ticks_5_minute);
+		final MenuItem item1 = menu.add(R.string.ticks_1_minute);
 
 		item15.setOnMenuItemClickListener(new OnMenuItemClickListener(){
 			@Override
@@ -1681,7 +1793,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	private Menu addStandardMenuItems(LinearLayout row, final Delete listener) {
 		ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
 		Menu menu = amv.getMenu();
-		MenuItem mi = menu.add(Menu.NONE, Menu.NONE, Menu.CATEGORY_SECONDARY, "Delete");
+		MenuItem mi = menu.add(Menu.NONE, Menu.NONE, Menu.CATEGORY_SECONDARY, R.string.Delete);
 		mi.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {

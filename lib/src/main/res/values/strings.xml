@@ -7,6 +7,38 @@
     <string name="group_header">Group %1$s</string>
     <string name="rule_header">Rule %1$s</string>
     
+<!--     menu items -->
+	<string name="Delete">Delete</string>
+	<string name="add_modifier_comment">Add modifier/comment</string>
+	<string name="add_year_range">Add year range</string>
+	<string name="add_week_range">Add week range</string>
+	<string name="add_holiday">Add holiday</string>
+    <string name="timespan_menu">Add time span ...</string>
+    <string name="time_time">Time - time</string>
+    <string name="time_extended_time">Time - extended time</string>
+    <string name="variable_time_time">Var. time - time</string>
+    <string name="time_variable_time">Time - var. time</string>
+    <string name="variable_time_variable_time">Var. time - var. time</string>
+    <string name="week_day_range">Add week day range</string>
+    <string name="occurrence_in_month">Add occurrence in month</string>
+    <string name="daterange_menu">Add date range ...</string>
+    <string name="date_date">Date - date</string>
+    <string name="variable_date_date">Variable date - date</string>
+    <string name="date_variable_date">Date - variable date</string>
+    <string name="variable_date_variable_date">Variable date - variable date</string>
+    <string name="rule_type">Show rule type</string>
+    <string name="move_up">Move up</string>
+    <string name="move_down">Move down</string>
+    <string name="ticks_15_minute">Switch to 15 minute ticks</string>
+    <string name="ticks_5_minute">Switch to 5 minute ticks</string>
+    <string name="ticks_1_minute">Switch to 1 minute ticks</string>
+    
+<!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
+    <string name="additive_rule">Additive</string>
+    <string name="fallback_rule">Fallback</string>
+    
     <string name="interval_minutes">Interval (minutes)</string>
     <string name="interval_years">Interval (years)</string>
     <string name="interval_weeks">Interval (weeks)</string>
