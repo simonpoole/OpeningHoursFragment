@@ -46,6 +46,8 @@
     <string name="ticks_15_minute">Switch to 15 minute ticks</string>
     <string name="ticks_5_minute">Switch to 5 minute ticks</string>
     <string name="ticks_1_minute">Switch to 1 minute ticks</string>
+    <string name="show_offset">Show offset</string>
+    <string name="show_interval">Show interval</string>
     
 <!--     opening hour elements -->
          

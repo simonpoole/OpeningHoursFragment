@@ -133,8 +133,15 @@ public class OpeningHoursFragment extends DialogFragment {
 	};
 
 	/**
+	 * Create a new OpeningHoursFragment
+	 * 
+	 * @param key	the key the OH values belongs to
+	 * @param value	the OH value
+	 * @param style	resource id for the Android style to use
+	 * @param rule	rulle to scroll to or -1 (currently ignored)
+	 * @return an OpeningHoursFragment
 	 */
-	static public OpeningHoursFragment newInstance(String key, String value, int style, int rule) {
+	static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule) {
 		OpeningHoursFragment f = new OpeningHoursFragment();
 
 		Bundle args = new Bundle();
@@ -143,8 +150,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		args.putInt(STYLE_KEY, style);
 		args.putInt(RULE_KEY, rule);
 
-		f.setArguments(args);
-		// f.setShowsDialog(true);
+		f.setArguments(args);;
 
 		return f;
 	}
@@ -203,7 +209,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		
 		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 		
-		final ScrollView sv = buildLayout(openingHoursLayout, openingHoursValue, initialRule);
+		buildLayout(openingHoursLayout, openingHoursValue, initialRule);
 
 		// add callbacks for the buttons
 		AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
@@ -791,23 +797,23 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 				}
 				if (!r.equals(rules.get(rules.size()-1))) {
-				MenuItem moveDown = menu.add(R.string.move_down);
-				moveDown.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						int current = rules.indexOf(r);
-						if (current < 0) { // not found shouldn't happen
-							Log.e(DEBUG_TAG,"Rule missing from list!");
+					MenuItem moveDown = menu.add(R.string.move_down);
+					moveDown.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							int current = rules.indexOf(r);
+							if (current < 0) { // not found shouldn't happen
+								Log.e(DEBUG_TAG,"Rule missing from list!");
+								return true;
+							}
+							int size = rules.size();
+							rules.remove(current);
+							rules.add(Math.min(size-1, current+1), r);
+							updateString();
+							watcher.afterTextChanged(null);
 							return true;
 						}
-						int size = rules.size();
-						rules.remove(current);
-						rules.add(Math.min(size-1, current+1), r);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}
-				});
+					});
 				}
 				ll.addView(groupHeader);
 				//comments
@@ -842,301 +848,21 @@ public class OpeningHoursFragment extends DialogFragment {
 				final List<YearRange> years = r.getYears();
 				if (years != null && years.size() > 0) {
 					for (final YearRange yr : years) {
-						LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
-						final int startYear = yr.getStartYear();
-						final TextView startYearView = (TextView)yearLayout.findViewById(R.id.start_year);
-						startYearView.setText(Integer.toString(startYear));
-						
-						final TextView endYearView = (TextView)yearLayout.findViewById(R.id.end_year);
-						final int endYear = yr.getEndYear();
-						if (endYear > 0) {
-							endYearView.setText(Integer.toString(endYear));
-						}
-					
-						EditText yearIntervalEdit = (EditText)yearLayout.findViewById(R.id.interval);
-						if (yr.getInterval() > 0) {
-							yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
-						}
-						setTextWatcher(yearIntervalEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int interval = 0;
-								try {
-									interval = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								yr.setInterval(interval);
-							}
-						});
-						addStandardMenuItems(yearLayout, new Delete() {
-							@Override
-							public void delete() {
-								years.remove(yr);
-								if (years.isEmpty()) {
-									r.setYears(null);
-								}
-								updateString();
-								watcher.afterTextChanged(null); // hack to force rebuild of form
-							}
-						});
-						
-						LinearLayout range = (LinearLayout)yearLayout.findViewById(R.id.range);
-						range.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-								int rangeEnd = Math.max(currentYear, startYear)+50;
-								int tempEndYear = yr.getEndYear();
-								if (tempEndYear==YearRange.UNDEFINED_YEAR) {
-									tempEndYear = RangePicker.NOTHING_SELECTED;
-								} else {
-									rangeEnd = Math.max(rangeEnd, tempEndYear+50);
-								}
-								RangePicker.showDialog(getActivity(), R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear,
-									new SetRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setRange(int start, int end) {
-											yr.setStartYear(start);
-											startYearView.setText(Integer.toString(start));
-											if (end != RangePicker.NOTHING_SELECTED) {
-												endYearView.setText(Integer.toString(end));
-												yr.setEndYear(end);
-											} else {
-												endYearView.setText("");
-												yr.setEndYear(YearRange.UNDEFINED_YEAR);
-											}
-											updateString();
-										}
-									}
-								);
-							}
-						});
-						ll.addView(yearLayout);
+						addYearRangeUI(ll, r, years, yr);
 					}
 				}
-				// week list
+				// week range list
 				final List<WeekRange> weeks = r.getWeeks();
 				if (weeks != null && weeks.size() > 0) {
 					for (final WeekRange w : weeks) {
-						LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
-						final TextView startWeekView = (TextView)weekLayout.findViewById(R.id.start_week);
-						final int startWeek = w.getStartWeek();
-						startWeekView.setText(Integer.toString(startWeek));
-
-						final TextView endWeekView = (TextView)weekLayout.findViewById(R.id.end_week);
-						final int endWeek = w.getEndWeek();
-						if (endWeek > 0) {
-							endWeekView.setText(Integer.toString(endWeek));
-						}
-						
-						EditText weekIntervalEdit = (EditText)weekLayout.findViewById(R.id.interval);
-						if (w.getInterval() > 0) {
-							weekIntervalEdit.setText(Integer.toString(w.getInterval()));
-						}
-						setTextWatcher(weekIntervalEdit, new SetValue() {
-							@Override
-							public void set(String value) {
-								int interval = 0;
-								try {
-									interval = Integer.parseInt(value);
-								} catch (NumberFormatException nfex) {
-								}
-								w.setInterval(interval);
-							}
-						});
-						addStandardMenuItems(weekLayout, new Delete() {
-							@Override
-							public void delete() {
-								weeks.remove(w);
-								if (weeks.isEmpty()) {
-									r.setWeeks(null);
-								}
-								updateString();
-								watcher.afterTextChanged(null); // hack to force rebuild of form
-							}
-						});
-						
-						LinearLayout range = (LinearLayout)weekLayout.findViewById(R.id.range);
-						range.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								// need to reget values from w
-								int tempEndWeek = w.getEndWeek();
-								if (tempEndWeek == WeekRange.UNDEFINED_WEEK) {
-									tempEndWeek = RangePicker.NOTHING_SELECTED;
-								}
-								RangePicker.showDialog(getActivity(), R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK, w.getStartWeek(), tempEndWeek,
-									new SetRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setRange(int start, int end) {
-											w.setStartWeek(start);
-											startWeekView.setText(Integer.toString(start));
-											if (end != RangePicker.NOTHING_SELECTED) {
-												endWeekView.setText(Integer.toString(end));
-												w.setEndWeek(end);
-											} else {
-												endWeekView.setText("");
-												w.setEndWeek(WeekRange.UNDEFINED_WEEK);
-											}
-											updateString();			
-										}
-									}
-								);
-							}
-						});
-						ll.addView(weekLayout);
+						addWeekRangeUI(ll, r, weeks, w);
 					}
 				}
 				// date range list
 				final List<DateRange> dateRanges = r.getDates();
 				if (dateRanges != null && dateRanges.size() > 0) {
 					for (final DateRange dateRange : dateRanges) {
-						
-						// cases to consider
-						// date - date
-						// vardate - date
-						// date - vardate
-						// vardate - vardate
-						//
-						final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.daterange, null);
-						setDateRangeValues(dateRange.getStartDate(), dateRange.getEndDate(), dateRangeRow);
-						RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
-						dateRangeLayout.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {		
-								int tempEndYear = YearRange.UNDEFINED_YEAR;
-								Month tempEndMonth = null;
-								int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
-								
-								final DateWithOffset start = dateRange.getStartDate();
-								DateWithOffset end = dateRange.getEndDate();
-								
-								if (end != null) {
-									tempEndYear = end.getYear();
-									tempEndMonth = end.getMonth();
-									tempEndDay = end.getDay();
-								}
-								if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
-									DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-											start.getYear(), start.getMonth(), start.getDay(),
-											tempEndYear, tempEndMonth, tempEndDay,
-											new SetDateRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-												int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-											start.setYear(startYear);
-											start.setMonth(startMonth);
-											start.setDay(startDay);
-											DateWithOffset tempDwo = dateRange.getEndDate();
-											if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-												tempDwo = new DateWithOffset();
-												dateRange.setEndDate(tempDwo);
-											}
-											if (tempDwo != null) {
-												tempDwo.setYear(endYear);
-												tempDwo.setMonth(endMonth);
-												tempDwo.setDay(endDay);
-											}
-											final LinearLayout finalRow = dateRangeRow;  
-											setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-											updateString();
-										}
-									});
-								} else if (start.getVarDate()!=null && (end==null || end.getVarDate()==null)) {
-									DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-											start.getYear(), start.getVarDate(),
-											tempEndYear, tempEndMonth, tempEndDay,
-											new SetDateRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-												int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-											start.setYear(startYear);
-											start.setVarDate(startVarDate);
-											DateWithOffset tempDwo = dateRange.getEndDate();
-											if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-												tempDwo = new DateWithOffset();
-												dateRange.setEndDate(tempDwo);
-											}
-											if (tempDwo != null) {
-												tempDwo.setYear(endYear);
-												tempDwo.setMonth(endMonth);
-												tempDwo.setDay(endDay);
-											}
-											final LinearLayout finalRow = dateRangeRow;  
-											setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-											updateString();
-										}
-									});
-								} else if (start.getVarDate()==null && (end!=null && end.getVarDate()!=null)) {
-									DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-											start.getYear(), start.getMonth(), start.getDay(),
-											tempEndYear, end.getVarDate(),
-											new SetDateRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-												int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-											start.setYear(startYear);
-											start.setMonth(startMonth);
-											start.setDay(startDay);
-
-											dateRange.getEndDate().setYear(endYear);
-											dateRange.getEndDate().setVarDate(endVarDate);
-
-											final LinearLayout finalRow = dateRangeRow;  
-											setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-											updateString();
-										}
-									});
-								} else if (start.getVarDate()!=null && (end!=null && end.getVarDate()!=null)) {
-									DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-											start.getYear(), start.getVarDate(),
-											tempEndYear, end.getVarDate(),
-											new SetDateRangeListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-												int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-											start.setYear(startYear);
-											start.setVarDate(startVarDate);
-
-											dateRange.getEndDate().setYear(endYear);
-											dateRange.getEndDate().setVarDate(endVarDate);
-
-											final LinearLayout finalRow = dateRangeRow;  
-											setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-											updateString();
-										}
-									});
-								}
-							}
-						});
-
-						// add menus
-						if (dateRangeRow != null) {
-							addStandardMenuItems(dateRangeRow, new Delete() {
-								@Override
-								public void delete() {
-									dateRanges.remove(dateRange);
-									if (dateRanges.isEmpty()) {
-										r.setMonthdays(null);
-									}
-									updateString();
-									watcher.afterTextChanged(null); // hack to force rebuild of form
-								}
-							});
-							ll.addView(dateRangeRow);
-						}
+						addDateRangeUI(ll, r, dateRanges, dateRange);
 					}
 				}
 				// Modifier
@@ -1183,164 +909,515 @@ public class OpeningHoursFragment extends DialogFragment {
 			final List<Holiday> holidays = r.getHolidays();
 			if (holidays != null && holidays.size() > 0) {
 				for (final Holiday hd : holidays) {
-					LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
-					Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
-					setSpinnerInitialEntryValue(holidaysSpinner, hd.getType().name());
-					setSpinnerListenerEntryValues(holidaysSpinner, new SetValue() {
-						@Override
-						public void set(String value) {
-							hd.setType(Holiday.Type.valueOf(value));
-						}
-					});
-					addStandardMenuItems(holidayRow,  new Delete() {
-						@Override
-						public void delete() {
-							holidays.remove(hd);
-							if (holidays.isEmpty()) {
-								r.setHolidays(null);
-							}
-							updateString();
-							watcher.afterTextChanged(null); // hack to force rebuild of form
-						}
-					});
-					if (hd.getOffset() != 0) {
-						EditText offset = (EditText) holidayRow.findViewById(R.id.offset);
-						offset.setText(Integer.toString(hd.getOffset()));
-						setTextWatcher(offset, new SetValue() {
-							@Override
-							public void set(String value) {
-								int offset = 0;
-								try {
-									offset = Integer.parseInt(value);
-								} catch (NumberFormatException nfex){
-								}
-								hd.setOffset(offset);
-							}
-						});
-					}
-					ll.addView(holidayRow);
+					addHolidayUI(ll, r, holidays, hd);
 				}
 			}
-			// day list
+			// week day list
 			final List<WeekDayRange> days = r.getDays();
 			if (days != null && days.size() > 0) {
-				final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-				final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
-				
-				Menu menu = addStandardMenuItems(weekDayRow, new Delete() {
-					@Override
-					public void delete() {
-						List<WeekDayRange> temp = new ArrayList<WeekDayRange>(days);
-						for (WeekDayRange d:temp) {
-							if (d.getNths()==null) {
-								days.remove(d);
-							}
-						}
-						updateString();
-						watcher.afterTextChanged(null); // hack to force rebuild of form
-					}
-				});
-				// menu item will be enabled/disabled depending on number of days etc. 
-				MenuItem nthMenuItem = menu.add(R.string.occurrence_in_month);
-				nthMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
-						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
-						setNthListeners(nthContainer, days.get(0));
-						weekDayRow.addView(nthLayout);
-						item.setEnabled(false);
-						return true;
-					}
-				});
-
-				List<WeekDayRange>normal = new ArrayList<WeekDayRange>();
-				List<WeekDayRange>withNth = new ArrayList<WeekDayRange>();
-				for (WeekDayRange d : days) {
-					if (d.getNths()==null || d.getNths().isEmpty()) {
-						normal.add(d);
-					} else {
-						withNth.add(d);
-					}
-				}
-						
-				if (!normal.isEmpty()) {
-					for (WeekDayRange d : normal) {
-						WeekDay startDay = d.getStartDay();
-						WeekDay endDay = d.getEndDay();
-						if (endDay == null) {
-							checkWeekDay(weekDayContainer, startDay.toString());
-						} else {
-							int startIndex = startDay.ordinal();
-							int endIndex = endDay.ordinal();
-							Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
-							for (int i = startIndex; i <= endIndex; i++) {
-								checkWeekDay(weekDayContainer, weekDays.get(i));
-							}
-						}
-					}
-					setWeekDayListeners(weekDayContainer, days, normal, false, nthMenuItem);
-					nthMenuItem.setEnabled(justOneDay(normal));
-					ll.addView(weekDayRow);
-				}
-				
-				if (!withNth.isEmpty()) {
-					for (final WeekDayRange d : withNth) {
-						final LinearLayout weekDayRowNth = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-						final RelativeLayout weekDayContainerNth = (RelativeLayout) weekDayRowNth.findViewById(R.id.weekDayContainer);
-						WeekDay startDay = d.getStartDay();
-						List<Nth>nths = d.getNths();
-						checkWeekDay(weekDayContainerNth, startDay.toString());
-						nthMenuItem.setEnabled(false);
-						LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
-						RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
-						for (Nth nth:nths) {
-							Log.d(DEBUG_TAG,"adding nth " + nth.toString());
-							int startNth = nth.getStartNth();
-							int endNth = nth.getEndNth();
-							if (endNth < 1) {
-								checkNth(nthContainer, startNth);
-							} else {
-								for (int i=startNth;i<= endNth; i++) {
-									checkNth(nthContainer, i);
-								}
-							}
-						}
-						setWeekDayListeners(weekDayContainerNth, days, withNth, true, nthMenuItem);
-						setNthListeners(nthContainer, d);
-						weekDayRowNth.addView(nthLayout);
-						menu = addStandardMenuItems(weekDayRowNth, new Delete() {
-							@Override
-							public void delete() {
-								days.remove(d);
-								updateString();
-								watcher.afterTextChanged(null); // hack to force rebuild of form
-							}
-						});
-						// FIXME hide when not in use
-						EditText offset = (EditText) nthLayout.findViewById(R.id.offset);
-						offset.setText(Integer.toString(d.getOffset()));
-						setTextWatcher(offset, new SetValue() {
-							@Override
-							public void set(String value) {
-								int offset = 0;
-								try {
-									offset = Integer.parseInt(value);
-								} catch (NumberFormatException nfex){
-								}
-								d.setOffset(offset);
-							}
-						});
-							
-						ll.addView(weekDayRowNth);
-					}		
-				}
+				addWeekDayUI(ll, days);
 			}
 
 			// times
 			List<TimeSpan> times = r.getTimes();
 			addTimeSpanUIs(ll, times);
 		}
+	}
+
+	private void addWeekDayUI(LinearLayout ll, final List<WeekDayRange> days) {
+		final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
+		final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
+		
+		Menu menu = addStandardMenuItems(weekDayRow, new Delete() {
+			@Override
+			public void delete() {
+				List<WeekDayRange> temp = new ArrayList<WeekDayRange>(days);
+				for (WeekDayRange d:temp) {
+					if (d.getNths()==null) {
+						days.remove(d);
+					}
+				}
+				updateString();
+				watcher.afterTextChanged(null); // hack to force rebuild of form
+			}
+		});
+		// menu item will be enabled/disabled depending on number of days etc. 
+		MenuItem nthMenuItem = menu.add(R.string.occurrence_in_month);
+		nthMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
+				RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
+				setNthListeners(nthContainer, days.get(0));
+				weekDayRow.addView(nthLayout);
+				item.setEnabled(false);
+				return true;
+			}
+		});
+
+		List<WeekDayRange>normal = new ArrayList<WeekDayRange>();
+		List<WeekDayRange>withNth = new ArrayList<WeekDayRange>();
+		for (WeekDayRange d : days) {
+			if (d.getNths()==null || d.getNths().isEmpty()) {
+				normal.add(d);
+			} else {
+				withNth.add(d);
+			}
+		}
+				
+		if (!normal.isEmpty()) {
+			for (WeekDayRange d : normal) {
+				WeekDay startDay = d.getStartDay();
+				WeekDay endDay = d.getEndDay();
+				if (endDay == null) {
+					checkWeekDay(weekDayContainer, startDay.toString());
+				} else {
+					int startIndex = startDay.ordinal();
+					int endIndex = endDay.ordinal();
+					Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
+					for (int i = startIndex; i <= endIndex; i++) {
+						checkWeekDay(weekDayContainer, weekDays.get(i));
+					}
+				}
+			}
+			setWeekDayListeners(weekDayContainer, days, normal, false, nthMenuItem);
+			nthMenuItem.setEnabled(justOneDay(normal));
+			ll.addView(weekDayRow);
+		}
+		
+		if (!withNth.isEmpty()) {
+			for (final WeekDayRange d : withNth) {
+				final LinearLayout weekDayRowNth = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
+				final RelativeLayout weekDayContainerNth = (RelativeLayout) weekDayRowNth.findViewById(R.id.weekDayContainer);
+				WeekDay startDay = d.getStartDay();
+				List<Nth>nths = d.getNths();
+				checkWeekDay(weekDayContainerNth, startDay.toString());
+				nthMenuItem.setEnabled(false);
+				LinearLayout nthLayout = (LinearLayout) inflater.inflate(R.layout.nth, null);
+				RelativeLayout nthContainer = (RelativeLayout) nthLayout.findViewById(R.id.nthContainer);
+				for (Nth nth:nths) {
+					Log.d(DEBUG_TAG,"adding nth " + nth.toString());
+					int startNth = nth.getStartNth();
+					int endNth = nth.getEndNth();
+					if (endNth < 1) {
+						checkNth(nthContainer, startNth);
+					} else {
+						for (int i=startNth;i<= endNth; i++) {
+							checkNth(nthContainer, i);
+						}
+					}
+				}
+				setWeekDayListeners(weekDayContainerNth, days, withNth, true, nthMenuItem);
+				setNthListeners(nthContainer, d);
+				weekDayRowNth.addView(nthLayout);
+				menu = addStandardMenuItems(weekDayRowNth, new Delete() {
+					@Override
+					public void delete() {
+						days.remove(d);
+						updateString();
+						watcher.afterTextChanged(null); // hack to force rebuild of form
+					}
+				});
+				
+				final View offsetContainer = weekDayRowNth.findViewById(R.id.offset_container);			
+				if (d.getOffset() != 0) {
+					offsetContainer.setVisibility(View.VISIBLE);
+				} else {
+					offsetContainer.setVisibility(View.GONE);
+					MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+					showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							offsetContainer.setVisibility(View.VISIBLE);
+							return true;
+						}	
+					});
+				}
+				
+				EditText offset = (EditText) nthLayout.findViewById(R.id.offset);
+				offset.setText(Integer.toString(d.getOffset()));
+				setTextWatcher(offset, new SetValue() {
+					@Override
+					public void set(String value) {
+						int offset = 0;
+						try {
+							offset = Integer.parseInt(value);
+						} catch (NumberFormatException nfex){
+						}
+						d.setOffset(offset);
+					}
+				});
+					
+				ll.addView(weekDayRowNth);
+			}		
+		}
+	}
+
+	private void addDateRangeUI(LinearLayout ll, final Rule r, final List<DateRange> dateRanges,
+			final DateRange dateRange) {
+		// cases to consider
+		// date - date
+		// vardate - date
+		// date - vardate
+		// vardate - vardate
+		//
+		final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.daterange, null);
+		setDateRangeValues(dateRange.getStartDate(), dateRange.getEndDate(), dateRangeRow);
+		RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
+		dateRangeLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {		
+				int tempEndYear = YearRange.UNDEFINED_YEAR;
+				Month tempEndMonth = null;
+				int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
+				
+				final DateWithOffset start = dateRange.getStartDate();
+				DateWithOffset end = dateRange.getEndDate();
+				
+				if (end != null) {
+					tempEndYear = end.getYear();
+					tempEndMonth = end.getMonth();
+					tempEndDay = end.getDay();
+				}
+				if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
+					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+							start.getYear(), start.getMonth(), start.getDay(),
+							tempEndYear, tempEndMonth, tempEndDay,
+							new SetDateRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+							start.setYear(startYear);
+							start.setMonth(startMonth);
+							start.setDay(startDay);
+							DateWithOffset tempDwo = dateRange.getEndDate();
+							if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+								tempDwo = new DateWithOffset();
+								dateRange.setEndDate(tempDwo);
+							}
+							if (tempDwo != null) {
+								tempDwo.setYear(endYear);
+								tempDwo.setMonth(endMonth);
+								tempDwo.setDay(endDay);
+							}
+							final LinearLayout finalRow = dateRangeRow;  
+							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
+							updateString();
+						}
+					});
+				} else if (start.getVarDate()!=null && (end==null || end.getVarDate()==null)) {
+					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+							start.getYear(), start.getVarDate(),
+							tempEndYear, tempEndMonth, tempEndDay,
+							new SetDateRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+							start.setYear(startYear);
+							start.setVarDate(startVarDate);
+							DateWithOffset tempDwo = dateRange.getEndDate();
+							if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+								tempDwo = new DateWithOffset();
+								dateRange.setEndDate(tempDwo);
+							}
+							if (tempDwo != null) {
+								tempDwo.setYear(endYear);
+								tempDwo.setMonth(endMonth);
+								tempDwo.setDay(endDay);
+							}
+							final LinearLayout finalRow = dateRangeRow;  
+							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
+							updateString();
+						}
+					});
+				} else if (start.getVarDate()==null && (end!=null && end.getVarDate()!=null)) {
+					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+							start.getYear(), start.getMonth(), start.getDay(),
+							tempEndYear, end.getVarDate(),
+							new SetDateRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+							start.setYear(startYear);
+							start.setMonth(startMonth);
+							start.setDay(startDay);
+
+							dateRange.getEndDate().setYear(endYear);
+							dateRange.getEndDate().setVarDate(endVarDate);
+
+							final LinearLayout finalRow = dateRangeRow;  
+							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
+							updateString();
+						}
+					});
+				} else if (start.getVarDate()!=null && (end!=null && end.getVarDate()!=null)) {
+					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+							start.getYear(), start.getVarDate(),
+							tempEndYear, end.getVarDate(),
+							new SetDateRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+							start.setYear(startYear);
+							start.setVarDate(startVarDate);
+
+							dateRange.getEndDate().setYear(endYear);
+							dateRange.getEndDate().setVarDate(endVarDate);
+
+							final LinearLayout finalRow = dateRangeRow;  
+							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
+							updateString();
+						}
+					});
+				}
+			}
+		});
+
+		// add menus
+		if (dateRangeRow != null) {
+			addStandardMenuItems(dateRangeRow, new Delete() {
+				@Override
+				public void delete() {
+					dateRanges.remove(dateRange);
+					if (dateRanges.isEmpty()) {
+						r.setMonthdays(null);
+					}
+					updateString();
+					watcher.afterTextChanged(null); // hack to force rebuild of form
+				}
+			});
+			ll.addView(dateRangeRow);
+		}
+	}
+
+	private void addHolidayUI(LinearLayout ll, final Rule r, final List<Holiday> holidays, final Holiday hd) {
+		LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
+		Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
+		setSpinnerInitialEntryValue(holidaysSpinner, hd.getType().name());
+		setSpinnerListenerEntryValues(holidaysSpinner, new SetValue() {
+			@Override
+			public void set(String value) {
+				hd.setType(Holiday.Type.valueOf(value));
+			}
+		});
+		Menu menu = addStandardMenuItems(holidayRow, new Delete() {
+			@Override
+			public void delete() {
+				holidays.remove(hd);
+				if (holidays.isEmpty()) {
+					r.setHolidays(null);
+				}
+				updateString();
+				watcher.afterTextChanged(null); // hack to force rebuild of form
+			}
+		});
+		final View offsetContainer = holidayRow.findViewById(R.id.offset_container);			
+		if (hd.getOffset() != 0) {
+			offsetContainer.setVisibility(View.VISIBLE);
+		} else {
+			offsetContainer.setVisibility(View.GONE);
+			MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+			showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					offsetContainer.setVisibility(View.VISIBLE);
+					return true;
+				}	
+			});
+		}
+
+		EditText offset = (EditText) holidayRow.findViewById(R.id.offset);
+		offset.setText(Integer.toString(hd.getOffset()));
+		setTextWatcher(offset, new SetValue() {
+			@Override
+			public void set(String value) {
+				int offset = 0;
+				try {
+					offset = Integer.parseInt(value);
+				} catch (NumberFormatException nfex){
+				}
+				hd.setOffset(offset);
+			}
+		});
+		ll.addView(holidayRow);
+	}
+
+	private void addYearRangeUI(LinearLayout ll, final Rule r, final List<YearRange> years, final YearRange yr) {
+		LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
+		final int startYear = yr.getStartYear();
+		final TextView startYearView = (TextView)yearLayout.findViewById(R.id.start_year);
+		startYearView.setText(Integer.toString(startYear));
+		
+		final TextView endYearView = (TextView)yearLayout.findViewById(R.id.end_year);
+		final int endYear = yr.getEndYear();
+		if (endYear > 0) {
+			endYearView.setText(Integer.toString(endYear));
+		}
+		final View intervalContainer = yearLayout.findViewById(R.id.interval_container);
+		EditText yearIntervalEdit = (EditText)yearLayout.findViewById(R.id.interval);
+		if (yr.getInterval() > 0) {
+			intervalContainer.setVisibility(View.VISIBLE);
+			yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
+		} else {
+			intervalContainer.setVisibility(View.GONE);
+		}
+		setTextWatcher(yearIntervalEdit, new SetValue() {
+			@Override
+			public void set(String value) {
+				int interval = 0;
+				try {
+					interval = Integer.parseInt(value);
+				} catch (NumberFormatException nfex) {
+				}
+				yr.setInterval(interval);
+			}
+		});
+		Menu menu = addStandardMenuItems(yearLayout, new Delete() {
+			@Override
+			public void delete() {
+				years.remove(yr);
+				if (years.isEmpty()) {
+					r.setYears(null);
+				}
+				updateString();
+				watcher.afterTextChanged(null); // hack to force rebuild of form
+			}
+		});
+		MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
+		showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				intervalContainer.setVisibility(View.VISIBLE);
+				return true;
+			}	
+		});
+		
+		LinearLayout range = (LinearLayout)yearLayout.findViewById(R.id.range);
+		range.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+				int rangeEnd = Math.max(currentYear, startYear)+50;
+				int tempEndYear = yr.getEndYear();
+				if (tempEndYear==YearRange.UNDEFINED_YEAR) {
+					tempEndYear = RangePicker.NOTHING_SELECTED;
+				} else {
+					rangeEnd = Math.max(rangeEnd, tempEndYear+50);
+				}
+				RangePicker.showDialog(getActivity(), R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear,
+					new SetRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setRange(int start, int end) {
+							yr.setStartYear(start);
+							startYearView.setText(Integer.toString(start));
+							if (end != RangePicker.NOTHING_SELECTED) {
+								endYearView.setText(Integer.toString(end));
+								yr.setEndYear(end);
+							} else {
+								endYearView.setText("");
+								yr.setEndYear(YearRange.UNDEFINED_YEAR);
+							}
+							updateString();
+						}
+					}
+				);
+			}
+		});
+		ll.addView(yearLayout);
+	}
+
+	private void addWeekRangeUI(LinearLayout ll, final Rule r, final List<WeekRange> weeks, final WeekRange w) {
+		LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
+		final TextView startWeekView = (TextView)weekLayout.findViewById(R.id.start_week);
+		final int startWeek = w.getStartWeek();
+		startWeekView.setText(Integer.toString(startWeek));
+
+		final TextView endWeekView = (TextView)weekLayout.findViewById(R.id.end_week);
+		final int endWeek = w.getEndWeek();
+		if (endWeek > 0) {
+			endWeekView.setText(Integer.toString(endWeek));
+		}
+		
+		final View intervalContainer = weekLayout.findViewById(R.id.interval_container);
+		EditText weekIntervalEdit = (EditText)weekLayout.findViewById(R.id.interval);
+		if (w.getInterval() > 0) {
+			intervalContainer.setVisibility(View.VISIBLE);
+			weekIntervalEdit.setText(Integer.toString(w.getInterval()));
+		} else {
+			intervalContainer.setVisibility(View.GONE);
+		}
+		setTextWatcher(weekIntervalEdit, new SetValue() {
+			@Override
+			public void set(String value) {
+				int interval = 0;
+				try {
+					interval = Integer.parseInt(value);
+				} catch (NumberFormatException nfex) {
+				}
+				w.setInterval(interval);
+			}
+		});
+		Menu menu = addStandardMenuItems(weekLayout, new Delete() {
+			@Override
+			public void delete() {
+				weeks.remove(w);
+				if (weeks.isEmpty()) {
+					r.setWeeks(null);
+				}
+				updateString();
+				watcher.afterTextChanged(null); // hack to force rebuild of form
+			}
+		});
+		MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
+		showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				intervalContainer.setVisibility(View.VISIBLE);
+				return true;
+			}	
+		});
+		
+		LinearLayout range = (LinearLayout)weekLayout.findViewById(R.id.range);
+		range.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// need to reget values from w
+				int tempEndWeek = w.getEndWeek();
+				if (tempEndWeek == WeekRange.UNDEFINED_WEEK) {
+					tempEndWeek = RangePicker.NOTHING_SELECTED;
+				}
+				RangePicker.showDialog(getActivity(), R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK, w.getStartWeek(), tempEndWeek,
+					new SetRangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void setRange(int start, int end) {
+							w.setStartWeek(start);
+							startWeekView.setText(Integer.toString(start));
+							if (end != RangePicker.NOTHING_SELECTED) {
+								endWeekView.setText(Integer.toString(end));
+								w.setEndWeek(end);
+							} else {
+								endWeekView.setText("");
+								w.setEndWeek(WeekRange.UNDEFINED_WEEK);
+							}
+							updateString();			
+						}
+					}
+				);
+			}
+		});
+		ll.addView(weekLayout);
 	}
 
 	private void setDateRangeValues(final DateWithOffset start, final DateWithOffset end, LinearLayout dateRangeRow) {
@@ -1455,9 +1532,10 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void addTimeSpanUIs(LinearLayout ll, final List<TimeSpan> times) {
+	private void addTimeSpanUIs(@NonNull final LinearLayout ll, final List<TimeSpan> times) {
 		if (times != null && times.size() > 0) {
 			Log.d(DEBUG_TAG, "#time spans " + times.size());
+			Menu menu = null;
 			for (final TimeSpan ts : times) {
 				boolean hasStartEvent = ts.getStartEvent() != null;
 				boolean hasEndEvent = ts.getEndEvent() != null;
@@ -1483,7 +1561,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setEnd(toMins(rightPinValue));
 							updateString();
 						}});
-					Menu menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null,  menu);
 					ll.addView(timeRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && extendedTime) {
@@ -1515,7 +1593,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setEnd(toMins(rightPinValue));
 							updateString();
 						}});
-					Menu menu = addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, extendedTimeBar, menu);
 					ll.addView(timeExtendedRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
@@ -1537,7 +1615,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
@@ -1563,7 +1641,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getEndEvent().setEvent(value);
 						}
 					});
-					Menu menu =addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					menu =addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
@@ -1608,7 +1686,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getStartEvent().setEvent(value);
 						}
 					});
-					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					if (timeBar.getVisibility()==View.VISIBLE) {
 						addTimeSpanMenus(timeBar, null, menu);
 					}
@@ -1651,7 +1729,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && hasStartEvent) {
@@ -1676,23 +1754,33 @@ public class OpeningHoursFragment extends DialogFragment {
 					ll.addView(tv);
 					return;
 				}
-				if (hasInterval) {
-					LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.interval, null);
-					EditText interval = (EditText)intervalLayout.findViewById(R.id.interval);
-					interval.setText(Integer.toString(ts.getInterval()));
-					setTextWatcher(interval, new SetValue() {
-						@Override
-						public void set(String value) {
-							int interval = 0;
-							try {
-								interval = Integer.parseInt(value);
-							} catch (NumberFormatException nfex) {
-							}
-							ts.setInterval(interval);
+				final LinearLayout intervalLayout = (LinearLayout) inflater.inflate(R.layout.interval, null);
+				EditText intervalEdit = (EditText)intervalLayout.findViewById(R.id.interval);
+				intervalEdit.setText(Integer.toString(ts.getInterval()));
+				setTextWatcher(intervalEdit, new SetValue() {
+					@Override
+					public void set(String value) {
+						int interval = 0;
+						try {
+							interval = Integer.parseInt(value);
+						} catch (NumberFormatException nfex) {
 						}
+						ts.setInterval(interval);
+					}
+				});
+				ll.addView(intervalLayout);
+				if (hasInterval) {
+					intervalLayout.setVisibility(View.VISIBLE);
+				} else {
+					intervalLayout.setVisibility(View.GONE);
+					MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
+					showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							intervalLayout.setVisibility(View.VISIBLE);
+							return true;
+						}	
 					});
-					// addStandardMenuItems(intervalLayout, null);
-					ll.addView(intervalLayout);
 				}
 			}
 		}
