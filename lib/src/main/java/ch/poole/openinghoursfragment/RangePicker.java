@@ -56,11 +56,7 @@ public class RangePicker extends DialogFragment
 
 		FragmentManager fm = activity.getSupportFragmentManager();
 	    RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent, listener);
-	    if (rangePickerFragment != null) {
-	    	rangePickerFragment.show(fm, TAG);
-	    } else {
-	    	Log.e(DEBUG_TAG,"Unable to create range picker dialog ");
-	    }
+	    rangePickerFragment.show(fm, TAG);
 	}
 	
 	private static void dismissDialog(FragmentActivity activity) {

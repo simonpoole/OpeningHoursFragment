@@ -36,7 +36,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,21 +53,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import ch.poole.openinghoursparser.DateRange;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Event;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.Holiday.Type;
 import ch.poole.openinghoursparser.Month;
-import ch.poole.openinghoursparser.DateRange;
 import ch.poole.openinghoursparser.Nth;
 import ch.poole.openinghoursparser.OpeningHoursParser;
 import ch.poole.openinghoursparser.ParseException;
@@ -509,6 +506,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 						Holiday holiday = new Holiday();
 						holiday.setType(Type.PH);
+						holidays.add(holiday);
 						updateString();
 						watcher.afterTextChanged(null);
 						return true;
@@ -834,7 +832,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				if (r.isTwentyfourseven()) {
 					Log.d(DEBUG_TAG, "24/7 " + r.toString());
 					LinearLayout twentyFourSeven = (LinearLayout) inflater.inflate(R.layout.twentyfourseven, null);
-					menu = addStandardMenuItems(twentyFourSeven, new Delete() {
+					addStandardMenuItems(twentyFourSeven, new Delete() {
 						@Override
 						public void delete() {
 							r.setTwentyfourseven(false);
