@@ -31,7 +31,7 @@
                 custom:connectToRight="true"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorPrimary"
-                custom:textColor="@android:color/black"
+                custom:textColor="?android:attr/textColorPrimary"
                 custom:pinMinFont="10sp"
                 custom:pinRadius="14sp"
                 custom:rangeBar="false"

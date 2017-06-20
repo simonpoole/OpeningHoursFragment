@@ -10,16 +10,24 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -36,6 +44,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -45,8 +54,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -86,6 +97,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private static final String STYLE_KEY = "style";
 
 	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
+	
+	private Context context = null;
 
 	private LayoutInflater inflater = null;
 
@@ -103,11 +116,11 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	private OnSaveListener saveListener = null;
 	
-	private TemplateListener templateListener = null;
-	
 	List<String> weekDays = WeekDay.nameValues();
 	
 	List<String> months = Month.nameValues();
+
+	private SQLiteDatabase mDatabase;
 
 	static PinTextFormatter timeFormater = new PinTextFormatter() {
 		@Override
@@ -142,17 +155,13 @@ public class OpeningHoursFragment extends DialogFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnSaveListener");
         }
-        try {
-            templateListener = (TemplateListener) activity;
-        } catch (ClassCastException e) {
-            // optional
-        }
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(DEBUG_TAG, "onCreate");
+		mDatabase = new TemplateDatabaseHelper(getContext()).getReadableDatabase();
 	}
 
 	@Override
@@ -174,19 +183,21 @@ public class OpeningHoursFragment extends DialogFragment {
 			styleRes = savedInstanceState.getInt(STYLE_KEY);
 		} else {
 			key = getArguments().getString(KEY_KEY);
-			openingHoursValue = getArguments().getString(VALUE_KEY);
+			//openingHoursValue = getArguments().getString(VALUE_KEY);
 			styleRes = getArguments().getInt(STYLE_KEY);
 		}
 		if (styleRes == 0) {
 			styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
 		}
+		if (openingHoursValue == null) {
+			openingHoursValue = TemplateDatabase.getDefault(mDatabase);
+		}
 		
-		Context context =  new ContextThemeWrapper(getActivity(), styleRes);
+		context =  new ContextThemeWrapper(getActivity(), styleRes);
 		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 		
-
 		buildLayout(openingHoursLayout, openingHoursValue);
 
 		// add callbacks for the buttons
@@ -265,11 +276,16 @@ public class OpeningHoursFragment extends DialogFragment {
 				Log.e(DEBUG_TAG, err.getMessage());
 			}
 			
-			FloatingActionButton add = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
-			add.setOnClickListener(new OnClickListener() {
+			class AddRuleListener implements OnMenuItemClickListener {
+				String ruleString;
+				
+				AddRuleListener(String rule) {
+					ruleString = rule;
+				}
+				
 				@Override
-				public void onClick(View v) {
-					OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream("Mo 6:00-20:00".getBytes()));
+				public boolean onMenuItemClick(MenuItem item) {
+					OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(ruleString.getBytes()));
 					List<Rule> rules2 = null;
 					try {
 						rules2 = parser.rules(false);
@@ -283,6 +299,47 @@ public class OpeningHoursFragment extends DialogFragment {
 						updateString();
 						watcher.afterTextChanged(null); // hack to force rebuild of form
 					}
+					return true;
+				}
+	        	
+	        }
+			final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
+			fab.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+			        PopupMenu popup = new PopupMenu(context, fab);
+
+			        MenuItem addRule = popup.getMenu().add(R.string.add_rule);
+			        addRule.setOnMenuItemClickListener(new AddRuleListener("Mo 6:00-20:00"));
+			        MenuItem addRule247 = popup.getMenu().add(R.string.add_rule_247);
+			        addRule247.setOnMenuItemClickListener(new AddRuleListener("24/7"));
+			        MenuItem loadTemplate = popup.getMenu().add(R.string.load_template);
+			        loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							loadTemplate(context);
+							return true;
+						}
+			        });
+					MenuItem saveTemplate = popup.getMenu().add(R.string.save_to_template);
+					saveTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							showTemplateDialog(new TemplateDatabaseHelper(context).getWritableDatabase(), false, -1);
+							return true;
+						}
+					});					
+			        MenuItem refresh = popup.getMenu().add(R.string.refresh);
+			        refresh.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							updateString();
+							watcher.afterTextChanged(null); // hack to force rebuild of form
+							return true;
+						}
+			        });
+					popup.show();//showing popup menu
 				}
 			});
 		}
@@ -1435,7 +1492,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					Menu menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
-					addTickMenus(timeBar, null,  menu);
+					addTimeSpanMenus(timeBar, null,  menu);
 					ll.addView(timeRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && extendedTime) {
 					Log.d(DEBUG_TAG, "t-x " + ts.toString());
@@ -1467,7 +1524,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					Menu menu = addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
-					addTickMenus(timeBar, extendedTimeBar, menu);
+					addTimeSpanMenus(timeBar, extendedTimeBar, menu);
 					ll.addView(timeExtendedRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
 					Log.d(DEBUG_TAG, "pot " + ts.toString());
@@ -1489,7 +1546,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
 					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-					addTickMenus(timeBar, null, menu);
+					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
 					Log.d(DEBUG_TAG, "t-e " + ts.toString());
@@ -1515,7 +1572,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					});
 					Menu menu =addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-					addTickMenus(timeBar, null, menu);
+					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-t " + ts.toString());
@@ -1561,7 +1618,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					if (timeBar.getVisibility()==View.VISIBLE) {
-						addTickMenus(timeBar, null, menu);
+						addTimeSpanMenus(timeBar, null, menu);
 					}
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
@@ -1603,7 +1660,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
 					Menu menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-					addTickMenus(timeBar, null, menu);
+					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && hasStartEvent) {
 					Log.d(DEBUG_TAG, "e- " + ts.toString());
@@ -1658,8 +1715,19 @@ public class OpeningHoursFragment extends DialogFragment {
 		timeBar.setRangePinsByValue(start, end);
 		timeBar.setVisibleTickInterval(60/interval);
 	}
+	
+	private void changeStart(final RangeBar timeBar, float newTickStart) {
+		int interval = (int)timeBar.getTickInterval();
+		int start = toMins(timeBar.getLeftPinValue());
+		start = Math.round(((float)start)/interval)*interval;
+		int end = toMins(timeBar.getRightPinValue());
+		end = Math.round(((float)end)/interval)*interval;
+		timeBar.setTickStart(newTickStart);
+		timeBar.setRangePinsByValue(start, end);
+		
+	}
 
-	private void addTickMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
+	private void addTimeSpanMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
 
 		final MenuItem item15 = menu.add(R.string.ticks_15_minute);
 		final MenuItem item5 = menu.add(R.string.ticks_5_minute);
@@ -1717,6 +1785,21 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 		if (((int)timeBar.getTickInterval()) != 15) {
 			item15.setEnabled(true);
+		}
+		
+		if ((int)timeBar.getTickStart() > 0 || (timeBar2 != null && (int)timeBar2.getTickStart() > 0)) {
+			final MenuItem expand = menu.add(R.string.start_at_midnight);
+			expand.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					changeStart(timeBar, 0f);
+					if (timeBar2 != null) {
+						changeStart(timeBar2, 0f);
+					}	
+					expand.setEnabled(false);
+					return true;
+				}
+			});
 		}
 	}
 
@@ -2038,6 +2121,146 @@ public class OpeningHoursFragment extends DialogFragment {
 			Log.d(DEBUG_TAG, "got null view in getView");
 		}
 		return null;
+	}
+	
+	Cursor templateCursor;
+	TemplateAdapter templateAdapter;
+	AlertDialog templateDialog;
+	
+	
+	void loadTemplate(Context context) {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+		View templateView = (View) inflater.inflate(R.layout.template_list, null);
+		alertDialog.setTitle(R.string.load_templates_title);
+		alertDialog.setView(templateView);
+		ListView lv = (ListView) templateView.findViewById(R.id.listView1);
+		final SQLiteDatabase writableDb = new TemplateDatabaseHelper(context).getWritableDatabase();
+		templateCursor = writableDb.rawQuery(TemplateDatabase.QUERY_ALL, null);
+		templateAdapter = new TemplateAdapter(writableDb, context, templateCursor);
+		lv.setAdapter(templateAdapter);		
+		alertDialog.setNegativeButton(R.string.Cancel, null);
+		alertDialog.setOnDismissListener(new OnDismissListener(){
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				templateCursor.close();
+				writableDb.close();
+			}
+		});
+		templateDialog = alertDialog.show();
+	}
+	
+	private class TemplateAdapter extends CursorAdapter {	
+		final SQLiteDatabase db;
+		
+		public TemplateAdapter(final SQLiteDatabase db, Context context, Cursor cursor) {
+			super(context, cursor, 0);
+			this.db = db;
+		}
+
+		@Override
+		public View newView(Context context, Cursor cursor, ViewGroup parent) {
+			Log.d(DEBUG_TAG, "newView");
+			View view = LayoutInflater.from(context).inflate(R.layout.template_list_item, parent, false);
+			return view;
+		}
+
+		@Override
+		public void bindView(final View view, final Context context, Cursor cursor) {
+			Log.d(DEBUG_TAG, "bindView");
+			final int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+			view.setTag(id);
+			Log.d(DEBUG_TAG, "bindView id " + id);
+			boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD))==1;
+			String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
+			TextView nameView = (TextView) view.findViewById(R.id.name);
+			nameView.setText(isDefault ? getActivity().getString(R.string.is_default, name): name);
+			final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
+			nameView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					text.removeTextChangedListener(watcher);
+					text.setText(template);
+					text.addTextChangedListener(watcher);
+					watcher.afterTextChanged(null);
+					templateDialog.dismiss();
+				}
+			});
+			nameView.setLongClickable(true);
+			nameView.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					Integer id = (Integer) view.getTag();
+					showTemplateDialog(db, true, id != null ? id.intValue() : -1);
+					return true;
+				}
+			});
+		}
+	}
+	
+	/**
+	 * SHow a dialog for editing and saving a template
+	 * 
+	 * @param db		a writeable instance of the template database
+	 * @param existing	true if this is not a new template 
+	 * @param id		the rowid of the template in the database or -1 if not saved yet
+	 */
+	private void showTemplateDialog(@NonNull final SQLiteDatabase db, final boolean existing, final int id) {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+		View templateView = (View) inflater.inflate(R.layout.template_item, null);
+		alertDialog.setView(templateView);
+		final CheckBox defaultCheck = (CheckBox)templateView.findViewById(R.id.is_default);
+		final EditText nameEdit = (EditText)templateView.findViewById(R.id.template_name);
+		if (existing) {
+			Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[]{Integer.toString(id)});
+			if (cursor.moveToFirst()) {
+				boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD))==1;		
+				defaultCheck.setChecked(isDefault);
+				String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));			
+				nameEdit.setText(name);
+			} else {
+				Log.e(DEBUG_TAG,"template id " + Integer.toString(id) + " not found");
+			}
+			cursor.close();
+
+			alertDialog.setTitle(R.string.edit_template);
+			alertDialog.setNeutralButton(R.string.Delete, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Log.d(DEBUG_TAG,"deleting template " + Integer.toString(id));
+					TemplateDatabase.delete(db, id);
+					newCursor(db);
+				}
+			});
+		} else {
+			alertDialog.setTitle(R.string.save_template);
+		}
+		alertDialog.setNegativeButton(R.string.Cancel, null);
+
+		alertDialog.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (!existing) {
+					TemplateDatabase.add(db, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
+					db.close();
+				} else {
+					TemplateDatabase.update(db, id, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
+					newCursor(db);
+				}
+			}
+		});
+		alertDialog.show();
+	}
+	
+	/**
+	 * Replace the current cursor for the template database
+	 * 
+	 * @param db	the template database
+	 */
+	private void newCursor(@NonNull final SQLiteDatabase db) {
+		Cursor newCursor = db.rawQuery(TemplateDatabase.QUERY_ALL, null);
+		Cursor oldCursor = templateAdapter.swapCursor(newCursor);
+		oldCursor.close();
+		templateAdapter.notifyDataSetChanged();
 	}
 	
 	private int dpToPixels(int dp) {

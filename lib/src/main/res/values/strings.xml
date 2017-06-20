@@ -4,6 +4,19 @@
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
     
+    <string name="add_rule">Add rule</string>
+    <string name="add_rule_247">Add rule for 24/7</string>
+    <string name="load_template">Load template</string>
+    <string name="save_to_template">Save to template</string>
+    <string name="refresh">Refresh</string>
+    <string name="load_templates_title">Load and manage templates</string>
+    <string name="save_template">Save template</string>
+    <string name="edit_template">Edit template</string>
+    <string name="name_legend">Name:</string>
+    <string name="default_legend">Default:</string>
+    
+    <string name="is_default">%1$s (default)</string>
+    
     <string name="group_header">Group %1$s</string>
     <string name="rule_header">Rule %1$s</string>
     
@@ -19,6 +32,7 @@
     <string name="variable_time_time">Var. time - time</string>
     <string name="time_variable_time">Time - var. time</string>
     <string name="variable_time_variable_time">Var. time - var. time</string>
+    <string name="start_at_midnight">Start at midnight</string>
     <string name="week_day_range">Add week day range</string>
     <string name="occurrence_in_month">Add occurrence in month</string>
     <string name="daterange_menu">Add date range ...</string>

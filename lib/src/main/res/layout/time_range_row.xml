@@ -34,7 +34,7 @@
             custom:selectorColor="?attr/colorAccent"
             custom:rangeBarColor="?attr/colorAccent"
             custom:pinColor="?attr/colorPrimary"
-            custom:textColor="@android:color/black" />
+            custom:textColor="?android:attr/textColorPrimary" />
 
         <include layout="@layout/menu" />
     </LinearLayout>
