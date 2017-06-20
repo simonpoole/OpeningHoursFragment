@@ -89,15 +89,17 @@ import ch.poole.rangebar.RangeBar.OnRangeBarChangeListener;
 import ch.poole.rangebar.RangeBar.PinTextFormatter;
 
 public class OpeningHoursFragment extends DialogFragment {
+	
+	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
 	private static final String VALUE_KEY = "value";
 
 	private static final String KEY_KEY = "key";
 	
 	private static final String STYLE_KEY = "style";
-
-	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 	
+	private static final String RULE_KEY = "rule";
+
 	private Context context = null;
 
 	private LayoutInflater inflater = null;
@@ -132,13 +134,14 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	/**
 	 */
-	static public OpeningHoursFragment newInstance(String key,String value, int style) {
+	static public OpeningHoursFragment newInstance(String key, String value, int style, int rule) {
 		OpeningHoursFragment f = new OpeningHoursFragment();
 
 		Bundle args = new Bundle();
 		args.putSerializable(KEY_KEY, key);
 		args.putSerializable(VALUE_KEY, value);
 		args.putInt(STYLE_KEY, style);
+		args.putInt(RULE_KEY, rule);
 
 		f.setArguments(args);
 		// f.setShowsDialog(true);
@@ -176,6 +179,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		int initialRule = -1;
 		if (savedInstanceState != null) {
 			Log.d(DEBUG_TAG,"Restoring from saved state");
 			key = savedInstanceState.getString(KEY_KEY);
@@ -183,8 +187,9 @@ public class OpeningHoursFragment extends DialogFragment {
 			styleRes = savedInstanceState.getInt(STYLE_KEY);
 		} else {
 			key = getArguments().getString(KEY_KEY);
-			//openingHoursValue = getArguments().getString(VALUE_KEY);
+			openingHoursValue = getArguments().getString(VALUE_KEY);
 			styleRes = getArguments().getInt(STYLE_KEY);
+			initialRule = getArguments().getInt(RULE_KEY);
 		}
 		if (styleRes == 0) {
 			styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
@@ -198,7 +203,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		
 		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 		
-		buildLayout(openingHoursLayout, openingHoursValue);
+		final ScrollView sv = buildLayout(openingHoursLayout, openingHoursValue, initialRule);
 
 		// add callbacks for the buttons
 		AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
@@ -220,11 +225,12 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 
 	/**
+	 * Build the parts of the layout that only needs to be done once
 	 * 
-	 * @param openingHoursLayout
-	 * @param openingHoursValue
+	 * @param openingHoursLayout	the layout
+	 * @param openingHoursValue		the OH value
 	 */
-	private void buildLayout(LinearLayout openingHoursLayout, String openingHoursValue) {
+	private ScrollView buildLayout(LinearLayout openingHoursLayout, String openingHoursValue, final int initialRule) {
 		text = (EditText) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
 		final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
 		if (text != null && sv != null) {
@@ -252,7 +258,11 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					};
 					text.removeCallbacks(rebuild);
-					text.postDelayed(rebuild, 500);
+					if (s != null) {
+						text.postDelayed(rebuild, 500);
+					} else {
+						text.postDelayed(rebuild, 100); // a direct post currently doesn't work
+					}
 				}
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -298,11 +308,18 @@ public class OpeningHoursFragment extends DialogFragment {
 						rules.add(rules2.get(0));
 						updateString();
 						watcher.afterTextChanged(null); // hack to force rebuild of form
+						text.postDelayed(new Runnable() { // use post to ensure view has been rebuilt
+							@Override
+							public void run() {
+								ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false); // scroll to bottom
+							}
+						}, 200);
+						
 					}
 					return true;
 				}
-	        	
 	        }
+			
 			final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
 			fab.setOnClickListener(new OnClickListener() {
 				@Override
@@ -343,6 +360,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				}
 			});
 		}
+		return sv;
 	}
 	
 	/**
@@ -383,37 +401,11 @@ public class OpeningHoursFragment extends DialogFragment {
 		LinearLayout ll = new LinearLayout(getActivity());
 		ll.setPadding(0, 0, 0, dpToPixels(64));
 		ll.setOrientation(LinearLayout.VERTICAL);
-		// LinearLayout.LayoutParams layoutParams = new
-		// LinearLayout.LayoutParams(
-		// LinearLayout.LayoutParams.MATCH_PARENT,
-		// LinearLayout.LayoutParams.WRAP_CONTENT);
-		// layoutParams.setMargins(20, 20, 20, 20);
-		// ll.setLayoutParams(layoutParams);
 		sv.addView(ll);
-		//
-
-		if (false) { // group mode
-			List<ArrayList<Rule>> mergeableRules = Util.getMergeableRules(rules);
-			for (ArrayList<Rule> ruleList : mergeableRules) {	
-				addRules(true, ruleList, ll);
-			}
-		} else {
-			addRules(false, rules, ll);
-		}
+		addRules(false, rules, ll);
 	}
 
 	private void addRules(boolean groupMode, final List<Rule> rules, LinearLayout ll) {
-		// some standard static elements
-		TextView dash = new TextView(getActivity());
-		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 0.0f);
-		dash.setLayoutParams(params);
-		dash.setText("-");
-		dash.setGravity(Gravity.CENTER_VERTICAL);
-		TextView comma = new TextView(getActivity());
-		comma.setLayoutParams(params);
-		comma.setText(",");
-		comma.setGravity(Gravity.CENTER_VERTICAL);
-		
 		boolean first = true;
 		int headerCount = 1;
 		for (final Rule r:rules) {
