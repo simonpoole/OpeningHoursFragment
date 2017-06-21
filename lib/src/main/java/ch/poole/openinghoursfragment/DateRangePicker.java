@@ -48,6 +48,8 @@ public class DateRangePicker extends DialogFragment
 	
 	private static final String START_VARDATE = "startVarDate";
 	
+	private static final String START_ONLY = "startOnly";
+	
 	private static final String END_YEAR = "endYear";
 
 	private static final String END_MONTH = "endMonth";
@@ -71,7 +73,8 @@ public class DateRangePicker extends DialogFragment
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
-	    DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, 
+	    DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null,
+	    		false,
 	    		endYear, endMonth, endDay, null, listener);
 	    datePickerFragment.show(fm, TAG);
 	}
@@ -85,6 +88,7 @@ public class DateRangePicker extends DialogFragment
 
 		FragmentManager fm = activity.getSupportFragmentManager();
 	    DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, 
+	    		false,
 	    		endYear, endMonth, endDay, null, listener);
 	    datePickerFragment.show(fm, TAG);
 	}
@@ -98,6 +102,7 @@ public class DateRangePicker extends DialogFragment
 
 		FragmentManager fm = activity.getSupportFragmentManager();
 	    DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, 
+	    		false,
 	    		endYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, endVarDate, listener);
 	    datePickerFragment.show(fm, TAG);
 	}
@@ -111,7 +116,34 @@ public class DateRangePicker extends DialogFragment
 
 		FragmentManager fm = activity.getSupportFragmentManager();
 	    DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, 
+	    		false,
 	    		endYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, endVarDate, listener);
+	    datePickerFragment.show(fm, TAG);
+	}
+	
+	static public void showDialog(FragmentActivity activity, 
+			int title,
+			int startYear, Month startMonth, int startDay,
+			SetDateRangeListener listener) {
+		dismissDialog(activity);
+
+		FragmentManager fm = activity.getSupportFragmentManager();
+	    DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, 
+	    		true,
+	    		YearRange.UNDEFINED_YEAR, null, DateWithOffset.UNDEFINED_MONTH_DAY, null, listener);
+	    datePickerFragment.show(fm, TAG);
+	}
+	
+	static public void showDialog(FragmentActivity activity, 
+			int title,
+			int startYear, VarDate startVarDate,
+			SetDateRangeListener listener) {
+		dismissDialog(activity);
+
+		FragmentManager fm = activity.getSupportFragmentManager();
+	    DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, 
+	    		true,
+	    		YearRange.UNDEFINED_YEAR, null, DateWithOffset.UNDEFINED_MONTH_DAY, null, listener);
 	    datePickerFragment.show(fm, TAG);
 	}
 	
@@ -128,6 +160,7 @@ public class DateRangePicker extends DialogFragment
     /**
      */
     static private DateRangePicker newInstance(int title, int startYear, @Nullable Month startMonth, int startDay, @Nullable VarDate startVarDate, 
+    		boolean startOnly,
     		int endYear, @Nullable Month endMonth, int endDay, @Nullable VarDate endVarDate, @NonNull SetDateRangeListener listener) {
     	DateRangePicker f = new DateRangePicker();
         Bundle args = new Bundle();
@@ -136,6 +169,7 @@ public class DateRangePicker extends DialogFragment
         args.putSerializable(START_MONTH, startMonth);
         args.putInt(START_DAY, startDay);
         args.putSerializable(START_VARDATE, startVarDate);
+        args.putBoolean(START_ONLY, startOnly);
         args.putInt(END_YEAR, endYear);
         args.putSerializable(END_MONTH, endMonth);
         args.putInt(END_DAY, endDay);
@@ -180,6 +214,8 @@ public class DateRangePicker extends DialogFragment
     	int endYear = getArguments().getInt(END_YEAR);
     	Month endMonth = (Month) getArguments().getSerializable(END_MONTH);
     	int endDay = getArguments().getInt(END_DAY);	
+    	
+    	boolean startOnly =  getArguments().getBoolean(START_ONLY);
     	
     	final SetDateRangeListener listener = (SetDateRangeListener) getArguments().getSerializable(LISTENER);
     	
@@ -241,6 +277,7 @@ public class DateRangePicker extends DialogFragment
 			npvStartVarDate.setValue(startVarDate.ordinal()+1);
 		}
 	   	
+		
 		final NumberPickerView npvEndYear = (NumberPickerView)layout.findViewById(R.id.endYear);
 		npvEndYear.setDisplayedValues(yearValues);
 	   	npvEndYear.setMinValue(YearRange.FIRST_VALID_YEAR-1);
@@ -251,34 +288,41 @@ public class DateRangePicker extends DialogFragment
 		final NumberPickerView npvEndMonth = (NumberPickerView)layout.findViewById(R.id.endMonth);
 		final NumberPickerView npvEndDay = (NumberPickerView)layout.findViewById(R.id.endDay);
 		
-		if (endVarDate == null) {
+		if (startOnly) {
+			npvEndYear.setVisibility(View.GONE);
 			npvEndVarDate.setVisibility(View.GONE);
-			npvEndMonth.setVisibility(View.VISIBLE);
-			npvEndDay.setVisibility(View.VISIBLE);
-			
-			String[] tempMonthValues = new String[monthValues.length+1];
-			tempMonthValues[0] = "-";
-			for(int i=0;i < monthValues.length;i++) {
-				tempMonthValues[i+1] = monthValues[i];
-			}
-			npvEndMonth.setDisplayedValues(tempMonthValues);
-			npvEndMonth.setMinValue(0);
-			npvEndMonth.setMaxValue(12);
-			npvEndMonth.setValue(endMonth != null ? endMonth.ordinal()+1 : 0);
-			
-			npvEndDay.setDisplayedValues(dayValues);
-		   	npvEndDay.setMinValue(0);
-		   	npvEndDay.setMaxValue(31);
-		   	npvEndDay.setValue(endDay != DateWithOffset.UNDEFINED_MONTH_DAY ? endDay : 0);
-		} else {
-			npvEndVarDate.setVisibility(View.VISIBLE);
 			npvEndMonth.setVisibility(View.GONE);
 			npvEndDay.setVisibility(View.GONE);
-			
-			npvEndVarDate.setDisplayedValues(varDateValues);
-			npvEndVarDate.setMinValue(1);
-			npvEndVarDate.setMaxValue(VarDate.values().length);
-			npvEndVarDate.setValue(endVarDate.ordinal()+1);
+		} else {
+			if (endVarDate == null) {
+				npvEndVarDate.setVisibility(View.GONE);
+				npvEndMonth.setVisibility(View.VISIBLE);
+				npvEndDay.setVisibility(View.VISIBLE);
+
+				String[] tempMonthValues = new String[monthValues.length+1];
+				tempMonthValues[0] = "-";
+				for(int i=0;i < monthValues.length;i++) {
+					tempMonthValues[i+1] = monthValues[i];
+				}
+				npvEndMonth.setDisplayedValues(tempMonthValues);
+				npvEndMonth.setMinValue(0);
+				npvEndMonth.setMaxValue(12);
+				npvEndMonth.setValue(endMonth != null ? endMonth.ordinal()+1 : 0);
+
+				npvEndDay.setDisplayedValues(dayValues);
+				npvEndDay.setMinValue(0);
+				npvEndDay.setMaxValue(31);
+				npvEndDay.setValue(endDay != DateWithOffset.UNDEFINED_MONTH_DAY ? endDay : 0);
+			} else {
+				npvEndVarDate.setVisibility(View.VISIBLE);
+				npvEndMonth.setVisibility(View.GONE);
+				npvEndDay.setVisibility(View.GONE);
+
+				npvEndVarDate.setDisplayedValues(varDateValues);
+				npvEndVarDate.setMinValue(1);
+				npvEndVarDate.setMaxValue(VarDate.values().length);
+				npvEndVarDate.setValue(endVarDate.ordinal()+1);
+			}
 		}
 
 		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {

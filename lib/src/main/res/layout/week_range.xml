@@ -23,7 +23,7 @@
             	android:layout_height="wrap_content"
             	android:layout_alignParentLeft="true"
             	android:layout_alignParentTop="true"
-            	android:text="Weeks" />
+            	android:text="@string/weeks" />
             <LinearLayout
             	android:id="@+id/range"
             	android:layout_width="wrap_content"

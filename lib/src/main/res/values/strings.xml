@@ -44,6 +44,8 @@
     <string name="variable_date_date">Variable date - date</string>
     <string name="date_variable_date">Date - variable date</string>
     <string name="variable_date_variable_date">Variable date - variable date</string>
+    <string name="date_open_end">Date - open end</string>
+    <string name="variable_date_open_end">Variable date - open end</string>
     <string name="rule_type">Show rule type</string>
     <string name="move_up">Move up</string>
     <string name="move_down">Move down</string>
@@ -66,11 +68,16 @@
     <string name="offset_mins">Offset (±mins)</string>
     <string name="offset_days">Offset (±days)</string>
     
-    
-    
     <string name="date_range">Date range</string>
+    <string name="date">Date</string>
     <string name="week_range">Week range</string>
+    <string name="weeks">Weeks</string>
     <string name="year_range">Year range</string>
+    <string name="years">Years</string>
+    
+    <string name="modifier">Modifier</string>
+    <string name="comment">Comment</string>
+    
     
     <string name="twentyfourseven">24 hours, 7 days a week</string>
     
