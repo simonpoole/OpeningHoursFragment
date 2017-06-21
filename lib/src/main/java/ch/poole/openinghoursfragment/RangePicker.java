@@ -19,10 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
-// import de.blau.android.util.ThemeUtils;
 
 /**
- * Display a dialog allowing the user to change some properties of the current background
+ * Display a dialog allowing the user to set a numreric range
  *
  */
 public class RangePicker extends DialogFragment

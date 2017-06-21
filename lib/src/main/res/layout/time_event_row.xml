@@ -13,29 +13,81 @@
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_gravity="center_vertical" >
 
             <Spinner
                 android:id="@+id/startEvent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="12dp"
+                android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_values" />
 
             <Spinner
                 android:id="@+id/endEvent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/startEvent"
+                android:layout_marginLeft="12dp"
+                android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_values" />
-        </LinearLayout>
+                
+            <LinearLayout
+ 				android:id="@+id/start_offset_container"
+ 				android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignLeft="@id/startEvent"
+            	android:layout_below="@id/startEvent"
+            	android:orientation="horizontal"
+            	>
+            	<TextView
+        			android:id="@+id/offset_label"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"          	
+            		android:text="@string/offset_mins" />
+       			<EditText
+            		android:id="@+id/offset"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:inputType="number|none"
+            		android:minEms="2"
+            		android:maxEms="2"
+					android:maxLength="3"
+					android:digits="+-0123456789" />
+			</LinearLayout>
+			<LinearLayout
+ 				android:id="@+id/end_offset_container"
+ 				android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignLeft="@id/endEvent"
+            	android:layout_below="@id/endEvent"
+            	android:orientation="horizontal"
+            	>
+            	<TextView
+        			android:id="@+id/offset_label"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"          	
+            		android:text="@string/offset_mins" />
+       			<EditText
+            		android:id="@+id/offset"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:inputType="number|none"
+            		android:minEms="2"
+            		android:maxEms="2"
+					android:maxLength="3"
+					android:digits="+-0123456789" />
+			</LinearLayout>
+        </RelativeLayout>
 
         <include layout="@layout/menu" />
     </LinearLayout>

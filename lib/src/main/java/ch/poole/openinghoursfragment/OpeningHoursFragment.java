@@ -552,8 +552,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_time);
-				addVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				MenuItem addVarTimeTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_time);
+				addVarTimeTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 						List<TimeSpan>ts = r.getTimes();
@@ -573,8 +573,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
-				addTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				MenuItem addTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
+				addTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 						List<TimeSpan>ts = r.getTimes();
@@ -594,8 +594,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
-				MenuItem addVarTimeVarTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_variable_time);
-				addVarTimeVarTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				MenuItem addVarTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_variable_time);
+				addVarTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 						List<TimeSpan>ts = r.getTimes();
@@ -610,6 +610,84 @@ public class OpeningHoursFragment extends DialogFragment {
 						VariableTime endVt = new VariableTime();
 						endVt.setEvent(Event.DUSK);
 						t.setEndEvent(endVt);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time);
+				addTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						t.setStart(360);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_open_end);
+				addTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						t.setStart(360);
+						t.setOpenEnded(true);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time);
+				addVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						VariableTime startVt = new VariableTime();
+						startVt.setEvent(Event.DAWN);
+						t.setStartEvent(startVt);;
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
+				MenuItem addVarTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_open_end);
+				addVarTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						VariableTime startVt = new VariableTime();
+						startVt.setEvent(Event.DAWN);
+						t.setStartEvent(startVt);;
+						t.setOpenEnded(true);
 						ts.add(t);
 						updateString();
 						watcher.afterTextChanged(null);
@@ -1596,7 +1674,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					ll.addView(timeExtendedRangeRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
 					Log.d(DEBUG_TAG, "pot " + ts.toString());
-					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row, null);
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_row, null);
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
 					timeBar.setPinTextFormatter(timeFormater);
 					int start = ts.getStart();
@@ -1611,8 +1689,6 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setStart(toMins(rightPinValue));
 							updateString();
 						}});
-					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					endEvent.setVisibility(View.GONE);
 					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
@@ -1641,6 +1717,35 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					menu =addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
+					
+					final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);			
+					if (ts.getEndEvent().getOffset() != 0) {
+						offsetContainer.setVisibility(View.VISIBLE);
+					} else {
+						offsetContainer.setVisibility(View.GONE);
+						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+						showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override
+							public boolean onMenuItemClick(MenuItem item) {
+								offsetContainer.setVisibility(View.VISIBLE);
+								return true;
+							}	
+						});
+					}
+					
+					EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
+					offset.setText(Integer.toString(ts.getEndEvent().getOffset()));
+					setTextWatcher(offset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
+							}
+							ts.getEndEvent().setOffset(offset);
+						}
+					});
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && !hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-t " + ts.toString());
@@ -1688,6 +1793,34 @@ public class OpeningHoursFragment extends DialogFragment {
 					if (timeBar.getVisibility()==View.VISIBLE) {
 						addTimeSpanMenus(timeBar, null, menu);
 					}
+					final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);			
+					if (ts.getStartEvent().getOffset() != 0) {
+						offsetContainer.setVisibility(View.VISIBLE);
+					} else {
+						offsetContainer.setVisibility(View.GONE);
+						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+						showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override
+							public boolean onMenuItemClick(MenuItem item) {
+								offsetContainer.setVisibility(View.VISIBLE);
+								return true;
+							}	
+						});
+					}
+					
+					EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
+					offset.setText(Integer.toString(ts.getStartEvent().getOffset()));
+					setTextWatcher(offset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
+							}
+							ts.getStartEvent().setOffset(offset);
+						}
+					});
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && hasStartEvent && hasEndEvent) {
 					Log.d(DEBUG_TAG, "e-e " + ts.toString());
@@ -1708,11 +1841,57 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getEndEvent().setEvent(value);
 						}
 					});
-					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					
+					final View startOffsetContainer = timeEventRow.findViewById(R.id.start_offset_container);
+					final View endOffsetContainer = timeEventRow.findViewById(R.id.end_offset_container);
+					if (ts.getStartEvent().getOffset() != 0 || ts.getEndEvent().getOffset() != 0) {
+						startOffsetContainer.setVisibility(View.VISIBLE);
+						endOffsetContainer.setVisibility(View.VISIBLE);
+					} else {
+						startOffsetContainer.setVisibility(View.GONE);
+						endOffsetContainer.setVisibility(View.GONE);
+						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+						showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override
+							public boolean onMenuItemClick(MenuItem item) {
+								startOffsetContainer.setVisibility(View.VISIBLE);
+								endOffsetContainer.setVisibility(View.VISIBLE);
+								return true;
+							}	
+						});
+					}
+					
+					EditText startOffset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+					startOffset.setText(Integer.toString(ts.getStartEvent().getOffset()));
+					setTextWatcher(startOffset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
+							}
+							ts.getStartEvent().setOffset(offset);
+						}
+					});
+					EditText endOffset = (EditText) endOffsetContainer.findViewById(R.id.offset);
+					endOffset.setText(Integer.toString(ts.getEndEvent().getOffset()));
+					setTextWatcher(endOffset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
+							}
+							ts.getEndEvent().setOffset(offset);
+						}
+					});
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && !hasStartEvent) {
 					Log.d(DEBUG_TAG, "t- " + ts.toString());
-					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_end_event_row, null);
+					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_row, null);
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
 					timeBar.setPinTextFormatter(timeFormater);
 					int start = ts.getStart();
@@ -1725,8 +1904,6 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setStart(toMins(rightPinValue));
 							updateString();
 						}});
-					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					endEvent.setVisibility(View.GONE);
 					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
@@ -1743,7 +1920,37 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
 					endEvent.setVisibility(View.GONE);
-					addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					View endOffsetContainer = timeEventRow.findViewById(R.id.end_offset_container);
+					endOffsetContainer.setVisibility(View.GONE);
+					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					final View offsetContainer = timeEventRow.findViewById(R.id.start_offset_container);			
+					if (ts.getStartEvent().getOffset() != 0) {
+						offsetContainer.setVisibility(View.VISIBLE);
+					} else {
+						offsetContainer.setVisibility(View.GONE);
+						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
+						showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override
+							public boolean onMenuItemClick(MenuItem item) {
+								offsetContainer.setVisibility(View.VISIBLE);
+								return true;
+							}	
+						});
+					}
+					
+					EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
+					offset.setText(Integer.toString(ts.getStartEvent().getOffset()));
+					setTextWatcher(offset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
+							}
+							ts.getStartEvent().setOffset(offset);
+						}
+					});
 					ll.addView(timeEventRow);
 				} else {
 					Log.d(DEBUG_TAG, "? " + ts.toString());

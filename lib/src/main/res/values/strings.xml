@@ -32,6 +32,10 @@
     <string name="variable_time_time">Var. time - time</string>
     <string name="time_variable_time">Time - var. time</string>
     <string name="variable_time_variable_time">Var. time - var. time</string>
+    <string name="time">Time</string>
+    <string name="time_open_end">Time-open end</string>
+    <string name="variable_time">Variable time</string>
+    <string name="variable_time_open_end">Variable time-open end</string>
     <string name="start_at_midnight">Start at midnight</string>
     <string name="week_day_range">Add week day range</string>
     <string name="occurrence_in_month">Add occurrence in month</string>
@@ -58,6 +62,11 @@
     <string name="interval_minutes">Interval (minutes)</string>
     <string name="interval_years">Interval (years)</string>
     <string name="interval_weeks">Interval (weeks)</string>
+    
+    <string name="offset_mins">Offset (±mins)</string>
+    <string name="offset_days">Offset (±days)</string>
+    
+    
     
     <string name="date_range">Date range</string>
     <string name="week_range">Week range</string>
