@@ -1,11 +1,18 @@
 package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Rect;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Util {
 	protected static final String DEBUG_TAG = "Util";
@@ -57,5 +64,26 @@ public class Util {
 				}
 			});
 		}
+	}
+	
+
+	/**
+	 * Display a toast underneath the top action bar
+	 * 
+	 * @param activity	activity that called this
+	 * @param msg 		the message to display
+	 * @param color 	background color of the message
+	 * @param duration 	how long to display the message
+	 */
+	public static void toastTop(Context context, String msg) {
+		 LayoutInflater inflater = LayoutInflater.from(context);
+		 View layout = inflater.inflate(R.layout.toast, null);
+		 TextView text = (TextView) layout.findViewById(R.id.text);
+		 text.setText(msg);
+		 Toast toast = new Toast(context);
+		 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
+		 toast.setDuration(Toast.LENGTH_LONG);
+		 toast.setView(layout);
+		 toast.show();
 	}
 }

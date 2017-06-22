@@ -20,7 +20,10 @@
     <string name="group_header">Group %1$s</string>
     <string name="rule_header">Rule %1$s</string>
     
-<!--     menu items -->
+<!--	messages -->
+    <string name="loaded_default">Loaded default template</string>
+    
+<!--    menu items -->
 	<string name="Delete">Delete</string>
 	<string name="add_modifier_comment">Add modifier/comment</string>
 	<string name="add_year_range">Add year range</string>

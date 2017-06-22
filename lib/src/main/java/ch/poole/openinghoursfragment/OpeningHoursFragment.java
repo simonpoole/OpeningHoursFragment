@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
@@ -122,6 +123,8 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	private SQLiteDatabase mDatabase;
 
+	private transient boolean loadedDefault = false;
+
 	static PinTextFormatter timeFormater = new PinTextFormatter() {
 		@Override
 		public String getText(String value) {
@@ -200,13 +203,14 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 		if (openingHoursValue == null || "".equals(openingHoursValue)) {
 			openingHoursValue = TemplateDatabase.getDefault(mDatabase);
+			loadedDefault = true;
 		}
 		
 		context =  new ContextThemeWrapper(getActivity(), styleRes);
 		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
-		
+					
 		buildLayout(openingHoursLayout, openingHoursValue, initialRule);
 
 		// add callbacks for the buttons
@@ -2457,6 +2461,16 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d(DEBUG_TAG, "onResume");
+		if (loadedDefault) {
+			Log.d(DEBUG_TAG,"Show toast");
+			ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
+		}
+	}
+	
+	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		// disable address tagging for stuff that won't have an address
@@ -2482,7 +2496,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				if (v == null) {
 					Log.d(DEBUG_TAG, "didn't find R.id.openinghours_layout");
 				} else {
-					Log.d(DEBUG_TAG, "Found R.id.openinghours_layoutt");
+					Log.d(DEBUG_TAG, "Found R.id.openinghours_layout");
 				}
 				return v;
 			}
