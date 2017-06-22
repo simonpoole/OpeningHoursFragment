@@ -92,6 +92,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
 	private static final String VALUE_KEY = "value";
+	
+	private static final String ORIGINAL_VALUE_KEY = "original_value";
 
 	private static final String KEY_KEY = "key";
 	
@@ -108,6 +110,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private String key;
 	
 	private String openingHoursValue;
+	
+	private String originalOpeningHoursValue;
 	
 	private int styleRes = 0;
 	
@@ -191,10 +195,12 @@ public class OpeningHoursFragment extends DialogFragment {
 			Log.d(DEBUG_TAG,"Restoring from saved state");
 			key = savedInstanceState.getString(KEY_KEY);
 			openingHoursValue = savedInstanceState.getString(VALUE_KEY);
+			originalOpeningHoursValue = savedInstanceState.getString(ORIGINAL_VALUE_KEY);
 			styleRes = savedInstanceState.getInt(STYLE_KEY);
 		} else {
 			key = getArguments().getString(KEY_KEY);
 			openingHoursValue = getArguments().getString(VALUE_KEY);
+			originalOpeningHoursValue = openingHoursValue;
 			styleRes = getArguments().getInt(STYLE_KEY);
 			initialRule = getArguments().getInt(RULE_KEY);
 		}
@@ -221,8 +227,9 @@ public class OpeningHoursFragment extends DialogFragment {
 				dismiss();				
 			}});
 		
-		AppCompatButton save = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);
-		save.setOnClickListener(new OnClickListener() {
+		saveButton = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);
+		enableSaveButton(openingHoursValue);
+		saveButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				saveListener.save(key,text.getText().toString());	
@@ -263,6 +270,7 @@ public class OpeningHoursFragment extends DialogFragment {
 								// we currently can't do anything reasonable here except ignore
 								Log.e(DEBUG_TAG, err.getMessage());
 							}
+							enableSaveButton(text.getText().toString());
 						}
 					};
 					text.removeCallbacks(rebuild);
@@ -2273,6 +2281,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			text.setText(oh);
 			text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos,text.length()));
 			text.addTextChangedListener(watcher);
+			enableSaveButton(oh);
 		}
 	};
 	
@@ -2439,6 +2448,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		Log.d(DEBUG_TAG, "onSaveInstanceState");
 	   	outState.putSerializable(KEY_KEY, key);
     	outState.putSerializable(VALUE_KEY, text.getText().toString());
+    	outState.putSerializable(ORIGINAL_VALUE_KEY, originalOpeningHoursValue);
     	outState.putInt(STYLE_KEY, styleRes);
 	}
 
@@ -2509,6 +2519,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	Cursor templateCursor;
 	TemplateAdapter templateAdapter;
 	AlertDialog templateDialog;
+
+	private AppCompatButton saveButton;
 	
 	
 	void loadTemplate(Context context) {
@@ -2649,5 +2661,14 @@ public class OpeningHoursFragment extends DialogFragment {
 	private int dpToPixels(int dp) {
 		Resources r = getResources();
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+	}
+
+	/**
+	 * Enable / disable the save button depending on if the current value is the same as the original one
+	 * 
+	 * @param oh	oh value to test against
+	 */
+	private void enableSaveButton(String oh) {
+		saveButton.setEnabled(originalOpeningHoursValue==null || !originalOpeningHoursValue.equals(oh));
 	}
 }
