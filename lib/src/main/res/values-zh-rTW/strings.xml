@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">取消</string>
+    <string name="Save">儲存</string>
+    
+    <string name="add_rule">增加規則</string>
+    <string name="add_rule_247">為24/7增加規則</string>
+    <string name="load_template">載入模版</string>
+    <string name="save_to_template">儲存到模版</string>
+    <string name="refresh">重整</string>
+    <string name="load_templates_title">載入與管理模版</string>
+    <string name="save_template">儲存模版</string>
+    <string name="edit_template">編輯模版</string>
+    <!--    menu items -->
+	<string name="Delete">刪除</string>
+	<string name="closed">已關閉</string>
+  	<string name="unknown">未知的</string>
+    
+  	</resources>

@@ -1602,7 +1602,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			startDayView.setVisibility(View.VISIBLE);
 			
 			if (start.getMonth() != null) {
-				startMonthView.setText(getResources().getStringArray(R.array.months)[start.getMonth().ordinal()]);
+				startMonthView.setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
 			}
 
 			if (start.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
@@ -1630,7 +1630,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				endDayView.setVisibility(View.VISIBLE);
 				
 				if (end.getMonth() != null) {
-					endMonthView.setText(getResources().getStringArray(R.array.months)[end.getMonth().ordinal()]);
+					endMonthView.setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
 				} else {
 					endMonthView.setText("");
 				}

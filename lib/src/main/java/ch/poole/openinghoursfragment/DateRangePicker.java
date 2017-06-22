@@ -240,7 +240,7 @@ public class DateRangePicker extends DialogFragment
 	   	npvStartYear.setMaxValue(MAX_YEAR);
 	   	npvStartYear.setValue(startYear != YearRange.UNDEFINED_YEAR ? startYear : YearRange.FIRST_VALID_YEAR-1);
 	   	
-		String[] monthValues = getActivity().getResources().getStringArray(R.array.months);
+		String[] monthEntries = getActivity().getResources().getStringArray(R.array.months_entries);
 		String[] dayValues = new String[32];
 		dayValues[0]="-";
 		for (int i=1;i<=31;i++) {
@@ -257,7 +257,7 @@ public class DateRangePicker extends DialogFragment
 			npvStartMonth.setVisibility(View.VISIBLE);
 			npvStartDay.setVisibility(View.VISIBLE);
 			
-			npvStartMonth.setDisplayedValues(monthValues);
+			npvStartMonth.setDisplayedValues(monthEntries);
 			npvStartMonth.setMinValue(1);
 			npvStartMonth.setMaxValue(12);
 			npvStartMonth.setValue(startMonth.ordinal()+1);
@@ -299,10 +299,10 @@ public class DateRangePicker extends DialogFragment
 				npvEndMonth.setVisibility(View.VISIBLE);
 				npvEndDay.setVisibility(View.VISIBLE);
 
-				String[] tempMonthValues = new String[monthValues.length+1];
+				String[] tempMonthValues = new String[monthEntries.length+1];
 				tempMonthValues[0] = "-";
-				for(int i=0;i < monthValues.length;i++) {
-					tempMonthValues[i+1] = monthValues[i];
+				for(int i=0;i < monthEntries.length;i++) {
+					tempMonthValues[i+1] = monthEntries[i];
 				}
 				npvEndMonth.setDisplayedValues(tempMonthValues);
 				npvEndMonth.setMinValue(0);

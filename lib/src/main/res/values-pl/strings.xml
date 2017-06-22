@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Anuluj</string>
+    <string name="Save">Zapisz</string>
+    
+    <string name="add_rule">Dodaj regułę</string>
+    <string name="load_template">Wczytaj szablon</string>
+    <string name="save_to_template">Zapisz do szablonu</string>
+    <string name="refresh">Wczytaj ponownie</string>
+    <string name="name_legend">Nazwa:</string>
+    <string name="is_default">%1$s (domyślnie)</string>
+    
+    <string name="group_header">Grupa %1$s</string>
+    <string name="rule_header">Reguła %1$s</string>
+    
+<string name="weekdays">Dni tygodnia</string>
+    
+<!--    menu items -->
+	<string name="Delete">Usuń</string>
+	<string name="date_range">Zakres dat</string>
+    <string name="date">Data</string>
+    <string name="week_range">Zakres tygodni</string>
+    <string name="weeks">Tygodnie</string>
+    <string name="year_range">Zakres lat</string>
+    <string name="years">Lata</string>
+    
+    <string name="comment">Komentarz</string>
+    
+    
+    <string name="twentyfourseven">24 godziny, 7 dni w tygodniu</string>
+    
+    <string name="to">do</string>
+    
+    <string name="monday_short">Pon.</string>
+  	<string name="tuesday_short">Wt.</string>
+  	<string name="wednesday_short">Śr.</string>
+  	<string name="thursday_short">Czw.</string>
+  	<string name="friday_short">Pt.</string>
+  	<string name="saturday_short">Sob.</string>
+  	<string name="sunday_short">Niedz.</string>
+
+  	<string name="open">otwarte</string>
+ 	<string name="closed">zamknięte</string>
+  	<string name="unknown">nieznane</string>
+    
+  	</resources>

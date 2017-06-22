@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Mégse</string>
+    <string name="Save">Mentés</string>
+    
+    <string name="add_rule">Szabály hozzáadása</string>
+    <string name="add_rule_247">24/7 szabály hozzáadása</string>
+    <string name="load_template">Sablon betöltése</string>
+    <string name="save_to_template">Mentés sablonba</string>
+    <string name="refresh">Frissítés</string>
+    <string name="load_templates_title">Sablonok betöltése és kezelése</string>
+    <string name="save_template">Sablon mentése</string>
+    <string name="edit_template">Sablon szerkesztése</string>
+    <string name="name_legend">Név:</string>
+    <string name="default_legend">Alapértelmezett:</string>
+    
+    <string name="is_default">%1$s (alapértelmezett)</string>
+    
+    <string name="group_header">%1$s. csoport</string>
+    <string name="rule_header">%1$s. szabály</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Alapértelmezett sablon betöltve</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Hétköznapokon ebédidővel</string>
+	<string name="weekdays">Hétvégeken</string>
+    
+<!--    menu items -->
+	<string name="Delete">Törlés</string>
+	<string name="add_modifier_comment">Módosító/megjegyzés hozzáadása</string>
+	<string name="add_year_range">Év tartomány megadása</string>
+	<string name="add_week_range">Hét tartomány hozzáadása</string>
+	<string name="add_holiday">Szünnap hozzáadása</string>
+    <string name="timespan_menu">Időszak hozzáadása…</string>
+    <string name="time_time">Idő – idő</string>
+    <string name="time_extended_time">Idő – bővített idő</string>
+    <string name="variable_time_time">Változó idő – idő</string>
+    <string name="time_variable_time">Idő – változó idő</string>
+    <string name="variable_time_variable_time">Változó idő – változó idő</string>
+    <string name="time">Idő</string>
+    <string name="time_open_end">Idő – nyílt vég</string>
+    <string name="variable_time">Változó idő</string>
+    <string name="variable_time_open_end">Változó idő – nyílt vég</string>
+    <string name="start_at_midnight">Éjfélkor indul</string>
+    <string name="week_day_range">Hét napjai tartomány hozzáadása</string>
+    <string name="occurrence_in_month">Havi előfordulás hozzáadása</string>
+    <string name="closed">zárt</string>
+  	<string name="unknown">unknown</string>
+    
+  	</resources>

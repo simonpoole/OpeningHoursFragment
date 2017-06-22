@@ -123,6 +123,19 @@
   	<string name="saturday_short">Sa</string>
   	<string name="sunday_short">Su</string>
 
+  	<string name="january">Jan</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Apr</string>
+  	<string name="may">May</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Aug</string>
+  	<string name="september">Sep</string>
+  	<string name="october">Oct</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dec</string>
+  	
   	<string name="oh_january" translatable="false">Jan</string>
   	<string name="oh_february" translatable="false">Feb</string>
   	<string name="oh_march" translatable="false">Mar</string>
@@ -146,7 +159,22 @@
   	<string name="oh_off" translatable="false">off</string>
     <string name="oh_unknown" translatable="false">unknown</string>
   	
-  	<string-array name="months" translatable="false">
+  	<string-array name="months_entries" translatable="false">
+  	    <item>@string/january</item>
+  	    <item>@string/february</item>
+  	    <item>@string/march</item>
+  	    <item>@string/april</item>
+  	    <item>@string/may</item>
+  	    <item>@string/june</item>
+  	    <item>@string/july</item>
+        <item>@string/august</item>
+  	    <item>@string/september</item>
+  	    <item>@string/october</item>
+  	    <item>@string/november</item>
+  	    <item>@string/december</item>
+  	</string-array>
+  	
+  	<string-array name="months_values" translatable="false">
   	    <item>@string/oh_january</item>
   	    <item>@string/oh_february</item>
   	    <item>@string/oh_march</item>

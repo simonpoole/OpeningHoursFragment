@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="public_holidays">Státní svátky</string>
+  	<string name="school_holidays">Školní prázdniny</string>
+  	
+  	<string name="monday_short">Po</string>
+  	<string name="tuesday_short">Út</string>
+  	<string name="wednesday_short">St</string>
+  	<string name="thursday_short">Čt</string>
+  	<string name="friday_short">Pá</string>
+  	<string name="saturday_short">So</string>
+  	<string name="sunday_short">Ne</string>
+
+  	<string name="open">otevřeno</string>
+ 	<string name="closed">zavřeno</string>
+  	<string name="unknown">unknown</string>
+    
+  	</resources>

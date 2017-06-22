@@ -34,6 +34,7 @@
     <!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
+    <string name="date">Datum</string>
     <string name="weeks">Wochen</string>
     <string name="years">Jahre</string>
     
@@ -63,6 +64,19 @@
   	<string name="saturday_short">Sa</string>
   	<string name="sunday_short">So</string>
 
+  	<string name="january">Jan</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mär</string>
+  	<string name="april">Apr</string>
+  	<string name="may">Mai</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Aug</string>
+  	<string name="september">Sep</string>
+  	<string name="october">Okt</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dez</string>
+  	
   	<string name="open">offen</string>
  	<string name="closed">geschlossen</string>
   	<string name="off">aus</string>

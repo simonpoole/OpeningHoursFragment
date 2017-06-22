@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Отменить</string>
+    <string name="Save">Сохранить</string>
+    
+    <string name="add_rule">Добавить правило</string>
+    <string name="load_template">Загрузить шаблон</string>
+    <string name="save_to_template">Сохранить как шаблон</string>
+    <string name="refresh">Обновить</string>
+    <string name="save_template">Сохранить шаблон</string>
+    <string name="edit_template">Редактировать шаблон</string>
+    <string name="name_legend">Название:</string>
+    <string name="default_legend">По умолчанию:</string>
+    
+    <string name="is_default">%1$s(по умолчанию)</string>
+    
+    <string name="group_header">Группа %1$s</string>
+    <string name="rule_header">Правило %1$s</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
+	<string name="weekdays">Будние дни</string>
+    
+<!--    menu items -->
+	<string name="Delete">Удалить</string>
+	<string name="add_week_range">Добавить диапазон недель</string>
+	<string name="time">Время</string>
+    <string name="week_day_range">Добавить диапазон дней недели</string>
+    <string name="daterange_menu">Добавить диапазон дат...</string>
+    <string name="date_date">Дата - дата</string>
+    <string name="date_range">Диапазон дат</string>
+    <string name="date">Дата</string>
+    <string name="week_range">Диапазон недель</string>
+    <string name="weeks">Недели</string>
+    <string name="closed">замкнутая</string>
+  	<string name="unknown">неизвестно</string>
+    
+  	</resources>
