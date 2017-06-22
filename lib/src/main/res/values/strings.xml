@@ -23,6 +23,10 @@
 <!--	messages -->
     <string name="loaded_default">Loaded default template</string>
     
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Weekdays with lunch break</string>
+	<string name="weekdays">Weekdays</string>
+    
 <!--    menu items -->
 	<string name="Delete">Delete</string>
 	<string name="add_modifier_comment">Add modifier/comment</string>
@@ -132,6 +136,11 @@
   	<string name="oh_november" translatable="false">Nov</string>
   	<string name="oh_december" translatable="false">Dec</string>
   	
+  	<string name="open">open</string>
+ 	<string name="closed">closed</string>
+  	<string name="off">off</string>
+    <string name="unknown">unknown</string>
+    
   	<string name="oh_open" translatable="false">open</string>
  	<string name="oh_closed" translatable="false">closed</string>
   	<string name="oh_off" translatable="false">off</string>
@@ -211,21 +220,28 @@
   	    <item>@string/oh_dusk</item>
   	</string-array>
   	
-  	  	<string-array name="events_entries" translatable="false">
+  	  <string-array name="events_entries" translatable="false">
   	    <item>@string/sunrise</item>
   	    <item>@string/sunset</item>
   	    <item>@string/dawn</item>
   	    <item>@string/dusk</item>
   	</string-array>
-  	
-  	<string-array name="modifiers" translatable="false">
+  	   
+    <string-array name="modifier_entries" translatable="false">
+  	   <item>@string/open</item>
+ 	   <item>@string/closed</item>
+  	   <item>@string/off</item>
+       <item>@string/unknown</item>
+    </string-array>
+    
+    <string-array name="modifier_values" translatable="false">
   	   <item>@string/oh_open</item>
  	   <item>@string/oh_closed</item>
   	   <item>@string/oh_off</item>
        <item>@string/oh_unknown</item>
     </string-array>
     
-     <string-array name="holidays_entries" translatable="false">
+    <string-array name="holidays_entries" translatable="false">
   	   	<item>@string/public_holidays</item>
  		<item>@string/school_holidays</item>
     </string-array>

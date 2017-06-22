@@ -1025,9 +1025,9 @@ public class OpeningHoursFragment extends DialogFragment {
 			final RuleModifier rm = r.getModifier();
 			if (rm != null) {
 				LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
-				final Spinner modifier = (Spinner)modifierLayout.findViewById(R.id.modifier);
-				setSpinnerInitialValue(modifier, rm.getModifier().toString());
-				setSpinnerListener(modifier, new SetValue() {
+				final Spinner modifierSpinner = (Spinner)modifierLayout.findViewById(R.id.modifier);
+				setSpinnerInitialEntryValue(R.array.modifier_values, modifierSpinner, rm.getModifier().toString());
+				setSpinnerListenerEntryValues(R.array.modifier_values, modifierSpinner, new SetValue() {
 					@Override
 					public void set(String value) {
 						rm.setModifier(value);
@@ -1368,8 +1368,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	private void addHolidayUI(LinearLayout ll, final Rule r, final List<Holiday> holidays, final Holiday hd) {
 		LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
 		Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
-		setSpinnerInitialEntryValue(holidaysSpinner, hd.getType().name());
-		setSpinnerListenerEntryValues(holidaysSpinner, new SetValue() {
+		setSpinnerInitialEntryValue(R.array.holidays_values, holidaysSpinner, hd.getType().name());
+		setSpinnerListenerEntryValues(R.array.holidays_values, holidaysSpinner, new SetValue() {
 			@Override
 			public void set(String value) {
 				hd.setType(Holiday.Type.valueOf(value));
@@ -1804,8 +1804,8 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					setSpinnerInitialValue(endEvent, ts.getEndEvent().getEvent().toString());
-					setSpinnerListener(endEvent, new SetValue() {
+					setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
+					setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
 						@Override
 						public void set(String value) {
 							ts.getEndEvent().setEvent(value);
@@ -1878,8 +1878,8 @@ public class OpeningHoursFragment extends DialogFragment {
 						extendedTimeBar.setVisibility(View.GONE);
 					}
 					Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent().toString());
-					setSpinnerListener(startEvent, new SetValue() {
+					setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+					setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
 						@Override
 						public void set(String value) {
 							ts.getStartEvent().setEvent(value);
@@ -1922,16 +1922,16 @@ public class OpeningHoursFragment extends DialogFragment {
 					Log.d(DEBUG_TAG, "e-e " + ts.toString());
 					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
 					final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent().toString());
-					setSpinnerListener(startEvent, new SetValue() {
+					setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+					setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
 						@Override
 						public void set(String value) {
 							ts.getStartEvent().setEvent(value);
 						}
 					});
 					Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-					setSpinnerInitialValue(endEvent, ts.getEndEvent().getEvent().toString());
-					setSpinnerListener(endEvent, new SetValue() {
+					setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
+					setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
 						@Override
 						public void set(String value) {
 							ts.getEndEvent().setEvent(value);
@@ -2007,8 +2007,8 @@ public class OpeningHoursFragment extends DialogFragment {
 					Log.d(DEBUG_TAG, "e- " + ts.toString());
 					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
 					final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-					setSpinnerInitialValue(startEvent, ts.getStartEvent().getEvent().toString());
-					setSpinnerListener(startEvent, new SetValue() {
+					setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+					setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
 						@Override
 						public void set(String value) {
 							ts.getStartEvent().setEvent(value);
@@ -2225,9 +2225,9 @@ public class OpeningHoursFragment extends DialogFragment {
 		});
 	}
 	
-	private void setSpinnerInitialEntryValue(Spinner spinner, String value) {
+	private void setSpinnerInitialEntryValue(int valuesId, Spinner spinner, String value) {
 		Resources res = getResources();
-		final TypedArray values = res.obtainTypedArray(R.array.holidays_values);
+		final TypedArray values = res.obtainTypedArray(valuesId);
 		for (int i=0;i<values.length();i++) {
 			if (value.equals(values.getString(i))) {
 				spinner.setSelection(i);
@@ -2237,13 +2237,13 @@ public class OpeningHoursFragment extends DialogFragment {
 		values.recycle();
 	}
 	
-	private void setSpinnerListenerEntryValues(final Spinner spinner, final SetValue listener) {
+	private void setSpinnerListenerEntryValues(final int valuesId, final Spinner spinner, final SetValue listener) {
 		final Resources res = getResources();
 		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				final TypedArray selectedValues = res.obtainTypedArray(R.array.holidays_values);
+				final TypedArray selectedValues = res.obtainTypedArray(valuesId);
 				listener.set(selectedValues.getString(position));
 				updateString();
 				selectedValues.recycle();

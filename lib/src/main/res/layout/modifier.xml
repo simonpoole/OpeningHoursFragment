@@ -37,7 +37,7 @@
             	android:paddingTop="12dp"
             	android:paddingLeft="10dp"
             	android:drawSelectorOnTop="true"
-            	android:entries="@array/modifiers" />
+            	android:entries="@array/modifier_entries" />
       
         	<TextView
         		android:id="@+id/comment_label"

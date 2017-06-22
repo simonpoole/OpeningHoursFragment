@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jacoco"
 
-version = '0.0.18'
+version = '0.0.19'
 def libName = "OpeningHoursFragment"
 
 eclipse {

@@ -52,7 +52,7 @@
                 android:layout_below="@id/timebar"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events_values" />
+                android:entries="@array/events_entries" />
                 
             <LinearLayout
  				android:id="@+id/offset_container"

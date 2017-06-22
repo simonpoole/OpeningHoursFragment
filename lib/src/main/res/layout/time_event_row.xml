@@ -28,7 +28,7 @@
                 android:layout_marginRight="12dp"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events_values" />
+                android:entries="@array/events_entries" />
 
             <Spinner
                 android:id="@+id/endEvent"
@@ -39,7 +39,7 @@
                 android:layout_marginLeft="12dp"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/events_values" />
+                android:entries="@array/events_entries" />
                 
             <LinearLayout
  				android:id="@+id/start_offset_container"
