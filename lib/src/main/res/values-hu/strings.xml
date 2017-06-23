@@ -9,8 +9,8 @@
     <string name="load_template">Sablon betöltése</string>
     <string name="save_to_template">Mentés sablonba</string>
     <string name="refresh">Frissítés</string>
-    <string name="load_templates_title">Sablonok betöltése és kezelése</string>
     <string name="save_template">Sablon mentése</string>
+    
     <string name="edit_template">Sablon szerkesztése</string>
     <string name="name_legend">Név:</string>
     <string name="default_legend">Alapértelmezett:</string>
@@ -30,8 +30,8 @@
 <!--    menu items -->
 	<string name="Delete">Törlés</string>
 	<string name="add_modifier_comment">Módosító/megjegyzés hozzáadása</string>
-	<string name="add_year_range">Év tartomány megadása</string>
-	<string name="add_week_range">Hét tartomány hozzáadása</string>
+	<string name="add_year_range">Évtartomány megadása</string>
+	<string name="add_week_range">Héttartomány hozzáadása</string>
 	<string name="add_holiday">Szünnap hozzáadása</string>
     <string name="timespan_menu">Időszak hozzáadása…</string>
     <string name="time_time">Idő – idő</string>
@@ -46,7 +46,84 @@
     <string name="start_at_midnight">Éjfélkor indul</string>
     <string name="week_day_range">Hét napjai tartomány hozzáadása</string>
     <string name="occurrence_in_month">Havi előfordulás hozzáadása</string>
-    <string name="closed">zárt</string>
-  	<string name="unknown">unknown</string>
+    <string name="daterange_menu">Dátum tartomány hozzáadása…</string>
+    <string name="date_date">Dátum – dátum</string>
+    <string name="variable_date_date">Változó dátum – dátum</string>
+    <string name="date_variable_date">Dátum – változó dátum</string>
+    <string name="variable_date_variable_date">Változó dátum – változó dátum</string>
+    <string name="date_open_end">Dátum – nyílt vég</string>
+    <string name="variable_date_open_end">Változó dátum – nyílt vég</string>
+    <string name="rule_type">Szabálytípus megjelenítése</string>
+    <string name="move_up">Mozgatás felfelé</string>
+    <string name="move_down">Mozgatás lefelé</string>
+    <string name="ticks_15_minute">Váltás 15 perces lépésekre</string>
+    <string name="ticks_5_minute">Váltás 5 perces lépésekre</string>
+    <string name="ticks_1_minute">Váltás 1 perces lépésekre</string>
+    <string name="show_offset">Eltolás megjelenítése</string>
+    <string name="show_interval">Intervallum megjelenítése</string>
+    
+<!--     opening hour elements -->
+         
+    <string name="normal_rule">Normális</string>
+    <string name="additive_rule">Összeadódó</string>
+    <string name="fallback_rule">Tartalék</string>
+    
+    <string name="interval_minutes">Intervallum (perc)</string>
+    <string name="interval_years">Intervallum (év)</string>
+    <string name="interval_weeks">Intervallum (hét)</string>
+    
+    <string name="offset_mins">Eltolás (±perc)</string>
+    <string name="offset_days">Eltolás (±nap)</string>
+    
+    <string name="date_range">Dátum tartomány</string>
+    <string name="date">Dátum</string>
+    <string name="week_range">Hét tartomány</string>
+    <string name="weeks">Hét</string>
+    <string name="year_range">Év tartomány</string>
+    <string name="years">Év</string>
+    
+    <string name="modifier">Módosító</string>
+    <string name="comment">Megjegyzés</string>
+    
+    
+    <string name="twentyfourseven">24 óra, 7 nap hetente</string>
+    
+    <string name="to">eddig:</string>
+    
+    <string name="easter">Húsvét</string>
+    
+    <string name="sunrise">Napkelte</string>
+  	<string name="sunset">Napnyugta</string>
+  	<string name="dawn">Hajnal</string>
+  	<string name="dusk">Szürkület</string>
+  	
+  	<string name="public_holidays">Munkaszüneti nap</string>
+  	<string name="school_holidays">Iskolaszünet</string>
+  	
+  	<string name="monday_short">H</string>
+  	<string name="tuesday_short">K</string>
+  	<string name="wednesday_short">Sze</string>
+  	<string name="thursday_short">Cs</string>
+  	<string name="friday_short">P</string>
+  	<string name="saturday_short">Szo</string>
+  	<string name="sunday_short">V</string>
+
+  	<string name="january">jan.</string>
+  	<string name="february">febr.</string>
+  	<string name="march">márc.</string>
+  	<string name="april">ápr.</string>
+  	<string name="may">máj.</string>
+  	<string name="june">jún.</string>
+  	<string name="july">júl.</string>
+  	<string name="august">aug.</string>
+  	<string name="september">szept.</string>
+  	<string name="october">okt.</string>
+  	<string name="november">nov.</string>
+  	<string name="december">dec.</string>
+  	
+  	<string name="open">nyitva</string>
+ 	<string name="closed">zárva</string>
+  	<string name="off">ki</string>
+    <string name="unknown">ismeretlen</string>
     
   	</resources>

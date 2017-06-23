@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -351,7 +352,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			        loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 						@Override
 						public boolean onMenuItemClick(MenuItem item) {
-							loadTemplate(context);
+							loadOrManageTemplate(context, false);
 							return true;
 						}
 			        });
@@ -362,7 +363,15 @@ public class OpeningHoursFragment extends DialogFragment {
 							showTemplateDialog(new TemplateDatabaseHelper(context).getWritableDatabase(), false, -1);
 							return true;
 						}
-					});					
+					});	
+			        MenuItem manageTemplate = popup.getMenu().add(R.string.manage_template);
+			        manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+						@Override
+						public boolean onMenuItemClick(MenuItem item) {
+							loadOrManageTemplate(context, true);
+							return true;
+						}
+			        });
 			        MenuItem refresh = popup.getMenu().add(R.string.refresh);
 			        refresh.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 						@Override
@@ -739,127 +748,141 @@ public class OpeningHoursFragment extends DialogFragment {
 				
 				SubMenu dateRangeMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.daterange_menu);
 				MenuItem addDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
-				addDateDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset dwo = new DateWithOffset();
 						dwo.setMonth(Month.JAN);
 						dateRange.setStartDate(dwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
 				MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
-				addVarDateDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addVarDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset dwo = new DateWithOffset();
 						dwo.setVarDate(VarDate.EASTER);
 						dateRange.setStartDate(dwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
 				MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
-				addDateVarDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset startDwo = new DateWithOffset();
 						startDwo.setMonth(Month.JAN);
 						dateRange.setStartDate(startDwo);
 						DateWithOffset endDwo = new DateWithOffset();
 						endDwo.setVarDate(VarDate.EASTER);
 						dateRange.setEndDate(endDwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
 				MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
-				addVarDateVarDateRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addVarDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset startDwo = new DateWithOffset();
 						startDwo.setVarDate(VarDate.EASTER);
 						dateRange.setStartDate(startDwo);
 						DateWithOffset endDwo = new DateWithOffset();
 						endDwo.setVarDate(VarDate.EASTER);
 						dateRange.setEndDate(endDwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
 				MenuItem addDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
-				addDateOpenEndRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset startDwo = new DateWithOffset();
 						startDwo.setMonth(Month.JAN);
 						startDwo.setOpenEnded(true);
 						dateRange.setStartDate(startDwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
 				MenuItem addVarDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
-				addVarDateOpenEndRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addVarDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
 					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						List<DateRange>mdr = r.getDates();
-						if (mdr==null) {
-							r.setMonthdays(new ArrayList<DateRange>());
-							mdr = r.getDates();
-						} 
-						DateRange dateRange = new DateRange();
+					public void addDates(DateRange dateRange) {
 						DateWithOffset startDwo = new DateWithOffset();
 						startDwo.setVarDate(VarDate.EASTER);
 						startDwo.setOpenEnded(true);
 						dateRange.setStartDate(startDwo);
-						mdr.add(dateRange);
-						updateString();
-						watcher.afterTextChanged(null);
-						return true;
-					}	
-				});
+					}
+				}));
+				
+				// the same with offsets
+				SubMenu dateRangeOffsetMenu = dateRangeMenu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.with_offsets);
+				MenuItem addDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
+				addDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset dwo = new DateWithOffset();
+						dwo.setMonth(Month.JAN);
+						dwo.setDay(1);
+						dwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(dwo);
+					}
+				}));
+				MenuItem addVarDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
+				addVarDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset dwo = new DateWithOffset();
+						dwo.setVarDate(VarDate.EASTER);
+						dwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(dwo);
+					}
+				}));
+				MenuItem addDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
+				addDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset startDwo = new DateWithOffset();
+						startDwo.setMonth(Month.JAN);
+						startDwo.setDay(1);
+						startDwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(startDwo);
+						DateWithOffset endDwo = new DateWithOffset();
+						endDwo.setVarDate(VarDate.EASTER);
+						dateRange.setEndDate(endDwo);
+					}
+				}));
+				MenuItem addVarDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
+				addVarDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset startDwo = new DateWithOffset();
+						startDwo.setVarDate(VarDate.EASTER);
+						startDwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(startDwo);
+						DateWithOffset endDwo = new DateWithOffset();
+						endDwo.setVarDate(VarDate.EASTER);
+						dateRange.setEndDate(endDwo);
+					}
+				}));
+				MenuItem addDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
+				addDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset startDwo = new DateWithOffset();
+						startDwo.setMonth(Month.JAN);
+						startDwo.setDay(1);
+						startDwo.setOpenEnded(true);
+						startDwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(startDwo);
+					}
+				}));
+				MenuItem addVarDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
+				addVarDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r,new DateMenuInterface() {
+					@Override
+					public void addDates(DateRange dateRange) {
+						DateWithOffset startDwo = new DateWithOffset();
+						startDwo.setVarDate(VarDate.EASTER);
+						startDwo.setOpenEnded(true);
+						startDwo.setWeekDayOffset(WeekDay.MO);
+						dateRange.setStartDate(startDwo);
+					}
+				}));
 				
 				MenuItem addYearRange=menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_year_range);
 				addYearRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -880,7 +903,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				});
 				
 				MenuItem addWeekRange=menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_week_range);
-				addYearRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				addWeekRange.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 						List<WeekRange>weeks = r.getWeeks();
@@ -1053,7 +1076,32 @@ public class OpeningHoursFragment extends DialogFragment {
 			}
 		}
 	}
-
+	
+	class DateRangeMenuListener implements OnMenuItemClickListener {
+		final DateMenuInterface datesAdder;
+		final Rule r;
+		
+		DateRangeMenuListener(Rule r, DateMenuInterface datesAdder) {
+			this.r = r;
+			this.datesAdder = datesAdder;
+		}
+ 		
+		@Override
+		public boolean onMenuItemClick(MenuItem item) {
+			List<DateRange>mdr = r.getDates();
+			if (mdr==null) {
+				r.setMonthdays(new ArrayList<DateRange>());
+				mdr = r.getDates();
+			} 
+			DateRange dateRange = new DateRange();
+			datesAdder.addDates(dateRange);
+			mdr.add(dateRange);
+			updateString();
+			watcher.afterTextChanged(null);
+			return true;
+		}	
+	}
+	
 	private void addWeekDayUI(LinearLayout ll, final List<WeekDayRange> days) {
 		final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
 		final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
@@ -1190,181 +1238,514 @@ public class OpeningHoursFragment extends DialogFragment {
 		// vardate - date
 		// date - vardate
 		// vardate - vardate
+		// date open ended
+		// vardate open ended
 		//
-		final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(R.layout.daterange, null);
-		setDateRangeValues(dateRange.getStartDate(), dateRange.getEndDate(), dateRangeRow);
-		RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
-		dateRangeLayout.setOnClickListener(new OnClickListener() {
+		// and the same with offsets
+		final DateWithOffset startDate = dateRange.getStartDate();
+		final DateWithOffset endDate = dateRange.getEndDate();
+		
+		boolean hasStartOffset = startDate.getWeekDayOffset() != null || startDate.getDayOffset()>0;
+		boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || startDate.getDayOffset()>0);
+		final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(hasStartOffset || hasEndOffset ? R.layout.daterange_with_offset_row :R.layout.daterange_row, null);
+		
+		// add menus
+		final Menu menu =	addStandardMenuItems(dateRangeRow, new Delete() {
 			@Override
-			public void onClick(View v) {		
-				int tempEndYear = YearRange.UNDEFINED_YEAR;
-				Month tempEndMonth = null;
-				int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
-				
-				final DateWithOffset start = dateRange.getStartDate();
-				DateWithOffset end = dateRange.getEndDate();
-				
-				if (end != null) {
-					tempEndYear = end.getYear();
-					tempEndMonth = end.getMonth();
-					tempEndDay = end.getDay();
+			public void delete() {
+				dateRanges.remove(dateRange);
+				if (dateRanges.isEmpty()) {
+					r.setMonthdays(null);
 				}
-				if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
-					if (start.isOpenEnded()) {
-						DateRangePicker.showDialog(getActivity(), R.string.date, 
-								start.getYear(), start.getMonth(), start.getDay(),
-								new SetDateRangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-								start.setYear(startYear);
-								start.setMonth(startMonth);
-								start.setDay(startDay);
-								final LinearLayout finalRow = dateRangeRow;  
-								setDateRangeValues(start, null, finalRow);
-								updateString();
-							}
-						});
-					} else {
-						DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-								start.getYear(), start.getMonth(), start.getDay(),
-								tempEndYear, tempEndMonth, tempEndDay,
-								new SetDateRangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-								start.setYear(startYear);
-								start.setMonth(startMonth);
-								start.setDay(startDay);
-								DateWithOffset tempDwo = dateRange.getEndDate();
-								if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-									tempDwo = new DateWithOffset();
-									dateRange.setEndDate(tempDwo);
-								}
-								if (tempDwo != null) {
-									tempDwo.setYear(endYear);
-									tempDwo.setMonth(endMonth);
-									tempDwo.setDay(endDay);
-								}
-								final LinearLayout finalRow = dateRangeRow;  
-								setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-								updateString();
-							}
-						});
-					}
-				} else if (start.getVarDate()!=null && (end==null || end.getVarDate()==null)) {
-					if (start.isOpenEnded()) {
-						DateRangePicker.showDialog(getActivity(), R.string.date, 
-								start.getYear(), start.getVarDate(),
-								new SetDateRangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-								start.setYear(startYear);
-								start.setVarDate(startVarDate);
-								final LinearLayout finalRow = dateRangeRow;  
-								setDateRangeValues(start, null, finalRow);
-								updateString();
-							}
-						});
-					} else {
-						DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-								start.getYear(), start.getVarDate(),
-								tempEndYear, tempEndMonth, tempEndDay,
-								new SetDateRangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-								start.setYear(startYear);
-								start.setVarDate(startVarDate);
-								DateWithOffset tempDwo = dateRange.getEndDate();
-								if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-									tempDwo = new DateWithOffset();
-									dateRange.setEndDate(tempDwo);
-								}
-								if (tempDwo != null) {
-									tempDwo.setYear(endYear);
-									tempDwo.setMonth(endMonth);
-									tempDwo.setDay(endDay);
-								}
-								final LinearLayout finalRow = dateRangeRow;  
-								setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-								updateString();
-							}
-						});
-					}
-				} else if (start.getVarDate()==null && (end!=null && end.getVarDate()!=null)) {
-					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-							start.getYear(), start.getMonth(), start.getDay(),
-							tempEndYear, end.getVarDate(),
-							new SetDateRangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-							start.setYear(startYear);
-							start.setMonth(startMonth);
-							start.setDay(startDay);
-
-							dateRange.getEndDate().setYear(endYear);
-							dateRange.getEndDate().setVarDate(endVarDate);
-
-							final LinearLayout finalRow = dateRangeRow;  
-							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-							updateString();
-						}
-					});
-				} else if (start.getVarDate()!=null && (end!=null && end.getVarDate()!=null)) {
-					DateRangePicker.showDialog(getActivity(), R.string.date_range, 
-							start.getYear(), start.getVarDate(),
-							tempEndYear, end.getVarDate(),
-							new SetDateRangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
-								int endYear, Month endMonth, int endDay, VarDate endVarDate) {
-							start.setYear(startYear);
-							start.setVarDate(startVarDate);
-
-							dateRange.getEndDate().setYear(endYear);
-							dateRange.getEndDate().setVarDate(endVarDate);
-
-							final LinearLayout finalRow = dateRangeRow;  
-							setDateRangeValues(start, dateRange.getEndDate(), finalRow);
-							updateString();
-						}
-					});
-				}
+				updateString();
+				watcher.afterTextChanged(null); // hack to force rebuild of form
 			}
 		});
 
-		// add menus
-		if (dateRangeRow != null) {
-			addStandardMenuItems(dateRangeRow, new Delete() {
+		if (hasStartOffset || hasEndOffset) {
+			LinearLayout startDateLayout = (LinearLayout)dateRangeRow.findViewById(R.id.startDate);
+			LinearLayout endDateLayout = (LinearLayout)dateRangeRow.findViewById(R.id.endDate);
+			setDateRangeValues(startDate, endDate, dateRangeRow, menu);
+			startDateLayout.setOnClickListener(new OnClickListener() {
 				@Override
-				public void delete() {
-					dateRanges.remove(dateRange);
-					if (dateRanges.isEmpty()) {
-						r.setMonthdays(null);
+				public void onClick(View v) {		
+					final DateWithOffset start = startDate;			
+					if (start.getVarDate()==null) {
+						DateRangePicker.showDialog(getActivity(), R.string.date, 
+								start.getYear(), start.getMonth(), start.getDay(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								start.setYear(startYear);
+								start.setMonth(startMonth);
+								start.setDay(startDay);
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(start, null, finalRow, menu);
+								updateString();
+							}
+						});	
+					} else {
+						DateRangePicker.showDialog(getActivity(), R.string.date, 
+								start.getYear(), start.getVarDate(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								start.setYear(startYear);
+								start.setVarDate(startVarDate);
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(start, null, finalRow, menu);
+								updateString();
+							}
+						});
 					}
-					updateString();
-					watcher.afterTextChanged(null); // hack to force rebuild of form
 				}
 			});
-			ll.addView(dateRangeRow);
+			endDateLayout.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {	
+					if (endDate==null || endDate.getVarDate()==null) {
+						final DateWithOffset end;
+						if (endDate==null) {
+							end = new DateWithOffset();
+							end.setMonth(Month.JAN);
+						} else {
+							end = endDate;
+						}		
+						DateRangePicker.showDialog(getActivity(), R.string.date, 
+								end.getYear(), end.getMonth(), end.getDay(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								// we are only using the first NPV thats why we need to use the startXXX values here
+								DateWithOffset tempDwo = endDate;
+								if (tempDwo == null && (startYear != YearRange.UNDEFINED_YEAR || startMonth != null || startDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+									tempDwo = new DateWithOffset();
+									dateRange.setEndDate(tempDwo);
+								}
+								if (tempDwo != null) {
+									tempDwo.setYear(startYear);
+									tempDwo.setMonth(startMonth);
+									tempDwo.setDay(startDay);
+								}
+								end.setYear(startYear);
+								end.setMonth(startMonth);
+								end.setDay(startDay);
+								Log.d(DEBUG_TAG,"y " + startYear + " m " + startMonth + " d" + startDay);
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(startDate, tempDwo, finalRow, menu);
+								updateString();
+								if (endDate==null) {
+									text.postDelayed(new Runnable() {
+										@Override
+										public void run() {
+											watcher.afterTextChanged(null); // force endDate to be set	
+										}	
+									}, 100);
+								}
+							}
+						});	
+					} else  {
+						DateRangePicker.showDialog(getActivity(), R.string.date, 
+								endDate.getYear(), endDate.getVarDate(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								// we are only using the first NPV thats why we need to use the startXXX values here
+								endDate.setYear(startYear);
+								endDate.setVarDate(startVarDate);
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(startDate, endDate, finalRow, menu);
+								updateString();
+							}
+						});
+					}
+				}
+			});
+		} else {			
+			setDateRangeValues(startDate, endDate, dateRangeRow, menu);
+			RelativeLayout dateRangeLayout = (RelativeLayout)dateRangeRow.findViewById(R.id.daterange_container);
+			dateRangeLayout.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {		
+					int tempEndYear = YearRange.UNDEFINED_YEAR;
+					Month tempEndMonth = null;
+					int tempEndDay = DateWithOffset.UNDEFINED_MONTH_DAY;
+
+					final DateWithOffset start = startDate;
+					DateWithOffset end = endDate;
+
+					if (end != null) {
+						tempEndYear = end.getYear();
+						tempEndMonth = end.getMonth();
+						tempEndDay = end.getDay();
+					}
+					if (start.getVarDate()==null && (end==null || end.getVarDate()==null)) {
+						if (start.isOpenEnded()) {
+							DateRangePicker.showDialog(getActivity(), R.string.date, 
+									start.getYear(), start.getMonth(), start.getDay(),
+									new SetDateRangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+										int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+									start.setYear(startYear);
+									start.setMonth(startMonth);
+									start.setDay(startDay);
+									final LinearLayout finalRow = dateRangeRow;  
+									setDateRangeValues(start, null, finalRow, menu);
+									updateString();
+								}
+							});
+						} else {
+							DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+									start.getYear(), start.getMonth(), start.getDay(),
+									tempEndYear, tempEndMonth, tempEndDay,
+									new SetDateRangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+										int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+									start.setYear(startYear);
+									start.setMonth(startMonth);
+									start.setDay(startDay);
+									DateWithOffset tempDwo = endDate;
+									if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+										tempDwo = new DateWithOffset();
+										dateRange.setEndDate(tempDwo);
+									}
+									if (tempDwo != null) {
+										tempDwo.setYear(endYear);
+										tempDwo.setMonth(endMonth);
+										tempDwo.setDay(endDay);
+									}
+									final LinearLayout finalRow = dateRangeRow;  
+									setDateRangeValues(start, tempDwo, finalRow, menu);
+									updateString();
+									if (endDate==null) {
+										text.postDelayed(new Runnable() {
+											@Override
+											public void run() {
+												watcher.afterTextChanged(null); // force endDate to be set	
+											}	
+										}, 100);
+									}
+								}
+							});
+						}
+					} else if (start.getVarDate()!=null && (end==null || end.getVarDate()==null)) {
+						if (start.isOpenEnded()) {
+							DateRangePicker.showDialog(getActivity(), R.string.date, 
+									start.getYear(), start.getVarDate(),
+									new SetDateRangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+										int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+									start.setYear(startYear);
+									start.setVarDate(startVarDate);
+									final LinearLayout finalRow = dateRangeRow;  
+									setDateRangeValues(start, null, finalRow, menu);
+									updateString();
+								}
+							});
+						} else {
+							DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+									start.getYear(), start.getVarDate(),
+									tempEndYear, tempEndMonth, tempEndDay,
+									new SetDateRangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+										int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+									start.setYear(startYear);
+									start.setVarDate(startVarDate);
+									DateWithOffset tempDwo = endDate;
+									if (tempDwo == null && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+										tempDwo = new DateWithOffset();
+										dateRange.setEndDate(tempDwo);
+									}
+									if (tempDwo != null) {
+										tempDwo.setYear(endYear);
+										tempDwo.setMonth(endMonth);
+										tempDwo.setDay(endDay);
+									}
+									final LinearLayout finalRow = dateRangeRow;  
+									setDateRangeValues(start, tempDwo, finalRow, menu);
+									updateString();
+									if (endDate==null) {
+										text.postDelayed(new Runnable() {
+											@Override
+											public void run() {
+												watcher.afterTextChanged(null); // force endDate to be set	
+											}	
+										}, 100);
+									}
+								}
+							});
+						}
+					} else if (start.getVarDate()==null && (end!=null && end.getVarDate()!=null)) {
+						DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+								start.getYear(), start.getMonth(), start.getDay(),
+								tempEndYear, end.getVarDate(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								start.setYear(startYear);
+								start.setMonth(startMonth);
+								start.setDay(startDay);
+
+								endDate.setYear(endYear);
+								endDate.setVarDate(endVarDate);
+
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(start, endDate, finalRow, menu);
+								updateString();
+							}
+						});
+					} else if (start.getVarDate()!=null && (end!=null && end.getVarDate()!=null)) {
+						DateRangePicker.showDialog(getActivity(), R.string.date_range, 
+								start.getYear(), start.getVarDate(),
+								tempEndYear, end.getVarDate(),
+								new SetDateRangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, 
+									int endYear, Month endMonth, int endDay, VarDate endVarDate) {
+								start.setYear(startYear);
+								start.setVarDate(startVarDate);
+
+								endDate.setYear(endYear);
+								endDate.setVarDate(endVarDate);
+
+								final LinearLayout finalRow = dateRangeRow;  
+								setDateRangeValues(start, endDate, finalRow, menu);
+								updateString();
+							}
+						});
+					}
+				}
+			});
+		}
+		ll.addView(dateRangeRow);
+	}
+
+
+	private void setDateRangeValues(final DateWithOffset start, final DateWithOffset end, LinearLayout dateRangeRow, Menu menu) {	
+		TextView startYearView = (TextView) dateRangeRow.findViewById(R.id.startYear);
+		if (start.getYear() != YearRange.UNDEFINED_YEAR) {
+			startYearView.setText(Integer.toString(start.getYear()));
+		} else {
+			startYearView.setText("");
+		}
+		TextView startDelimiter = (TextView) dateRangeRow.findViewById(R.id.startMonthDayDelimiter);
+		TextView startMonthView = (TextView) dateRangeRow.findViewById(R.id.startMonth);
+		TextView startDayView = (TextView) dateRangeRow.findViewById(R.id.startMonthDay);
+		if (start.getVarDate()==null) {
+			startDelimiter.setVisibility(View.VISIBLE);
+			startDayView.setVisibility(View.VISIBLE);
+			
+			if (start.getMonth() != null) {
+				startMonthView.setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
+			}
+
+			if (start.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
+				startDayView.setText(Integer.toString(start.getDay()));
+			} else {
+				startDayView.setText("");
+			}
+		} else {
+			startDelimiter.setVisibility(View.GONE);
+			startDayView.setVisibility(View.GONE);
+			startMonthView.setText(getResources().getStringArray(R.array.vardate_values)[start.getVarDate().ordinal()]);
+		}
+		// offset stuff
+		RelativeLayout startWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.startWeekDayContainer);
+		if (startWeekDayContainer != null) {
+			checkWeekDay(startWeekDayContainer, start.getWeekDayOffset() != null ? start.getWeekDayOffset().toString() : null);
+			setWeekDayListeners(startWeekDayContainer, start);
+			final Spinner offsetTypeSpinner = (Spinner)dateRangeRow.findViewById(R.id.startOffsetType);
+			setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, start.isWeekDayOffsetPositive()?"+":"-");
+			setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
+				@Override
+				public void set(String value) {
+					start.setWeekDayOffsetPositive("+".equals(value));
+				}
+			});
+		}
+		final LinearLayout startOffsetContainer = (LinearLayout) dateRangeRow.findViewById(R.id.start_offset_container);
+		if (startOffsetContainer != null) {
+			if (start.getDayOffset() != 0) {
+				startOffsetContainer.setVisibility(View.VISIBLE);
+				EditText offset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+				offset.setText(Integer.toString(start.getDayOffset()));
+				setTextWatcher(offset, new SetValue() {
+					@Override
+					public void set(String value) {
+						int offset = 0;
+						try {
+							offset = Integer.parseInt(value);
+						} catch (NumberFormatException nfex){
+						}
+						start.setDayOffset(offset);
+					}
+				});
+			} else {
+				startOffsetContainer.setVisibility(View.GONE);
+				MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_start_offset);
+				showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						startOffsetContainer.setVisibility(View.VISIBLE);
+						return true;
+					}	
+				});
+			}
+		}
+		if (end != null) {
+			TextView yearView = (TextView) dateRangeRow.findViewById(R.id.endYear);
+			if (end.getYear() != YearRange.UNDEFINED_YEAR) {				
+				yearView.setText(Integer.toString(end.getYear()));
+			} else {
+				yearView.setText("");
+			}
+			TextView endDelimiter = (TextView) dateRangeRow.findViewById(R.id.endMonthDayDelimiter);
+			TextView endMonthView = (TextView) dateRangeRow.findViewById(R.id.endMonth);
+			TextView endDayView = (TextView) dateRangeRow.findViewById(R.id.endMonthDay);
+			if (end.getVarDate()==null) {
+				endDelimiter.setVisibility(View.VISIBLE);
+				endDayView.setVisibility(View.VISIBLE);
+				
+				if (end.getMonth() != null) {
+					endMonthView.setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
+				} else {
+					endMonthView.setText("");
+				}
+				if (end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
+					endDayView.setText(Integer.toString(end.getDay()));
+				} else {
+					endDayView.setText("");
+				}
+			} else {
+				endDelimiter.setVisibility(View.GONE);
+				endDayView.setVisibility(View.GONE);
+				endMonthView.setText(getResources().getStringArray(R.array.vardate_values)[end.getVarDate().ordinal()]);
+			}
+			Log.d(DEBUG_TAG,"month " + end.getMonth() + " day " + end.getDay() + " var date " + end.getVarDate());
+			if ((end.getMonth() != null && end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) || end.getVarDate()!=null) {
+				// offset stuff
+				setEnableEndDateOffsets(dateRangeRow,true);
+				RelativeLayout endWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.endWeekDayContainer);
+				if (endWeekDayContainer!=null) {
+					checkWeekDay(endWeekDayContainer, end.getWeekDayOffset() != null ? end.getWeekDayOffset().toString() : null);
+					setWeekDayListeners(endWeekDayContainer, end);
+					final Spinner offsetTypeSpinner = (Spinner)dateRangeRow.findViewById(R.id.endOffsetType);
+					setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, end.isWeekDayOffsetPositive()?"+":"-");
+					setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
+						@Override
+						public void set(String value) {
+							end.setWeekDayOffsetPositive("+".equals(value));
+						}
+					});
+				}
+				final LinearLayout endOffsetContainer = (LinearLayout) dateRangeRow.findViewById(R.id.end_offset_container);
+				if (endOffsetContainer != null) {
+					if (end.getDayOffset() > 0) {
+						endOffsetContainer.setVisibility(View.VISIBLE);
+						EditText offset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+						offset.setText(Integer.toString(start.getDayOffset()));
+						setTextWatcher(offset, new SetValue() {
+							@Override
+							public void set(String value) {
+								int offset = 0;
+								try {
+									offset = Integer.parseInt(value);
+								} catch (NumberFormatException nfex){
+								}
+								end.setDayOffset(offset);
+							}
+						});
+					} else {
+						endOffsetContainer.setVisibility(View.GONE);
+						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_end_offset);
+						showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+							@Override
+							public boolean onMenuItemClick(MenuItem item) {
+								endOffsetContainer.setVisibility(View.VISIBLE);
+								return true;
+							}	
+						});
+					}
+				}
+			} else {
+				setEnableEndDateOffsets(dateRangeRow,false);
+			}
+		} else {
+			if (start.isOpenEnded()) {
+				View endDate = dateRangeRow.findViewById(R.id.endDate);
+				endDate.setVisibility(View.GONE);
+				View to = dateRangeRow.findViewById(R.id.to);
+				to.setVisibility(View.GONE);
+				setVisEndDateOffsets(dateRangeRow, View.GONE);
+			} else {
+				setEnableEndDateOffsets(dateRangeRow,false);
+			}
 		}
 	}
 
+	private void setVisEndDateOffsets(LinearLayout dateRangeRow,int vis) {
+		View endWeekDayContainer = dateRangeRow.findViewById(R.id.endWeekDayContainer);
+		if (endWeekDayContainer != null) {
+			endWeekDayContainer.setVisibility(vis);
+		}
+		View endOffsetType = dateRangeRow.findViewById(R.id.endOffsetType);
+		if (endOffsetType != null) {
+			endOffsetType.setVisibility(vis);
+		}
+		View endOffsetContainer = dateRangeRow.findViewById(R.id.end_offset_container);
+		if (endOffsetContainer != null) {
+			endOffsetContainer.setVisibility(vis);
+		}
+	}
+	
+	private void setEnableEndDateOffsets(LinearLayout dateRangeRow,boolean enable) {
+		setEnableChlldren(R.id.endWeekDayContainer, dateRangeRow, enable);
+		View endOffsetType = dateRangeRow.findViewById(R.id.endOffsetType);
+		if (endOffsetType != null) {
+			endOffsetType.setEnabled(enable);
+		}
+		setEnableChlldren(R.id.end_offset_container, dateRangeRow, enable);
+	}
+
+	private void setEnableChlldren(int res, LinearLayout dateRangeRow, boolean enable) {
+		ViewGroup container = (ViewGroup) dateRangeRow.findViewById(res);
+		if (container != null) {
+			int children = container.getChildCount();
+			for (int i=0;i<children;i++) {
+				container.getChildAt(i).setEnabled(enable);
+			}
+		}
+	}
+	
 	private void addHolidayUI(LinearLayout ll, final Rule r, final List<Holiday> holidays, final Holiday hd) {
 		LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
 		Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
@@ -1587,70 +1968,6 @@ public class OpeningHoursFragment extends DialogFragment {
 		ll.addView(weekLayout);
 	}
 
-	private void setDateRangeValues(final DateWithOffset start, final DateWithOffset end, LinearLayout dateRangeRow) {
-		TextView startYearView = (TextView) dateRangeRow.findViewById(R.id.startYear);
-		if (start.getYear() != YearRange.UNDEFINED_YEAR) {
-			startYearView.setText(Integer.toString(start.getYear()));
-		} else {
-			startYearView.setText("");
-		}
-		TextView startDelimiter = (TextView) dateRangeRow.findViewById(R.id.startMonthDayDelimiter);
-		TextView startMonthView = (TextView) dateRangeRow.findViewById(R.id.startMonth);
-		TextView startDayView = (TextView) dateRangeRow.findViewById(R.id.startMonthDay);
-		if (start.getVarDate()==null) {
-			startDelimiter.setVisibility(View.VISIBLE);
-			startDayView.setVisibility(View.VISIBLE);
-			
-			if (start.getMonth() != null) {
-				startMonthView.setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
-			}
-
-			if (start.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
-				startDayView.setText(Integer.toString(start.getDay()));
-			} else {
-				startDayView.setText("");
-			}
-		} else {
-			startDelimiter.setVisibility(View.GONE);
-			startDayView.setVisibility(View.GONE);
-			startMonthView.setText(getResources().getStringArray(R.array.vardate_values)[start.getVarDate().ordinal()]);
-		}
-		if (end != null) {
-			TextView yearView = (TextView) dateRangeRow.findViewById(R.id.endYear);
-			if (end.getYear() != YearRange.UNDEFINED_YEAR) {				
-				yearView.setText(Integer.toString(end.getYear()));
-			} else {
-				yearView.setText("");
-			}
-			TextView endDelimiter = (TextView) dateRangeRow.findViewById(R.id.endMonthDayDelimiter);
-			TextView endMonthView = (TextView) dateRangeRow.findViewById(R.id.endMonth);
-			TextView endDayView = (TextView) dateRangeRow.findViewById(R.id.endMonthDay);
-			if (end.getVarDate()==null) {
-				endDelimiter.setVisibility(View.VISIBLE);
-				endDayView.setVisibility(View.VISIBLE);
-				
-				if (end.getMonth() != null) {
-					endMonthView.setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
-				} else {
-					endMonthView.setText("");
-				}
-				if (end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
-					endDayView.setText(Integer.toString(end.getDay()));
-				} else {
-					endDayView.setText("");
-				}
-			} else {
-				endDelimiter.setVisibility(View.GONE);
-				endDayView.setVisibility(View.GONE);
-				endMonthView.setText(getResources().getStringArray(R.array.vardate_values)[end.getVarDate().ordinal()]);
-			}
-		} else if (start.isOpenEnded()) {
-			View endDate = dateRangeRow.findViewById(R.id.endDate);
-			endDate.setVisibility(View.GONE);
-			View to = dateRangeRow.findViewById(R.id.to);
-			to.setVisibility(View.GONE);
-		}
-	}
 	
 	/**
 	 * Check if just one day is in the ranges
@@ -2104,8 +2421,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		int end = toMins(timeBar.getRightPinValue());
 		end = Math.round(((float)end)/interval)*interval;
 		timeBar.setTickStart(newTickStart);
-		timeBar.setRangePinsByValue(start, end);
-		
+		timeBar.setRangePinsByValue(start, end);		
 	}
 
 	private void addTimeSpanMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
@@ -2203,26 +2519,8 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setSpinnerInitialValue(Spinner spinner, String value) {
-		spinner.setSelection(((ArrayAdapter<String>) spinner.getAdapter())
-				.getPosition(value));
-	}
-
 	interface SetValue {
 		void set(String value);
-	}
-	
-	private void setSpinnerListener(final Spinner spinner, final SetValue listener) {
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				listener.set((String) spinner.getItemAtPosition(position));
-				updateString();
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-			}
-		});
 	}
 	
 	private void setSpinnerInitialEntryValue(int valuesId, Spinner spinner, String value) {
@@ -2307,7 +2605,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	    return hoursInMins + mins;
 	}
 
-	private void checkWeekDay(RelativeLayout container, String day) {
+	private void checkWeekDay(@NonNull RelativeLayout container, @Nullable String day) {
 		Log.d(DEBUG_TAG, "checking " + day);
 		for (int i = 0; i < container.getChildCount(); i++) {
 			View v = container.getChildAt(i);
@@ -2401,7 +2699,42 @@ public class OpeningHoursFragment extends DialogFragment {
 			}
 		}
 	}
-
+	
+	private void setWeekDayListeners(final RelativeLayout container, final DateWithOffset dwo) {
+		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if  (isChecked) { 
+					for (int i = 0; i < container.getChildCount(); i++) {
+						final View c = container.getChildAt(i);
+						if ((c instanceof CheckBox || c instanceof AppCompatCheckBox) && !c.equals(buttonView)) {
+							((CheckBox)c).setChecked(false);
+						}
+					}
+					dwo.setWeekDayOffset((String) buttonView.getTag());
+				} else { // hack alert
+					for (int i = 0; i < container.getChildCount(); i++) {
+						final View c = container.getChildAt(i);
+						if ((c instanceof CheckBox || c instanceof AppCompatCheckBox)) {
+							if (((CheckBox)c).isChecked()) {
+								return;
+							}
+						} 
+					}
+					((CheckBox)buttonView).setChecked(false);
+					dwo.setWeekDayOffset((WeekDay)null);
+				}
+				updateString();
+			}};
+			
+		for (int i = 0; i < container.getChildCount(); i++) {
+			final View v = container.getChildAt(i);
+			if (v instanceof CheckBox || v instanceof AppCompatCheckBox) {
+				((CheckBox) v).setOnCheckedChangeListener(listener);
+			}
+		}
+	}
+	
 	private void setNthListeners(final RelativeLayout container, final WeekDayRange days) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
@@ -2522,16 +2855,21 @@ public class OpeningHoursFragment extends DialogFragment {
 
 	private AppCompatButton saveButton;
 	
-	
-	void loadTemplate(Context context) {
+	/**
+	 * Show a list of the templates in the database, selection will either load a template or start the edit dialog on it
+	 * 
+	 * @param context	Android context
+	 * @param manage	if true the template editor will be started otherwise the template will replace the current OH value
+	 */
+	void loadOrManageTemplate(Context context, boolean manage) {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 		View templateView = (View) inflater.inflate(R.layout.template_list, null);
-		alertDialog.setTitle(R.string.load_templates_title);
+		alertDialog.setTitle(manage?R.string.manage_templates_title:R.string.load_templates_title);
 		alertDialog.setView(templateView);
 		ListView lv = (ListView) templateView.findViewById(R.id.listView1);
 		final SQLiteDatabase writableDb = new TemplateDatabaseHelper(context).getWritableDatabase();
 		templateCursor = writableDb.rawQuery(TemplateDatabase.QUERY_ALL, null);
-		templateAdapter = new TemplateAdapter(writableDb, context, templateCursor);
+		templateAdapter = new TemplateAdapter(writableDb, context, templateCursor, manage);
 		lv.setAdapter(templateAdapter);		
 		alertDialog.setNegativeButton(R.string.Cancel, null);
 		alertDialog.setOnDismissListener(new OnDismissListener(){
@@ -2546,10 +2884,12 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	private class TemplateAdapter extends CursorAdapter {	
 		final SQLiteDatabase db;
+		final boolean manage;
 		
-		public TemplateAdapter(final SQLiteDatabase db, Context context, Cursor cursor) {
+		public TemplateAdapter(final SQLiteDatabase db, Context context, Cursor cursor, boolean manage) {
 			super(context, cursor, 0);
 			this.db = db;
+			this.manage = manage;
 		}
 
 		@Override
@@ -2570,25 +2910,26 @@ public class OpeningHoursFragment extends DialogFragment {
 			TextView nameView = (TextView) view.findViewById(R.id.name);
 			nameView.setText(isDefault ? getActivity().getString(R.string.is_default, name): name);
 			final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
-			nameView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					text.removeTextChangedListener(watcher);
-					text.setText(template);
-					text.addTextChangedListener(watcher);
-					watcher.afterTextChanged(null);
-					templateDialog.dismiss();
-				}
-			});
-			nameView.setLongClickable(true);
-			nameView.setOnLongClickListener(new OnLongClickListener() {
-				@Override
-				public boolean onLongClick(View v) {
-					Integer id = (Integer) view.getTag();
-					showTemplateDialog(db, true, id != null ? id.intValue() : -1);
-					return true;
-				}
-			});
+			if (manage) {
+				nameView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Integer id = (Integer) view.getTag();
+						showTemplateDialog(db, true, id != null ? id.intValue() : -1);
+					}
+				});
+			} else {
+				nameView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						text.removeTextChangedListener(watcher);
+						text.setText(template);
+						text.addTextChangedListener(watcher);
+						watcher.afterTextChanged(null);
+						templateDialog.dismiss();
+					}
+				});
+			}
 		}
 	}
 	

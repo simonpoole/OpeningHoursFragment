@@ -9,10 +9,25 @@
     <string name="load_template">載入模版</string>
     <string name="save_to_template">儲存到模版</string>
     <string name="refresh">重整</string>
-    <string name="load_templates_title">載入與管理模版</string>
     <string name="save_template">儲存模版</string>
+    
     <string name="edit_template">編輯模版</string>
-    <!--    menu items -->
+    <string name="name_legend">名稱：</string>
+    <string name="default_legend">預設：</string>
+    
+    <string name="is_default">%1$s (預設)</string>
+    
+    <string name="group_header">群組 %1$s</string>
+    <string name="rule_header">規則 %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">已載入預設模版</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">平日午餐休息</string>
+	<string name="weekdays">平日</string>
+    
+<!--    menu items -->
 	<string name="Delete">刪除</string>
 	<string name="closed">已關閉</string>
   	<string name="unknown">未知的</string>

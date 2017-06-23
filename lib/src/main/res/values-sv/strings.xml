@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Avbryt</string>
+    <string name="Save">Spara</string>
+    
+    <string name="add_rule">Lägg till regel</string>
+    <string name="add_rule_247">Lägg till regel för 24/7</string>
+    <string name="load_template">Ladda mall</string>
+    <string name="save_to_template">Spara till mall</string>
+    <string name="refresh">Uppdatera</string>
+    <string name="save_template">Spara mall</string>
+    
+    <string name="edit_template">Redigera mall</string>
+    <string name="name_legend">Namn:</string>
+    <string name="default_legend">Standard:</string>
+    
+    <string name="is_default">%1$s(standard)</string>
+    
+    <string name="group_header">Grupp %1$s</string>
+    <string name="rule_header">Regel %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Laddat standardmall</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
+	<string name="weekdays">Veckodagar</string>
+    
+<!--    menu items -->
+	<string name="Delete">Ta bort</string>
+	<string name="add_year_range">Lägg till årsspann</string>
+	<string name="add_week_range">Lägg till veckospann</string>
+	<string name="add_holiday">Lägg till helg</string>
+    <string name="timespan_menu">Lägg till tidsspann...</string>
+    <string name="time_time">Tid - tid</string>
+    <string name="time_extended_time">Tid - utökad tid</string>
+    <string name="variable_time_time">Var. tid - tid</string>
+    <string name="time_variable_time">Tid - var. tid</string>
+    <string name="variable_time_variable_time">Var. tid - var. tid</string>
+    <string name="time">Tid</string>
+    <string name="variable_time">Variabel tid</string>
+    <string name="start_at_midnight">Börjar vid midnatt</string>
+    <string name="daterange_menu">Lägg till datumspann...</string>
+    <string name="date_date">Datum - datum</string>
+    <string name="variable_date_date">Variabelt datum - datum</string>
+    <string name="date_variable_date">Datum - variabelt datum</string>
+    <string name="variable_date_variable_date">Variabelt datum - variabelt datum</string>
+    <string name="rule_type">Visa regeltyp</string>
+    <string name="move_up">Flytta upp</string>
+    <string name="move_down">Flytta ned</string>
+    <string name="ticks_15_minute">Flytta till närmaste 15 minuter</string>
+    <string name="ticks_5_minute">Flytta till närmaste 5 minuter</string>
+    <string name="ticks_1_minute">Flytta till närmaste 1 minut</string>
+    <string name="show_interval">Visa intervall</string>
+    
+<string name="interval_minutes">Intervall (minuter)</string>
+    <string name="interval_years">Intervall (år)</string>
+    <string name="interval_weeks">Intervall (veckor)</string>
+    
+    <string name="offset_mins">Justering (±minuter)</string>
+    <string name="offset_days">Justering (±dagar)</string>
+    
+    <string name="date_range">Datumspann</string>
+    <string name="date">Datum</string>
+    <string name="week_range">Veckospann</string>
+    <string name="weeks">Veckor</string>
+    <string name="year_range">Årsspann</string>
+    <string name="years">År</string>
+    
+    <string name="comment">Kommentar</string>
+    
+    
+    <string name="twentyfourseven">24 timmar, 7 dagar i veckan</string>
+    
+    <string name="to">till</string>
+    
+    <string name="easter">Påsk</string>
+    
+    <string name="sunrise">Soluppgång</string>
+  	<string name="sunset">Solnedgång</string>
+  	<string name="dawn">Gryning</string>
+  	<string name="dusk">Skymning</string>
+  	
+  	<string name="public_holidays">Offentliga helgdagar</string>
+  	<string name="school_holidays">Skollov</string>
+  	
+  	<string name="monday_short">Må</string>
+  	<string name="tuesday_short">Ti</string>
+  	<string name="wednesday_short">On</string>
+  	<string name="thursday_short">To</string>
+  	<string name="friday_short">Fr</string>
+  	<string name="saturday_short">Lö</string>
+  	<string name="sunday_short">Sö</string>
+
+  	<string name="january">Jan</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Apr</string>
+  	<string name="may">Maj</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Aug</string>
+  	<string name="september">Sep</string>
+  	<string name="october">Okt</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dec</string>
+  	
+  	<string name="closed">sluten</string>
+  	<string name="unknown">okänd</string>
+    
+  	</resources>

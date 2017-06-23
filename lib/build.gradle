@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jacoco"
 
-version = '0.0.19'
+version = '0.1.0'
 def libName = "OpeningHoursFragment"
 
 eclipse {
@@ -146,6 +146,19 @@ def getXmlFromFile(String xmlFilePath) {
         throw new NullPointerException("Failure reading from " + xmlFilePath)
     }
     return xml;
+}
+
+android.libraryVariants.all { variant ->
+  task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+    description "Generates Javadoc for $variant.name."
+    group "Documentation"
+    source = variant.javaCompile.source
+    classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath) + files(variant.javaCompile.destinationDir)
+    options.links("http://docs.oracle.com/javase/7/docs/api/");
+    options.links("http://d.android.com/reference/");
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+  }
 }
 
 group "ch.poole"

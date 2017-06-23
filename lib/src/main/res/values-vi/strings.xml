@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Hủy bỏ</string>
+    <string name="Save">Lưu</string>
+    
+    <string name="add_rule">Thêm quy tắc</string>
+    <string name="add_rule_247">Thêm quy tắc 24/7</string>
+    <string name="refresh">Làm mới</string>
+    <string name="name_legend">Tên:</string>
+    <string name="default_legend">Mặc định:</string>
+    
+    <string name="is_default">%1$s (mặc định)</string>
+    
+    <string name="group_header">Nhóm %1$s</string>
+    <string name="rule_header">Quy tắc %1$s</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Ngày thường trừ bữa trưa</string>
+	<string name="weekdays">Ngày thường</string>
+    
+<!--    menu items -->
+	<string name="Delete">Xóa</string>
+	<string name="time">Giờ</string>
+    <string name="start_at_midnight">Bắt đầu nửa đêm</string>
+    <string name="rule_type">Xem kiểu tuy tắc</string>
+    <string name="move_up">Chuyển lên</string>
+    <string name="move_down">Chuyển xuống</string>
+    <string name="show_offset">Xem giờ chệch</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Bình thường</string>
+    <string name="offset_mins">Giờ chệch (±phút)</string>
+    <string name="offset_days">Ngày chệch (±ngày)</string>
+    
+    <string name="date">Ngày tháng</string>
+    <string name="weeks">Tuần</string>
+    <string name="years">Năm</string>
+    
+    <string name="comment">Nhận xét</string>
+    
+    
+    <string name="to">đến</string>
+    
+    <string name="easter">Phục sinh</string>
+    
+    <string name="public_holidays">Ngày lễ công cộng</string>
+  	<string name="school_holidays">Ngày lễ trường học</string>
+  	
+  	<string name="monday_short">T2</string>
+  	<string name="tuesday_short">T3</string>
+  	<string name="wednesday_short">T4</string>
+  	<string name="thursday_short">T5</string>
+  	<string name="friday_short">T6</string>
+  	<string name="saturday_short">T7</string>
+  	<string name="sunday_short">CN</string>
+
+  	<string name="january">Thg1</string>
+  	<string name="february">Thg2</string>
+  	<string name="march">Thg3</string>
+  	<string name="april">Thg4</string>
+  	<string name="may">Thg5</string>
+  	<string name="june">Thg6</string>
+  	<string name="july">Thg7</string>
+  	<string name="august">Thg8</string>
+  	<string name="september">Thg9</string>
+  	<string name="october">Thg10</string>
+  	<string name="november">Thg11</string>
+  	<string name="december">Thg12</string>
+  	
+  	<string name="open">mở cửa</string>
+ 	<string name="closed">đóng cửa</string>
+  	<string name="unknown">không rõ</string>
+    
+  	</resources>

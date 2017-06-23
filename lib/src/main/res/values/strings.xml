@@ -8,9 +8,12 @@
     <string name="add_rule_247">Add rule for 24/7</string>
     <string name="load_template">Load template</string>
     <string name="save_to_template">Save to template</string>
+    <string name="manage_template">Manage template</string>
     <string name="refresh">Refresh</string>
-    <string name="load_templates_title">Load and manage templates</string>
+    <string name="load_templates_title">Load templates</string>
+    <string name="manage_templates_title">Manage templates</string>
     <string name="save_template">Save template</string>
+    
     <string name="edit_template">Edit template</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Default:</string>
@@ -53,6 +56,7 @@
     <string name="variable_date_variable_date">Variable date - variable date</string>
     <string name="date_open_end">Date - open end</string>
     <string name="variable_date_open_end">Variable date - open end</string>
+    <string name="with_offsets">With offsets...</string>
     <string name="rule_type">Show rule type</string>
     <string name="move_up">Move up</string>
     <string name="move_down">Move down</string>
@@ -60,6 +64,8 @@
     <string name="ticks_5_minute">Switch to 5 minute ticks</string>
     <string name="ticks_1_minute">Switch to 1 minute ticks</string>
     <string name="show_offset">Show offset</string>
+    <string name="show_start_offset">Show start offset</string>
+    <string name="show_end_offset">Show end offset</string>
     <string name="show_interval">Show interval</string>
     
 <!--     opening hour elements -->
@@ -158,6 +164,9 @@
  	<string name="oh_closed" translatable="false">closed</string>
   	<string name="oh_off" translatable="false">off</string>
     <string name="oh_unknown" translatable="false">unknown</string>
+    
+    <string name="before">before</string>
+    <string name="after">after</string>
   	
   	<string-array name="months_entries" translatable="false">
   	    <item>@string/january</item>
@@ -277,5 +286,15 @@
     <string-array name="holidays_values" translatable="false">
   	   	<item>PH</item>
  		<item>SH</item>
+    </string-array>
+    
+    <string-array name="offset_type_entries" translatable="false">
+  	   	<item>@string/before</item>
+ 		<item>@string/after</item>
+    </string-array>
+    
+    <string-array name="offset_type_values" translatable="false">
+  	   	<item>-</item>
+ 		<item>+</item>
     </string-array>
 </resources>

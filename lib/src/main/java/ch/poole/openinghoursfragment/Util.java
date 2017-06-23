@@ -68,12 +68,10 @@ public class Util {
 	
 
 	/**
-	 * Display a toast underneath the top action bar
+	 * Display a toast at the top of the screen
 	 * 
-	 * @param activity	activity that called this
+	 * @param context	android context
 	 * @param msg 		the message to display
-	 * @param color 	background color of the message
-	 * @param duration 	how long to display the message
 	 */
 	public static void toastTop(Context context, String msg) {
 		 LayoutInflater inflater = LayoutInflater.from(context);

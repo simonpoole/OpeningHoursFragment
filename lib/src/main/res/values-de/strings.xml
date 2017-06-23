@@ -8,9 +8,12 @@
     <string name="add_rule_247">Regel für 24/7 hinzufügen</string>
     <string name="load_template">Vorlage laden</string>
     <string name="save_to_template">In Vorlage speichern</string>
+    <string name="manage_template">Vorlage verwalten</string>
     <string name="refresh">Aktualisieren</string>
-    <string name="load_templates_title">Vorlagen laden und verwalten</string>
+    <string name="load_templates_title">Vorlage laden</string>
+    <string name="manage_templates_title">Vorlagen verwalten</string>
     <string name="save_template">Vorlage speichern</string>
+    
     <string name="edit_template">Vorlage ändern</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Standard:</string>
@@ -29,13 +32,46 @@
     
 <!--    menu items -->
 	<string name="Delete">Löschen</string>
-	<string name="move_up">Nach oben verschieben</string>
+	<string name="add_year_range">Jahresbereich hinzufügen</string>
+	<string name="add_week_range">Wochenbereich hinzufügen</string>
+	<string name="add_holiday">Feiertag hinzufügen</string>
+    <string name="timespan_menu">Zeitspanne hinzufügen ...</string>
+    <string name="time_time">Zeitpunkt - Zeitpunkt</string>
+    <string name="time_extended_time">Zeitpunkt - erweiterter Zeitpunkt</string>
+    <string name="time">Zeit</string>
+    <string name="time_open_end">Ab Zeitpunkt</string>
+    <string name="start_at_midnight">Um Mitternacht beginnen</string>
+    <string name="week_day_range">Wochentagsbereich hinzufügen</string>
+    <string name="daterange_menu">Datumsbereiche hinzufügen...</string>
+    <string name="date_date">Datum - Datum</string>
+    <string name="date_open_end">Ab Datum</string>
+    <string name="with_offsets">Mit Verschiebungen...</string>
+    <string name="rule_type">Regeltyp anzeigen</string>
+    <string name="move_up">Nach oben verschieben</string>
     <string name="move_down">Nach unten verschieben</string>
-    <!--     opening hour elements -->
+    <string name="ticks_15_minute">15-Minuten Raster</string>
+    <string name="ticks_5_minute">5-Minuten Raster</string>
+    <string name="ticks_1_minute">1-Minute Raster</string>
+    <string name="show_offset">Verschiebung anzeigen</string>
+    <string name="show_start_offset">Startverschiebung anzeigen</string>
+    <string name="show_end_offset">Endverschiebung anzeigen</string>
+    <string name="show_interval">Intervall anzeigen</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
+    <string name="interval_minutes">Intervall (Minuten)</string>
+    <string name="interval_years">Intervall (Jahre)</string>
+    <string name="interval_weeks">Intervall (Wochen)</string>
+    
+    <string name="offset_mins">Verschiebung (±min)</string>
+    <string name="offset_days">Verschiebung (±Tage)</string>
+    
+    <string name="date_range">Datumsbereich</string>
     <string name="date">Datum</string>
+    <string name="week_range">Wochenbereich</string>
     <string name="weeks">Wochen</string>
+    <string name="year_range">Jahresbereich</string>
     <string name="years">Jahre</string>
     
     <string name="modifier">Zustand</string>
@@ -79,7 +115,10 @@
   	
   	<string name="open">offen</string>
  	<string name="closed">geschlossen</string>
-  	<string name="off">aus</string>
+  	<string name="off">geschlossen</string>
     <string name="unknown">unbekannt</string>
     
+  	<string name="before">vor dem</string>
+    <string name="after">nach dem</string>
+  	
   	</resources>

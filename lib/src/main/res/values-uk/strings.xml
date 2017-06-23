@@ -9,8 +9,8 @@
     <string name="load_template">Заватажити шаблон</string>
     <string name="save_to_template">Зберегти шаблон</string>
     <string name="refresh">Перезавантажити</string>
-    <string name="load_templates_title">Завантаження та керування шаблонами</string>
     <string name="save_template">Зберегти шаблон</string>
+    
     <string name="edit_template">Редагувати шаблон</string>
     <string name="name_legend">Назва:</string>
     <string name="default_legend">Типово:</string>
