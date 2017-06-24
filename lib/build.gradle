@@ -62,8 +62,8 @@ eclipseClasspath.dependsOn "generateDebugSources"
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         minSdkVersion project.getMinSdkVersion()
@@ -94,7 +94,7 @@ android {
 }
 
 ext {
-    supportLibVersion = "23.3.0"
+    supportLibVersion = "24.1.1"
 }
 
 dependencies {
@@ -160,6 +160,20 @@ android.libraryVariants.all { variant ->
     exclude '**/R.java'
   }
 }
+
+//task sourcesJar(type: Jar) {
+//	from release.javaCompile.source
+//	classifier = 'sources'
+//}
+
+task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
+	doLast {
+		classifier = 'javadoc'
+		from javadoc.destinationDir
+	//	options.encoding = 'UTF-8'
+	}
+}
+
 
 group "ch.poole"
 

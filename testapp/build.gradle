@@ -55,8 +55,8 @@ eclipseClasspath.dependsOn "generateDebugSources"
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         minSdkVersion project.getMinSdkVersion()
@@ -86,7 +86,7 @@ android {
 }
 
 ext {
-    supportLibVersion = "23.3.0"
+    supportLibVersion = "24.1.1"
 }
 
 dependencies {
