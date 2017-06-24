@@ -22,8 +22,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
@@ -46,12 +44,10 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -144,7 +140,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	 * @param key	the key the OH values belongs to
 	 * @param value	the OH value
 	 * @param style	resource id for the Android style to use
-	 * @param rule	rulle to scroll to or -1 (currently ignored)
+	 * @param rule	rule to scroll to or -1 (currently ignored)
 	 * @return an OpeningHoursFragment
 	 */
 	static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule) {
@@ -245,6 +241,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	 * 
 	 * @param openingHoursLayout	the layout
 	 * @param openingHoursValue		the OH value
+	 * @param initialRule			index of the rule to scroll to, currently ignored
 	 */
 	private ScrollView buildLayout(LinearLayout openingHoursLayout, String openingHoursValue, final int initialRule) {
 		text = (EditText) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
@@ -421,7 +418,13 @@ public class OpeningHoursFragment extends DialogFragment {
 		text.addTextChangedListener(watcher);
 	}
 
-	private synchronized void buildForm(ScrollView sv, List<Rule> rules) {
+	/**
+	 * (Re-)Build the contents of the scroll view
+	 * 
+	 * @param sv	the ScrollView
+	 * @param rules	List of Rules to display
+	 */
+	private synchronized void buildForm(@NonNull ScrollView sv, @NonNull List<Rule> rules) {
 		sv.removeAllViews();
 		LinearLayout ll = new LinearLayout(getActivity());
 		ll.setPadding(0, 0, 0, dpToPixels(64));
@@ -430,7 +433,14 @@ public class OpeningHoursFragment extends DialogFragment {
 		addRules(false, rules, ll);
 	}
 
-	private void addRules(boolean groupMode, final List<Rule> rules, LinearLayout ll) {
+	/**
+	 * Loop over the list of rules adding views and menus for the entries
+	 * 
+	 * @param groupMode	use groupMode, currently ignored
+	 * @param rules		List of Rules to display
+	 * @param ll		layout to add the wules to
+	 */
+	private void addRules(boolean groupMode, @NonNull final List<Rule> rules, @NonNull LinearLayout ll) {
 		boolean first = true;
 		int headerCount = 1;
 		for (final Rule r:rules) {
@@ -1077,11 +1087,16 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
+	/**
+	 * Helper class to reduce code duplication when adding date range menu items 
+	 * @author simon
+	 *
+	 */
 	class DateRangeMenuListener implements OnMenuItemClickListener {
 		final DateMenuInterface datesAdder;
 		final Rule r;
 		
-		DateRangeMenuListener(Rule r, DateMenuInterface datesAdder) {
+		DateRangeMenuListener(@NonNull Rule r, @NonNull DateMenuInterface datesAdder) {
 			this.r = r;
 			this.datesAdder = datesAdder;
 		}
@@ -1102,7 +1117,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}	
 	}
 	
-	private void addWeekDayUI(LinearLayout ll, final List<WeekDayRange> days) {
+	private void addWeekDayUI(@NonNull LinearLayout ll, @NonNull final List<WeekDayRange> days) {
 		final LinearLayout weekDayRow = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
 		final RelativeLayout weekDayContainer = (RelativeLayout) weekDayRow.findViewById(R.id.weekDayContainer);
 		
@@ -1231,7 +1246,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void addDateRangeUI(LinearLayout ll, final Rule r, final List<DateRange> dateRanges,
+	private void addDateRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<DateRange> dateRanges,
 			final DateRange dateRange) {
 		// cases to consider
 		// date - date
@@ -1549,8 +1564,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		ll.addView(dateRangeRow);
 	}
 
-
-	private void setDateRangeValues(final DateWithOffset start, final DateWithOffset end, LinearLayout dateRangeRow, Menu menu) {	
+	private void setDateRangeValues(@NonNull final DateWithOffset start, @Nullable final DateWithOffset end, @NonNull LinearLayout dateRangeRow, @NonNull Menu menu) {	
 		TextView startYearView = (TextView) dateRangeRow.findViewById(R.id.startYear);
 		if (start.getYear() != YearRange.UNDEFINED_YEAR) {
 			startYearView.setText(Integer.toString(start.getYear()));
@@ -1712,7 +1726,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setVisEndDateOffsets(LinearLayout dateRangeRow,int vis) {
+	private void setVisEndDateOffsets(@NonNull LinearLayout dateRangeRow,int vis) {
 		View endWeekDayContainer = dateRangeRow.findViewById(R.id.endWeekDayContainer);
 		if (endWeekDayContainer != null) {
 			endWeekDayContainer.setVisibility(vis);
@@ -1727,7 +1741,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void setEnableEndDateOffsets(LinearLayout dateRangeRow,boolean enable) {
+	private void setEnableEndDateOffsets(@NonNull LinearLayout dateRangeRow,boolean enable) {
 		setEnableChlldren(R.id.endWeekDayContainer, dateRangeRow, enable);
 		View endOffsetType = dateRangeRow.findViewById(R.id.endOffsetType);
 		if (endOffsetType != null) {
@@ -1736,7 +1750,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		setEnableChlldren(R.id.end_offset_container, dateRangeRow, enable);
 	}
 
-	private void setEnableChlldren(int res, LinearLayout dateRangeRow, boolean enable) {
+	private void setEnableChlldren(int res, @NonNull LinearLayout dateRangeRow, boolean enable) {
 		ViewGroup container = (ViewGroup) dateRangeRow.findViewById(res);
 		if (container != null) {
 			int children = container.getChildCount();
@@ -1746,7 +1760,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void addHolidayUI(LinearLayout ll, final Rule r, final List<Holiday> holidays, final Holiday hd) {
+	private void addHolidayUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<Holiday> holidays, @NonNull final Holiday hd) {
 		LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
 		Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
 		setSpinnerInitialEntryValue(R.array.holidays_values, holidaysSpinner, hd.getType().name());
@@ -1798,7 +1812,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		ll.addView(holidayRow);
 	}
 
-	private void addYearRangeUI(LinearLayout ll, final Rule r, final List<YearRange> years, final YearRange yr) {
+	private void addYearRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<YearRange> years, @NonNull final YearRange yr) {
 		LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
 		final int startYear = yr.getStartYear();
 		final TextView startYearView = (TextView)yearLayout.findViewById(R.id.start_year);
@@ -1884,7 +1898,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		ll.addView(yearLayout);
 	}
 
-	private void addWeekRangeUI(LinearLayout ll, final Rule r, final List<WeekRange> weeks, final WeekRange w) {
+	private void addWeekRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<WeekRange> weeks, @NonNull final WeekRange w) {
 		LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
 		final TextView startWeekView = (TextView)weekLayout.findViewById(R.id.start_week);
 		final int startWeek = w.getStartWeek();
@@ -1967,19 +1981,24 @@ public class OpeningHoursFragment extends DialogFragment {
 		});
 		ll.addView(weekLayout);
 	}
-
 	
 	/**
 	 * Check if just one day is in the ranges
 	 * 
-	 * @param ranges
-	 * @return
+	 * @param ranges WeekDayRange to check
+	 * @return return true if just one range and that only contains one day
 	 */
-	private boolean justOneDay(List<WeekDayRange> ranges) {
+	private boolean justOneDay(@NonNull List<WeekDayRange> ranges) {
 		return ranges.size()==1 && ranges.get(0).getEndDay()==null;
 	}
 	
-	private void setTextWatcher(final EditText edit, final SetValue listener) {
+	/**
+	 * Set our standard text watcher and a listener on an EditText
+	 * 
+	 * @param edit		the EditText
+	 * @param listener	listener to call when afterTextChanged is called
+	 */
+	private void setTextWatcher(@NonNull final EditText edit, @NonNull final SetValue listener) {
 		edit.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1997,6 +2016,11 @@ public class OpeningHoursFragment extends DialogFragment {
 		});
 	}
 	
+	/**
+	 * Interface for call backs that delete a Rule
+	 * @author simon
+	 *
+	 */
 	interface Delete {
 		void delete();
 	}
@@ -2021,7 +2045,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void addTimeSpanUIs(@NonNull final LinearLayout ll, final List<TimeSpan> times) {
+	private void addTimeSpanUIs(@NonNull final LinearLayout ll, @Nullable final List<TimeSpan> times) {
 		if (times != null && times.size() > 0) {
 			Log.d(DEBUG_TAG, "#time spans " + times.size());
 			Menu menu = null;
@@ -2404,7 +2428,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void changeTicks(final RangeBar timeBar, int interval) {
+	private void changeTicks(@NonNull final RangeBar timeBar, int interval) {
 		int start = toMins(timeBar.getLeftPinValue());
 		start = Math.round(((float)start)/interval)*interval;
 		int end = toMins(timeBar.getRightPinValue());
@@ -2414,7 +2438,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		timeBar.setVisibleTickInterval(60/interval);
 	}
 	
-	private void changeStart(final RangeBar timeBar, float newTickStart) {
+	private void changeStart(@NonNull final RangeBar timeBar, float newTickStart) {
 		int interval = (int)timeBar.getTickInterval();
 		int start = toMins(timeBar.getLeftPinValue());
 		start = Math.round(((float)start)/interval)*interval;
@@ -2424,7 +2448,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		timeBar.setRangePinsByValue(start, end);		
 	}
 
-	private void addTimeSpanMenus(final RangeBar timeBar, final RangeBar timeBar2, Menu menu) {
+	private void addTimeSpanMenus(@NonNull final RangeBar timeBar, @Nullable final RangeBar timeBar2, @NonNull Menu menu) {
 
 		final MenuItem item15 = menu.add(R.string.ticks_15_minute);
 		final MenuItem item5 = menu.add(R.string.ticks_5_minute);
@@ -2500,7 +2524,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setGranuarlty(RangeBar bar, int start, int end) {
+	private void setGranuarlty(@NonNull RangeBar bar, int start, int end) {
 		if ((start % 5 > 0) || (end % 5 > 0)) { // need
 			// 1 minute
 			// granularity
@@ -2523,7 +2547,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		void set(String value);
 	}
 	
-	private void setSpinnerInitialEntryValue(int valuesId, Spinner spinner, String value) {
+	private void setSpinnerInitialEntryValue(int valuesId, @NonNull Spinner spinner, String value) {
 		Resources res = getResources();
 		final TypedArray values = res.obtainTypedArray(valuesId);
 		for (int i=0;i<values.length();i++) {
@@ -2535,7 +2559,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		values.recycle();
 	}
 	
-	private void setSpinnerListenerEntryValues(final int valuesId, final Spinner spinner, final SetValue listener) {
+	private void setSpinnerListenerEntryValues(final int valuesId, @NonNull final Spinner spinner, @NonNull final SetValue listener) {
 		final Resources res = getResources();
 		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
@@ -2552,7 +2576,13 @@ public class OpeningHoursFragment extends DialogFragment {
 		});
 	}
 	
-	private Menu addStandardMenuItems(LinearLayout row, final Delete listener) {
+	/**
+	 * Add the standard menu entries for a Rule
+	 * @param row		the layout containing the Rule UI
+	 * @param listener	the listerner for the deleting the rule
+	 * @return the created Menu
+	 */
+	private Menu addStandardMenuItems(@NonNull LinearLayout row, @Nullable final Delete listener) {
 		ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
 		Menu menu = amv.getMenu();
 		MenuItem mi = menu.add(Menu.NONE, Menu.NONE, Menu.CATEGORY_SECONDARY, R.string.Delete);
@@ -2569,6 +2599,9 @@ public class OpeningHoursFragment extends DialogFragment {
 		return menu;
 	}
 	
+	/**
+	 * Runnable that updates the OH string
+	 */
 	Runnable updateStringRunnable = new Runnable() {
 		@Override
 		public void run() {
@@ -2592,10 +2625,12 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 	
 	/**
-	 * Parse hh:ss and return minutes since midnight
+	 * Parse hh:mm and return minutes since midnight
+	 * 
 	 * Totally trivial implementation c&p from http://stackoverflow.com/questions/8909075/convert-time-field-hm-into-integer-field-minutes-in-java
-	 * @param t
-	 * @return
+	 * FIXME what happens when this throws an Exception?
+	 * @param t	hh:mm format string
+	 * @return	number of minutes
 	 */
 	private static int toMins(String t) {
 		String[] hourMin = t.split(":");
@@ -2605,6 +2640,12 @@ public class OpeningHoursFragment extends DialogFragment {
 	    return hoursInMins + mins;
 	}
 
+	/**
+	 * Set a check mark for the say specified
+	 * 
+	 * @param container	layout containing the checkboxes
+	 * @param day		two letter day as a string
+	 */
 	private void checkWeekDay(@NonNull RelativeLayout container, @Nullable String day) {
 		Log.d(DEBUG_TAG, "checking " + day);
 		for (int i = 0; i < container.getChildCount(); i++) {
@@ -2616,18 +2657,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void checkMonth(RelativeLayout container, String month) {
-		Log.d(DEBUG_TAG, "checking " + month);
-		for (int i = 0; i < container.getChildCount(); i++) {
-			View v = container.getChildAt(i);
-			if ((v instanceof CheckBox || v instanceof AppCompatCheckBox) && ((String) v.getTag()).equals(month)) {
-				((CheckBox) v).setChecked(true);
-				return;
-			}
-		}
-	}
-	
-	private void checkNth(RelativeLayout container, int nth) {
+	private void checkNth(@NonNull RelativeLayout container, int nth) {
 		Log.d(DEBUG_TAG, "checking " + nth);
 		for (int i = 0; i < container.getChildCount(); i++) {
 			View v = container.getChildAt(i);
@@ -2638,7 +2668,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 
-	private void setWeekDayListeners(final RelativeLayout container, final List<WeekDayRange> days, final List<WeekDayRange> inContainer, final boolean justOne, final MenuItem nthMenuItem) {
+	private void setWeekDayListeners(@NonNull final RelativeLayout container, @NonNull final List<WeekDayRange> days, @NonNull final List<WeekDayRange> inContainer, final boolean justOne, @NonNull final MenuItem nthMenuItem) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -2700,7 +2730,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void setWeekDayListeners(final RelativeLayout container, final DateWithOffset dwo) {
+	private void setWeekDayListeners(@NonNull final RelativeLayout container, @NonNull final DateWithOffset dwo) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -2735,7 +2765,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 	}
 	
-	private void setNthListeners(final RelativeLayout container, final WeekDayRange days) {
+	private void setNthListeners(@NonNull final RelativeLayout container, @NonNull final WeekDayRange days) {
 		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -2816,17 +2846,14 @@ public class OpeningHoursFragment extends DialogFragment {
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		// disable address tagging for stuff that won't have an address
-		// menu.findItem(R.id.tag_menu_address).setVisible(!type.equals(Way.NAME)
-		// || element.hasTagKey(Tags.KEY_BUILDING));
 	}
 
 	/**
-	 * Return the view we have our rows in and work around some android
-	 * craziness
+	 * Return the view we have our rows in and work around some android craziness
 	 * 
-	 * @return
+	 * @return our layout view or null if it can't be found
 	 */
+	@Nullable
 	public View getOurView() {
 		// android.support.v4.app.NoSaveStateFrameLayout
 		View v = getView();
@@ -2849,9 +2876,26 @@ public class OpeningHoursFragment extends DialogFragment {
 		return null;
 	}
 	
-	Cursor templateCursor;
-	TemplateAdapter templateAdapter;
-	AlertDialog templateDialog;
+	private int dpToPixels(int dp) {
+		Resources r = getResources();
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+	}
+
+	/**
+	 * Enable / disable the save button depending on if the current value is the same as the original one
+	 * 
+	 * @param oh	oh value to test against
+	 */
+	private void enableSaveButton(String oh) {
+		saveButton.setEnabled(originalOpeningHoursValue==null || !originalOpeningHoursValue.equals(oh));
+	}
+	
+	/**
+	 * Template database related methods and fields
+	 */
+	private Cursor templateCursor;
+	private TemplateAdapter templateAdapter;
+	private AlertDialog templateDialog;
 
 	private AppCompatButton saveButton;
 	
@@ -2936,7 +2980,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	/**
 	 * SHow a dialog for editing and saving a template
 	 * 
-	 * @param db		a writeable instance of the template database
+	 * @param db		a writable instance of the template database
 	 * @param existing	true if this is not a new template 
 	 * @param id		the rowid of the template in the database or -1 if not saved yet
 	 */
@@ -2997,19 +3041,5 @@ public class OpeningHoursFragment extends DialogFragment {
 		Cursor oldCursor = templateAdapter.swapCursor(newCursor);
 		oldCursor.close();
 		templateAdapter.notifyDataSetChanged();
-	}
-	
-	private int dpToPixels(int dp) {
-		Resources r = getResources();
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
-	}
-
-	/**
-	 * Enable / disable the save button depending on if the current value is the same as the original one
-	 * 
-	 * @param oh	oh value to test against
-	 */
-	private void enableSaveButton(String oh) {
-		saveButton.setEnabled(originalOpeningHoursValue==null || !originalOpeningHoursValue.equals(oh));
 	}
 }

@@ -24,10 +24,9 @@ import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.YearRange;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
-// import de.blau.android.util.ThemeUtils;
 
 /**
- * Display a dialog allowing the user to change some properties of the current background
+ * Display a dialog allowing the user to select values for a start date and optionally an end date
  *
  */
 public class DateRangePicker extends DialogFragment
@@ -63,13 +62,23 @@ public class DateRangePicker extends DialogFragment
 	private static final String TAG = "fragment_datepicker";
 		
 	/**
-	 
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startMonth	initial start month
+	 * @param startDay		initial start day of the month
+	 * @param endYear		initial end year
+	 * @param endMonth		initial end month
+	 * @param endDay		initial end day of the month
+	 * @param listener		listener used to return the chosen values
 	 */
-	static public void showDialog(FragmentActivity activity, 
+	static void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, Month startMonth, int startDay,
-			int endYear, Month endMonth, int endDay,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull Month startMonth, int startDay,
+			int endYear, @NonNull Month endMonth, int endDay,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -79,11 +88,23 @@ public class DateRangePicker extends DialogFragment
 	    datePickerFragment.show(fm, TAG);
 	}
 	
-	static public void showDialog(FragmentActivity activity, 
+	/**
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startVarDate	initial start variable date ie easter
+	 * @param endYear		initial end year
+	 * @param endMonth		initial end month
+	 * @param endDay		initial end day of the month
+	 * @param listener		listener used to return the chosen values
+	 */
+	static void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, VarDate startVarDate,
-			int endYear, Month endMonth, int endDay,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull VarDate startVarDate,
+			int endYear, @NonNull Month endMonth, int endDay,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -93,11 +114,23 @@ public class DateRangePicker extends DialogFragment
 	    datePickerFragment.show(fm, TAG);
 	}
 	
-	static public void showDialog(FragmentActivity activity, 
+	/**
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startMonth	initial start month
+	 * @param startDay		initial start day of the month
+	 * @param endYear		initial end year
+	 * @param endVarDate	initial end variable date ie easter
+	 * @param listener		listener used to return the chosen values
+	 */
+	static void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, Month startMonth, int startDay,
-			int endYear, VarDate endVarDate,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull Month startMonth, int startDay,
+			int endYear, @NonNull VarDate endVarDate,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -107,11 +140,22 @@ public class DateRangePicker extends DialogFragment
 	    datePickerFragment.show(fm, TAG);
 	}
 	
-	static public void showDialog(FragmentActivity activity, 
+	/**
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startVarDate	initial start variable date ie easter
+	 * @param endYear		initial end year
+	 * @param endVarDate	initial end variable date ie easter
+	 * @param listener		listener used to return the chosen values
+	 */
+	static void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, VarDate startVarDate,
-			int endYear, VarDate endVarDate,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull VarDate startVarDate,
+			int endYear, @NonNull VarDate endVarDate,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -121,10 +165,20 @@ public class DateRangePicker extends DialogFragment
 	    datePickerFragment.show(fm, TAG);
 	}
 	
+	/**
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startMonth	initial start month
+	 * @param startDay		initial start day of the month
+	 * @param listener		listener used to return the chosen values
+	 */
 	static public void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, Month startMonth, int startDay,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull Month startMonth, int startDay,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -134,10 +188,19 @@ public class DateRangePicker extends DialogFragment
 	    datePickerFragment.show(fm, TAG);
 	}
 	
+	/**
+	 * Show the DateRangePicker dialog
+	 * 
+	 * @param activity		activity calling this
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startVarDate	initial start variable date ie easter
+	 * @param listener		listener used to return the chosen values
+	 */
 	static public void showDialog(FragmentActivity activity, 
 			int title,
-			int startYear, VarDate startVarDate,
-			SetDateRangeListener listener) {
+			int startYear, @NonNull VarDate startVarDate,
+			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -157,8 +220,22 @@ public class DateRangePicker extends DialogFragment
 	    ft.commit();
 	}
 		
-    /**
-     */
+	/**
+	 * Create a new instance of DateRangePicker
+	 * 
+	 * @param title			resource id for the title to display
+	 * @param startYear		initial start year
+	 * @param startMonth	initial start month or null
+	 * @param startDay		initial start day of the month
+	 * @param startVarDate	initial start variable date ie easter or null
+	 * @param startOnly		only show a picker for one date
+	 * @param endYear		initial end year
+	 * @param endMonth		initial end month or null
+	 * @param endDay		initial end day of the month
+	 * @param endVarDate	initial end variable date ie easter or null
+	 * @param listener		listener used to return the chosen values
+	 * @return and instance of DateRangePicker
+	 */
     static private DateRangePicker newInstance(int title, int startYear, @Nullable Month startMonth, int startDay, @Nullable VarDate startVarDate, 
     		boolean startOnly,
     		int endYear, @Nullable Month endMonth, int endDay, @Nullable VarDate endVarDate, @NonNull SetDateRangeListener listener) {
@@ -186,9 +263,6 @@ public class DateRangePicker extends DialogFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.d(DEBUG_TAG, "onAttach");
-//        if (!(activity instanceof Main)) {
-//            throw new ClassCastException(activity.toString() + " can ownly be called from Main");
-//        }
     }
     
     @Override
@@ -377,5 +451,4 @@ public class DateRangePicker extends DialogFragment
 	   	
     	return builder.create();
     }	
-    
 }

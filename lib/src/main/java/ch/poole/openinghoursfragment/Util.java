@@ -3,8 +3,6 @@ package ch.poole.openinghoursfragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.Gravity;
@@ -66,7 +64,6 @@ public class Util {
 		}
 	}
 	
-
 	/**
 	 * Display a toast at the top of the screen
 	 * 

@@ -21,7 +21,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 
 /**
- * Display a dialog allowing the user to set a numreric range
+ * Display a dialog allowing the user to set a numeric range
  *
  */
 public class RangePicker extends DialogFragment
@@ -45,12 +45,20 @@ public class RangePicker extends DialogFragment
 	private static final String TAG = "fragment_rangepicker";
 		
 	/**
-	 
+	 * Show the range picker dialog
+	 * 
+	 * @param activity		activity that called this
+	 * @param title			resource id for the title to display
+	 * @param min			minimum range value
+	 * @param max			maximum range value
+	 * @param startCurrent	initial start value
+	 * @param endCurrent	initial end value
+	 * @param listener		listener used to return the chosen values
 	 */
-	static public void showDialog(FragmentActivity activity, 
+	static void showDialog(FragmentActivity activity, 
 			int title,
 			int min, int max, int startCurrent, int endCurrent,
-			SetRangeListener listener) {
+			@NonNull SetRangeListener listener) {
 		dismissDialog(activity);
 
 		FragmentManager fm = activity.getSupportFragmentManager();
@@ -68,9 +76,18 @@ public class RangePicker extends DialogFragment
 	    ft.commit();
 	}
 		
-    /**
-     */
-    static private RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent, SetRangeListener listener) {
+	/**
+	 * Create a new instance of RangePicker
+	 * 
+	 * @param title			resource id for the title to display
+	 * @param min			minimum range value
+	 * @param max			maximum range value
+	 * @param startCurrent	initial start value
+	 * @param endCurrent	initial end value
+	 * @param listener		listener used to return the chosen values
+	 * @return an instance of RangePicker
+	 */
+    static private RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent, @NonNull SetRangeListener listener) {
     	RangePicker f = new RangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -90,9 +107,6 @@ public class RangePicker extends DialogFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.d(DEBUG_TAG, "onAttach");
-//        if (!(activity instanceof Main)) {
-//            throw new ClassCastException(activity.toString() + " can ownly be called from Main");
-//        }
     }
     
     @Override
