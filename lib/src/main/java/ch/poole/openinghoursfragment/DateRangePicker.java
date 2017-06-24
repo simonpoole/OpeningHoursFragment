@@ -77,7 +77,7 @@ public class DateRangePicker extends DialogFragment
 	static void showDialog(FragmentActivity activity, 
 			int title,
 			int startYear, @NonNull Month startMonth, int startDay,
-			int endYear, @NonNull Month endMonth, int endDay,
+			int endYear, @Nullable Month endMonth, int endDay,
 			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
@@ -103,7 +103,7 @@ public class DateRangePicker extends DialogFragment
 	static void showDialog(FragmentActivity activity, 
 			int title,
 			int startYear, @NonNull VarDate startVarDate,
-			int endYear, @NonNull Month endMonth, int endDay,
+			int endYear, @Nullable Month endMonth, int endDay,
 			@NonNull SetDateRangeListener listener) {
 		dismissDialog(activity);
 
