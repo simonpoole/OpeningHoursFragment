@@ -32,19 +32,30 @@
     
 <!--    menu items -->
 	<string name="Delete">Löschen</string>
+	<string name="add_modifier_comment">Zustandsänderung/Kommentar</string>
 	<string name="add_year_range">Jahresbereich hinzufügen</string>
 	<string name="add_week_range">Wochenbereich hinzufügen</string>
 	<string name="add_holiday">Feiertag hinzufügen</string>
     <string name="timespan_menu">Zeitspanne hinzufügen ...</string>
     <string name="time_time">Zeitpunkt - Zeitpunkt</string>
     <string name="time_extended_time">Zeitpunkt - erweiterter Zeitpunkt</string>
+    <string name="variable_time_time">Ereignis - Zeitpunkt</string>
+    <string name="time_variable_time">Zeitpunkt - EReignis</string>
+    <string name="variable_time_variable_time">Ereignis - Ereignis</string>
     <string name="time">Zeit</string>
     <string name="time_open_end">Ab Zeitpunkt</string>
+    <string name="variable_time">Ereignis</string>
+    <string name="variable_time_open_end">Ab Ereignis</string>
     <string name="start_at_midnight">Um Mitternacht beginnen</string>
     <string name="week_day_range">Wochentagsbereich hinzufügen</string>
+    <string name="occurrence_in_month">Vorkommen im Monat</string>
     <string name="daterange_menu">Datumsbereiche hinzufügen...</string>
     <string name="date_date">Datum - Datum</string>
+    <string name="variable_date_date">Beweglicher Feiertag - Datum</string>
+    <string name="date_variable_date">Datum - beweglicher Feiertag</string>
+    <string name="variable_date_variable_date">Beweglicher Feiertag - beweglicher Feiertag</string>
     <string name="date_open_end">Ab Datum</string>
+    <string name="variable_date_open_end">Ab beweglicher Feiertag</string>
     <string name="with_offsets">Mit Verschiebungen...</string>
     <string name="rule_type">Regeltyp anzeigen</string>
     <string name="move_up">Nach oben verschieben</string>
@@ -60,6 +71,9 @@
 <!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
+    <string name="additive_rule">Zusatz</string>
+    <string name="fallback_rule">Ersatz</string>
+    
     <string name="interval_minutes">Intervall (Minuten)</string>
     <string name="interval_years">Intervall (Jahre)</string>
     <string name="interval_weeks">Intervall (Wochen)</string>

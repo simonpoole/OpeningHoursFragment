@@ -21,11 +21,18 @@
     
 <!--    menu items -->
 	<string name="Delete">Xóa</string>
-	<string name="time">Giờ</string>
+	<string name="add_year_range">Thêm khoảng năm</string>
+	<string name="add_week_range">Thêm khoảng tuần</string>
+	<string name="add_holiday">Thêm ngày lễ</string>
+    <string name="timespan_menu">Thêm khoảng thời gian…</string>
+    <string name="time">Giờ</string>
     <string name="start_at_midnight">Bắt đầu nửa đêm</string>
     <string name="rule_type">Xem kiểu tuy tắc</string>
     <string name="move_up">Chuyển lên</string>
     <string name="move_down">Chuyển xuống</string>
+    <string name="ticks_15_minute">Đánh dấu mỗi 15 phút</string>
+    <string name="ticks_5_minute">Đánh dấu mỗi 5 phút</string>
+    <string name="ticks_1_minute">Đánh dấu mỗi phút</string>
     <string name="show_offset">Xem giờ chệch</string>
     <!--     opening hour elements -->
          
@@ -33,8 +40,11 @@
     <string name="offset_mins">Giờ chệch (±phút)</string>
     <string name="offset_days">Ngày chệch (±ngày)</string>
     
+    <string name="date_range">Khoảng ngày</string>
     <string name="date">Ngày tháng</string>
+    <string name="week_range">Khoảng tuần</string>
     <string name="weeks">Tuần</string>
+    <string name="year_range">Khoảng năm</string>
     <string name="years">Năm</string>
     
     <string name="comment">Nhận xét</string>
@@ -44,7 +54,12 @@
     
     <string name="easter">Phục sinh</string>
     
-    <string name="public_holidays">Ngày lễ công cộng</string>
+    <string name="sunrise">Mặt Trời mọc</string>
+  	<string name="sunset">Mặt Trời lặn</string>
+  	<string name="dawn">Bình minh</string>
+  	<string name="dusk">Hoàng hôn</string>
+  	
+  	<string name="public_holidays">Ngày lễ công cộng</string>
   	<string name="school_holidays">Ngày lễ trường học</string>
   	
   	<string name="monday_short">T2</string>
@@ -72,4 +87,7 @@
  	<string name="closed">đóng cửa</string>
   	<string name="unknown">không rõ</string>
     
+  	<string name="before">trước</string>
+    <string name="after">sau</string>
+  	
   	</resources>

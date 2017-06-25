@@ -8,7 +8,10 @@
     <string name="add_rule_247">Lägg till regel för 24/7</string>
     <string name="load_template">Ladda mall</string>
     <string name="save_to_template">Spara till mall</string>
+    <string name="manage_template">Hantera mall</string>
     <string name="refresh">Uppdatera</string>
+    <string name="load_templates_title">Ladda mallar</string>
+    <string name="manage_templates_title">Hantera mallar</string>
     <string name="save_template">Spara mall</string>
     
     <string name="edit_template">Redigera mall</string>
@@ -109,4 +112,7 @@
   	<string name="closed">sluten</string>
   	<string name="unknown">okänd</string>
     
+  	<string name="before">före</string>
+    <string name="after">efter</string>
+  	
   	</resources>
