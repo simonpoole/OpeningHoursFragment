@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Cancelar</string>
+    <string name="Save">Gardar</string>
+    
+    <string name="add_rule">Engadir norma</string>
+    <string name="add_rule_247">Engadir norma para 24/7</string>
+    <string name="load_template">Cargar plantilla</string>
+    <string name="save_to_template">Gardar a plantilla</string>
+    <string name="manage_template">Manexar plantilla</string>
+    <string name="refresh">Refrescar</string>
+    <string name="load_templates_title">Cargar plantilla</string>
+    <string name="manage_templates_title">Manexar plantillas</string>
+    <string name="save_template">Gardar plantilla</string>
+    
+    <string name="edit_template">Editar plantilla</string>
+    <string name="name_legend">Nome:</string>
+    <string name="default_legend">Defecto:</string>
+    
+    <string name="is_default">%1$s (defecto)</string>
+    
+    <string name="group_header">Grupo %1$s</string>
+    <string name="rule_header">Norma %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Cargar plantilla por defecto</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Días laborables con xantar</string>
+	<string name="weekdays">Días da semana</string>
+    
+<!--    menu items -->
+	<string name="Delete">Borrar</string>
+	<string name="add_modifier_comment">Engadir modificar/comentario</string>
+	<string name="add_year_range">Engadir rango anual</string>
+	<string name="add_week_range">Engadir rango semanal</string>
+	<string name="add_holiday">Engadir vacacións</string>
+    <string name="timespan_menu">Engade intervalo de tempo...</string>
+    <string name="time_time">Tempo - tempo</string>
+    <string name="time_extended_time">Tempo - tempo extendido</string>
+    <string name="variable_time_time">Var. tempo - tempo</string>
+    <string name="time_variable_time">Tempo - var. tempo</string>
+    <string name="variable_time_variable_time">Var. tempo - var. tempo</string>
+    <string name="time">Hora</string>
+    <string name="time_open_end">Fin do tempo aberto</string>
+    <string name="variable_time">Tempo Variable</string>
+    <string name="variable_time_open_end">Variable de tempo aberto</string>
+    <string name="start_at_midnight">Comeza a media noite</string>
+    <string name="week_day_range">Engade un intervalo de días semanais</string>
+    <string name="occurrence_in_month">Engadir ocorrencia no mes</string>
+    <string name="daterange_menu">Engadir rango de data...</string>
+    <string name="date_date">Data - data</string>
+    <string name="variable_date_date">Variable data - data</string>
+    <string name="date_variable_date">Data - variable data</string>
+    <string name="variable_date_variable_date">Variable data - variable data</string>
+    <string name="date_open_end">Data - abrir fin</string>
+    <string name="variable_date_open_end">Data variable - extremo aberto</string>
+    <string name="with_offsets">Con offsets...</string>
+    <string name="rule_type">Amosar regla tipo</string>
+    <string name="move_up">Subir</string>
+    <string name="move_down">Baixar</string>
+    <string name="ticks_15_minute">Cambia a tics de 15 minutos</string>
+    <string name="ticks_5_minute">Cambia a tics de 5 minutos</string>
+    <string name="ticks_1_minute">Cambia a tics de 1 minuto</string>
+    <string name="show_offset">Amosar offset</string>
+    <string name="show_start_offset">Amosar inicio offset</string>
+    <string name="show_end_offset">Amosar final offset</string>
+    <string name="show_interval">Amosar intervalo</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
+    <string name="additive_rule">Aditivo</string>
+    <string name="fallback_rule">Fallback</string>
+    
+    <string name="interval_minutes">Intervalo (minutos)</string>
+    <string name="interval_years">Intervalo (anos)</string>
+    <string name="interval_weeks">Intervalo (semanas)</string>
+    
+    <string name="offset_mins">Offset (±mins)</string>
+    <string name="offset_days">Offset (±días)</string>
+    
+    <string name="date_range">Rango Data</string>
+    <string name="date">Data</string>
+    <string name="week_range">Rango Semanas</string>
+    <string name="weeks">Semanas</string>
+    <string name="year_range">Rango Anos</string>
+    <string name="years">Anos</string>
+    
+    <string name="modifier">Modificar</string>
+    <string name="comment">Comentario</string>
+    
+    <string name="twentyfourseven">24 horas, 7 días á semana</string>
+    
+    <string name="to">a</string>
+    
+    <string name="easter">Borrar</string>
+    
+    <string name="sunrise">Amencer</string>
+  	<string name="sunset">Pousada</string>
+  	<string name="dawn">Amencer</string>
+  	<string name="dusk">Anoitecer</string>
+  	
+  	<string name="public_holidays">Vacacións públicas</string>
+  	<string name="school_holidays">Vacacións escolares</string>
+  	
+  	<string name="monday_short">Lu</string>
+  	<string name="tuesday_short">Ma</string>
+  	<string name="wednesday_short">Me</string>
+  	<string name="thursday_short">Xo</string>
+  	<string name="friday_short">Ve</string>
+  	<string name="saturday_short">Sa</string>
+  	<string name="sunday_short">Do</string>
+
+  	<string name="january">Xan</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Abr</string>
+  	<string name="may">Mai</string>
+  	<string name="june">Xun</string>
+  	<string name="july">Xul</string>
+  	<string name="august">Ago</string>
+  	<string name="september">Sep</string>
+  	<string name="october">Out</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dec</string>
+  	
+  	<string name="open">aberto</string>
+ 	<string name="closed">pechado</string>
+  	<string name="off">off</string>
+    <string name="unknown">descoñecida</string>
+    
+  	<string name="before">antes</string>
+    <string name="after">despois</string>
+  	
+  	</resources>

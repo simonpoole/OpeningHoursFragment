@@ -67,6 +67,7 @@
     <string name="show_start_offset">Show start offset</string>
     <string name="show_end_offset">Show end offset</string>
     <string name="show_interval">Show interval</string>
+    <string name="show_useAsWeekDay">Show use</string>
     
 <!--     opening hour elements -->
          
@@ -91,6 +92,7 @@
     <string name="modifier">Modifier</string>
     <string name="comment">Comment</string>
     
+    <string name="use_as_weekday">Use like weekday</string>
     
     <string name="twentyfourseven">24 hours, 7 days a week</string>
     

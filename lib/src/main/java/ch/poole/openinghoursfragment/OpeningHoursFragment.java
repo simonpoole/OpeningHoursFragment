@@ -1781,6 +1781,39 @@ public class OpeningHoursFragment extends DialogFragment {
 				watcher.afterTextChanged(null); // hack to force rebuild of form
 			}
 		});
+
+		final CheckBox useAsWeekDay = (CheckBox)holidayRow.findViewById(R.id.checkBoxUseAsWeekDay);		
+		useAsWeekDay.setChecked(hd.getUseAsWeekDay());
+		useAsWeekDay.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				for (Holiday h:holidays) {
+					h.setUseAsWeekDay(isChecked);
+				}
+				updateString();
+				text.postDelayed(new Runnable(){
+					@Override
+					public void run() {
+						watcher.afterTextChanged(null);
+					}},100);
+			}
+		});
+		
+		final View useAsWeekDayContainer = holidayRow.findViewById(R.id.useAsWeekDay_container);
+		if (!hd.getUseAsWeekDay()) {
+			useAsWeekDayContainer.setVisibility(View.VISIBLE);
+		} else {
+			useAsWeekDayContainer.setVisibility(View.GONE);
+			MenuItem showUse = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_useAsWeekDay);
+			showUse.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+				@Override
+				public boolean onMenuItemClick(MenuItem item) {
+					useAsWeekDayContainer.setVisibility(View.VISIBLE);
+					return true;
+				}	
+			});
+		}
+		
 		final View offsetContainer = holidayRow.findViewById(R.id.offset_container);			
 		if (hd.getOffset() != 0) {
 			offsetContainer.setVisibility(View.VISIBLE);

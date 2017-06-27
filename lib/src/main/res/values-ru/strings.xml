@@ -55,8 +55,7 @@
     <string name="ticks_1_minute">Переключить на 1-мин интервалы</string>
     <string name="show_offset">Показатль смещение</string>
     <string name="show_interval">Показать интервал</string>
-    
-<!--     opening hour elements -->
+    <!--     opening hour elements -->
          
     <string name="normal_rule">Нормальный</string>
     <string name="additive_rule">Добавочный</string>
@@ -78,7 +77,6 @@
     
     <string name="modifier">Модификатор</string>
     <string name="comment">Комментарий</string>
-    
     
     <string name="twentyfourseven">24 часа, 7 дней в неделю</string>
     

@@ -33,8 +33,7 @@
     <string name="time_time">Čas - čas</string>
     <string name="show_offset">Zobrazit ofset</string>
     <string name="show_interval">Zobrazit interval</string>
-    
-<!--     opening hour elements -->
+    <!--     opening hour elements -->
          
     <string name="normal_rule">Normální</string>
     <string name="interval_minutes">Interval (minut)</string>
@@ -53,7 +52,6 @@
     
     <string name="modifier">Modifikátor</string>
     <string name="comment">Poznámka</string>
-    
     
     <string name="twentyfourseven">24 hodin denně, 7 dní v týdnu</string>
     

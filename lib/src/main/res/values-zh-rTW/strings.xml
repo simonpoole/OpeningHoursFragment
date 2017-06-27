@@ -8,7 +8,10 @@
     <string name="add_rule_247">為24/7增加規則</string>
     <string name="load_template">載入模版</string>
     <string name="save_to_template">儲存到模版</string>
+    <string name="manage_template">管理模版</string>
     <string name="refresh">重整</string>
+    <string name="load_templates_title">載入模版</string>
+    <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
     
     <string name="edit_template">編輯模版</string>
@@ -29,7 +32,65 @@
     
 <!--    menu items -->
 	<string name="Delete">刪除</string>
-	<string name="closed">已關閉</string>
+	<string name="add_modifier_comment">添加調整值/評論</string>
+	<string name="add_year_range">增加年間範圍</string>
+	<string name="add_week_range">增加週間範圍</string>
+	<string name="add_holiday">增加節日</string>
+    <string name="timespan_menu">增加時間跨度 ...</string>
+    <string name="time">時間</string>
+    <string name="rule_type">顯示規則種類</string>
+    <string name="move_up">往上移動</string>
+    <string name="move_down">往下移動</string>
+    <string name="interval_minutes">間隔 (分鐘)</string>
+    <string name="interval_years">間隔 (年分)</string>
+    <string name="interval_weeks">間隔 (週數)</string>
+    
+    <string name="date_range">期間</string>
+    <string name="date">日期</string>
+    <string name="week_range">週間</string>
+    <string name="weeks">週</string>
+    <string name="year_range">年間</string>
+    <string name="years">年</string>
+    
+    <string name="twentyfourseven">全年無休 （7天24小時）</string>
+    
+    <string name="to">至</string>
+    
+    <string name="easter">復活節</string>
+    
+    <string name="sunrise">日出</string>
+  	<string name="sunset">日落</string>
+  	<string name="dawn">拂曉</string>
+  	<string name="dusk">薄暮</string>
+  	
+  	<string name="public_holidays">公衆假期</string>
+  	<string name="school_holidays">學校假期</string>
+  	
+  	<string name="monday_short">一</string>
+  	<string name="tuesday_short">二</string>
+  	<string name="wednesday_short">三</string>
+  	<string name="thursday_short">四</string>
+  	<string name="friday_short">五</string>
+  	<string name="saturday_short">六</string>
+  	<string name="sunday_short">日</string>
+
+  	<string name="january">一月</string>
+  	<string name="february">二月</string>
+  	<string name="march">三月</string>
+  	<string name="april">四月</string>
+  	<string name="may">五月</string>
+  	<string name="june">六月</string>
+  	<string name="july">七月</string>
+  	<string name="august">八月</string>
+  	<string name="september">九月</string>
+  	<string name="october">十月 </string>
+  	<string name="november">十一月</string>
+  	<string name="december">十二月</string>
+  	
+  	<string name="closed">已關閉</string>
   	<string name="unknown">未知的</string>
     
+  	<string name="before">之前</string>
+    <string name="after">之後</string>
+  	
   	</resources>

@@ -57,8 +57,7 @@
     <string name="ticks_1_minute">Перемикнути на 1 хвилинний діапазон</string>
     <string name="show_offset">Показати зсув</string>
     <string name="show_interval">Показати інтервал</string>
-    
-<!--     opening hour elements -->
+    <!--     opening hour elements -->
          
     <string name="normal_rule">Звичайно</string>
     <string name="additive_rule">Добавки</string>
@@ -80,7 +79,6 @@
     
     <string name="modifier">Модифікатор</string>
     <string name="comment">Коментар</string>
-    
     
     <string name="twentyfourseven">24 години, 7 днів на тиждень</string>
     

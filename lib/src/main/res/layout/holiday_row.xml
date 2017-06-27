@@ -27,11 +27,28 @@
             	android:drawSelectorOnTop="true"
             	android:entries="@array/holidays_entries" 
           		/>
+          	<LinearLayout
+ 				android:id="@+id/useAsWeekDay_container"
+ 				android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_below="@id/holidays"
+            	android:layout_alignParentLeft="true"
+            	android:orientation="horizontal">
+            	<TextView
+        			android:id="@+id/label"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"          	
+            		android:text="@string/use_as_weekday" />
+          		<CheckBox
+                	android:id="@+id/checkBoxUseAsWeekDay"
+                	android:layout_width="wrap_content"
+                	android:layout_height="wrap_content" />
+                </LinearLayout>
  			<LinearLayout
  				android:id="@+id/offset_container"
  				android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
-            	android:layout_below="@id/holidays"
+            	android:layout_below="@id/useAsWeekDay_container"
             	android:layout_alignParentLeft="true"
             	android:orientation="horizontal"
             	>

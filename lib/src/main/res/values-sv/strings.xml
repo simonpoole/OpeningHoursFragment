@@ -56,8 +56,7 @@
     <string name="ticks_5_minute">Flytta till närmaste 5 minuter</string>
     <string name="ticks_1_minute">Flytta till närmaste 1 minut</string>
     <string name="show_interval">Visa intervall</string>
-    
-<string name="interval_minutes">Intervall (minuter)</string>
+    <string name="interval_minutes">Intervall (minuter)</string>
     <string name="interval_years">Intervall (år)</string>
     <string name="interval_weeks">Intervall (veckor)</string>
     
@@ -72,7 +71,6 @@
     <string name="years">År</string>
     
     <string name="comment">Kommentar</string>
-    
     
     <string name="twentyfourseven">24 timmar, 7 dagar i veckan</string>
     
