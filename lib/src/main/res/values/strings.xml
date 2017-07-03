@@ -40,6 +40,7 @@
     <string name="time_time">Time - time</string>
     <string name="time_extended_time">Time - extended time</string>
     <string name="variable_time_time">Var. time - time</string>
+    <string name="variable_time_extended_time">Var. time - extended time</string>
     <string name="time_variable_time">Time - var. time</string>
     <string name="variable_time_variable_time">Var. time - var. time</string>
     <string name="time">Time</string>

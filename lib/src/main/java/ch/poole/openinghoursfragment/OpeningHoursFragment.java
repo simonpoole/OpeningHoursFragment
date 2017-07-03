@@ -605,6 +605,27 @@ public class OpeningHoursFragment extends DialogFragment {
 					}	
 				});
 				
+				MenuItem addVarTimeExtendedTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_extended_time);
+				addVarTimeExtendedTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						List<TimeSpan>ts = r.getTimes();
+						if (ts==null) {
+							r.setTimes(new ArrayList<TimeSpan>());
+							ts = r.getTimes();
+						}
+						TimeSpan t = new TimeSpan();
+						VariableTime vt = new VariableTime();
+						vt.setEvent(Event.DAWN);
+						t.setStartEvent(vt);
+						t.setEnd(2880);
+						ts.add(t);
+						updateString();
+						watcher.afterTextChanged(null);
+						return true;
+					}	
+				});
+				
 				MenuItem addTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
 				addTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
