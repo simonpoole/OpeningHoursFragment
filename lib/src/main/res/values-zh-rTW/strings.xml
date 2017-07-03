@@ -37,6 +37,8 @@
 	<string name="add_week_range">增加週間範圍</string>
 	<string name="add_holiday">增加節日</string>
     <string name="timespan_menu">增加時間跨度 ...</string>
+    <string name="time_time">時間 - 時段</string>
+    <string name="time_extended_time">時間 - 延長時段</string>
     <string name="time">時間</string>
     <string name="rule_type">顯示規則種類</string>
     <string name="move_up">往上移動</string>
@@ -45,12 +47,20 @@
     <string name="interval_years">間隔 (年分)</string>
     <string name="interval_weeks">間隔 (週數)</string>
     
+    <string name="offset_mins">時間偏移 (±分鐘)</string>
+    <string name="offset_days">時間偏移 (±天)</string>
+    
     <string name="date_range">期間</string>
     <string name="date">日期</string>
     <string name="week_range">週間</string>
     <string name="weeks">週</string>
     <string name="year_range">年間</string>
     <string name="years">年</string>
+    
+    <string name="modifier">修改</string>
+    <string name="comment">評論</string>
+    
+    <string name="use_as_weekday">就像週間</string>
     
     <string name="twentyfourseven">全年無休 （7天24小時）</string>
     
@@ -87,8 +97,10 @@
   	<string name="november">十一月</string>
   	<string name="december">十二月</string>
   	
-  	<string name="closed">已關閉</string>
-  	<string name="unknown">未知的</string>
+  	<string name="open">營業</string>
+ 	<string name="closed">已關閉</string>
+  	<string name="off">關閉</string>
+    <string name="unknown">未知的</string>
     
   	<string name="before">之前</string>
     <string name="after">之後</string>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Peruuta</string>
+    <string name="Save">Tallenna</string>
+    
+    <string name="move_up">Ylöspäin</string>
+    <string name="move_down">Alaspäin</string>
+    <string name="closed">suljettu</string>
+  	<string name="unknown">tuntematon</string>
+    
+  	</resources>

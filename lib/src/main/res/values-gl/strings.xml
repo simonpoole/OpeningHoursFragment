@@ -67,7 +67,9 @@
     <string name="show_start_offset">Amosar inicio offset</string>
     <string name="show_end_offset">Amosar final offset</string>
     <string name="show_interval">Amosar intervalo</string>
-    <!--     opening hour elements -->
+    <string name="show_useAsWeekDay">Amosar uso</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
     <string name="additive_rule">Aditivo</string>
@@ -89,6 +91,8 @@
     
     <string name="modifier">Modificar</string>
     <string name="comment">Comentario</string>
+    
+    <string name="use_as_weekday">Use como día de semana</string>
     
     <string name="twentyfourseven">24 horas, 7 días á semana</string>
     

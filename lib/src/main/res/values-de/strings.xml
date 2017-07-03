@@ -40,6 +40,7 @@
     <string name="time_time">Zeitpunkt - Zeitpunkt</string>
     <string name="time_extended_time">Zeitpunkt - erweiterter Zeitpunkt</string>
     <string name="variable_time_time">Ereignis - Zeitpunkt</string>
+    <string name="variable_time_extended_time">Ereignis - erweiterter Zeitpunkt</string>
     <string name="time_variable_time">Zeitpunkt - EReignis</string>
     <string name="variable_time_variable_time">Ereignis - Ereignis</string>
     <string name="time">Zeit</string>
@@ -67,7 +68,7 @@
     <string name="show_start_offset">Startverschiebung anzeigen</string>
     <string name="show_end_offset">Endverschiebung anzeigen</string>
     <string name="show_interval">Intervall anzeigen</string>
-    <string name="show_useAsWeekDay">Nutzung anzeigen</string>
+    <string name="show_useAsWeekDay">Verwendung anzeigen</string>
     
 <!--     opening hour elements -->
          
@@ -92,7 +93,7 @@
     <string name="modifier">Zustand</string>
     <string name="comment">Kommentar</string>
     
-    <string name="use_as_weekday">Wie Wochentag nutzen</string>
+    <string name="use_as_weekday">Wie Wochentag verwenden</string>
     
     <string name="twentyfourseven">24 Stunden, 7 Tage in der Woche</string>
     

@@ -6,7 +6,15 @@
     
     <string name="add_rule">Thêm quy tắc</string>
     <string name="add_rule_247">Thêm quy tắc 24/7</string>
+    <string name="load_template">Tải bản mẫu</string>
+    <string name="save_to_template">Lưu bản mẫu</string>
+    <string name="manage_template">Quản lý bản mẫu</string>
     <string name="refresh">Làm mới</string>
+    <string name="load_templates_title">Tải các bản mẫu</string>
+    <string name="manage_templates_title">Quản lý các bản mẫu</string>
+    <string name="save_template">Lưu bản mẫu</string>
+    
+    <string name="edit_template">Sửa đổi bản mẫu</string>
     <string name="name_legend">Tên:</string>
     <string name="default_legend">Mặc định:</string>
     
@@ -15,18 +23,29 @@
     <string name="group_header">Nhóm %1$s</string>
     <string name="rule_header">Quy tắc %1$s</string>
     
+<!--	messages -->
+    <string name="loaded_default">Đã tải bản mẫu mặc định</string>
+    
 <!--	default template entries -->
 	<string name="weekdays_with_lunch">Ngày thường trừ bữa trưa</string>
 	<string name="weekdays">Ngày thường</string>
     
 <!--    menu items -->
 	<string name="Delete">Xóa</string>
+	<string name="add_modifier_comment">Thêm chi tiết/ghi chú</string>
 	<string name="add_year_range">Thêm khoảng năm</string>
 	<string name="add_week_range">Thêm khoảng tuần</string>
 	<string name="add_holiday">Thêm ngày lễ</string>
     <string name="timespan_menu">Thêm khoảng thời gian…</string>
     <string name="time">Giờ</string>
+    <string name="time_open_end">Giờ vô hạn</string>
+    <string name="variable_time">Giờ thay đổi</string>
+    <string name="variable_time_open_end">Giờ thay đổi vô hạn</string>
     <string name="start_at_midnight">Bắt đầu nửa đêm</string>
+    <string name="week_day_range">Thêm khoảng ngày thường</string>
+    <string name="occurrence_in_month">Thêm lần trong tháng</string>
+    <string name="daterange_menu">Thêm khoảng thời gian…</string>
+    <string name="with_offsets">Có giờ chệch…</string>
     <string name="rule_type">Xem kiểu tuy tắc</string>
     <string name="move_up">Chuyển lên</string>
     <string name="move_down">Chuyển xuống</string>
@@ -34,9 +53,16 @@
     <string name="ticks_5_minute">Đánh dấu mỗi 5 phút</string>
     <string name="ticks_1_minute">Đánh dấu mỗi phút</string>
     <string name="show_offset">Xem giờ chệch</string>
-    <!--     opening hour elements -->
+    <string name="show_start_offset">Xem giờ chệch đầu tiên</string>
+    <string name="show_end_offset">Xem giờ chệch cuối cùng</string>
+    <string name="show_useAsWeekDay">Xem sự dùng</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Bình thường</string>
+    <string name="additive_rule">Cộng vào</string>
+    <string name="fallback_rule">Dự trữ</string>
+    
     <string name="offset_mins">Giờ chệch (±phút)</string>
     <string name="offset_days">Ngày chệch (±ngày)</string>
     
@@ -47,7 +73,12 @@
     <string name="year_range">Khoảng năm</string>
     <string name="years">Năm</string>
     
+    <string name="modifier">Chi tiết</string>
     <string name="comment">Nhận xét</string>
+    
+    <string name="use_as_weekday">Sử dụng như ngày thường</string>
+    
+    <string name="twentyfourseven">24 giờ 7 ngày</string>
     
     <string name="to">đến</string>
     
@@ -84,7 +115,8 @@
   	
   	<string name="open">mở cửa</string>
  	<string name="closed">đóng cửa</string>
-  	<string name="unknown">không rõ</string>
+  	<string name="off">nghỉ</string>
+    <string name="unknown">không rõ</string>
     
   	<string name="before">trước</string>
     <string name="after">sau</string>
