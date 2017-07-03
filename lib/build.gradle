@@ -7,10 +7,10 @@ plugins {
 
 apply plugin: 'eclipse'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.1.2'
+version = '0.1.3'
 def libName = "OpeningHoursFragment"
 
 eclipse {
@@ -104,7 +104,7 @@ dependencies {
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:support-annotations:23.4.0"
     compile "ch.poole:OpeningHoursParser:0.9.0"
-    compile "ch.poole:rangebar:0.0.9"
+    compile "ch.poole:rangebar:0.1.1"
     compile 'cn.carbswang.android:NumberPickerView:1.1.1'
     
     // Unit tests
@@ -161,27 +161,34 @@ android.libraryVariants.all { variant ->
   }
 }
 
-//task sourcesJar(type: Jar) {
-//	from release.javaCompile.source
-//	classifier = 'sources'
-//}
+ext {
+	// hardwiring this is ugly but it does work
+    releaseSource = file('src/main/java/ch/poole/openinghoursfragment')
+    releaseJavadoc = file('build/docs/javadoc')
+}
+
+task sourcesJar(type: Jar) {
+	from releaseSource
+	classifier = 'sources'
+}
 
 task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
-	doLast {
-		classifier = 'javadoc'
-		from javadoc.destinationDir
+	classifier = 'javadoc'
+	from releaseJavadoc
 	//	options.encoding = 'UTF-8'
-	}
 }
 
 
 group "ch.poole"
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            artifactId "${libName}"
-            version "${project.version}"
+publishing {
+    publications {
+        openinghoursfragment(MavenPublication) {
+            groupId 'ch.poole'
+            artifactId 'openinghousfragment'
+			artifact sourcesJar 
+			artifact javadocJar 
+			artifact("$buildDir/outputs/aar/OpeningHoursFragment-release.aar")
         }
     }
 }
@@ -189,7 +196,7 @@ install {
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    configurations = ['archives']
+    publications = ['openinghoursfragment']
     pkg {
         repo = 'osm'
         name = "${libName}"
