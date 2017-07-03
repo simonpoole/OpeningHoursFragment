@@ -35,6 +35,5 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 	@Override
 	public void save(String key, String openingHours) {
 		Log.d("TEST", "save got " + openingHours + " for key " + key);
-		
 	}
 }
