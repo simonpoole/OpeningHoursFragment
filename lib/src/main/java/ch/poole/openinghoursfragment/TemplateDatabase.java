@@ -19,7 +19,7 @@ class TemplateDatabase {
 	static final String NAME_FIELD = "name";
 	
 	static final String QUERY_ALL = "SELECT rowid as _id, name, is_default, template FROM templates";
-	static final String QUERY_BY_ROWID = "SELECT name, is_default FROM templates WHERE rowid=?";
+	static final String QUERY_BY_ROWID = "SELECT name, is_default, template FROM templates WHERE rowid=?";
 
 	/**
 	 * Return the default template entry if any

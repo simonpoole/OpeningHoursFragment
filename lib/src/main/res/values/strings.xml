@@ -14,6 +14,9 @@
     <string name="load_templates_title">Load templates</string>
     <string name="manage_templates_title">Manage templates</string>
     <string name="save_template">Save template</string>
+    <string name="update_template">Update template value too?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
     
     <string name="edit_template">Edit template</string>
     <string name="name_legend">Name:</string>

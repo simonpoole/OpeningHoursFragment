@@ -3096,7 +3096,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 	
 	/**
-	 * SHow a dialog for editing and saving a template
+	 * Show a dialog for editing and saving a template
 	 * 
 	 * @param db		a writable instance of the template database
 	 * @param existing	true if this is not a new template 
@@ -3108,12 +3108,14 @@ public class OpeningHoursFragment extends DialogFragment {
 		alertDialog.setView(templateView);
 		final CheckBox defaultCheck = (CheckBox)templateView.findViewById(R.id.is_default);
 		final EditText nameEdit = (EditText)templateView.findViewById(R.id.template_name);
+		String template = null;
 		if (existing) {
 			Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[]{Integer.toString(id)});
 			if (cursor.moveToFirst()) {
 				boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD))==1;		
 				defaultCheck.setChecked(isDefault);
-				String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));			
+				String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));	
+				template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));	
 				nameEdit.setText(name);
 			} else {
 				Log.e(DEBUG_TAG,"template id " + Integer.toString(id) + " not found");
@@ -3134,6 +3136,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 		alertDialog.setNegativeButton(R.string.Cancel, null);
 
+		final String finalTemplate = template;
 		alertDialog.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -3141,8 +3144,29 @@ public class OpeningHoursFragment extends DialogFragment {
 					TemplateDatabase.add(db, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
 					db.close();
 				} else {
-					TemplateDatabase.update(db, id, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
-					newCursor(db);
+					final String current = text.getText().toString();
+					if (!current.equals(finalTemplate)) {
+						AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+						alertDialog.setTitle(R.string.update_template);
+						alertDialog.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								TemplateDatabase.update(db, id, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
+								newCursor(db);
+							}
+						});
+						alertDialog.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								TemplateDatabase.update(db, id, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate);
+								newCursor(db);
+							}
+						});
+						alertDialog.show();
+					} else {
+						TemplateDatabase.update(db, id, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
+						newCursor(db);
+					}
 				}
 			}
 		});
