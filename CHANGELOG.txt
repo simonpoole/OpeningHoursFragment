@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.1.6: Add shortcut for adding holidays.
+
 0.1.5: Typo fixes, add missing dependencies to pom file.
 
 0.1.4: Improved documentation, added missing time span menu item.
