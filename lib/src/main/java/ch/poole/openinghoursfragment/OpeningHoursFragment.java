@@ -237,7 +237,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 
 	/**
-	 * Build the parts of the layout that only needs to be done once
+	 * Build the parts of the layout that only need to be done once
 	 * 
 	 * @param openingHoursLayout	the layout
 	 * @param openingHoursValue		the OH value
@@ -341,10 +341,14 @@ public class OpeningHoursFragment extends DialogFragment {
 
 			        PopupMenu popup = new PopupMenu(context, fab);
 
+			        // menu items for adding rules
 			        MenuItem addRule = popup.getMenu().add(R.string.add_rule);
 			        addRule.setOnMenuItemClickListener(new AddRuleListener("Mo 6:00-20:00"));
+			        MenuItem addRulePH = popup.getMenu().add(R.string.add_rule_closed_on_holidays);
+			        addRulePH.setOnMenuItemClickListener(new AddRuleListener("PH closed"));
 			        MenuItem addRule247 = popup.getMenu().add(R.string.add_rule_247);
 			        addRule247.setOnMenuItemClickListener(new AddRuleListener("24/7"));
+
 			        MenuItem loadTemplate = popup.getMenu().add(R.string.load_template);
 			        loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 						@Override
