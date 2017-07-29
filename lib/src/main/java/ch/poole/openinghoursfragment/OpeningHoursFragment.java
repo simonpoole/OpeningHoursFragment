@@ -2112,7 +2112,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				boolean hasEndEvent = ts.getEndEvent() != null;
 				boolean extendedTime = ts.getEnd() > 1440;
 				boolean hasInterval = ts.getInterval() > 0;
-				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && !extendedTime) {
+				if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() >= 0 && !extendedTime) {
 					Log.d(DEBUG_TAG, "t-t " + ts.toString());
 					LinearLayout timeRangeRow = (LinearLayout) inflater.inflate(R.layout.time_range_row, null);
 					RangeBar timeBar = (RangeBar) timeRangeRow.findViewById(R.id.timebar);
@@ -2132,10 +2132,12 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.setEnd(toMins(rightPinValue));
 							updateString();
 						}});
-					menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
+					menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));			
+					addTimePickerMenu(menu, ts);
 					addTimeSpanMenus(timeBar, null,  menu);
+					
 					ll.addView(timeRangeRow);
-				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() > 0 && extendedTime) {
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() >= 0 && extendedTime) {
 					Log.d(DEBUG_TAG, "t-x " + ts.toString());
 					LinearLayout timeExtendedRangeRow = (LinearLayout) inflater
 							.inflate(R.layout.time_extended_range_row, null);
@@ -2165,9 +2167,10 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					menu = addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
+					addTimePickerMenu(menu, ts);
 					addTimeSpanMenus(timeBar, extendedTimeBar, menu);
 					ll.addView(timeExtendedRangeRow);
-				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() <= 0) {
+				} else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() < 0) {
 					Log.d(DEBUG_TAG, "pot " + ts.toString());
 					LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_row, null);
 					RangeBar timeBar = (RangeBar) timeEventRow.findViewById(R.id.timebar);
@@ -2185,6 +2188,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					addTimePickerMenu(menu, ts);
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
@@ -2211,6 +2215,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						}
 					});
 					menu =addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					addTimePickerMenu(menu, ts);
 					addTimeSpanMenus(timeBar, null, menu);
 					
 					final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);			
@@ -2286,6 +2291,7 @@ public class OpeningHoursFragment extends DialogFragment {
 					});
 					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
 					if (timeBar.getVisibility()==View.VISIBLE) {
+						addTimePickerMenu(menu, ts);
 						addTimeSpanMenus(timeBar, null, menu);
 					}
 					final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);			
@@ -2400,6 +2406,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							updateString();
 						}});
 					menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
+					addTimePickerMenu(menu, ts);
 					addTimeSpanMenus(timeBar, null, menu);
 					ll.addView(timeEventRow);
 				} else if (ts.isOpenEnded() && hasStartEvent) {
@@ -2484,6 +2491,59 @@ public class OpeningHoursFragment extends DialogFragment {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Add a menu item that displays a number picker for times
+	 * 
+	 * @param menu	Menu to and the item to
+	 * @param ts	TimeSpan to display and modify
+	 */
+	private void addTimePickerMenu(Menu menu, final TimeSpan ts) {
+		final MenuItem timePickerMenu = menu.add(R.string.display_time_picker);
+		timePickerMenu.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				int start = ts.getStart();
+				int end = ts.getEnd();
+				if (ts.getStartEvent()==null && ts.getEndEvent()==null && end >= 0) { // t-t, t-x
+					TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60, end / 60, end % 60,
+						new SetTimeRangeListener() {
+							private static final long serialVersionUID = 1L;
+							@Override
+							public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+								ts.setStart(startHour*60+startMinute);
+								ts.setEnd(endHour*60+endMinute);
+								updateString();
+								watcher.afterTextChanged(null);
+							}
+						});	
+				} else if (ts.getStartEvent()==null && (ts.getEndEvent()!=null || end < 0)) { // t, t-, t-e
+					TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60,
+							new SetTimeRangeListener() {
+								private static final long serialVersionUID = 1L;
+								@Override
+								public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+									ts.setStart(startHour*60+startMinute);
+									updateString();
+									watcher.afterTextChanged(null);
+								}
+							});
+				} else if (ts.getStartEvent()!=null && ts.getEndEvent()==null || end >= 0) { // e-t
+					TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60,
+							new SetTimeRangeListener() {
+								private static final long serialVersionUID = 1L;
+								@Override
+								public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+									ts.setEnd(startHour*60+startMinute);
+									updateString();
+									watcher.afterTextChanged(null);
+								}
+							});
+				}
+				return true;
+			}
+		});
 	}
 	
 	private void changeTicks(@NonNull final RangeBar timeBar, int interval) {

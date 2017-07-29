@@ -14,7 +14,7 @@ Naturally you can build an opening hours value from scratch, but we would recomm
 
 If an existing opening hours value is loaded, an attempt is made to auto-correct it to conform to the opening hours specification. If that is not possible the rough location where the error occurred will be highlighted in the display of the raw OH value and you can try and correct it manually. Roughly a quarter of the OH values in the OpenStreetMap database have problems, but less than 10% can't be corrected, see [OpeningHoursParser](https://github.com/simonpoole/OpeningHoursParser) for more information on what deviations from the specification are tolerated.
 
-### Main menu button
+#### Main menu button
 
 * __Add rule__: add a new rule.
 * __Add rule for holidays__: add a new rule for a holiday together with a state change.

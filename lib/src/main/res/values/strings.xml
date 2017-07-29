@@ -6,6 +6,7 @@
     
     <string name="add_rule">Add rule</string>
     <string name="add_rule_247">Add rule for 24/7</string>
+    <string name="add_rule_closed_on_holidays">Add rule for holidays</string>
     <string name="load_template">Load template</string>
     <string name="save_to_template">Save to template</string>
     <string name="manage_template">Manage template</string>
@@ -61,6 +62,7 @@
     <string name="rule_type">Show rule type</string>
     <string name="move_up">Move up</string>
     <string name="move_down">Move down</string>
+    <string name="display_time_picker">Display time picker</string>
     <string name="ticks_15_minute">Switch to 15 minute ticks</string>
     <string name="ticks_5_minute">Switch to 5 minute ticks</string>
     <string name="ticks_1_minute">Switch to 1 minute ticks</string>

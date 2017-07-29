@@ -234,7 +234,7 @@ public class DateRangePicker extends DialogFragment
 	 * @param endDay		initial end day of the month
 	 * @param endVarDate	initial end variable date ie easter or null
 	 * @param listener		listener used to return the chosen values
-	 * @return and instance of DateRangePicker
+	 * @return an instance of DateRangePicker
 	 */
     static private DateRangePicker newInstance(int title, int startYear, @Nullable Month startMonth, int startDay, @Nullable VarDate startVarDate, 
     		boolean startOnly,
