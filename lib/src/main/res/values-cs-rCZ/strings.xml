@@ -10,6 +10,8 @@
     <string name="save_to_template">Uložit jako předlohu</string>
     <string name="refresh">Obnovit</string>
     <string name="save_template">Uložit předlohu</string>
+    <string name="Yes">Ano</string>
+    <string name="No">Ne</string>
     
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>

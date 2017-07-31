@@ -10,6 +10,8 @@
     <string name="save_to_template">Зберегти шаблон</string>
     <string name="refresh">Перезавантажити</string>
     <string name="save_template">Зберегти шаблон</string>
+    <string name="Yes">Так</string>
+    <string name="No">Ні</string>
     
     <string name="edit_template">Редагувати шаблон</string>
     <string name="name_legend">Назва:</string>

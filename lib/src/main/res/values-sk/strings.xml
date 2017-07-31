@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">Áno</string>
+    <string name="No">Nie</string>
+    
+    <!--    menu items -->
+	<string name="Delete">Delete</string>
+	<string name="date">Dátum</string>
+    <string name="closed">zatvorené</string>
+  	<string name="unknown">neznáme</string>
+    
+  	</resources>

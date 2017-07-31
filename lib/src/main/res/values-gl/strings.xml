@@ -13,6 +13,8 @@
     <string name="load_templates_title">Cargar plantilla</string>
     <string name="manage_templates_title">Manexar plantillas</string>
     <string name="save_template">Gardar plantilla</string>
+    <string name="Yes">Si</string>
+    <string name="No">Non</string>
     
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nome:</string>
@@ -40,6 +42,7 @@
     <string name="time_time">Tempo - tempo</string>
     <string name="time_extended_time">Tempo - tempo extendido</string>
     <string name="variable_time_time">Var. tempo - tempo</string>
+    <string name="variable_time_extended_time">Var. time - tempo extendido</string>
     <string name="time_variable_time">Tempo - var. tempo</string>
     <string name="variable_time_variable_time">Var. tempo - var. tempo</string>
     <string name="time">Hora</string>

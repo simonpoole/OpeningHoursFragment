@@ -4,9 +4,140 @@
     <string name="Cancel">Peruuta</string>
     <string name="Save">Tallenna</string>
     
-    <string name="move_up">Ylöspäin</string>
-    <string name="move_down">Alaspäin</string>
-    <string name="closed">suljettu</string>
-  	<string name="unknown">tuntematon</string>
+    <string name="add_rule">Lisää sääntö</string>
+    <string name="add_rule_247">Lisää sääntö 24/7</string>
+    <string name="load_template">Lataa malline</string>
+    <string name="save_to_template">Tallenna mallineeksi</string>
+    <string name="manage_template">Hallitse mallinetta</string>
+    <string name="refresh">Päivitä</string>
+    <string name="load_templates_title">Lataa mallineita</string>
+    <string name="manage_templates_title">Hallitse mallineita</string>
+    <string name="save_template">Tallenna malline</string>
+    <string name="Yes">Kyllä</string>
+    <string name="No">Ei</string>
     
+    <string name="edit_template">Muokkaa mallinetta</string>
+    <string name="name_legend">Nimi:</string>
+    <string name="default_legend">Oletus:</string>
+    
+    <string name="is_default">%1$s (oletus)</string>
+    
+    <string name="group_header">Ryhmä %1$s</string>
+    <string name="rule_header">Sääntö %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Oletusmalline ladattiin</string>
+    
+<!--	default template entries -->
+	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kera</string>
+	<string name="weekdays">Arkipäivisin</string>
+    
+<!--    menu items -->
+	<string name="Delete">Poista</string>
+	<string name="add_modifier_comment">Lisää määre/kommentti</string>
+	<string name="add_year_range">Lisää vuosijakso</string>
+	<string name="add_week_range">Lisää viikkojakso</string>
+	<string name="add_holiday">Lisää vapaapäivä</string>
+    <string name="timespan_menu">Lisää ajanjakso</string>
+    <string name="time_time">Aika–aika</string>
+    <string name="time_extended_time">Aika–laajennettu aika</string>
+    <string name="variable_time_time">Vaiht. aika–aika</string>
+    <string name="variable_time_extended_time">Vaiht. aika–laajennettu aika</string>
+    <string name="time_variable_time">Aika–vaiht. aika</string>
+    <string name="variable_time_variable_time">Vaiht. aika–vaiht. aika</string>
+    <string name="time">Aika</string>
+    <string name="time_open_end">Aika, alkaen</string>
+    <string name="variable_time">Vaihteleva aika</string>
+    <string name="variable_time_open_end">Vaihteleva aika, alkaen</string>
+    <string name="start_at_midnight">Aloita keskiyöstä</string>
+    <string name="week_day_range">Lisää viikonpäiväjakso</string>
+    <string name="occurrence_in_month">Lisää tapahtumakerta kuun sisällä </string>
+    <string name="daterange_menu">Lisää päivämääräjakso...</string>
+    <string name="date_date">Pvm–pvm</string>
+    <string name="variable_date_date">Vaihteleva pvm–pvm</string>
+    <string name="date_variable_date">Pvm–vaihteleva pvm</string>
+    <string name="variable_date_variable_date">Vaihteleva pvm–vaihteleva pvm</string>
+    <string name="date_open_end">Pvm, alkaen</string>
+    <string name="variable_date_open_end">Vaihteleva pvm, alkaen</string>
+    <string name="with_offsets">Poikkeama...</string>
+    <string name="rule_type">Näytä sääntötyyppi</string>
+    <string name="move_up">Siirrä ylöspäin</string>
+    <string name="move_down">Siirrä alaspäin</string>
+    <string name="ticks_15_minute">15 minuutin jaotus</string>
+    <string name="ticks_5_minute">5 minuutin jaotus</string>
+    <string name="ticks_1_minute">1 minuutin jaotus</string>
+    <string name="show_offset">Näytä poikkeama</string>
+    <string name="show_start_offset">Näytä alun poikkeama</string>
+    <string name="show_end_offset">Näytä lopun poikkeama</string>
+    <string name="show_interval">Näytä aikaväli</string>
+    <string name="show_useAsWeekDay">Näytä käyttö</string>
+    
+<!--     opening hour elements -->
+         
+    <string name="normal_rule">Tavallinen</string>
+    <string name="additive_rule">Lisäävä</string>
+    <string name="fallback_rule">Vara</string>
+    
+    <string name="interval_minutes">Aikaväli (minuutteja)</string>
+    <string name="interval_years">Aikaväli (vuosia)</string>
+    <string name="interval_weeks">Aikaväli (viikkoja)</string>
+    
+    <string name="offset_mins">Poikkeama (±minuuttia)</string>
+    <string name="offset_days">Poikkeama (±päivää)</string>
+    
+    <string name="date_range">Päivämääräjakso</string>
+    <string name="date">Päivämäärä</string>
+    <string name="week_range">Viikkojakso</string>
+    <string name="weeks">Viikot</string>
+    <string name="year_range">Vuosijakso</string>
+    <string name="years">Vuodet</string>
+    
+    <string name="modifier">Määre</string>
+    <string name="comment">Kommentti</string>
+    
+    <string name="use_as_weekday">Käytä viikonpäivän tapaan</string>
+    
+    <string name="twentyfourseven">Kellon ympäri, joka päivä</string>
+    
+    <string name="to">–</string>
+    
+    <string name="easter">Pääsiäinen</string>
+    
+    <string name="sunrise">Auringonnousu</string>
+  	<string name="sunset">Auringonlasku</string>
+  	<string name="dawn">Aamuhämärä</string>
+  	<string name="dusk">Iltahämärä</string>
+  	
+  	<string name="public_holidays">Yleiset vapaapäivät</string>
+  	<string name="school_holidays">Koulujen vapaapäivät</string>
+  	
+  	<string name="monday_short">Ma</string>
+  	<string name="tuesday_short">Ti</string>
+  	<string name="wednesday_short">Ke</string>
+  	<string name="thursday_short">To</string>
+  	<string name="friday_short">Pe</string>
+  	<string name="saturday_short">La</string>
+  	<string name="sunday_short">Su</string>
+
+  	<string name="january">Tammi</string>
+  	<string name="february">Helmi</string>
+  	<string name="march">Maalis</string>
+  	<string name="april">Huhti</string>
+  	<string name="may">Touko</string>
+  	<string name="june">Kesä</string>
+  	<string name="july">Heinä</string>
+  	<string name="august">Elo</string>
+  	<string name="september">Syys</string>
+  	<string name="october">Loka</string>
+  	<string name="november">Marras</string>
+  	<string name="december">Joulu</string>
+  	
+  	<string name="open">auki</string>
+ 	<string name="closed">kiinni</string>
+  	<string name="off">poissa</string>
+    <string name="unknown">tuntematon</string>
+    
+  	<string name="before">ennen</string>
+    <string name="after">jälkeen</string>
+  	
   	</resources>

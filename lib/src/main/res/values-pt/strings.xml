@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Cancelar</string>
+    <string name="Save">Guardar</string>
+    
+    <string name="add_rule">Adicionar regra</string>
+    <string name="add_rule_247">Adicionar regra para 24/7</string>
+    <string name="Yes">Sim</string>
+    <string name="No">Não</string>
+    
+    <string name="name_legend">Nome:</string>
+    <!--	default template entries -->
+	<string name="weekdays_with_lunch">Dias da semana com pausa para almoço</string>
+	<string name="weekdays">Dias da semana</string>
+    
+<!--    menu items -->
+	<string name="Delete">Apagar</string>
+	<string name="twentyfourseven">24 horas por dia, 7 dias por semana</string>
+    
+    <string name="to">para</string>
+    
+    <string name="easter">Páscoa</string>
+    
+    <string name="sunrise">Nascer do sol</string>
+  	<string name="sunset">Por do Sol</string>
+  	<string name="dawn">Anoitecer</string>
+  	<string name="dusk">Amanhecer</string>
+  	
+  	<string name="public_holidays">Feriados</string>
+  	<string name="school_holidays">Férias escolares</string>
+  	
+  	<string name="monday_short">Seg</string>
+  	<string name="tuesday_short">Ter</string>
+  	<string name="wednesday_short">Qua</string>
+  	<string name="thursday_short">Qui</string>
+  	<string name="friday_short">Sex</string>
+  	<string name="saturday_short">Sáb</string>
+  	<string name="sunday_short">Dom</string>
+
+  	<string name="january">Jan</string>
+  	<string name="february">Fev</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Abr</string>
+  	<string name="may">Mai</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Ago</string>
+  	<string name="september">Set</string>
+  	<string name="october">Out</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dez</string>
+  	
+  	<string name="open">aberto</string>
+ 	<string name="closed">fechado</string>
+  	<string name="off">encerrado</string>
+    <string name="unknown">desconhecida</string>
+    
+  	<string name="before">antes</string>
+    <string name="after">depois</string>
+  	
+  	</resources>

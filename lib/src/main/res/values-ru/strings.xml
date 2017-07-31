@@ -13,6 +13,8 @@
     <string name="load_templates_title">Загрузить шаблоны</string>
     <string name="manage_templates_title">Управлять шаблонами</string>
     <string name="save_template">Сохранить шаблон</string>
+    <string name="Yes">Да</string>
+    <string name="No">Нет</string>
     
     <string name="edit_template">Редактировать шаблон</string>
     <string name="name_legend">Название:</string>

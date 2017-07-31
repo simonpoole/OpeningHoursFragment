@@ -11,6 +11,8 @@
     <string name="save_to_template">Şablonu kaydet</string>
     <string name="refresh">Yenile</string>
     <string name="save_template">Şablonu kaydet </string>
+    <string name="Yes">Evet</string>
+    <string name="No">Hayır</string>
     
     <string name="edit_template">Şablonu düzenle</string>
     <string name="name_legend">İsim:</string>

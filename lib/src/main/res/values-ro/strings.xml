@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">Da</string>
+    <string name="No">Nu</string>
+    
+    <!--    menu items -->
+	<string name="Delete">Delete</string>
+	<string name="date">Dată</string>
+    <string name="closed">închis </string>
+  	<string name="unknown">necunoscut</string>
+    
+  	</resources>

@@ -6,6 +6,7 @@
     
     <string name="add_rule">Regel hinzufügen</string>
     <string name="add_rule_247">Regel für 24/7 hinzufügen</string>
+    <string name="add_rule_closed_on_holidays">Regel für einen Feiertag hinzufügen</string>
     <string name="load_template">Vorlage laden</string>
     <string name="save_to_template">In Vorlage speichern</string>
     <string name="manage_template">Vorlage verwalten</string>
@@ -13,6 +14,9 @@
     <string name="load_templates_title">Vorlage laden</string>
     <string name="manage_templates_title">Vorlagen verwalten</string>
     <string name="save_template">Vorlage speichern</string>
+    <string name="update_template">Vorlage auch ändern?</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nein</string>
     
     <string name="edit_template">Vorlage ändern</string>
     <string name="name_legend">Name:</string>
@@ -61,6 +65,7 @@
     <string name="rule_type">Regeltyp anzeigen</string>
     <string name="move_up">Nach oben verschieben</string>
     <string name="move_down">Nach unten verschieben</string>
+    <string name="display_time_picker">Zeitauswahl anzeigen</string>
     <string name="ticks_15_minute">15-Minuten Raster</string>
     <string name="ticks_5_minute">5-Minuten Raster</string>
     <string name="ticks_1_minute">1-Minute Raster</string>

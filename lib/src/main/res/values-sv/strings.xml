@@ -13,6 +13,8 @@
     <string name="load_templates_title">Ladda mallar</string>
     <string name="manage_templates_title">Hantera mallar</string>
     <string name="save_template">Spara mall</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nej</string>
     
     <string name="edit_template">Redigera mall</string>
     <string name="name_legend">Namn:</string>

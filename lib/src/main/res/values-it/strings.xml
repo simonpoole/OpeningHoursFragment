@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Annulla</string>
+    <string name="Save">Salva</string>
+    
+    <string name="add_rule">Aggiungi regola</string>
+    <string name="add_rule_247">Aggiungi regola per 24/7</string>
+    <string name="load_template">Carica modello</string>
+    <string name="save_to_template">Salva come modello</string>
+    <string name="manage_template">Gestisci modello</string>
+    <string name="refresh">Ricarica</string>
+    <string name="load_templates_title">Carica modelli</string>
+    <string name="manage_templates_title">Gestisci modelli</string>
+    <string name="save_template">Salva modello</string>
+    <string name="Yes">Sì</string>
+    <string name="No">No</string>
+    
+    <string name="edit_template">Modifica modello</string>
+    <string name="name_legend">Nome:</string>
+    <string name="default_legend">Predefinito:</string>
+    
+    <string name="is_default">%1$s (predefinito)</string>
+    
+    <string name="group_header">Gruppo %1$s</string>
+    <string name="rule_header">Regola %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Caricato il modello predefinito</string>
+    
+<string name="weekdays">Giorni della settimana</string>
+    
+<!--    menu items -->
+	<string name="Delete">Elimina</string>
+	<string name="add_modifier_comment">Aggiungi modificatore/commento</string>
+	<string name="add_year_range">Aggiungi intervallo annuale</string>
+	<string name="add_week_range">Aggiungi intervallo settimanale</string>
+	<string name="add_holiday">Aggiungi festività</string>
+    <string name="move_up">Sposta su</string>
+    <string name="move_down">Sposta giù</string>
+    <string name="ticks_15_minute">Passa a scatti di 15 minuti</string>
+    <string name="ticks_5_minute">Passa a scatti di 5 minuti</string>
+    <string name="ticks_1_minute">Passa a scatti di 1 minuto</string>
+    <string name="interval_minutes">Intervallo (minuti)</string>
+    <string name="interval_years">Intervallo (anni)</string>
+    <string name="interval_weeks">Intervallo (settimane)</string>
+    
+    <string name="date">Data</string>
+    <string name="weeks">Settimane</string>
+    <string name="years">Anni</string>
+    
+    <string name="modifier">Modificatore</string>
+    <string name="comment">Commento</string>
+    
+    <string name="twentyfourseven">24 ore su 24, 7 giorni su 7</string>
+    
+    <string name="easter">Pasqua</string>
+    
+    <string name="sunrise">Alba</string>
+  	<string name="sunset">Tramonto</string>
+  	<string name="dawn">Aurora</string>
+  	<string name="dusk">Crepuscolo</string>
+  	
+  	<string name="public_holidays">Festività pubbliche</string>
+  	<string name="school_holidays">Festività scolastiche</string>
+  	
+  	<string name="monday_short">Lu</string>
+  	<string name="tuesday_short">Ma</string>
+  	<string name="wednesday_short">Me</string>
+  	<string name="thursday_short">Gi</string>
+  	<string name="friday_short">Ve</string>
+  	<string name="saturday_short">Sa</string>
+  	<string name="sunday_short">Do</string>
+
+  	<string name="january">Gen</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Apr</string>
+  	<string name="may">Mag</string>
+  	<string name="june">Giu</string>
+  	<string name="july">Lug</string>
+  	<string name="august">Ago</string>
+  	<string name="september">Set</string>
+  	<string name="october">Ott</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Dic</string>
+  	
+  	<string name="open">aperto</string>
+ 	<string name="closed">chiuso</string>
+  	<string name="off">chiuso</string>
+    <string name="unknown">sconosciuto</string>
+    
+  	<string name="before">prima</string>
+    <string name="after">dopo</string>
+  	
+  	</resources>

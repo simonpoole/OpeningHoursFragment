@@ -5,7 +5,7 @@
     <string name="Save">Mentés</string>
     
     <string name="add_rule">Szabály hozzáadása</string>
-    <string name="add_rule_247">24/7 szabály hozzáadása</string>
+    <string name="add_rule_247">24/7 (non-stop) szabály hozzáadása</string>
     <string name="load_template">Sablon betöltése</string>
     <string name="save_to_template">Mentés sablonba</string>
     <string name="manage_template">Sablon kezelése</string>
@@ -13,6 +13,8 @@
     <string name="load_templates_title">Sablonok betöltése</string>
     <string name="manage_templates_title">Sablonok kezelése</string>
     <string name="save_template">Sablon mentése</string>
+    <string name="Yes">Van</string>
+    <string name="No">Nincs</string>
     
     <string name="edit_template">Sablon szerkesztése</string>
     <string name="name_legend">Név:</string>
@@ -27,8 +29,8 @@
     <string name="loaded_default">Alapértelmezett sablon betöltve</string>
     
 <!--	default template entries -->
-	<string name="weekdays_with_lunch">Hétköznapokon ebédidővel</string>
-	<string name="weekdays">Hétvégeken</string>
+	<string name="weekdays_with_lunch">Hétköznap ebédidővel</string>
+	<string name="weekdays">Hétköznap</string>
     
 <!--    menu items -->
 	<string name="Delete">Törlés</string>
@@ -40,6 +42,7 @@
     <string name="time_time">Idő – idő</string>
     <string name="time_extended_time">Idő – bővített idő</string>
     <string name="variable_time_time">Változó idő – idő</string>
+    <string name="variable_time_extended_time">Változó idő – bővített idő</string>
     <string name="time_variable_time">Idő – változó idő</string>
     <string name="variable_time_variable_time">Változó idő – változó idő</string>
     <string name="time">Idő</string>
@@ -56,7 +59,7 @@
     <string name="variable_date_variable_date">Változó dátum – változó dátum</string>
     <string name="date_open_end">Dátum – nyílt vég</string>
     <string name="variable_date_open_end">Változó dátum – nyílt vég</string>
-    <string name="with_offsets">Eltolásokkal</string>
+    <string name="with_offsets">Eltolásokkal…</string>
     <string name="rule_type">Szabálytípus megjelenítése</string>
     <string name="move_up">Mozgatás felfelé</string>
     <string name="move_down">Mozgatás lefelé</string>
@@ -67,7 +70,9 @@
     <string name="show_start_offset">Kiinduló eltolás megmutatása</string>
     <string name="show_end_offset">Befejező eltolás megmutatása</string>
     <string name="show_interval">Intervallum megjelenítése</string>
-    <!--     opening hour elements -->
+    <string name="show_useAsWeekDay">Használat megjelenítése</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normális</string>
     <string name="additive_rule">Összeadódó</string>
@@ -90,7 +95,9 @@
     <string name="modifier">Módosító</string>
     <string name="comment">Megjegyzés</string>
     
-    <string name="twentyfourseven">24 óra, 7 nap hetente</string>
+    <string name="use_as_weekday">Használat a hét napjaként</string>
+    
+    <string name="twentyfourseven">Napi 24 óra, heti 7 nap (non-stop)</string>
     
     <string name="to">eddig:</string>
     
