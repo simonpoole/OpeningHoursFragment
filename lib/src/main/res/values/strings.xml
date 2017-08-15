@@ -3,6 +3,7 @@
 
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
+    <string name="value_too_long">The length of the opening hours value is %1$d which is longer than the maximum of 255.\n\nPlease simplify the string before saving!</string>
     
     <string name="add_rule">Add rule</string>
     <string name="add_rule_247">Add rule for 24/7</string>

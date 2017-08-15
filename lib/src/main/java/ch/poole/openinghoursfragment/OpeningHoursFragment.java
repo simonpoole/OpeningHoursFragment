@@ -98,6 +98,8 @@ public class OpeningHoursFragment extends DialogFragment {
 	
 	private static final String RULE_KEY = "rule";
 
+	protected static final int OSM_MAX_TAG_LENGTH = 255;
+
 	private Context context = null;
 
 	private LayoutInflater inflater = null;
@@ -2731,6 +2733,11 @@ public class OpeningHoursFragment extends DialogFragment {
 			text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos,text.length()));
 			text.addTextChangedListener(watcher);
 			enableSaveButton(oh);
+			final int len = oh.length();
+			if (len > OSM_MAX_TAG_LENGTH) {
+				Log.d(DEBUG_TAG,"string too long");
+				ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.value_too_long, len));
+			} 
 		}
 	};
 	
@@ -3005,7 +3012,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	 * @param oh	oh value to test against
 	 */
 	private void enableSaveButton(String oh) {
-		saveButton.setEnabled(originalOpeningHoursValue==null || !originalOpeningHoursValue.equals(oh));
+		saveButton.setEnabled(originalOpeningHoursValue==null || (!originalOpeningHoursValue.equals(oh) && oh.length() <= OSM_MAX_TAG_LENGTH));
 	}
 	
 	/**
