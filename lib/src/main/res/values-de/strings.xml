@@ -46,7 +46,7 @@
     <string name="time_extended_time">Zeitpunkt - erweiterter Zeitpunkt</string>
     <string name="variable_time_time">Ereignis - Zeitpunkt</string>
     <string name="variable_time_extended_time">Ereignis - erweiterter Zeitpunkt</string>
-    <string name="time_variable_time">Zeitpunkt - EReignis</string>
+    <string name="time_variable_time">Zeitpunkt - Ereignis</string>
     <string name="variable_time_variable_time">Ereignis - Ereignis</string>
     <string name="time">Zeit</string>
     <string name="time_open_end">Ab Zeitpunkt</string>
