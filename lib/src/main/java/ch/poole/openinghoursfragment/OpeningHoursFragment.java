@@ -178,6 +178,7 @@ public class OpeningHoursFragment extends DialogFragment {
 	}
 
 	@Override
+	@NonNull
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	  Dialog dialog = super.onCreateDialog(savedInstanceState);
 
@@ -1637,7 +1638,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		if (startOffsetContainer != null) {
 			if (start.getDayOffset() != 0) {
 				startOffsetContainer.setVisibility(View.VISIBLE);
-				EditText offset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+				EditText offset = (EditText) startOffsetContainer.findViewById(R.id.start_offset);
 				offset.setText(Integer.toString(start.getDayOffset()));
 				setTextWatcher(offset, new SetValue() {
 					@Override
@@ -1712,7 +1713,7 @@ public class OpeningHoursFragment extends DialogFragment {
 				if (endOffsetContainer != null) {
 					if (end.getDayOffset() > 0) {
 						endOffsetContainer.setVisibility(View.VISIBLE);
-						EditText offset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+						EditText offset = (EditText) startOffsetContainer.findViewById(R.id.end_offset);
 						offset.setText(Integer.toString(start.getDayOffset()));
 						setTextWatcher(offset, new SetValue() {
 							@Override
@@ -2365,7 +2366,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						});
 					}
 					
-					EditText startOffset = (EditText) startOffsetContainer.findViewById(R.id.offset);
+					EditText startOffset = (EditText) startOffsetContainer.findViewById(R.id.start_offset);
 					startOffset.setText(Integer.toString(ts.getStartEvent().getOffset()));
 					setTextWatcher(startOffset, new SetValue() {
 						@Override
@@ -2378,7 +2379,7 @@ public class OpeningHoursFragment extends DialogFragment {
 							ts.getStartEvent().setOffset(offset);
 						}
 					});
-					EditText endOffset = (EditText) endOffsetContainer.findViewById(R.id.offset);
+					EditText endOffset = (EditText) endOffsetContainer.findViewById(R.id.end_offset);
 					endOffset.setText(Integer.toString(ts.getEndEvent().getOffset()));
 					setTextWatcher(endOffset, new SetValue() {
 						@Override
