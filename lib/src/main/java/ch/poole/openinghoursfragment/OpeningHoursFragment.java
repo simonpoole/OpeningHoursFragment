@@ -1636,21 +1636,21 @@ public class OpeningHoursFragment extends DialogFragment {
 		}
 		final LinearLayout startOffsetContainer = (LinearLayout) dateRangeRow.findViewById(R.id.start_offset_container);
 		if (startOffsetContainer != null) {
-			if (start.getDayOffset() != 0) {
-				startOffsetContainer.setVisibility(View.VISIBLE);
-				EditText offset = (EditText) startOffsetContainer.findViewById(R.id.start_offset);
-				offset.setText(Integer.toString(start.getDayOffset()));
-				setTextWatcher(offset, new SetValue() {
-					@Override
-					public void set(String value) {
-						int offset = 0;
-						try {
-							offset = Integer.parseInt(value);
-						} catch (NumberFormatException nfex){
-						}
-						start.setDayOffset(offset);
+			EditText offset = (EditText) startOffsetContainer.findViewById(R.id.start_offset);
+			setTextWatcher(offset, new SetValue() {
+				@Override
+				public void set(String value) {
+					int offset = 0;
+					try {
+						offset = Integer.parseInt(value);
+					} catch (NumberFormatException nfex){
 					}
-				});
+					start.setDayOffset(offset);
+				}
+			});
+			if (start.getDayOffset() != 0) {
+				offset.setText(Integer.toString(start.getDayOffset()));
+				startOffsetContainer.setVisibility(View.VISIBLE);
 			} else {
 				startOffsetContainer.setVisibility(View.GONE);
 				MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_start_offset);
@@ -1706,26 +1706,28 @@ public class OpeningHoursFragment extends DialogFragment {
 						@Override
 						public void set(String value) {
 							end.setWeekDayOffsetPositive("+".equals(value));
+							updateString();
 						}
 					});
 				}
 				final LinearLayout endOffsetContainer = (LinearLayout) dateRangeRow.findViewById(R.id.end_offset_container);
 				if (endOffsetContainer != null) {
-					if (end.getDayOffset() > 0) {
-						endOffsetContainer.setVisibility(View.VISIBLE);
-						EditText offset = (EditText) startOffsetContainer.findViewById(R.id.end_offset);
-						offset.setText(Integer.toString(start.getDayOffset()));
-						setTextWatcher(offset, new SetValue() {
-							@Override
-							public void set(String value) {
-								int offset = 0;
-								try {
-									offset = Integer.parseInt(value);
-								} catch (NumberFormatException nfex){
-								}
-								end.setDayOffset(offset);
+					EditText offset = (EditText) endOffsetContainer.findViewById(R.id.end_offset);
+					setTextWatcher(offset, new SetValue() {
+						@Override
+						public void set(String value) {
+							int offset = 0;
+							try {
+								offset = Integer.parseInt(value);
+							} catch (NumberFormatException nfex){
 							}
-						});
+							end.setDayOffset(offset);
+							updateString();
+						}
+					});
+					if (end.getDayOffset() > 0) {
+						offset.setText(Integer.toString(end.getDayOffset()));
+						endOffsetContainer.setVisibility(View.VISIBLE);
 					} else {
 						endOffsetContainer.setVisibility(View.GONE);
 						MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_end_offset);
@@ -2443,7 +2445,7 @@ public class OpeningHoursFragment extends DialogFragment {
 						});
 					}
 					
-					EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
+					EditText offset = (EditText) offsetContainer.findViewById(R.id.start_offset);
 					offset.setText(Integer.toString(ts.getStartEvent().getOffset()));
 					setTextWatcher(offset, new SetValue() {
 						@Override
