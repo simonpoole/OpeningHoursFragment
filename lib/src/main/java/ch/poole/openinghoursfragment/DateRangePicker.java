@@ -321,7 +321,7 @@ public class DateRangePicker extends DialogFragment
 			dayValues[i] = Integer.toString(i);
 		}		
 		
-		String[] varDateValues = getActivity().getResources().getStringArray(R.array.vardate_values);
+		String[] varDateEntries = getActivity().getResources().getStringArray(R.array.vardate_entries);
 		
 		final NumberPickerView npvStartVarDate = (NumberPickerView)layout.findViewById(R.id.startVarDate);
 		final NumberPickerView npvStartMonth = (NumberPickerView)layout.findViewById(R.id.startMonth);
@@ -345,7 +345,7 @@ public class DateRangePicker extends DialogFragment
 			npvStartMonth.setVisibility(View.GONE);
 			npvStartDay.setVisibility(View.GONE);
 			
-			npvStartVarDate.setDisplayedValues(varDateValues);
+			npvStartVarDate.setDisplayedValues(varDateEntries);
 			npvStartVarDate.setMinValue(1);
 			npvStartVarDate.setMaxValue(VarDate.values().length);
 			npvStartVarDate.setValue(startVarDate.ordinal()+1);
@@ -392,7 +392,7 @@ public class DateRangePicker extends DialogFragment
 				npvEndMonth.setVisibility(View.GONE);
 				npvEndDay.setVisibility(View.GONE);
 
-				npvEndVarDate.setDisplayedValues(varDateValues);
+				npvEndVarDate.setDisplayedValues(varDateEntries);
 				npvEndVarDate.setMinValue(1);
 				npvEndVarDate.setMaxValue(VarDate.values().length);
 				npvEndVarDate.setValue(endVarDate.ordinal()+1);

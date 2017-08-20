@@ -1618,7 +1618,7 @@ public class OpeningHoursFragment extends DialogFragment {
 		} else {
 			startDelimiter.setVisibility(View.GONE);
 			startDayView.setVisibility(View.GONE);
-			startMonthView.setText(getResources().getStringArray(R.array.vardate_values)[start.getVarDate().ordinal()]);
+			startMonthView.setText(getResources().getStringArray(R.array.vardate_entries)[start.getVarDate().ordinal()]);
 		}
 		// offset stuff
 		RelativeLayout startWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.startWeekDayContainer);
@@ -1690,7 +1690,7 @@ public class OpeningHoursFragment extends DialogFragment {
 			} else {
 				endDelimiter.setVisibility(View.GONE);
 				endDayView.setVisibility(View.GONE);
-				endMonthView.setText(getResources().getStringArray(R.array.vardate_values)[end.getVarDate().ordinal()]);
+				endMonthView.setText(getResources().getStringArray(R.array.vardate_entries)[end.getVarDate().ordinal()]);
 			}
 			Log.d(DEBUG_TAG,"month " + end.getMonth() + " day " + end.getDay() + " var date " + end.getVarDate());
 			if ((end.getMonth() != null && end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) || end.getVarDate()!=null) {
