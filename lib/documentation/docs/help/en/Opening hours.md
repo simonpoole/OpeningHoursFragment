@@ -8,13 +8,15 @@ _This documentation is preliminary and a work in progress_
 
 ## Using the opening hours editor
 
+In a typical workflow the object you are editing will either already have an opening hours tag (opening_hours, service_times and collection_times) or you can re-apply the preset for the object to get an empty opening hours field. If you need to add the field manually you can enter the key on the details page and then switch back to the form based tab to edit. If you believe that the opening hours tag should have been part of the preset, please open an issue on github.
+
 If you have defined a default template (do this via the "Manage templates" menu item) it will be loaded automatically when the editor is started with an empty value. With the "Load template" function you can load any saved template and with the "Save template" menu you can save the current value as a template.
 
 Naturally you can build an opening hours value from scratch, but we would recommend using one of the existing templates as a starting point.
 
 If an existing opening hours value is loaded, an attempt is made to auto-correct it to conform to the opening hours specification. If that is not possible the rough location where the error occurred will be highlighted in the display of the raw OH value and you can try and correct it manually. Roughly a quarter of the OH values in the OpenStreetMap database have problems, but less than 10% can't be corrected, see [OpeningHoursParser](https://github.com/simonpoole/OpeningHoursParser) for more information on what deviations from the specification are tolerated.
 
-#### Main menu button
+### Main menu button
 
 * __Add rule__: add a new rule.
 * __Add rule for holidays__: add a new rule for a holiday together with a state change.
@@ -65,6 +67,7 @@ To make editing time spans as easy as possible, we try to choose an optimal time
 
 #### Time span menu
 
+* __Display time picker__: show a large number picker for selecting start and end time, on very small displays this is the preferred way of changing times.
 * __Switch to 15 minute ticks__: use 15 minute granularity for the range bar.
 * __Switch to 5 minute ticks__: use 5 minute granularity for the range bar.
 * __Switch to 1 minute ticks__: use 1 minute granularity for the range bar, very difficult to use on a phone.

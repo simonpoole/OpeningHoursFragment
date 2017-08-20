@@ -3,24 +3,25 @@
 
     <string name="Cancel">Cancelar</string>
     <string name="Save">Gardar</string>
-    
-    <string name="add_rule">Engadir norma</string>
-    <string name="add_rule_247">Engadir norma para 24/7</string>
+    <string name="add_rule">Engadir regra</string>
+    <string name="add_rule_247">Engadir regra para 24/7</string>
+    <string name="add_rule_closed_on_holidays">Engadir regra para vacacións</string>
     <string name="load_template">Cargar plantilla</string>
     <string name="save_to_template">Gardar a plantilla</string>
     <string name="manage_template">Manexar plantilla</string>
-    <string name="refresh">Refrescar</string>
-    <string name="load_templates_title">Cargar plantilla</string>
+    <string name="refresh">Actualizar</string>
+    <string name="load_templates_title">Cargar plantillas</string>
     <string name="manage_templates_title">Manexar plantillas</string>
     <string name="save_template">Gardar plantilla</string>
+    <string name="update_template">Actualizar tamén o valor da plantilla?</string>
     <string name="Yes">Si</string>
     <string name="No">Non</string>
     
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nome:</string>
-    <string name="default_legend">Defecto:</string>
+    <string name="default_legend">Por defecto:</string>
     
-    <string name="is_default">%1$s (defecto)</string>
+    <string name="is_default">%1$s (por defecto)</string>
     
     <string name="group_header">Grupo %1$s</string>
     <string name="rule_header">Norma %1$s</string>
@@ -34,35 +35,36 @@
     
 <!--    menu items -->
 	<string name="Delete">Borrar</string>
-	<string name="add_modifier_comment">Engadir modificar/comentario</string>
+	<string name="add_modifier_comment">Engadir modificador/comentario</string>
 	<string name="add_year_range">Engadir rango anual</string>
 	<string name="add_week_range">Engadir rango semanal</string>
 	<string name="add_holiday">Engadir vacacións</string>
     <string name="timespan_menu">Engade intervalo de tempo...</string>
-    <string name="time_time">Tempo - tempo</string>
-    <string name="time_extended_time">Tempo - tempo extendido</string>
-    <string name="variable_time_time">Var. tempo - tempo</string>
-    <string name="variable_time_extended_time">Var. time - tempo extendido</string>
-    <string name="time_variable_time">Tempo - var. tempo</string>
-    <string name="variable_time_variable_time">Var. tempo - var. tempo</string>
+    <string name="time_time">Hora - hora</string>
+    <string name="time_extended_time">Hora - hora estendida</string>
+    <string name="variable_time_time">Hora var. - hora</string>
+    <string name="variable_time_extended_time">Hora var. - hora estendida</string>
+    <string name="time_variable_time">Hora - hora var.</string>
+    <string name="variable_time_variable_time">Hora var. - hora var.</string>
     <string name="time">Hora</string>
-    <string name="time_open_end">Fin do tempo aberto</string>
-    <string name="variable_time">Tempo Variable</string>
-    <string name="variable_time_open_end">Variable de tempo aberto</string>
+    <string name="time_open_end">Hora - fin indefinido</string>
+    <string name="variable_time">Hora variable</string>
+    <string name="variable_time_open_end">Hora variable - fin indefinido</string>
     <string name="start_at_midnight">Comeza a media noite</string>
     <string name="week_day_range">Engade un intervalo de días semanais</string>
     <string name="occurrence_in_month">Engadir ocorrencia no mes</string>
-    <string name="daterange_menu">Engadir rango de data...</string>
+    <string name="daterange_menu">Engadir intervalo de datas...</string>
     <string name="date_date">Data - data</string>
-    <string name="variable_date_date">Variable data - data</string>
-    <string name="date_variable_date">Data - variable data</string>
-    <string name="variable_date_variable_date">Variable data - variable data</string>
-    <string name="date_open_end">Data - abrir fin</string>
-    <string name="variable_date_open_end">Data variable - extremo aberto</string>
+    <string name="variable_date_date">Data variable - data</string>
+    <string name="date_variable_date">Data - data variable</string>
+    <string name="variable_date_variable_date">Data variable - data variable</string>
+    <string name="date_open_end">Data - fin indefinido</string>
+    <string name="variable_date_open_end">Data variable - fin indefinido</string>
     <string name="with_offsets">Con offsets...</string>
-    <string name="rule_type">Amosar regla tipo</string>
+    <string name="rule_type">Amosar tipo de norma</string>
     <string name="move_up">Subir</string>
     <string name="move_down">Baixar</string>
+    <string name="display_time_picker">Amosar selector de hora</string>
     <string name="ticks_15_minute">Cambia a tics de 15 minutos</string>
     <string name="ticks_5_minute">Cambia a tics de 5 minutos</string>
     <string name="ticks_1_minute">Cambia a tics de 1 minuto</string>
@@ -85,11 +87,11 @@
     <string name="offset_mins">Offset (±mins)</string>
     <string name="offset_days">Offset (±días)</string>
     
-    <string name="date_range">Rango Data</string>
+    <string name="date_range">Rango de datas</string>
     <string name="date">Data</string>
-    <string name="week_range">Rango Semanas</string>
+    <string name="week_range">Rango de semanas</string>
     <string name="weeks">Semanas</string>
-    <string name="year_range">Rango Anos</string>
+    <string name="year_range">Rango de anos</string>
     <string name="years">Anos</string>
     
     <string name="modifier">Modificar</string>
@@ -101,11 +103,11 @@
     
     <string name="to">a</string>
     
-    <string name="easter">Borrar</string>
+    <string name="easter">Pascua</string>
     
     <string name="sunrise">Amencer</string>
-  	<string name="sunset">Pousada</string>
-  	<string name="dawn">Amencer</string>
+  	<string name="sunset">Solpor</string>
+  	<string name="dawn">Abrente</string>
   	<string name="dusk">Anoitecer</string>
   	
   	<string name="public_holidays">Vacacións públicas</string>

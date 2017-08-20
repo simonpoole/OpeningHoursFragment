@@ -3,7 +3,6 @@
 
     <string name="Cancel">Anuluj</string>
     <string name="Save">Zapisz</string>
-    
     <string name="add_rule">Dodaj regułę</string>
     <string name="load_template">Wczytaj szablon</string>
     <string name="save_to_template">Zapisz do szablonu</string>

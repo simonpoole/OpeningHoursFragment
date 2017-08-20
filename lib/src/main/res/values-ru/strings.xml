@@ -3,7 +3,6 @@
 
     <string name="Cancel">Отменить</string>
     <string name="Save">Сохранить</string>
-    
     <string name="add_rule">Добавить правило</string>
     <string name="add_rule_247">Добавить правило 24/7</string>
     <string name="load_template">Загрузить шаблон</string>

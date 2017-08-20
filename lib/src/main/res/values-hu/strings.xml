@@ -3,9 +3,9 @@
 
     <string name="Cancel">Mégse</string>
     <string name="Save">Mentés</string>
-    
     <string name="add_rule">Szabály hozzáadása</string>
     <string name="add_rule_247">24/7 (non-stop) szabály hozzáadása</string>
+    <string name="add_rule_closed_on_holidays">Munkaszüneti nap szabály hozzáadása</string>
     <string name="load_template">Sablon betöltése</string>
     <string name="save_to_template">Mentés sablonba</string>
     <string name="manage_template">Sablon kezelése</string>
@@ -13,6 +13,7 @@
     <string name="load_templates_title">Sablonok betöltése</string>
     <string name="manage_templates_title">Sablonok kezelése</string>
     <string name="save_template">Sablon mentése</string>
+    <string name="update_template">Frissíti a sablon értékét is?</string>
     <string name="Yes">Van</string>
     <string name="No">Nincs</string>
     
@@ -63,6 +64,7 @@
     <string name="rule_type">Szabálytípus megjelenítése</string>
     <string name="move_up">Mozgatás felfelé</string>
     <string name="move_down">Mozgatás lefelé</string>
+    <string name="display_time_picker">Időválasztó megjelenítése</string>
     <string name="ticks_15_minute">Váltás 15 perces lépésekre</string>
     <string name="ticks_5_minute">Váltás 5 perces lépésekre</string>
     <string name="ticks_1_minute">Váltás 1 perces lépésekre</string>

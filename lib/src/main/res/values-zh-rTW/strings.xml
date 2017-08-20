@@ -3,7 +3,6 @@
 
     <string name="Cancel">取消</string>
     <string name="Save">儲存</string>
-    
     <string name="add_rule">增加規則</string>
     <string name="add_rule_247">為24/7增加規則</string>
     <string name="load_template">載入模版</string>
