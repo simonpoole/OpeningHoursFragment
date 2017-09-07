@@ -9,11 +9,11 @@ import java.io.Serializable;
  *
  */
 public interface SetRangeListener extends Serializable {
-	/**
-	 * Listener for values from RangePicker
-	 * 
-	 * @param start	selected start range value
-	 * @param end	selected end range value
-	 */
-	void setRange(int start, int end);
+    /**
+     * Listener for values from RangePicker
+     * 
+     * @param start selected start range value
+     * @param end selected end range value
+     */
+    void setRange(int start, int end);
 }

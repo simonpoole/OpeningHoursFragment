@@ -9,10 +9,10 @@ import ch.poole.openinghoursparser.DateRange;
  *
  */
 interface DateMenuInterface {
-	/**
-	 * Add the actual dates that you want included in the config for the menu item
-	 * 
-	 * @param dateRange	the DateRange to add the dates to
-	 */
-	void addDates(DateRange dateRange);
+    /**
+     * Add the actual dates that you want included in the config for the menu item
+     * 
+     * @param dateRange the DateRange to add the dates to
+     */
+    void addDates(DateRange dateRange);
 }
