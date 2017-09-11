@@ -2,20 +2,65 @@
 <resources>
 
     <string name="Cancel">Cancelar</string>
-    <string name="Save">Guardar</string>
+    <string name="Save">Gravar</string>
+    <string name="value_too_long">O comprimento do horário de abertura é %1$d que é mais longo do que o permitido de 255.\n\nPor favor simplifique antes de gravar!</string>
     <string name="add_rule">Adicionar regra</string>
     <string name="add_rule_247">Adicionar regra para 24/7</string>
+    <string name="add_rule_closed_on_holidays">Adicionar regra para feriados</string>
+    <string name="load_template">Carregar modelo</string>
+    <string name="save_to_template">Gravar no modelo</string>
+    <string name="manage_template">Gerir modelo</string>
+    <string name="refresh">Atualizar</string>
+    <string name="load_templates_title">Carregar modelos</string>
+    <string name="manage_templates_title">Gerir modelos</string>
+    <string name="save_template">Gravar modelo</string>
+    <string name="update_template">Atualizar também o valor do modelo?</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
     
+    <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
-    <!--	default template entries -->
+    <string name="default_legend">Padrão:</string>
+    
+    <string name="is_default">%1$s (padrão)</string>
+    
+    <string name="group_header">Grupo %1$s</string>
+    <string name="rule_header">Regra %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Modelo padrão carregado</string>
+    
+<!--	default template entries -->
 	<string name="weekdays_with_lunch">Dias da semana com pausa para almoço</string>
 	<string name="weekdays">Dias da semana</string>
     
 <!--    menu items -->
-	<string name="Delete">Apagar</string>
-	<string name="twentyfourseven">24 horas por dia, 7 dias por semana</string>
+	<string name="Delete">Eliminar</string>
+	<string name="add_year_range">Adicionar intervalo de anos</string>
+	<string name="add_week_range">Adicionar intervalo de semanas</string>
+	<string name="add_holiday">Adicionar feriado</string>
+    <string name="daterange_menu">Adicionar intervalo de datas...</string>
+    <string name="date_date">Data - data</string>
+    <string name="variable_date_date">Data variável - data</string>
+    <string name="date_variable_date">Data - data variável</string>
+    <string name="variable_date_variable_date">Data variável - data variável</string>
+    <string name="rule_type">Mostrar tipo de regra</string>
+    <string name="move_up">Mover para cima</string>
+    <string name="move_down">Mover para baixo</string>
+    <string name="interval_minutes">Intervalo (minutos)</string>
+    <string name="interval_years">Intervalo (anos)</string>
+    <string name="interval_weeks">Intervalo (semanas)</string>
+    
+    <string name="date_range">Intervalo de datas</string>
+    <string name="date">Data</string>
+    <string name="week_range">Intervalo de semanas</string>
+    <string name="weeks">Semanas</string>
+    <string name="year_range">Intervalo de anos</string>
+    <string name="years">Anos</string>
+    
+    <string name="comment">Comentário</string>
+    
+    <string name="twentyfourseven">24 horas por dia, 7 dias por semana</string>
     
     <string name="to">para</string>
     

@@ -4,6 +4,7 @@
     <string name="Cancel">Abbrechen</string>
     <string name="Save">Speichern</string>
     <string name="value_too_long">Der Öffnungszeitenwert ist %1$d Zeichen lang, dies ist länger als das Maximum von 255,\n\nBitte vereinfache den Wert vor dem Speichern!</string>
+    <string name="would_overwrite_invalid_value">Zu einem ungültigen Öffnungszeitenwert, kann keine neue Regel hinzugefügt werden. Bitte korrigieren oder löschen!</string>
     
     <string name="add_rule">Regel hinzufügen</string>
     <string name="add_rule_247">Regel für 24/7 hinzufügen</string>

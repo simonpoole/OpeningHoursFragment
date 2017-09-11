@@ -5,15 +5,22 @@
     <string name="Save">Uložit</string>
     <string name="add_rule">Přidat pravidlo</string>
     <string name="add_rule_247">Přidat pravidlo pro 24/7</string>
-    <string name="load_template">Nahrát předlohu</string>
+    <string name="add_rule_closed_on_holidays">Přidat pravidlo pro svátky</string>
+    <string name="load_template">Načíst předlohu</string>
     <string name="save_to_template">Uložit jako předlohu</string>
+    <string name="manage_template">Spravovat šablonu</string>
     <string name="refresh">Obnovit</string>
+    <string name="load_templates_title">Načíst předlohy</string>
+    <string name="manage_templates_title">Spravovat šablony</string>
     <string name="save_template">Uložit předlohu</string>
+    <string name="update_template">Aktualizovat i hodnotu šablony?</string>
     <string name="Yes">Ano</string>
     <string name="No">Ne</string>
     
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>
+    <string name="default_legend">Výchozí:</string>
+    
     <string name="group_header">Skupina %1$s</string>
     <string name="rule_header">Pravidlo %1$s</string>
     
@@ -32,6 +39,9 @@
 	<string name="add_holiday">Přidat prázdniny</string>
     <string name="timespan_menu">Přidat rozpětí času ...</string>
     <string name="time_time">Čas - čas</string>
+    <string name="time">Čas</string>
+    <string name="move_up">Přesunout výš</string>
+    <string name="move_down">Přesunout níž</string>
     <string name="show_offset">Zobrazit ofset</string>
     <string name="show_interval">Zobrazit interval</string>
     <!--     opening hour elements -->

@@ -5,6 +5,7 @@
     <string name="Save">Salva</string>
     <string name="add_rule">Aggiungi regola</string>
     <string name="add_rule_247">Aggiungi regola per 24/7</string>
+    <string name="add_rule_closed_on_holidays">Aggiungi regola per le festività</string>
     <string name="load_template">Carica modello</string>
     <string name="save_to_template">Salva come modello</string>
     <string name="manage_template">Gestisci modello</string>
@@ -35,11 +36,18 @@
 	<string name="add_year_range">Aggiungi intervallo annuale</string>
 	<string name="add_week_range">Aggiungi intervallo settimanale</string>
 	<string name="add_holiday">Aggiungi festività</string>
+    <string name="start_at_midnight">Inizia a mezzanotte</string>
     <string name="move_up">Sposta su</string>
     <string name="move_down">Sposta giù</string>
     <string name="ticks_15_minute">Passa a scatti di 15 minuti</string>
     <string name="ticks_5_minute">Passa a scatti di 5 minuti</string>
     <string name="ticks_1_minute">Passa a scatti di 1 minuto</string>
+    <string name="show_interval">Mostra intervallo</string>
+    <string name="show_useAsWeekDay">Mostra utilizzo</string>
+    
+<!--     opening hour elements -->
+         
+    <string name="normal_rule">Normale</string>
     <string name="interval_minutes">Intervallo (minuti)</string>
     <string name="interval_years">Intervallo (anni)</string>
     <string name="interval_weeks">Intervallo (settimane)</string>

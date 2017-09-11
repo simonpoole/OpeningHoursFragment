@@ -3,9 +3,10 @@
 
     <string name="Cancel">Mégse</string>
     <string name="Save">Mentés</string>
+    <string name="value_too_long">A nyitva tartás címke értékének hossza %1$d karakter, ami több, mint a megengedett 255.\n\nMentés előtt egyszerűsíteni kell.</string>
     <string name="add_rule">Szabály hozzáadása</string>
     <string name="add_rule_247">24/7 (non-stop) szabály hozzáadása</string>
-    <string name="add_rule_closed_on_holidays">Munkaszüneti nap szabály hozzáadása</string>
+    <string name="add_rule_closed_on_holidays">Szabály hozzáadása munkaszüneti napokra</string>
     <string name="load_template">Sablon betöltése</string>
     <string name="save_to_template">Mentés sablonba</string>
     <string name="manage_template">Sablon kezelése</string>
@@ -65,20 +66,20 @@
     <string name="move_up">Mozgatás felfelé</string>
     <string name="move_down">Mozgatás lefelé</string>
     <string name="display_time_picker">Időválasztó megjelenítése</string>
-    <string name="ticks_15_minute">Váltás 15 perces lépésekre</string>
-    <string name="ticks_5_minute">Váltás 5 perces lépésekre</string>
-    <string name="ticks_1_minute">Váltás 1 perces lépésekre</string>
+    <string name="ticks_15_minute">Váltás 15 perces lépésközre</string>
+    <string name="ticks_5_minute">Váltás 5 perces lépésközre</string>
+    <string name="ticks_1_minute">Váltás 1 perces lépésközre</string>
     <string name="show_offset">Eltolás megjelenítése</string>
-    <string name="show_start_offset">Kiinduló eltolás megmutatása</string>
-    <string name="show_end_offset">Befejező eltolás megmutatása</string>
+    <string name="show_start_offset">Kiinduló eltolás megjelenítése</string>
+    <string name="show_end_offset">Befejező eltolás megjelenítése</string>
     <string name="show_interval">Intervallum megjelenítése</string>
     <string name="show_useAsWeekDay">Használat megjelenítése</string>
     
 <!--     opening hour elements -->
          
     <string name="normal_rule">Normális</string>
-    <string name="additive_rule">Összeadódó</string>
-    <string name="fallback_rule">Tartalék</string>
+    <string name="additive_rule">Kiegészítő</string>
+    <string name="fallback_rule">Helyettesítő</string>
     
     <string name="interval_minutes">Intervallum (perc)</string>
     <string name="interval_years">Intervallum (év)</string>
@@ -111,7 +112,7 @@
   	<string name="dusk">Szürkület</string>
   	
   	<string name="public_holidays">Munkaszüneti nap</string>
-  	<string name="school_holidays">Iskolaszünet</string>
+  	<string name="school_holidays">Tanítási szünet</string>
   	
   	<string name="monday_short">H</string>
   	<string name="tuesday_short">K</string>
