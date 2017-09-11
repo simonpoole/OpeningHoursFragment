@@ -34,6 +34,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -127,6 +128,11 @@ public class OpeningHoursFragment extends DialogFragment {
     private SQLiteDatabase mDatabase;
 
     private transient boolean loadedDefault = false;
+
+    /**
+     * True if we encountered a parse error
+     */
+    private boolean parseErrorFound;
 
     static PinTextFormatter timeFormater = new PinTextFormatter() {
         @Override
@@ -330,8 +336,9 @@ public class OpeningHoursFragment extends DialogFragment {
                             Log.e(DEBUG_TAG, err.getMessage());
                         }
                         if (rules2 != null && !rules2.isEmpty()) {
-                            if (rules==null) { //FIXME if there was an unparseable string this overwrites it 
-                                rules = new ArrayList<Rule>();
+                            if (rules==null || hasParseError(rules)) { // if there was an unparseable string it needs to be fixed first 
+                                ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
+                                return true;
                             }
                             rules.add(rules2.get(0));
                             updateString();
@@ -406,12 +413,23 @@ public class OpeningHoursFragment extends DialogFragment {
     }
 
     /**
+     * Check if we have an parser error
+     * 
+     * @return true if there was a parser error
+     */
+    public boolean hasParseError(List<Rule> rulesToCheck) {
+        return parseErrorFound;
+    }
+
+    /**
      * Highlight the position of a parse error
      * 
-     * @param text he EditTExt the string is displayed in
+     * Side effect sets parserErrorFound to true
+     * @param text he EditText the string is displayed in
      * @param pex the ParseException to use
      */
     private void highlightParseError(EditText text, ParseException pex) {
+        parseErrorFound = true;
         int c = pex.currentToken.next.beginColumn - 1; // starts at 1
         int pos = text.getSelectionStart();
         Spannable spannable = new SpannableString(text.getText());
@@ -426,9 +444,11 @@ public class OpeningHoursFragment extends DialogFragment {
     /**
      * Remove all parse error highlighting
      * 
-     * @param text the EditTExt the string is displayed in
+     * Side effect sets parserErrorFound to false
+     * @param text the EditText the string is displayed in
      */
     private void removeHighlight(EditText text) {
+        parseErrorFound = false;
         int pos = text.getSelectionStart();
         int prevLen = text.length();
         text.removeTextChangedListener(watcher); // avoid infinite loop

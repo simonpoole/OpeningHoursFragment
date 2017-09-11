@@ -81,4 +81,22 @@ public class Util {
         toast.setView(layout);
         toast.show();
     }
+    
+    /**
+     * Display a toast at the top of the screen
+     * 
+     * @param context android context
+     * @param msg the message resource id to display
+     */
+    public static void toastTop(Context context, int msg) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate(R.layout.toast, null);
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
 }
