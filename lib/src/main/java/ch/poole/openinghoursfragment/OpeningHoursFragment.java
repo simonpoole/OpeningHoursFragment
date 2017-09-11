@@ -321,26 +321,31 @@ public class OpeningHoursFragment extends DialogFragment {
                 public boolean onMenuItemClick(MenuItem item) {
                     OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(ruleString.getBytes()));
                     List<Rule> rules2 = null;
-                    try {
-                        rules2 = parser.rules(false);
-                    } catch (ParseException pex) {
-                        Log.e(DEBUG_TAG, pex.getMessage());
-                    } catch (TokenMgrError err) {
-                        Log.e(DEBUG_TAG, err.getMessage());
-                    }
-                    if (rules2 != null && !rules2.isEmpty()) {
-                        rules.add(rules2.get(0));
-                        updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
-                        text.postDelayed(new Runnable() { // use post to ensure view has been rebuilt
-                            @Override
-                            public void run() {
-                                ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false); // scroll to
-                                                                                                        // bottom
+                    if (parser != null) {
+                        try {
+                            rules2 = parser.rules(false);
+                        } catch (ParseException pex) {
+                            Log.e(DEBUG_TAG, pex.getMessage());
+                        } catch (TokenMgrError err) {
+                            Log.e(DEBUG_TAG, err.getMessage());
+                        }
+                        if (rules2 != null && !rules2.isEmpty()) {
+                            if (rules==null) {
+                                rules = new ArrayList<Rule>();
                             }
-                        }, 200);
+                            rules.add(rules2.get(0));
+                            updateString();
+                            watcher.afterTextChanged(null); // hack to force rebuild of form
+                            text.postDelayed(new Runnable() { // use post to ensure view has been rebuilt
+                                @Override
+                                public void run() {
+                                    ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false); // scroll to
+                                    // bottom
+                                }
+                            }, 200);
 
-                    }
+                        }
+                    } 
                     return true;
                 }
             }
