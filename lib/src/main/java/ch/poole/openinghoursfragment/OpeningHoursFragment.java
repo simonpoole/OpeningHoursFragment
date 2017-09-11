@@ -3049,7 +3049,7 @@ public class OpeningHoursFragment extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        // super.onSaveInstanceState(outState); avoid trying to save views, this is a hack
         Log.d(DEBUG_TAG, "onSaveInstanceState");
         outState.putSerializable(KEY_KEY, key);
         outState.putSerializable(VALUE_KEY, text.getText().toString());
