@@ -336,7 +336,7 @@ public class OpeningHoursFragment extends DialogFragment {
                             Log.e(DEBUG_TAG, err.getMessage());
                         }
                         if (rules2 != null && !rules2.isEmpty()) {
-                            if (rules==null || hasParseError(rules)) { // if there was an unparseable string it needs to be fixed first 
+                            if (rules==null || hasParseError()) { // if there was an unparseable string it needs to be fixed first 
                                 ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
                                 return true;
                             }
@@ -417,7 +417,7 @@ public class OpeningHoursFragment extends DialogFragment {
      * 
      * @return true if there was a parser error
      */
-    public boolean hasParseError(List<Rule> rulesToCheck) {
+    public boolean hasParseError() {
         return parseErrorFound;
     }
 
