@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.1.11: Don't overwrite invalid strings when adding a rule, try to avoid serialsation issues
+
 0.1.10: Protect against NPE when adding new rule to invalid string
 
 0.1.9: User the display string for variable dates (Easter)
