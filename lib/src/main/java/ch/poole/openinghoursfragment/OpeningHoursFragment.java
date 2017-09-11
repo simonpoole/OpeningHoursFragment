@@ -330,7 +330,7 @@ public class OpeningHoursFragment extends DialogFragment {
                             Log.e(DEBUG_TAG, err.getMessage());
                         }
                         if (rules2 != null && !rules2.isEmpty()) {
-                            if (rules==null) {
+                            if (rules==null) { //FIXME if there was an unparseable string this overwrites it 
                                 rules = new ArrayList<Rule>();
                             }
                             rules.add(rules2.get(0));

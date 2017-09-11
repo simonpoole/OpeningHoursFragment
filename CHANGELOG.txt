@@ -1,5 +1,11 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.1.10: Protect against NPE when adding new rule to invalid string
+
+0.1.9: User the display string for variable dates (Easter)
+
+0.1.8: Enforce OSM 255 char tag length restriction
+
 0.1.6: Add shortcut for adding holidays.
 
 0.1.5: Typo fixes, add missing dependencies to pom file.
