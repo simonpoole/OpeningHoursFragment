@@ -1355,8 +1355,8 @@ public class OpeningHoursFragment extends DialogFragment {
         final DateWithOffset startDate = dateRange.getStartDate();
         final DateWithOffset endDate = dateRange.getEndDate();
 
-        boolean hasStartOffset = startDate.getWeekDayOffset() != null || startDate.getDayOffset() > 0;
-        boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || startDate.getDayOffset() > 0);
+        boolean hasStartOffset = startDate.getWeekDayOffset() != null || startDate.getDayOffset() != 0;
+        boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || startDate.getDayOffset() != 0);
         final LinearLayout dateRangeRow = (LinearLayout) inflater.inflate(
                 hasStartOffset || hasEndOffset ? R.layout.daterange_with_offset_row : R.layout.daterange_row, null);
 

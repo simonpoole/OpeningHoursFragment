@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.1.12: Show negative day offsets for dates correctly
+
 0.1.11: Don't overwrite invalid strings when adding a rule, try to avoid serialsation issues
 
 0.1.10: Protect against NPE when adding new rule to invalid string
