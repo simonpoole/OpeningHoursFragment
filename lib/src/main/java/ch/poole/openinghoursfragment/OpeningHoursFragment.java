@@ -1152,7 +1152,7 @@ public class OpeningHoursFragment extends DialogFragment {
             if (rm != null) {
                 LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
                 final Spinner modifierSpinner = (Spinner) modifierLayout.findViewById(R.id.modifier);
-                setSpinnerInitialEntryValue(R.array.modifier_values, modifierSpinner, rm.getModifier().toString());
+                setSpinnerInitialEntryValue(R.array.modifier_values, modifierSpinner, rm.getModifier() == null ? "" : rm.getModifier().toString());
                 setSpinnerListenerEntryValues(R.array.modifier_values, modifierSpinner, new SetValue() {
                     @Override
                     public void set(String value) {

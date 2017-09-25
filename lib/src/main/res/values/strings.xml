@@ -275,6 +275,7 @@
   	</string-array>
   	   
     <string-array name="modifier_entries" translatable="false">
+       <item></item>
   	   <item>@string/open</item>
  	   <item>@string/closed</item>
   	   <item>@string/off</item>
@@ -282,6 +283,7 @@
     </string-array>
     
     <string-array name="modifier_values" translatable="false">
+    	<item></item>
   	   <item>@string/oh_open</item>
  	   <item>@string/oh_closed</item>
   	   <item>@string/oh_off</item>
