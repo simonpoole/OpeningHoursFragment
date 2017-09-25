@@ -46,7 +46,7 @@ public class TimeRangePicker extends DialogFragment {
     /**
      * Show the TimeRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startHour initial start hour
      * @param startMinute initial start minute
@@ -64,7 +64,7 @@ public class TimeRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startHour initial start hour
      * @param startMinute initial start minute

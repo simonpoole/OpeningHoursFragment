@@ -44,7 +44,7 @@ public class RangePicker extends DialogFragment {
     /**
      * Show the range picker dialog
      * 
-     * @param activity activity that called this
+     * @param parentFragment Fragment that called this
      * @param title resource id for the title to display
      * @param min minimum range value
      * @param max maximum range value

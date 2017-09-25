@@ -61,7 +61,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startMonth initial start month
@@ -83,7 +83,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startVarDate initial start variable date ie easter
@@ -104,7 +104,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startMonth initial start month
@@ -125,7 +125,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startVarDate initial start variable date ie easter
@@ -145,7 +145,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startMonth initial start month
@@ -163,7 +163,7 @@ public class DateRangePicker extends DialogFragment {
     /**
      * Show the DateRangePicker dialog
      * 
-     * @param activity activity calling this
+     * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startYear initial start year
      * @param startVarDate initial start variable date ie easter
