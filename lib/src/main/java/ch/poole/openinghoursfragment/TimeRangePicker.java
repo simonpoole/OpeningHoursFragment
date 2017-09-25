@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -53,15 +52,12 @@ public class TimeRangePicker extends DialogFragment {
      * @param startMinute initial start minute
      * @param endHour initial end hour
      * @param endMinute initial end minute
-     * @param listener listener used to return the chosen values
      */
-    static void showDialog(FragmentActivity activity, int title, int startHour, int startMinute, int endHour,
-            int endMinute, @NonNull SetTimeRangeListener listener) {
-        dismissDialog(activity);
+    static void showDialog(Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute) {
+        dismissDialog(parentFragment);
 
-        FragmentManager fm = activity.getSupportFragmentManager();
-        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute,
-                listener);
+        FragmentManager fm = parentFragment.getChildFragmentManager();
+        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute);
         timePickerFragment.show(fm, TAG);
     }
 
@@ -72,20 +68,18 @@ public class TimeRangePicker extends DialogFragment {
      * @param title resource id for the title to display
      * @param startHour initial start hour
      * @param startMinute initial start minute
-     * @param listener listener used to return the chosen values
      */
-    static public void showDialog(FragmentActivity activity, int title, int startHour, int startMinute,
-            @NonNull SetTimeRangeListener listener) {
-        dismissDialog(activity);
+    static public void showDialog(Fragment parentFragment, int title, int startHour, int startMinute) {
+        dismissDialog(parentFragment);
 
-        FragmentManager fm = activity.getSupportFragmentManager();
+        FragmentManager fm = parentFragment.getChildFragmentManager();
         TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED,
-                NOTHING_SELECTED, listener);
+                NOTHING_SELECTED);
         timePickerFragment.show(fm, TAG);
     }
 
-    private static void dismissDialog(FragmentActivity activity) {
-        FragmentManager fm = activity.getSupportFragmentManager();
+    private static void dismissDialog(Fragment parentFragment) {
+        FragmentManager fm = parentFragment.getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = fm.findFragmentByTag(TAG);
         if (fragment != null) {
@@ -103,11 +97,10 @@ public class TimeRangePicker extends DialogFragment {
      * @param startOnly only show a picker for one time
      * @param endHour initial end hour
      * @param endMinute initial end minute
-     * @param listener listener used to return the chosen values
      * @return an instance of TimeRangePicker
      */
     static private TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly,
-            int endHour, int endMinute, @NonNull SetTimeRangeListener listener) {
+            int endHour, int endMinute) {
         TimeRangePicker f = new TimeRangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -116,7 +109,6 @@ public class TimeRangePicker extends DialogFragment {
         args.putBoolean(START_ONLY, startOnly);
         args.putInt(END_HOUR, endHour);
         args.putInt(END_MINUTE, endMinute);
-        args.putSerializable(LISTENER, listener);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -149,7 +141,7 @@ public class TimeRangePicker extends DialogFragment {
 
         boolean startOnly = getArguments().getBoolean(START_ONLY);
 
-        final SetTimeRangeListener listener = (SetTimeRangeListener) getArguments().getSerializable(LISTENER);
+        final SetTimeRangeListener listener = (SetTimeRangeListener) getParentFragment();
 
         // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());

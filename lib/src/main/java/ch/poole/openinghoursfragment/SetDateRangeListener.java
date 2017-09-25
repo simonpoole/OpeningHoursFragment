@@ -1,7 +1,5 @@
 package ch.poole.openinghoursfragment;
 
-import java.io.Serializable;
-
 import android.support.annotation.Nullable;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.VarDate;
@@ -12,7 +10,7 @@ import ch.poole.openinghoursparser.VarDate;
  * @author simon
  *
  */
-public interface SetDateRangeListener extends Serializable {
+public interface SetDateRangeListener {
     /**
      * Listener for values from DateRangePicker
      * 

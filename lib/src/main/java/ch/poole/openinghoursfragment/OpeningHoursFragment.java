@@ -34,7 +34,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -85,7 +84,7 @@ import ch.poole.rangebar.RangeBar;
 import ch.poole.rangebar.RangeBar.OnRangeBarChangeListener;
 import ch.poole.rangebar.RangeBar.PinTextFormatter;
 
-public class OpeningHoursFragment extends DialogFragment {
+public class OpeningHoursFragment extends DialogFragment implements SetDateRangeListener, SetRangeListener, SetTimeRangeListener {
 
     private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
@@ -1341,6 +1340,17 @@ public class OpeningHoursFragment extends DialogFragment {
         }
     }
 
+
+    SetDateRangeListener realDateRangeListener = null;
+    
+    @Override
+    public void setDateRange(int startYear, Month startMonth, int startDay, VarDate startVarDate, int endYear,
+            Month endMonth, int endDay, VarDate endVarDate) {      
+        if (realDateRangeListener != null) {
+            realDateRangeListener.setDateRange(startYear, startMonth, startDay, startVarDate, endYear, endMonth, endDay, endVarDate);
+        }
+    }
+    
     private void addDateRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r,
             @NonNull final List<DateRange> dateRanges, final DateRange dateRange) {
         // cases to consider
@@ -1382,38 +1392,34 @@ public class OpeningHoursFragment extends DialogFragment {
                 public void onClick(View v) {
                     final DateWithOffset start = startDate;
                     if (start.getVarDate() == null) {
-                        DateRangePicker.showDialog(getActivity(), R.string.date, start.getYear(), start.getMonth(),
-                                start.getDay(), new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        start.setYear(startYear);
-                                        start.setMonth(startMonth);
-                                        start.setDay(startDay);
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(start, null, finalRow, menu);
-                                        updateString();
-                                    }
-                                });
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                start.setYear(startYear);
+                                start.setMonth(startMonth);
+                                start.setDay(startDay);
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(start, null, finalRow, menu);
+                                updateString();
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay());
                     } else {
-                        DateRangePicker.showDialog(getActivity(), R.string.date, start.getYear(), start.getVarDate(),
-                                new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        start.setYear(startYear);
-                                        start.setVarDate(startVarDate);
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(start, null, finalRow, menu);
-                                        updateString();
-                                    }
-                                });
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                start.setYear(startYear);
+                                start.setVarDate(startVarDate);
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(start, null, finalRow, menu);
+                                updateString();
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate());
                     }
                 }
             });
@@ -1428,63 +1434,59 @@ public class OpeningHoursFragment extends DialogFragment {
                         } else {
                             end = endDate;
                         }
-                        DateRangePicker.showDialog(getActivity(), R.string.date, end.getYear(), end.getMonth(),
-                                end.getDay(), new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        // we are only using the first NPV thats why we need to use the startXXX values
-                                        // here
-                                        DateWithOffset tempDwo = endDate;
-                                        if (tempDwo == null
-                                                && (startYear != YearRange.UNDEFINED_YEAR || startMonth != null
-                                                        || startDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-                                            tempDwo = new DateWithOffset();
-                                            dateRange.setEndDate(tempDwo);
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                // we are only using the first NPV thats why we need to use the startXXX values
+                                // here
+                                DateWithOffset tempDwo = endDate;
+                                if (tempDwo == null
+                                        && (startYear != YearRange.UNDEFINED_YEAR || startMonth != null
+                                                || startDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                    tempDwo = new DateWithOffset();
+                                    dateRange.setEndDate(tempDwo);
+                                }
+                                if (tempDwo != null) {
+                                    tempDwo.setYear(startYear);
+                                    tempDwo.setMonth(startMonth);
+                                    tempDwo.setDay(startDay);
+                                }
+                                end.setYear(startYear);
+                                end.setMonth(startMonth);
+                                end.setDay(startDay);
+                                Log.d(DEBUG_TAG, "y " + startYear + " m " + startMonth + " d" + startDay);
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(startDate, tempDwo, finalRow, menu);
+                                updateString();
+                                if (endDate == null) {
+                                    text.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            watcher.afterTextChanged(null); // force endDate to be set
                                         }
-                                        if (tempDwo != null) {
-                                            tempDwo.setYear(startYear);
-                                            tempDwo.setMonth(startMonth);
-                                            tempDwo.setDay(startDay);
-                                        }
-                                        end.setYear(startYear);
-                                        end.setMonth(startMonth);
-                                        end.setDay(startDay);
-                                        Log.d(DEBUG_TAG, "y " + startYear + " m " + startMonth + " d" + startDay);
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(startDate, tempDwo, finalRow, menu);
-                                        updateString();
-                                        if (endDate == null) {
-                                            text.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    watcher.afterTextChanged(null); // force endDate to be set
-                                                }
-                                            }, 100);
-                                        }
-                                    }
-                                });
+                                    }, 100);
+                                }
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, end.getYear(), end.getMonth(), end.getDay());
                     } else {
-                        DateRangePicker.showDialog(getActivity(), R.string.date, endDate.getYear(),
-                                endDate.getVarDate(), new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        // we are only using the first NPV thats why we need to use the startXXX values
-                                        // here
-                                        endDate.setYear(startYear);
-                                        endDate.setVarDate(startVarDate);
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(startDate, endDate, finalRow, menu);
-                                        updateString();
-                                    }
-                                });
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                // we are only using the first NPV thats why we need to use the startXXX values
+                                // here
+                                endDate.setYear(startYear);
+                                endDate.setVarDate(startVarDate);
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(startDate, endDate, finalRow, menu);
+                                updateString();
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, endDate.getYear(), endDate.getVarDate());
                     }
                 }
             });
@@ -1508,158 +1510,147 @@ public class OpeningHoursFragment extends DialogFragment {
                     }
                     if (start.getVarDate() == null && (end == null || end.getVarDate() == null)) {
                         if (start.isOpenEnded()) {
-                            DateRangePicker.showDialog(getActivity(), R.string.date, start.getYear(), start.getMonth(),
-                                    start.getDay(), new SetDateRangeListener() {
-                                        private static final long serialVersionUID = 1L;
-
-                                        @Override
-                                        public void setDateRange(int startYear, Month startMonth, int startDay,
-                                                VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                                VarDate endVarDate) {
-                                            start.setYear(startYear);
-                                            start.setMonth(startMonth);
-                                            start.setDay(startDay);
-                                            final LinearLayout finalRow = dateRangeRow;
-                                            setDateRangeValues(start, null, finalRow, menu);
-                                            updateString();
-                                        }
-                                    });
+                            realDateRangeListener = new SetDateRangeListener() {
+                                @Override
+                                public void setDateRange(int startYear, Month startMonth, int startDay,
+                                        VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                        VarDate endVarDate) {
+                                    start.setYear(startYear);
+                                    start.setMonth(startMonth);
+                                    start.setDay(startDay);
+                                    final LinearLayout finalRow = dateRangeRow;
+                                    setDateRangeValues(start, null, finalRow, menu);
+                                    updateString();
+                                }
+                            };
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay());
                         } else {
-                            DateRangePicker.showDialog(getActivity(), R.string.date_range, start.getYear(),
-                                    start.getMonth(), start.getDay(), tempEndYear, tempEndMonth, tempEndDay,
-                                    new SetDateRangeListener() {
-                                        private static final long serialVersionUID = 1L;
-
-                                        @Override
-                                        public void setDateRange(int startYear, Month startMonth, int startDay,
-                                                VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                                VarDate endVarDate) {
-                                            start.setYear(startYear);
-                                            start.setMonth(startMonth);
-                                            start.setDay(startDay);
-                                            DateWithOffset tempDwo = endDate;
-                                            if (tempDwo == null
-                                                    && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
-                                                            || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-                                                tempDwo = new DateWithOffset();
-                                                dateRange.setEndDate(tempDwo);
+                            realDateRangeListener = new SetDateRangeListener() {
+                                @Override
+                                public void setDateRange(int startYear, Month startMonth, int startDay,
+                                        VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                        VarDate endVarDate) {
+                                    start.setYear(startYear);
+                                    start.setMonth(startMonth);
+                                    start.setDay(startDay);
+                                    DateWithOffset tempDwo = endDate;
+                                    if (tempDwo == null
+                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
+                                                    || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                        tempDwo = new DateWithOffset();
+                                        dateRange.setEndDate(tempDwo);
+                                    }
+                                    if (tempDwo != null) {
+                                        tempDwo.setYear(endYear);
+                                        tempDwo.setMonth(endMonth);
+                                        tempDwo.setDay(endDay);
+                                    }
+                                    final LinearLayout finalRow = dateRangeRow;
+                                    setDateRangeValues(start, tempDwo, finalRow, menu);
+                                    updateString();
+                                    if (endDate == null) {
+                                        text.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                watcher.afterTextChanged(null); // force endDate to be set
                                             }
-                                            if (tempDwo != null) {
-                                                tempDwo.setYear(endYear);
-                                                tempDwo.setMonth(endMonth);
-                                                tempDwo.setDay(endDay);
-                                            }
-                                            final LinearLayout finalRow = dateRangeRow;
-                                            setDateRangeValues(start, tempDwo, finalRow, menu);
-                                            updateString();
-                                            if (endDate == null) {
-                                                text.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        watcher.afterTextChanged(null); // force endDate to be set
-                                                    }
-                                                }, 100);
-                                            }
-                                        }
-                                    });
+                                        }, 100);
+                                    }
+                                }
+                            };
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
+                                    start.getMonth(), start.getDay(), tempEndYear, tempEndMonth, tempEndDay);
                         }
                     } else if (start.getVarDate() != null && (end == null || end.getVarDate() == null)) {
                         if (start.isOpenEnded()) {
-                            DateRangePicker.showDialog(getActivity(), R.string.date, start.getYear(),
-                                    start.getVarDate(), new SetDateRangeListener() {
-                                        private static final long serialVersionUID = 1L;
-
-                                        @Override
-                                        public void setDateRange(int startYear, Month startMonth, int startDay,
-                                                VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                                VarDate endVarDate) {
-                                            start.setYear(startYear);
-                                            start.setVarDate(startVarDate);
-                                            final LinearLayout finalRow = dateRangeRow;
-                                            setDateRangeValues(start, null, finalRow, menu);
-                                            updateString();
-                                        }
-                                    });
+                            realDateRangeListener = new SetDateRangeListener() {
+                                @Override
+                                public void setDateRange(int startYear, Month startMonth, int startDay,
+                                        VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                        VarDate endVarDate) {
+                                    start.setYear(startYear);
+                                    start.setVarDate(startVarDate);
+                                    final LinearLayout finalRow = dateRangeRow;
+                                    setDateRangeValues(start, null, finalRow, menu);
+                                    updateString();
+                                }
+                            };
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate());
                         } else {
-                            DateRangePicker.showDialog(getActivity(), R.string.date_range, start.getYear(),
-                                    start.getVarDate(), tempEndYear, tempEndMonth, tempEndDay,
-                                    new SetDateRangeListener() {
-                                        private static final long serialVersionUID = 1L;
-
-                                        @Override
-                                        public void setDateRange(int startYear, Month startMonth, int startDay,
-                                                VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                                VarDate endVarDate) {
-                                            start.setYear(startYear);
-                                            start.setVarDate(startVarDate);
-                                            DateWithOffset tempDwo = endDate;
-                                            if (tempDwo == null
-                                                    && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
-                                                            || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
-                                                tempDwo = new DateWithOffset();
-                                                dateRange.setEndDate(tempDwo);
+                            realDateRangeListener = new SetDateRangeListener() {
+                                @Override
+                                public void setDateRange(int startYear, Month startMonth, int startDay,
+                                        VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                        VarDate endVarDate) {
+                                    start.setYear(startYear);
+                                    start.setVarDate(startVarDate);
+                                    DateWithOffset tempDwo = endDate;
+                                    if (tempDwo == null
+                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
+                                                    || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                        tempDwo = new DateWithOffset();
+                                        dateRange.setEndDate(tempDwo);
+                                    }
+                                    if (tempDwo != null) {
+                                        tempDwo.setYear(endYear);
+                                        tempDwo.setMonth(endMonth);
+                                        tempDwo.setDay(endDay);
+                                    }
+                                    final LinearLayout finalRow = dateRangeRow;
+                                    setDateRangeValues(start, tempDwo, finalRow, menu);
+                                    updateString();
+                                    if (endDate == null) {
+                                        text.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                watcher.afterTextChanged(null); // force endDate to be set
                                             }
-                                            if (tempDwo != null) {
-                                                tempDwo.setYear(endYear);
-                                                tempDwo.setMonth(endMonth);
-                                                tempDwo.setDay(endDay);
-                                            }
-                                            final LinearLayout finalRow = dateRangeRow;
-                                            setDateRangeValues(start, tempDwo, finalRow, menu);
-                                            updateString();
-                                            if (endDate == null) {
-                                                text.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        watcher.afterTextChanged(null); // force endDate to be set
-                                                    }
-                                                }, 100);
-                                            }
-                                        }
-                                    });
+                                        }, 100);
+                                    }
+                                }
+                            };
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
+                                    start.getVarDate(), tempEndYear, tempEndMonth, tempEndDay);
                         }
                     } else if (start.getVarDate() == null && (end != null && end.getVarDate() != null)) {
-                        DateRangePicker.showDialog(getActivity(), R.string.date_range, start.getYear(),
-                                start.getMonth(), start.getDay(), tempEndYear, end.getVarDate(),
-                                new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                start.setYear(startYear);
+                                start.setMonth(startMonth);
+                                start.setDay(startDay);
 
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        start.setYear(startYear);
-                                        start.setMonth(startMonth);
-                                        start.setDay(startDay);
+                                endDate.setYear(endYear);
+                                endDate.setVarDate(endVarDate);
 
-                                        endDate.setYear(endYear);
-                                        endDate.setVarDate(endVarDate);
-
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(start, endDate, finalRow, menu);
-                                        updateString();
-                                    }
-                                });
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(start, endDate, finalRow, menu);
+                                updateString();
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
+                                start.getMonth(), start.getDay(), tempEndYear, end.getVarDate());
                     } else if (start.getVarDate() != null && (end != null && end.getVarDate() != null)) {
-                        DateRangePicker.showDialog(getActivity(), R.string.date_range, start.getYear(),
-                                start.getVarDate(), tempEndYear, end.getVarDate(), new SetDateRangeListener() {
-                                    private static final long serialVersionUID = 1L;
+                        realDateRangeListener = new SetDateRangeListener() {
+                            @Override
+                            public void setDateRange(int startYear, Month startMonth, int startDay,
+                                    VarDate startVarDate, int endYear, Month endMonth, int endDay,
+                                    VarDate endVarDate) {
+                                start.setYear(startYear);
+                                start.setVarDate(startVarDate);
 
-                                    @Override
-                                    public void setDateRange(int startYear, Month startMonth, int startDay,
-                                            VarDate startVarDate, int endYear, Month endMonth, int endDay,
-                                            VarDate endVarDate) {
-                                        start.setYear(startYear);
-                                        start.setVarDate(startVarDate);
+                                endDate.setYear(endYear);
+                                endDate.setVarDate(endVarDate);
 
-                                        endDate.setYear(endYear);
-                                        endDate.setVarDate(endVarDate);
-
-                                        final LinearLayout finalRow = dateRangeRow;
-                                        setDateRangeValues(start, endDate, finalRow, menu);
-                                        updateString();
-                                    }
-                                });
+                                final LinearLayout finalRow = dateRangeRow;
+                                setDateRangeValues(start, endDate, finalRow, menu);
+                                updateString();
+                            }
+                        };
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
+                                start.getVarDate(), tempEndYear, end.getVarDate());
                     }
                 }
             });
@@ -2027,29 +2018,37 @@ public class OpeningHoursFragment extends DialogFragment {
                 } else {
                     rangeEnd = Math.max(rangeEnd, tempEndYear + 50);
                 }
-                RangePicker.showDialog(getActivity(), R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd,
-                        yr.getStartYear(), tempEndYear, new SetRangeListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void setRange(int start, int end) {
-                                yr.setStartYear(start);
-                                startYearView.setText(Integer.toString(start));
-                                if (end != RangePicker.NOTHING_SELECTED) {
-                                    endYearView.setText(Integer.toString(end));
-                                    yr.setEndYear(end);
-                                } else {
-                                    endYearView.setText("");
-                                    yr.setEndYear(YearRange.UNDEFINED_YEAR);
-                                }
-                                updateString();
-                            }
-                        });
+                realSetRangeListener = new SetRangeListener() {
+                    @Override
+                    public void setRange(int start, int end) {
+                        yr.setStartYear(start);
+                        startYearView.setText(Integer.toString(start));
+                        if (end != RangePicker.NOTHING_SELECTED) {
+                            endYearView.setText(Integer.toString(end));
+                            yr.setEndYear(end);
+                        } else {
+                            endYearView.setText("");
+                            yr.setEndYear(YearRange.UNDEFINED_YEAR);
+                        }
+                        updateString();
+                    }
+                };
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd,
+                        yr.getStartYear(), tempEndYear);
             }
         });
         ll.addView(yearLayout);
     }
 
+    SetRangeListener realSetRangeListener = null;
+    
+    @Override
+    public void setRange(int start, int end) {
+        if (realSetRangeListener != null) {
+            realSetRangeListener.setRange(start, end);
+        }   
+    }
+    
     private void addWeekRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<WeekRange> weeks,
             @NonNull final WeekRange w) {
         LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
@@ -2111,24 +2110,23 @@ public class OpeningHoursFragment extends DialogFragment {
                 if (tempEndWeek == WeekRange.UNDEFINED_WEEK) {
                     tempEndWeek = RangePicker.NOTHING_SELECTED;
                 }
-                RangePicker.showDialog(getActivity(), R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK,
-                        w.getStartWeek(), tempEndWeek, new SetRangeListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void setRange(int start, int end) {
-                                w.setStartWeek(start);
-                                startWeekView.setText(Integer.toString(start));
-                                if (end != RangePicker.NOTHING_SELECTED) {
-                                    endWeekView.setText(Integer.toString(end));
-                                    w.setEndWeek(end);
-                                } else {
-                                    endWeekView.setText("");
-                                    w.setEndWeek(WeekRange.UNDEFINED_WEEK);
-                                }
-                                updateString();
-                            }
-                        });
+                realSetRangeListener = new SetRangeListener() {
+                    @Override
+                    public void setRange(int start, int end) {
+                        w.setStartWeek(start);
+                        startWeekView.setText(Integer.toString(start));
+                        if (end != RangePicker.NOTHING_SELECTED) {
+                            endWeekView.setText(Integer.toString(end));
+                            w.setEndWeek(end);
+                        } else {
+                            endWeekView.setText("");
+                            w.setEndWeek(WeekRange.UNDEFINED_WEEK);
+                        }
+                        updateString();
+                    }
+                };
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK,
+                        w.getStartWeek(), tempEndWeek);
             }
         });
         ll.addView(weekLayout);
@@ -2598,7 +2596,16 @@ public class OpeningHoursFragment extends DialogFragment {
             }
         }
     }
-
+    
+    SetTimeRangeListener realSetTimeRangeListener = null;
+    
+    @Override
+    public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+        if (realSetTimeRangeListener!= null) {
+            realSetTimeRangeListener.setTimeRange(startHour, startMinute, endHour, endMinute);
+        }
+    }
+    
     /**
      * Add a menu item that displays a number picker for times
      * 
@@ -2613,42 +2620,36 @@ public class OpeningHoursFragment extends DialogFragment {
                 int start = ts.getStart();
                 int end = ts.getEnd();
                 if (ts.getStartEvent() == null && ts.getEndEvent() == null && end >= 0) { // t-t, t-x
-                    TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60, end / 60, end % 60,
-                            new SetTimeRangeListener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
-                                    ts.setStart(startHour * 60 + startMinute);
-                                    ts.setEnd(endHour * 60 + endMinute);
-                                    updateString();
-                                    watcher.afterTextChanged(null);
-                                }
-                            });
+                    realSetTimeRangeListener = new SetTimeRangeListener() {
+                        @Override
+                        public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+                            ts.setStart(startHour * 60 + startMinute);
+                            ts.setEnd(endHour * 60 + endMinute);
+                            updateString();
+                            watcher.afterTextChanged(null);
+                        }
+                    };
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60);
                 } else if (ts.getStartEvent() == null && (ts.getEndEvent() != null || end < 0)) { // t, t-, t-e
-                    TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60,
-                            new SetTimeRangeListener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
-                                    ts.setStart(startHour * 60 + startMinute);
-                                    updateString();
-                                    watcher.afterTextChanged(null);
-                                }
-                            });
+                    realSetTimeRangeListener = new SetTimeRangeListener() {
+                        @Override
+                        public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+                            ts.setStart(startHour * 60 + startMinute);
+                            updateString();
+                            watcher.afterTextChanged(null);
+                        }
+                    };
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60);
                 } else if (ts.getStartEvent() != null && ts.getEndEvent() == null || end >= 0) { // e-t
-                    TimeRangePicker.showDialog(getActivity(), R.string.time, start / 60, start % 60,
-                            new SetTimeRangeListener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
-                                    ts.setEnd(startHour * 60 + startMinute);
-                                    updateString();
-                                    watcher.afterTextChanged(null);
-                                }
-                            });
+                    realSetTimeRangeListener = new SetTimeRangeListener() {
+                        @Override
+                        public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
+                            ts.setEnd(startHour * 60 + startMinute);
+                            updateString();
+                            watcher.afterTextChanged(null);
+                        }
+                    };
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60);
                 }
                 return true;
             }

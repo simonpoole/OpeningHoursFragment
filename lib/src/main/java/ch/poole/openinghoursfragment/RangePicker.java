@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -51,19 +50,17 @@ public class RangePicker extends DialogFragment {
      * @param max maximum range value
      * @param startCurrent initial start value
      * @param endCurrent initial end value
-     * @param listener listener used to return the chosen values
      */
-    static void showDialog(FragmentActivity activity, int title, int min, int max, int startCurrent, int endCurrent,
-            @NonNull SetRangeListener listener) {
-        dismissDialog(activity);
+    static void showDialog(Fragment parentFragment, int title, int min, int max, int startCurrent, int endCurrent) {
+        dismissDialog(parentFragment);
 
-        FragmentManager fm = activity.getSupportFragmentManager();
-        RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent, listener);
+        FragmentManager fm = parentFragment.getChildFragmentManager();
+        RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent);
         rangePickerFragment.show(fm, TAG);
     }
 
-    private static void dismissDialog(FragmentActivity activity) {
-        FragmentManager fm = activity.getSupportFragmentManager();
+    private static void dismissDialog(Fragment parentFragment) {
+        FragmentManager fm = parentFragment.getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = fm.findFragmentByTag(TAG);
         if (fragment != null) {
@@ -80,11 +77,9 @@ public class RangePicker extends DialogFragment {
      * @param max maximum range value
      * @param startCurrent initial start value
      * @param endCurrent initial end value
-     * @param listener listener used to return the chosen values
      * @return an instance of RangePicker
      */
-    static private RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent,
-            @NonNull SetRangeListener listener) {
+    static private RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent) {
         RangePicker f = new RangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -92,7 +87,6 @@ public class RangePicker extends DialogFragment {
         args.putInt(MAX, max);
         args.putInt(START_CURRENT, startCurrent);
         args.putInt(END_CURRENT, endCurrent);
-        args.putSerializable(LISTENER, listener);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -121,7 +115,7 @@ public class RangePicker extends DialogFragment {
         final int max = getArguments().getInt(MAX);
         int startCurrent = getArguments().getInt(START_CURRENT);
         int endCurrent = getArguments().getInt(END_CURRENT);
-        final SetRangeListener listener = (SetRangeListener) getArguments().getSerializable(LISTENER);
+        final SetRangeListener listener = (SetRangeListener) getParentFragment();
 
         // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());

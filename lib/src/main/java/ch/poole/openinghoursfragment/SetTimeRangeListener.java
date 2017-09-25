@@ -1,14 +1,12 @@
 package ch.poole.openinghoursfragment;
 
-import java.io.Serializable;
-
 /**
  * Interface for listeners that return time values from TimeRangePicker
  * 
  * @author simon
  *
  */
-public interface SetTimeRangeListener extends Serializable {
+public interface SetTimeRangeListener {
     /**
      * Listener for values from DateRangePicker
      * 
