@@ -97,6 +97,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private static final String STYLE_KEY = "style";
 
     private static final String RULE_KEY = "rule";
+    
+    private static final String FRAGMENT_KEY = "fragment";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
@@ -113,6 +115,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private String originalOpeningHoursValue;
 
     private int styleRes = 0;
+
+    /**
+     * If true we use a call back to the parent fragment
+     */
+    private boolean useFragmentCallback;
 
     private ArrayList<Rule> rules;
 
@@ -143,7 +150,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     };
 
     /**
-     * Create a new OpeningHoursFragment
+     * Create a new OpeningHoursFragment with callback to an activity
      * 
      * @param key the key the OH values belongs to
      * @param value the OH value
@@ -159,9 +166,33 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putSerializable(VALUE_KEY, value);
         args.putInt(STYLE_KEY, style);
         args.putInt(RULE_KEY, rule);
+        args.putBoolean(FRAGMENT_KEY, false);
 
         f.setArguments(args);
-        ;
+
+        return f;
+    }
+    
+    /**
+     * Create a new OpeningHoursFragment with callback to a fragment
+     * 
+     * @param key the key the OH values belongs to
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @return an OpeningHoursFragment
+     */
+    static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule) {
+        OpeningHoursFragment f = new OpeningHoursFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_KEY, key);
+        args.putSerializable(VALUE_KEY, value);
+        args.putInt(STYLE_KEY, style);
+        args.putInt(RULE_KEY, rule);
+        args.putBoolean(FRAGMENT_KEY, true);
+
+        f.setArguments(args);
 
         return f;
     }
@@ -170,10 +201,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.d(DEBUG_TAG, "onAttach");
-        try {
-            saveListener = (OnSaveListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnSaveListener");
+        if (!useFragmentCallback) {
+            try {
+                saveListener = (OnSaveListener) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString() + " must implement OnSaveListener");
+            }
         }
     }
 
@@ -204,12 +237,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             openingHoursValue = savedInstanceState.getString(VALUE_KEY);
             originalOpeningHoursValue = savedInstanceState.getString(ORIGINAL_VALUE_KEY);
             styleRes = savedInstanceState.getInt(STYLE_KEY);
+            useFragmentCallback = savedInstanceState.getBoolean(FRAGMENT_KEY);
         } else {
             key = getArguments().getString(KEY_KEY);
             openingHoursValue = getArguments().getString(VALUE_KEY);
             originalOpeningHoursValue = openingHoursValue;
             styleRes = getArguments().getInt(STYLE_KEY);
             initialRule = getArguments().getInt(RULE_KEY);
+            useFragmentCallback = getArguments().getBoolean(FRAGMENT_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
@@ -234,6 +269,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 dismiss();
             }
         });
+        
+        if (useFragmentCallback) {
+            saveListener = (OnSaveListener) getParentFragment();
+        }
 
         saveButton = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);
         enableSaveButton(openingHoursValue);

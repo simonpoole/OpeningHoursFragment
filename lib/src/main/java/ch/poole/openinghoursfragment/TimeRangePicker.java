@@ -25,8 +25,6 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 public class TimeRangePicker extends DialogFragment {
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
-    private static final String LISTENER = "listener";
-
     private static final String TITLE = "title";
 
     private static final String START_HOUR = "startHour";

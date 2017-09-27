@@ -9,12 +9,28 @@ Please see the [end user documentation](lib/documentation/docs/help/en/Opening%2
 
 ## Usage
 
+### From a FragmentActivity
+
 ``` java
+    FragmentManager fm = getSupportFragmentManager();
+    ...
 	OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance(key,finalValue, R.style.Theme_AppCompat_Light_Dialog_Alert, -1);
 	openingHoursDialog.show(fm, "fragment_opening_hours");
 ```
 
 The calling activity needs to implement ch.poole.openinghoursfragement.OnSaveListener which will be used when the user saves a OH value. Have a look at the test app for a working trivial example.
+
+### From a Fragment
+
+``` java
+    FragmentManager fm = getChildFragmentManager();
+    ...
+	OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstanceForFragment(key,finalValue, R.style.Theme_AppCompat_Light_Dialog_Alert, -1);
+	openingHoursDialog.show(fm, "fragment_opening_hours");
+```
+
+The calling Fragment needs to implement ch.poole.openinghoursfragement.OnSaveListener which will be used when the user saves a OH value. Have a look at the test app for a working trivial example.
+
 
 ## Including in your project
 
