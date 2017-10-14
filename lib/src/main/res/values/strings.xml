@@ -11,7 +11,7 @@
     <string name="add_rule_closed_on_holidays">Add rule for holidays</string>
     <string name="load_template">Load template</string>
     <string name="save_to_template">Save to template</string>
-    <string name="manage_template">Manage template</string>
+    <string name="manage_templates">Manage templates</string>
     <string name="refresh">Refresh</string>
     <string name="load_templates_title">Load templates</string>
     <string name="manage_templates_title">Manage templates</string>
@@ -20,21 +20,43 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     
+ <!--	templates -->
     <string name="edit_template">Edit template</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Default:</string>
+    <string name="key_legend">Key:</string>
     
     <string name="is_default">%1$s (default)</string>
     
+     <string-array name="key_values" translatable="false">
+  	    <item></item>
+  	    <item>opening_hours</item>
+  	    <item>service_times</item>
+  	    <item>collection_times</item>
+  	</string-array>
+  	
+  	<string name="all_keys">All</string>
+  	<string name="opening_hours_key">Opening hours</string>
+  	<string name="service_times_key">Service times</string>
+  	<string name="collection_times_key">Collection times</string>
+  	<string-array name="key_entries" translatable="false">
+  	    <item>@string/all_keys</item>
+  	    <item>@string/opening_hours_key</item>
+  	    <item>@string/service_times_key</item>
+  	    <item>@string/collection_times_key</item>
+  	</string-array>
+  	
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Weekdays with lunch break</string>
+	<string name="weekdays">Weekdays</string>
+	<string name="collection_times_weekdays">Once per weekday</string>
+    
+<!--	 -->
     <string name="group_header">Group %1$s</string>
     <string name="rule_header">Rule %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Loaded default template</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Weekdays with lunch break</string>
-	<string name="weekdays">Weekdays</string>
     
 <!--    menu items -->
 	<string name="Delete">Delete</string>

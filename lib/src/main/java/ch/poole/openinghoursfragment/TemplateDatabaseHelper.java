@@ -9,7 +9,7 @@ import android.util.Log;
 public class TemplateDatabaseHelper extends SQLiteOpenHelper {
     private static final String DEBUG_TAG = "TemplateDatabase";
     private static final String DATABASE_NAME = "openinghours_templates";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private final Context context;
 
@@ -21,11 +21,12 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL("CREATE TABLE templates (name TEXT, is_default INTEGER DEFAULT 0, template TEXT DEFAULT '')");
-            TemplateDatabase.add(db, context.getString(R.string.weekdays_with_lunch), true,
+            db.execSQL("CREATE TABLE templates (key TEXT DEFAULT NULL, name TEXT, is_default INTEGER DEFAULT 0, template TEXT DEFAULT '')");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_with_lunch), true,
                     "Mo-Fr 09:00-12:00,13:30-18:30;Sa 09:00-17:00;PH closed");
-            TemplateDatabase.add(db, context.getString(R.string.weekdays), false,
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays), false,
                     "Mo-Fr 09:00-18:30;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, "collection_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed");
         } catch (SQLException e) {
             Log.w(DEBUG_TAG, "Problem creating database", e);
         }
@@ -34,5 +35,9 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(DEBUG_TAG, "Upgrading database from version " + oldVersion + " to " + newVersion);
+        if (oldVersion <= 1 && newVersion >= 2) {
+            db.execSQL("ALTER TABLE templates ADD COLUMN key TEXT DEFAULT NULL");
+            TemplateDatabase.add(db, "collection_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed");
+        }
     }
 }
