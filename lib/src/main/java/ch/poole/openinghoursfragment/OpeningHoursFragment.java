@@ -1337,7 +1337,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     }
                 }
-                setWeekDayListeners(weekDayContainerNth, days, withNth, true, nthMenuItem);
+                List<WeekDayRange> inContainer = new ArrayList<WeekDayRange>();
+                inContainer.add(d);
+                setWeekDayListeners(weekDayContainerNth, days, inContainer, true, nthMenuItem);
                 setNthListeners(nthContainer, d);
                 weekDayRowNth.addView(nthLayout);
                 menu = addStandardMenuItems(weekDayRowNth, new Delete() {
@@ -2975,7 +2977,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (justOne) { // Nth exists
                     if (isChecked) {
-                        WeekDayRange range = days.get(0);
+                        WeekDayRange range = inContainer.get(0);
                         for (int i = 0; i < container.getChildCount(); i++) {
                             final View c = container.getChildAt(i);
                             if ((c instanceof CheckBox || c instanceof AppCompatCheckBox) && !c.equals(buttonView)) {

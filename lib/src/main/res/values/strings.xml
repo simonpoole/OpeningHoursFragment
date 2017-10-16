@@ -145,6 +145,8 @@
   	<string name="public_holidays">Public holidays</string>
   	<string name="school_holidays">School holidays</string>
   	
+  	<string name="occurrence_in_month_title">Occurrence in month</string>
+  	
   	<string name="oh_monday" translatable="false">Mo</string>
   	<string name="oh_tuesday" translatable="false">Tu</string>
   	<string name="oh_wednesday" translatable="false">We</string>
