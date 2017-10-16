@@ -56,7 +56,7 @@ public class DateRangePicker extends DialogFragment {
 
     private static final String DEBUG_TAG = DateRangePicker.class.getSimpleName();
 
-    private static final String TAG = "fragment_datepicker";
+    private static final String TAG = "fragment_daterangepicker";
 
     /**
      * Show the DateRangePicker dialog
