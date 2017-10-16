@@ -3086,12 +3086,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     final View c = container.getChildAt(i);
                     if (c instanceof CheckBox || c instanceof AppCompatCheckBox) {
                         if (((CheckBox) c).isChecked()) {
+                            int nth = Integer.parseInt((String) c.getTag());
                             if (range == null) {
                                 range = new Nth();
-                                range.setStartNth(Integer.parseInt((String) c.getTag()));
+                                range.setStartNth(nth);
                                 nths.add(range);
-                            } else {
-                                range.setEndNth(Integer.parseInt((String) c.getTag()));
+                            } else { // don't mix pos and neg valus
+                                if (Integer.signum(nth) !=  Integer.signum(range.getStartNth())) {
+                                    range = new Nth();
+                                    range.setStartNth(nth);
+                                    nths.add(range);
+                                } else {
+                                    range.setEndNth(nth);
+                                }
                             }
                         } else {
                             range = null;
