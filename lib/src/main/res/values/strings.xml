@@ -19,6 +19,8 @@
     <string name="update_template">Update template value too?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="Start">Start</string>
+    <string name="End">End</string>
     
  <!--	templates -->
     <string name="edit_template">Edit template</string>
