@@ -34,7 +34,7 @@ class TemplateDatabase {
     public static String getDefault(@NonNull SQLiteDatabase database, @Nullable String key) {
         String result = null;
         Cursor dbresult = database.query(TEMPLATES_TABLE, new String[] { TEMPLATE_FIELD },
-                DEFAULT_FIELD + " = 1 AND " + KEY_FIELD + " = " + (key==null ? "NULL" : "'" + key + "'") , null, null, null, null);
+                DEFAULT_FIELD + " = 1 AND " + KEY_FIELD + (key==null ? " is NULL" : " = '" + key + "'") , null, null, null, null);
         dbresult.moveToFirst();
         if (dbresult.getCount() >= 1) {
             result = dbresult.getString(0);
