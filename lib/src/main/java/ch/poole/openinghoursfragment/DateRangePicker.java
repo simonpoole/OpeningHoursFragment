@@ -374,8 +374,8 @@ public class DateRangePicker extends DialogFragment {
                 VarDate startVarDateValue = getVarDateValue(npvStartVarDate);
                 VarDate endVarDateValue = getVarDateValue(npvEndVarDate);
 
-                listener.setDateRange(startYearValue, startMonthValue, startDayValue, startVarDateValue, endYearValue,
-                        endMonthValue, endDayValue, endVarDateValue);
+                listener.setDateRange(startYearValue, startMonthValue, null, startDayValue, startVarDateValue, 
+                                      endYearValue, endMonthValue, null, endDayValue, endVarDateValue);
             }
 
             private Month getMonthValue(final NumberPickerView npvMonth) {

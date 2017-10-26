@@ -162,8 +162,9 @@
 				android:id="@+id/startDate"
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
-    			android:layout_toRightOf="@id/startOffsetType"
-    			android:layout_alignBottom="@id/startOffsetType"
+    			android:layout_alignParentLeft="true"
+    			android:layout_below="@id/startOffsetType"
+    			android:layout_marginTop="12dp"
 				>
             	<TextView
                 	android:id="@+id/startYear"
@@ -191,6 +192,12 @@
             		android:textColor="?attr/colorAccent"
             		android:text=" - " />
             	<TextView
+            		android:id="@+id/startWeekday"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
+            		android:minEms="1" />
+            	<TextView
                 	android:id="@+id/startMonthDay"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
@@ -204,9 +211,7 @@
            			android:tint="?attr/colorAccent"
            			android:src="@drawable/ic_action_edit_holo_light"/>
 			</LinearLayout>
-			
-
-           		
+			         		
            	<LinearLayout
  				android:id="@+id/start_offset_container"
  				android:layout_width="wrap_content"
@@ -386,8 +391,10 @@
 				android:id="@+id/endDate"
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
-    			android:layout_toRightOf="@id/endOffsetType"
-    			android:layout_alignBottom="@id/endOffsetType"
+    			android:layout_alignParentLeft="true"
+    			android:layout_below="@id/endOffsetType"
+    			android:layout_marginTop="12dp"
+    			android:layout_marginBottom="12dp"
 				>
             	<TextView
                 	android:id="@+id/endYear"
@@ -414,6 +421,12 @@
             		android:layout_height="wrap_content"
             		android:textColor="?attr/colorAccent"
             		android:text=" - " />
+            	<TextView
+            		android:id="@+id/endWeekday"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:textColor="?attr/colorAccent"
+            		android:minEms="1" />
             	<TextView
                 	android:id="@+id/endMonthDay"
                 	android:layout_width="wrap_content"

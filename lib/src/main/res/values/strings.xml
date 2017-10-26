@@ -66,6 +66,7 @@
 	<string name="add_year_range">Add year range</string>
 	<string name="add_week_range">Add week range</string>
 	<string name="add_holiday">Add holiday</string>
+	
     <string name="timespan_menu">Add time span ...</string>
     <string name="time_time">Time - time</string>
     <string name="time_extended_time">Time - extended time</string>
@@ -78,15 +79,25 @@
     <string name="variable_time">Variable time</string>
     <string name="variable_time_open_end">Variable time-open end</string>
     <string name="start_at_midnight">Start at midnight</string>
+    
     <string name="week_day_range">Add week day range</string>
     <string name="occurrence_in_month">Add occurrence in month</string>
+    
     <string name="daterange_menu">Add date range ...</string>
     <string name="date_date">Date - date</string>
     <string name="variable_date_date">Variable date - date</string>
     <string name="date_variable_date">Date - variable date</string>
     <string name="variable_date_variable_date">Variable date - variable date</string>
+    <string name="occurrence_occurrence">Occurrence in month - occurrence in month</string>
+    <string name="occurrence_date">Occurrence in month - date</string>
+    <string name="date_occurrence">Date - occurrence in month</string>
+    <string name="occurrence_variable_date">Occurrence in month - variable date</string>
+    <string name="variable_date_occurrence">Variable date - occurrence in month</string>
+    
     <string name="date_open_end">Date - open end</string>
     <string name="variable_date_open_end">Variable date - open end</string>
+    <string name="occurrence_open_end">Occurrence in month - open end</string>
+
     <string name="with_offsets">With offsets...</string>
     <string name="rule_type">Show rule type</string>
     <string name="move_up">Move up</string>
@@ -116,6 +127,7 @@
     
     <string name="date_range">Date range</string>
     <string name="date">Date</string>
+    <string name="date_weekday_occurrence">Date (weekday in month)</string>
     <string name="week_range">Week range</string>
     <string name="weeks">Weeks</string>
     <string name="year_range">Year range</string>
@@ -232,6 +244,16 @@
   	    <item>@string/oh_october</item>
   	    <item>@string/oh_november</item>
   	    <item>@string/oh_december</item>
+  	</string-array>
+  	
+  	<string-array name="weekdays_entries" translatable="false">
+  	    <item>@string/monday_short</item>
+  	    <item>@string/tuesday_short</item>
+  	    <item>@string/wednesday_short</item>
+  	    <item>@string/thursday_short</item>
+  	    <item>@string/friday_short</item>
+  	    <item>@string/saturday_short</item>
+        <item>@string/sunday_short</item>
   	</string-array>
   	
   	<string-array name="weekdays" translatable="false">
