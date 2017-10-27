@@ -8,27 +8,30 @@
     <string name="add_rule_closed_on_holidays">Aggiungi regola per le festività</string>
     <string name="load_template">Carica modello</string>
     <string name="save_to_template">Salva come modello</string>
-    <string name="manage_template">Gestisci modello</string>
+    <string name="manage_templates">Gestisci modelli</string>
     <string name="refresh">Ricarica</string>
     <string name="load_templates_title">Carica modelli</string>
     <string name="manage_templates_title">Gestisci modelli</string>
     <string name="save_template">Salva modello</string>
     <string name="Yes">Sì</string>
     <string name="No">No</string>
+    <string name="End">Fine</string>
     
+ <!--	templates -->
     <string name="edit_template">Modifica modello</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Predefinito:</string>
-    
     <string name="is_default">%1$s (predefinito)</string>
     
+     <string name="all_keys">Tutto</string>
+  	<string name="opening_hours_key">Orari di apertura</string>
+  	<string name="weekdays">Giorni della settimana</string>
+	<!--	 -->
     <string name="group_header">Gruppo %1$s</string>
     <string name="rule_header">Regola %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Caricato il modello predefinito</string>
-    
-<string name="weekdays">Giorni della settimana</string>
     
 <!--    menu items -->
 	<string name="Delete">Elimina</string>
@@ -36,7 +39,9 @@
 	<string name="add_year_range">Aggiungi intervallo annuale</string>
 	<string name="add_week_range">Aggiungi intervallo settimanale</string>
 	<string name="add_holiday">Aggiungi festività</string>
+	
     <string name="start_at_midnight">Inizia a mezzanotte</string>
+    
     <string name="move_up">Sposta su</string>
     <string name="move_down">Sposta giù</string>
     <string name="ticks_15_minute">Passa a scatti di 15 minuti</string>

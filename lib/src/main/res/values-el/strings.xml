@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">Ναι</string>
+    <string name="No">Όχι</string>
+    <string name="all_keys">Όλα</string>
+  	<!--    menu items -->
+	<string name="Delete">Διαγραφή </string>
+	<string name="closed">κλειστό</string>
+  	<string name="unknown">άγνωστη</string>
+    
+  	</resources>

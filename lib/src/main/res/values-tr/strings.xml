@@ -12,12 +12,14 @@
     <string name="save_template">Şablonu kaydet </string>
     <string name="Yes">Evet</string>
     <string name="No">Hayır</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Şablonu düzenle</string>
     <string name="name_legend">İsim:</string>
     <string name="default_legend">Varsayılan:</string>
-    
-    <string name="closed">kapalı</string>
+    <string name="all_keys">Tüm</string>
+  	<string name="closed">kapalı</string>
   	<string name="unknown">bilinmeyen</string>
     
   	</resources>

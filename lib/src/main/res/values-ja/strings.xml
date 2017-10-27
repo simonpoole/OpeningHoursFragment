@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">中古品の取り扱いあり</string>
+    <string name="No">中古品の取り扱いなし</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">すべて</string>
+  	<!--    menu items -->
+	<string name="Delete">Delete</string>
+	<string name="closed">閉店中</string>
+  	<string name="unknown">不明</string>
+    
+  	</resources>

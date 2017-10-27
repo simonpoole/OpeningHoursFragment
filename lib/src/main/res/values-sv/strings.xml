@@ -7,35 +7,39 @@
     <string name="add_rule_247">Lägg till regel för 24/7</string>
     <string name="load_template">Ladda mall</string>
     <string name="save_to_template">Spara till mall</string>
-    <string name="manage_template">Hantera mall</string>
+    <string name="manage_templates">Hantera mallar</string>
     <string name="refresh">Uppdatera</string>
     <string name="load_templates_title">Ladda mallar</string>
     <string name="manage_templates_title">Hantera mallar</string>
     <string name="save_template">Spara mall</string>
     <string name="Yes">Ja</string>
     <string name="No">Nej</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Redigera mall</string>
     <string name="name_legend">Namn:</string>
     <string name="default_legend">Standard:</string>
-    
     <string name="is_default">%1$s(standard)</string>
     
+     <string name="all_keys">Alla</string>
+  	<string name="opening_hours_key">Öppettider</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
+	<string name="weekdays">Veckodagar</string>
+	<!--	 -->
     <string name="group_header">Grupp %1$s</string>
     <string name="rule_header">Regel %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Laddat standardmall</string>
     
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
-	<string name="weekdays">Veckodagar</string>
-    
 <!--    menu items -->
 	<string name="Delete">Ta bort</string>
 	<string name="add_year_range">Lägg till årsspann</string>
 	<string name="add_week_range">Lägg till veckospann</string>
 	<string name="add_holiday">Lägg till helg</string>
+	
     <string name="timespan_menu">Lägg till tidsspann...</string>
     <string name="time_time">Tid - tid</string>
     <string name="time_extended_time">Tid - utökad tid</string>
@@ -45,6 +49,7 @@
     <string name="time">Tid</string>
     <string name="variable_time">Variabel tid</string>
     <string name="start_at_midnight">Börjar vid midnatt</string>
+    
     <string name="daterange_menu">Lägg till datumspann...</string>
     <string name="date_date">Datum - datum</string>
     <string name="variable_date_date">Variabelt datum - datum</string>

@@ -8,7 +8,7 @@
     <string name="add_rule_closed_on_holidays">Engadir regra para vacacións</string>
     <string name="load_template">Cargar plantilla</string>
     <string name="save_to_template">Gardar a plantilla</string>
-    <string name="manage_template">Manexar plantilla</string>
+    <string name="manage_templates">Manexar plantillas</string>
     <string name="refresh">Actualizar</string>
     <string name="load_templates_title">Cargar plantillas</string>
     <string name="manage_templates_title">Manexar plantillas</string>
@@ -16,22 +16,26 @@
     <string name="update_template">Actualizar tamén o valor da plantilla?</string>
     <string name="Yes">Si</string>
     <string name="No">Non</string>
+    <string name="End">Fin</string>
     
+ <!--	templates -->
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Por defecto:</string>
-    
     <string name="is_default">%1$s (por defecto)</string>
     
+     <string name="all_keys">Todos</string>
+  	<string name="opening_hours_key">Horario de apertura</string>
+  	<string name="collection_times_key">Tempos de recollida</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Días laborables con xantar</string>
+	<string name="weekdays">Días da semana</string>
+	<!--	 -->
     <string name="group_header">Grupo %1$s</string>
     <string name="rule_header">Norma %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Cargar plantilla por defecto</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Días laborables con xantar</string>
-	<string name="weekdays">Días da semana</string>
     
 <!--    menu items -->
 	<string name="Delete">Borrar</string>
@@ -39,6 +43,7 @@
 	<string name="add_year_range">Engadir rango anual</string>
 	<string name="add_week_range">Engadir rango semanal</string>
 	<string name="add_holiday">Engadir vacacións</string>
+	
     <string name="timespan_menu">Engade intervalo de tempo...</string>
     <string name="time_time">Hora - hora</string>
     <string name="time_extended_time">Hora - hora estendida</string>
@@ -51,8 +56,10 @@
     <string name="variable_time">Hora variable</string>
     <string name="variable_time_open_end">Hora variable - fin indefinido</string>
     <string name="start_at_midnight">Comeza a media noite</string>
+    
     <string name="week_day_range">Engade un intervalo de días semanais</string>
     <string name="occurrence_in_month">Engadir ocorrencia no mes</string>
+    
     <string name="daterange_menu">Engadir intervalo de datas...</string>
     <string name="date_date">Data - data</string>
     <string name="variable_date_date">Data variable - data</string>

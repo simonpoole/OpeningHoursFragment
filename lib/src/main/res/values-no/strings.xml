@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">Ja</string>
+    <string name="No">Nei</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">Alle</string>
+  	<!--    menu items -->
+	<string name="Delete">Slett</string>
+	<string name="closed">lukket</string>
+  	<string name="unknown">ukjent</string>
+    
+  	</resources>

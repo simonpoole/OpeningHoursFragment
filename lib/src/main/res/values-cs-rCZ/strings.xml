@@ -8,7 +8,7 @@
     <string name="add_rule_closed_on_holidays">Přidat pravidlo pro svátky</string>
     <string name="load_template">Načíst předlohu</string>
     <string name="save_to_template">Uložit jako předlohu</string>
-    <string name="manage_template">Spravovat šablonu</string>
+    <string name="manage_templates">Spravovat šablony</string>
     <string name="refresh">Obnovit</string>
     <string name="load_templates_title">Načíst předlohy</string>
     <string name="manage_templates_title">Spravovat šablony</string>
@@ -16,20 +16,23 @@
     <string name="update_template">Aktualizovat i hodnotu šablony?</string>
     <string name="Yes">Ano</string>
     <string name="No">Ne</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>
     <string name="default_legend">Výchozí:</string>
-    
+    <string name="all_keys">Všem</string>
+  	<string name="opening_hours_key">Otevírací hodiny</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
+	<string name="weekdays">Pracovní dny</string>
+	<!--	 -->
     <string name="group_header">Skupina %1$s</string>
     <string name="rule_header">Pravidlo %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Nahrát defaultní předlohu</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
-	<string name="weekdays">Pracovní dny</string>
     
 <!--    menu items -->
 	<string name="Delete">Smazat</string>
@@ -37,6 +40,7 @@
 	<string name="add_year_range">Přidat rozsah let</string>
 	<string name="add_week_range">Přidat rozsah týdnů</string>
 	<string name="add_holiday">Přidat prázdniny</string>
+	
     <string name="timespan_menu">Přidat rozpětí času ...</string>
     <string name="time_time">Čas - čas</string>
     <string name="time">Čas</string>

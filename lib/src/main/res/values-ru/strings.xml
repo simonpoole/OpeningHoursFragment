@@ -7,43 +7,48 @@
     <string name="add_rule_247">Добавить правило 24/7</string>
     <string name="load_template">Загрузить шаблон</string>
     <string name="save_to_template">Сохранить как шаблон</string>
-    <string name="manage_template">Управлять шаблоном</string>
+    <string name="manage_templates">Управлять шаблонами</string>
     <string name="refresh">Обновить</string>
     <string name="load_templates_title">Загрузить шаблоны</string>
     <string name="manage_templates_title">Управлять шаблонами</string>
     <string name="save_template">Сохранить шаблон</string>
     <string name="Yes">Да</string>
     <string name="No">Нет</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Редактировать шаблон</string>
     <string name="name_legend">Название:</string>
     <string name="default_legend">По умолчанию:</string>
-    
     <string name="is_default">%1$s(по умолчанию)</string>
     
+     <string name="all_keys">Всем</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
+	<string name="weekdays">Будние дни</string>
+	<!--	 -->
     <string name="group_header">Группа %1$s</string>
     <string name="rule_header">Правило %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Загрузить стандартный шаблон</string>
     
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
-	<string name="weekdays">Будние дни</string>
-    
 <!--    menu items -->
 	<string name="Delete">Удалить</string>
 	<string name="add_year_range">Добавить диапазон лет</string>
 	<string name="add_week_range">Добавить диапазон недель</string>
 	<string name="add_holiday">Добавить праздник</string>
+	
     <string name="timespan_menu">Добавить промежуток времени...</string>
     <string name="time_time">Время - время</string>
     <string name="variable_time_time">Варьируещeеся время - время</string>
     <string name="time">Время</string>
     <string name="variable_time_open_end">Варьируещeеся время - неокончательное</string>
     <string name="start_at_midnight">Начинается в полночь</string>
+    
     <string name="week_day_range">Добавить диапазон дней недели</string>
     <string name="occurrence_in_month">Добавить месячное расписание</string>
+    
     <string name="daterange_menu">Добавить диапазон дат...</string>
     <string name="date_date">Дата - дата</string>
     <string name="date_open_end">Дата - некончательная</string>

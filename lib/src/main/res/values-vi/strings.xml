@@ -7,29 +7,32 @@
     <string name="add_rule_247">Thêm quy tắc 24/7</string>
     <string name="load_template">Tải bản mẫu</string>
     <string name="save_to_template">Lưu bản mẫu</string>
-    <string name="manage_template">Quản lý bản mẫu</string>
+    <string name="manage_templates">Quản lý các bản mẫu</string>
     <string name="refresh">Làm mới</string>
     <string name="load_templates_title">Tải các bản mẫu</string>
     <string name="manage_templates_title">Quản lý các bản mẫu</string>
     <string name="save_template">Lưu bản mẫu</string>
     <string name="Yes">Có Bán</string>
     <string name="No">Không Bán</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Sửa đổi bản mẫu</string>
     <string name="name_legend">Tên:</string>
     <string name="default_legend">Mặc định:</string>
-    
     <string name="is_default">%1$s (mặc định)</string>
     
+     <string name="all_keys">Tất cả</string>
+  	<string name="opening_hours_key">Giờ mở cửa</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Ngày thường trừ bữa trưa</string>
+	<string name="weekdays">Ngày thường</string>
+	<!--	 -->
     <string name="group_header">Nhóm %1$s</string>
     <string name="rule_header">Quy tắc %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Đã tải bản mẫu mặc định</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Ngày thường trừ bữa trưa</string>
-	<string name="weekdays">Ngày thường</string>
     
 <!--    menu items -->
 	<string name="Delete">Xóa</string>
@@ -37,6 +40,7 @@
 	<string name="add_year_range">Thêm khoảng năm</string>
 	<string name="add_week_range">Thêm khoảng tuần</string>
 	<string name="add_holiday">Thêm ngày lễ</string>
+	
     <string name="timespan_menu">Thêm khoảng thời gian…</string>
     <string name="time_time">Giờ – giờ</string>
     <string name="time_extended_time">Giờ – giờ mở rộng</string>
@@ -49,8 +53,10 @@
     <string name="variable_time">Giờ thay đổi</string>
     <string name="variable_time_open_end">Giờ thay đổi – vô hạn</string>
     <string name="start_at_midnight">Bắt đầu nửa đêm</string>
+    
     <string name="week_day_range">Thêm khoảng ngày thường</string>
     <string name="occurrence_in_month">Thêm lần trong tháng</string>
+    
     <string name="daterange_menu">Thêm khoảng thời gian…</string>
     <string name="date_date">Ngày tháng – ngày tháng</string>
     <string name="variable_date_date">Ngày tháng thay đổi – ngày tháng</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">Sí</string>
+    <string name="No">No</string>
+    <string name="End">Fin</string>
+    
+ <string name="all_keys">Todo</string>
+  	<string name="opening_hours_key">Horarios de apertura</string>
+  	<string name="collection_times_key">Tiempos de recogida</string>
+  	<string name="closed">cerrada</string>
+  	<string name="unknown">desconocida</string>
+    
+  	</resources>

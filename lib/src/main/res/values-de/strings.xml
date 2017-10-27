@@ -11,7 +11,7 @@
     <string name="add_rule_closed_on_holidays">Regel für einen Feiertag hinzufügen</string>
     <string name="load_template">Vorlage laden</string>
     <string name="save_to_template">In Vorlage speichern</string>
-    <string name="manage_template">Vorlage verwalten</string>
+    <string name="manage_templates">Vorlagen verwalten</string>
     <string name="refresh">Aktualisieren</string>
     <string name="load_templates_title">Vorlage laden</string>
     <string name="manage_templates_title">Vorlagen verwalten</string>
@@ -19,22 +19,32 @@
     <string name="update_template">Vorlage auch ändern?</string>
     <string name="Yes">Ja</string>
     <string name="No">Nein</string>
+    <string name="Start">Start</string>
+    <string name="End">Ende</string>
     
+ <!--	templates -->
     <string name="edit_template">Vorlage ändern</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Standard:</string>
+    <string name="key_legend">Schlüssel:</string>
     
     <string name="is_default">%1$s (standard)</string>
     
+     <string name="all_keys">Alle</string>
+  	<string name="opening_hours_key">Öffnungszeiten</string>
+  	<string name="service_times_key">Betriebszeiten</string>
+  	<string name="collection_times_key">Leerungszeiten</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Wochentage mit Mittagspause</string>
+	<string name="weekdays">Wochentage</string>
+	<string name="collection_times_weekdays">Einmal pro Wochentag</string>
+    
+<!--	 -->
     <string name="group_header">Gruppe %1$s</string>
     <string name="rule_header">Regel %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Standard Vorlage geladen</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Wochentage mit Mittagspause</string>
-	<string name="weekdays">Wochentage</string>
     
 <!--    menu items -->
 	<string name="Delete">Löschen</string>
@@ -42,6 +52,7 @@
 	<string name="add_year_range">Jahresbereich hinzufügen</string>
 	<string name="add_week_range">Wochenbereich hinzufügen</string>
 	<string name="add_holiday">Feiertag hinzufügen</string>
+	
     <string name="timespan_menu">Zeitspanne hinzufügen ...</string>
     <string name="time_time">Zeitpunkt - Zeitpunkt</string>
     <string name="time_extended_time">Zeitpunkt - erweiterter Zeitpunkt</string>
@@ -54,15 +65,25 @@
     <string name="variable_time">Ereignis</string>
     <string name="variable_time_open_end">Ab Ereignis</string>
     <string name="start_at_midnight">Um Mitternacht beginnen</string>
+    
     <string name="week_day_range">Wochentagsbereich hinzufügen</string>
     <string name="occurrence_in_month">Vorkommen im Monat</string>
+    
     <string name="daterange_menu">Datumsbereiche hinzufügen...</string>
     <string name="date_date">Datum - Datum</string>
     <string name="variable_date_date">Beweglicher Feiertag - Datum</string>
     <string name="date_variable_date">Datum - beweglicher Feiertag</string>
     <string name="variable_date_variable_date">Beweglicher Feiertag - beweglicher Feiertag</string>
+    <string name="occurrence_occurrence">Vorkommen im Monat - Vorkommen im Monat </string>
+    <string name="occurrence_date">Vorkommen im Monat  - Datum</string>
+    <string name="date_occurrence">Datum - Vorkommen im Monat </string>
+    <string name="occurrence_variable_date">Vorkommen im Monat - beweglicher Feiertag</string>
+    <string name="variable_date_occurrence">Beweglicher Feiertag - Vorkommen im Monat </string>
+    
     <string name="date_open_end">Ab Datum</string>
     <string name="variable_date_open_end">Ab beweglicher Feiertag</string>
+    <string name="occurrence_open_end">Ab Vorkommen im Monat </string>
+
     <string name="with_offsets">Mit Verschiebungen...</string>
     <string name="rule_type">Regeltyp anzeigen</string>
     <string name="move_up">Nach oben verschieben</string>
@@ -92,6 +113,7 @@
     
     <string name="date_range">Datumsbereich</string>
     <string name="date">Datum</string>
+    <string name="date_weekday_occurrence">Datum (Wochentag im Monat)</string>
     <string name="week_range">Wochenbereich</string>
     <string name="weeks">Wochen</string>
     <string name="year_range">Jahresbereich</string>
@@ -109,12 +131,14 @@
     <string name="easter">Ostern</string>
     
     <string name="sunrise">Sonnenaufgang</string>
-  	<string name="sunset">Sonnenaufgang</string>
+  	<string name="sunset">Sonnenuntergang</string>
   	<string name="dawn">Morgengrauen</string>
   	<string name="dusk">Dämmerung</string>
   	
   	<string name="public_holidays">Öffentliche Feiertage</string>
   	<string name="school_holidays">Schulferien</string>
+  	
+  	<string name="occurrence_in_month_title">Vorkommen im Monat</string>
   	
   	<string name="monday_short">Mo</string>
   	<string name="tuesday_short">Di</string>

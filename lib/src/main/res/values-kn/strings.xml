@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Yes">ಹೌದು</string>
+    <string name="No">ಇಲ್ಲ</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">‍ಎಲ್ಲಾ</string>
+  	<!--    menu items -->
+	<string name="Delete">Delete</string>
+	<string name="closed">‍ಮುಚ್ಚಿದ</string>
+  	</resources>

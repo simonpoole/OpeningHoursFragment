@@ -7,29 +7,32 @@
     <string name="add_rule_247">為24/7增加規則</string>
     <string name="load_template">載入模版</string>
     <string name="save_to_template">儲存到模版</string>
-    <string name="manage_template">管理模版</string>
+    <string name="manage_templates">管理模版</string>
     <string name="refresh">重整</string>
     <string name="load_templates_title">載入模版</string>
     <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
     <string name="Yes">可以</string>
     <string name="No">不行</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">編輯模版</string>
     <string name="name_legend">名稱：</string>
     <string name="default_legend">預設：</string>
-    
     <string name="is_default">%1$s (預設)</string>
     
+     <string name="all_keys">全部</string>
+  	<string name="opening_hours_key">營業時間 </string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">平日午餐休息</string>
+	<string name="weekdays">平日</string>
+	<!--	 -->
     <string name="group_header">群組 %1$s</string>
     <string name="rule_header">規則 %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">已載入預設模版</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">平日午餐休息</string>
-	<string name="weekdays">平日</string>
     
 <!--    menu items -->
 	<string name="Delete">刪除</string>
@@ -37,6 +40,7 @@
 	<string name="add_year_range">增加年間範圍</string>
 	<string name="add_week_range">增加週間範圍</string>
 	<string name="add_holiday">增加節日</string>
+	
     <string name="timespan_menu">增加時間跨度 ...</string>
     <string name="time_time">時間 - 時段</string>
     <string name="time_extended_time">時間 - 延長時段</string>
@@ -49,8 +53,10 @@
     <string name="variable_time">各個時段</string>
     <string name="variable_time_open_end">各個開放時段結束</string>
     <string name="start_at_midnight">午夜開始</string>
+    
     <string name="week_day_range">增加週間範圍</string>
     <string name="occurrence_in_month">增加月份中的出現機會</string>
+    
     <string name="daterange_menu">增加日期範圍...</string>
     <string name="date_date">期間 - 期間</string>
     <string name="variable_date_date">夑動日期 - 日期</string>

@@ -9,7 +9,7 @@
     <string name="add_rule_closed_on_holidays">Adicionar regra para feriados</string>
     <string name="load_template">Carregar modelo</string>
     <string name="save_to_template">Gravar no modelo</string>
-    <string name="manage_template">Gerir modelo</string>
+    <string name="manage_templates">Gerir modelos</string>
     <string name="refresh">Atualizar</string>
     <string name="load_templates_title">Carregar modelos</string>
     <string name="manage_templates_title">Gerir modelos</string>
@@ -17,28 +17,35 @@
     <string name="update_template">Atualizar também o valor do modelo?</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>
-    
     <string name="is_default">%1$s (padrão)</string>
     
+     <string name="all_keys">Tudo</string>
+  	<string name="opening_hours_key">Horário de abertura</string>
+  	<string name="collection_times_key">Horário de recolha</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Dias da semana com pausa para almoço</string>
+	<string name="weekdays">Dias da semana</string>
+	<!--	 -->
     <string name="group_header">Grupo %1$s</string>
     <string name="rule_header">Regra %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Modelo padrão carregado</string>
     
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Dias da semana com pausa para almoço</string>
-	<string name="weekdays">Dias da semana</string>
-    
 <!--    menu items -->
 	<string name="Delete">Eliminar</string>
 	<string name="add_year_range">Adicionar intervalo de anos</string>
 	<string name="add_week_range">Adicionar intervalo de semanas</string>
 	<string name="add_holiday">Adicionar feriado</string>
+	
+    <string name="start_at_midnight">Começar à meia-noite</string>
+    
     <string name="daterange_menu">Adicionar intervalo de datas...</string>
     <string name="date_date">Data - data</string>
     <string name="variable_date_date">Data variável - data</string>
@@ -47,6 +54,7 @@
     <string name="rule_type">Mostrar tipo de regra</string>
     <string name="move_up">Mover para cima</string>
     <string name="move_down">Mover para baixo</string>
+    <string name="show_interval">Mostrar intervalo</string>
     <string name="interval_minutes">Intervalo (minutos)</string>
     <string name="interval_years">Intervalo (anos)</string>
     <string name="interval_weeks">Intervalo (semanas)</string>

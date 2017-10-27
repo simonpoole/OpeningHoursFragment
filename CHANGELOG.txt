@@ -1,5 +1,9 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.2.1: Support "occurrence in month" notation for dates, bug fixes
+
+0.2.0: Support callbacks to a Fragment, support separate templates for the major OH like keys
+
 0.1.12: Show negative day offsets for dates correctly
 
 0.1.11: Don't overwrite invalid strings when adding a rule, try to avoid serialsation issues

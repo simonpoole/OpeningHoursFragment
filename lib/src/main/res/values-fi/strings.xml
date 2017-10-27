@@ -7,29 +7,32 @@
     <string name="add_rule_247">Lisää sääntö 24/7</string>
     <string name="load_template">Lataa malline</string>
     <string name="save_to_template">Tallenna mallineeksi</string>
-    <string name="manage_template">Hallitse mallinetta</string>
+    <string name="manage_templates">Hallitse mallineita</string>
     <string name="refresh">Päivitä</string>
     <string name="load_templates_title">Lataa mallineita</string>
     <string name="manage_templates_title">Hallitse mallineita</string>
     <string name="save_template">Tallenna malline</string>
     <string name="Yes">Kyllä</string>
     <string name="No">Ei</string>
+    <string name="End">End</string>
     
+ <!--	templates -->
     <string name="edit_template">Muokkaa mallinetta</string>
     <string name="name_legend">Nimi:</string>
     <string name="default_legend">Oletus:</string>
-    
     <string name="is_default">%1$s (oletus)</string>
     
+     <string name="all_keys">Kaikki</string>
+  	<string name="opening_hours_key">Aukioloajat</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kera</string>
+	<string name="weekdays">Arkipäivisin</string>
+	<!--	 -->
     <string name="group_header">Ryhmä %1$s</string>
     <string name="rule_header">Sääntö %1$s</string>
     
 <!--	messages -->
     <string name="loaded_default">Oletusmalline ladattiin</string>
-    
-<!--	default template entries -->
-	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kera</string>
-	<string name="weekdays">Arkipäivisin</string>
     
 <!--    menu items -->
 	<string name="Delete">Poista</string>
@@ -37,6 +40,7 @@
 	<string name="add_year_range">Lisää vuosijakso</string>
 	<string name="add_week_range">Lisää viikkojakso</string>
 	<string name="add_holiday">Lisää vapaapäivä</string>
+	
     <string name="timespan_menu">Lisää ajanjakso</string>
     <string name="time_time">Aika–aika</string>
     <string name="time_extended_time">Aika–laajennettu aika</string>
@@ -49,8 +53,10 @@
     <string name="variable_time">Vaihteleva aika</string>
     <string name="variable_time_open_end">Vaihteleva aika, alkaen</string>
     <string name="start_at_midnight">Aloita keskiyöstä</string>
+    
     <string name="week_day_range">Lisää viikonpäiväjakso</string>
     <string name="occurrence_in_month">Lisää tapahtumakerta kuun sisällä </string>
+    
     <string name="daterange_menu">Lisää päivämääräjakso...</string>
     <string name="date_date">Pvm–pvm</string>
     <string name="variable_date_date">Vaihteleva pvm–pvm</string>
