@@ -178,6 +178,15 @@ task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
 	//	options.encoding = 'UTF-8'
 }
 
+task updateTranslations(type: Exec) {
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    	commandLine 'cmd', '/c', 'tx.exe', 'pull', '-a'
+	} else {
+    	commandLine 'tx', 'pull', '-a'
+	}
+}
+updateTranslations.group = 'custom'
+updateTranslations.description = 'Update translations by executing the transifex tx utility'
 
 group "ch.poole"
 
