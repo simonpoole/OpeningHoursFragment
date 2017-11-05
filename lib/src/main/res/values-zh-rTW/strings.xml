@@ -3,8 +3,12 @@
 
     <string name="Cancel">取消</string>
     <string name="Save">儲存</string>
+    <string name="value_too_long">營業時間數值長度是 %1$d，比起 255 的最大值還要長。\n\n請在儲存前簡化數值！</string>
+    <string name="would_overwrite_invalid_value">無法為無效的營業時間加上規則。請修正或刪除！</string>
+    
     <string name="add_rule">增加規則</string>
     <string name="add_rule_247">為24/7增加規則</string>
+    <string name="add_rule_closed_on_holidays">為假日增加規則</string>
     <string name="load_template">載入模版</string>
     <string name="save_to_template">儲存到模版</string>
     <string name="manage_templates">管理模版</string>
@@ -12,22 +16,30 @@
     <string name="load_templates_title">載入模版</string>
     <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
+    <string name="update_template">也更新模版數值？</string>
     <string name="Yes">可以</string>
     <string name="No">不行</string>
-    <string name="End">End</string>
+    <string name="Start">開始</string>
+    <string name="End">結束</string>
     
  <!--	templates -->
     <string name="edit_template">編輯模版</string>
     <string name="name_legend">名稱：</string>
     <string name="default_legend">預設：</string>
+    <string name="key_legend">鍵：</string>
+    
     <string name="is_default">%1$s (預設)</string>
     
      <string name="all_keys">全部</string>
   	<string name="opening_hours_key">營業時間 </string>
+  	<string name="service_times_key">服務時間</string>
+  	<string name="collection_times_key">收集時間</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">平日午餐休息</string>
 	<string name="weekdays">平日</string>
-	<!--	 -->
+	<string name="collection_times_weekdays">週間一次</string>
+    
+<!--	 -->
     <string name="group_header">群組 %1$s</string>
     <string name="rule_header">規則 %1$s</string>
     
@@ -62,12 +74,21 @@
     <string name="variable_date_date">夑動日期 - 日期</string>
     <string name="date_variable_date">日期 - 變動日期</string>
     <string name="variable_date_variable_date">變動日期 - 變動日期</string>
+    <string name="occurrence_occurrence">月中發生 - 月中發生</string>
+    <string name="occurrence_date">月中發生 - 日期</string>
+    <string name="date_occurrence">日期 - 月中發生</string>
+    <string name="occurrence_variable_date">月中發生 - 變動日期</string>
+    <string name="variable_date_occurrence">變動日期 - 月中發生</string>
+    
     <string name="date_open_end">日期 - 持續延續</string>
     <string name="variable_date_open_end">變動日期 - 持續延續</string>
+    <string name="occurrence_open_end">月中發生 - 持續延續</string>
+
     <string name="with_offsets">有偏差...</string>
     <string name="rule_type">顯示規則種類</string>
     <string name="move_up">往上移動</string>
     <string name="move_down">往下移動</string>
+    <string name="display_time_picker">顯示時間選擇器</string>
     <string name="ticks_15_minute">切換到 15 分鐘間隔</string>
     <string name="ticks_5_minute">切換到 5 分鐘間隔</string>
     <string name="ticks_1_minute">切換到 1 分鐘間隔</string>
@@ -92,6 +113,7 @@
     
     <string name="date_range">期間</string>
     <string name="date">日期</string>
+    <string name="date_weekday_occurrence">日期 (月間的週間)</string>
     <string name="week_range">週間</string>
     <string name="weeks">週</string>
     <string name="year_range">年間</string>
@@ -115,6 +137,8 @@
   	
   	<string name="public_holidays">國定假日</string>
   	<string name="school_holidays">學校假期</string>
+  	
+  	<string name="occurrence_in_month_title">月中發生</string>
   	
   	<string name="monday_short">一</string>
   	<string name="tuesday_short">二</string>
