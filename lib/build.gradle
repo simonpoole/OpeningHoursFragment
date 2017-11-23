@@ -2,7 +2,7 @@
 // Project level build file starts here
 plugins {
   id "com.jfrog.bintray" version "1.7.1"
-  id "org.sonarqube" version "2.2"
+  id "org.sonarqube" version "2.6.1"
 }
 
 apply plugin: 'eclipse'
