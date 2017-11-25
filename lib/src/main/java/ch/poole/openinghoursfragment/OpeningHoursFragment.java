@@ -1477,6 +1477,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     int startIndex = startDay.ordinal();
                     int endIndex = endDay.ordinal();
                     Log.d(DEBUG_TAG, "startDay " + startDay + " " + startIndex + " endDay " + endDay + " " + endIndex);
+                    if (endIndex < startIndex) { // handle wrap around spec by splitting in two
+                        Log.d(DEBUG_TAG, "wraparound weekday spec");
+                        for (int i = startIndex; i <= WeekDay.SU.ordinal(); i++) {
+                            checkWeekDay(weekDayContainer, weekDays.get(i));
+                        }
+                        startIndex = WeekDay.MO.ordinal();
+                    }
                     for (int i = startIndex; i <= endIndex; i++) {
                         checkWeekDay(weekDayContainer, weekDays.get(i));
                     }
