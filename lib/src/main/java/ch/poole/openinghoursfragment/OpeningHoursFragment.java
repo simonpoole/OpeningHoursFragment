@@ -447,6 +447,16 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             return true;
                         }
                     });
+                    MenuItem clear = popup.getMenu().add(R.string.clear);
+                    clear.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            rules.clear();
+                            updateString();
+                            watcher.afterTextChanged(null); // hack to force rebuild of form
+                            return true;
+                        }
+                    });
                     popup.show();// showing popup menu
                 }
             });
@@ -3548,7 +3558,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         templateCursor = TemplateDatabase.queryByKey(writableDb, manage ? null : key);
         templateAdapter = new TemplateAdapter(writableDb, context, templateCursor, manage);
         lv.setAdapter(templateAdapter);
-        alertDialog.setNegativeButton(R.string.Cancel, null);
+        alertDialog.setNegativeButton(R.string.Done, null);
         alertDialog.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {

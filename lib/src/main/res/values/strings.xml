@@ -3,6 +3,7 @@
 
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
+    <string name="Done">Done</string>
     <string name="value_too_long">The length of the opening hours value is %1$d which is longer than the maximum of 255.\n\nPlease simplify the string before saving!</string>
     <string name="would_overwrite_invalid_value">Can\'t add rule to invalid opening hours string. Please correct or delete!</string>
     
@@ -13,6 +14,7 @@
     <string name="save_to_template">Save to template</string>
     <string name="manage_templates">Manage templates</string>
     <string name="refresh">Refresh</string>
+    <string name="clear">Delete all</string>
     <string name="load_templates_title">Load templates</string>
     <string name="manage_templates_title">Manage templates</string>
     <string name="save_template">Save template</string>
