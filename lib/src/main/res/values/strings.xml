@@ -100,6 +100,7 @@
 
     <string name="with_offsets">With offsets...</string>
     <string name="rule_type">Show rule type</string>
+    <string name="duplicate_rule">Duplicate</string>
     <string name="move_up">Move up</string>
     <string name="move_down">Move down</string>
     <string name="display_time_picker">Display time picker</string>

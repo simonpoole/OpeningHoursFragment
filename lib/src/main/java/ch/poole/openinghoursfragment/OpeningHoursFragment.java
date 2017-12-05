@@ -1237,6 +1237,23 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
+                MenuItem duplicateRule = menu.add(R.string.duplicate_rule);
+                duplicateRule.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Rule duplicate = r.copy();
+                        int current = rules.indexOf(r);
+                        if (current < 0) { // not found shouldn't happen
+                            Log.e(DEBUG_TAG, "Rule missing from list!");
+                            return true;
+                        }
+                        rules.add(Math.max(0, current + 1), duplicate);
+                        updateString();
+                        watcher.afterTextChanged(null);
+                        return true;
+                    }
+                });
+                
                 if (!r.equals(rules.get(0))) { // don't show this for the first rule as it is meaningless
                     final View typeView = groupHeader.findViewById(R.id.rule_type_group);
                     MenuItem showRuleType = menu.add(R.string.rule_type);

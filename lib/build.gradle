@@ -13,53 +13,17 @@ apply plugin: "jacoco"
 version = '0.2.2'
 def libName = "OpeningHoursFragment"
 
-eclipse {
-    classpath {
-        plusConfigurations += [ configurations.compile, configurations.testCompile, configurations.androidTestCompile ]
-
-        file {
-            beforeMerged { classpath ->
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/main/java", "bin"))
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/test/java", "bin"))
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("src/androidTest/java", "bin"))
-                // Hardcoded to use debug configuration
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/r/debug", "bin"))
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/buildConfig/debug", "bin"))
-                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder("build/generated/source/aidl/debug", "bin"))
-            }
-
-            whenMerged { classpath ->
-                def aars = []
-                classpath.entries.each { dep ->
-                    if (dep.path.toString().endsWith(".aar")) {
-                        def explodedDir = new File(projectDir, "build/intermediates/exploded-aar/" + dep.moduleVersion.group + "/" + dep.moduleVersion.name + "/" + dep.moduleVersion.version + "/jars/")
-                        if (explodedDir.exists()) {
-                            explodedDir.eachFileRecurse(groovy.io.FileType.FILES) {
-                                if (it.getName().endsWith("jar")) {
-                                    def aarJar = new org.gradle.plugins.ide.eclipse.model.Library(fileReferenceFactory.fromFile(it))
-                                    aarJar.sourcePath = dep.sourcePath
-                                    aars.add(aarJar)
-                                }
-                            }
-                        } else {
-                            println "Warning: Missing " + explodedDir
-                        }
-                    }
-                }
-                classpath.entries.removeAll { it.path.endsWith(".aar") }
-                classpath.entries.addAll(aars)
-
-                def androidJar = new org.gradle.plugins.ide.eclipse.model.Library(
-                    fileReferenceFactory.fromPath("${android.sdkDirectory}/platforms/" + android.compileSdkVersion + "/android.jar"))
-                androidJar.sourcePath = fileReferenceFactory.fromPath("${android.sdkDirectory}/sources/" + android.compileSdkVersion)
-                classpath.entries.add(androidJar)
-            }
-        }
-    }
+task updateTranslations(type: Exec) {
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    	commandLine 'cmd', '/c', 'tx.exe', 'pull', '-a'
+	} else {
+    	commandLine 'tx', 'pull', '-a'
+	}
 }
+updateTranslations.group = 'custom'
+updateTranslations.description = 'Update translations by executing the transifex tx utility'
 
-eclipseClasspath.dependsOn "generateDebugSources"
-
+apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android'
 
 android {
     compileSdkVersion 24
@@ -103,7 +67,7 @@ dependencies {
     compile "com.android.support:preference-v7:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:support-annotations:23.4.0"
-    compile "ch.poole:OpeningHoursParser:0.10.1"
+    compile "ch.poole:OpeningHoursParser:0.11.0"
     compile "ch.poole:rangebar:0.1.1"
     compile 'cn.carbswang.android:NumberPickerView:1.1.1'
     
@@ -138,7 +102,6 @@ int getVersionCode() {
     def xml = getXmlFromFile("${android.sourceSets.main.manifest.srcFile}")
     return xml.@'android:versionCode'.toInteger()
 }
-
 
 def getXmlFromFile(String xmlFilePath) {
     def xml = new XmlSlurper().parse(new File(xmlFilePath))
@@ -177,16 +140,6 @@ task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
 	from releaseJavadoc
 	//	options.encoding = 'UTF-8'
 }
-
-task updateTranslations(type: Exec) {
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-    	commandLine 'cmd', '/c', 'tx.exe', 'pull', '-a'
-	} else {
-    	commandLine 'tx', 'pull', '-a'
-	}
-}
-updateTranslations.group = 'custom'
-updateTranslations.description = 'Update translations by executing the transifex tx utility'
 
 group "ch.poole"
 
