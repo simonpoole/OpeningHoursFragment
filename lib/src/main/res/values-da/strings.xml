@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">Gem</string>
     <string name="Yes">Ja</string>
     <string name="No">Nej</string>
     <string name="End">End</string>

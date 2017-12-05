@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.2.2'
+version = '0.3.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -20,7 +20,7 @@ task updateTranslations(type: Exec) {
     	commandLine 'tx', 'pull', '-a'
 	}
 }
-updateTranslations.group = 'custom'
+updateTranslations.group = 'translation'
 updateTranslations.description = 'Update translations by executing the transifex tx utility'
 
 apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android'
@@ -86,7 +86,6 @@ dependencies {
  
     // androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
 }
-
 
 int getMinSdkVersion() {
     def xml = getXmlFromFile("${android.sourceSets.main.manifest.srcFile}")

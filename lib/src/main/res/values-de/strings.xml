@@ -3,6 +3,7 @@
 
     <string name="Cancel">Abbrechen</string>
     <string name="Save">Speichern</string>
+    <string name="Done">Fertig</string>
     <string name="value_too_long">Der Öffnungszeitenwert ist %1$d Zeichen lang, dies ist länger als das Maximum von 255,\n\nBitte vereinfache den Wert vor dem Speichern!</string>
     <string name="would_overwrite_invalid_value">Zu einem ungültigen Öffnungszeitenwert, kann keine neue Regel hinzugefügt werden. Bitte korrigieren oder löschen!</string>
     
@@ -13,6 +14,7 @@
     <string name="save_to_template">In Vorlage speichern</string>
     <string name="manage_templates">Vorlagen verwalten</string>
     <string name="refresh">Aktualisieren</string>
+    <string name="clear">Alles löschen</string>
     <string name="load_templates_title">Vorlage laden</string>
     <string name="manage_templates_title">Vorlagen verwalten</string>
     <string name="save_template">Vorlage speichern</string>
@@ -86,6 +88,7 @@
 
     <string name="with_offsets">Mit Verschiebungen...</string>
     <string name="rule_type">Regeltyp anzeigen</string>
+    <string name="duplicate_rule">Verdoppeln</string>
     <string name="move_up">Nach oben verschieben</string>
     <string name="move_down">Nach unten verschieben</string>
     <string name="display_time_picker">Zeitauswahl anzeigen</string>

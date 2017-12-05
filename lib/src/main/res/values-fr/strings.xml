@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">Sauvegarder</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
     <string name="End">Fin</string>

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">Desar</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
     <string name="End">Fin</string>
     
  <string name="all_keys">Tots</string>
+  	<string name="opening_hours_key">Horaris d\'apertura</string>
   	<!--    menu items -->
 	<string name="Delete">Supr</string>
 	<string name="closed">tancat</string>

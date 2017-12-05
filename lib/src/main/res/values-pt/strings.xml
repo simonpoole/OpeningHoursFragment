@@ -17,6 +17,7 @@
     <string name="update_template">Atualizar também o valor do modelo?</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
+    <string name="Start">Começar</string>
     <string name="End">End</string>
     
  <!--	templates -->
@@ -31,7 +32,9 @@
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Dias da semana com pausa para almoço</string>
 	<string name="weekdays">Dias da semana</string>
-	<!--	 -->
+	<string name="collection_times_weekdays">Uma vez por semana</string>
+    
+<!--	 -->
     <string name="group_header">Grupo %1$s</string>
     <string name="rule_header">Regra %1$s</string>
     
@@ -40,6 +43,7 @@
     
 <!--    menu items -->
 	<string name="Delete">Eliminar</string>
+	<string name="add_modifier_comment">Adicionar modificação/comentário</string>
 	<string name="add_year_range">Adicionar intervalo de anos</string>
 	<string name="add_week_range">Adicionar intervalo de semanas</string>
 	<string name="add_holiday">Adicionar feriado</string>

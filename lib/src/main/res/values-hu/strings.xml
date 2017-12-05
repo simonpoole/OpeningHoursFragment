@@ -8,7 +8,7 @@
     
     <string name="add_rule">Szabály hozzáadása</string>
     <string name="add_rule_247">24/7 (non-stop) szabály hozzáadása</string>
-    <string name="add_rule_closed_on_holidays">Szabály hozzáadása munkaszüneti napokra</string>
+    <string name="add_rule_closed_on_holidays">Szabály hozzáadása szünnapokra</string>
     <string name="load_template">Sablon betöltése</string>
     <string name="save_to_template">Mentés sablonba</string>
     <string name="manage_templates">Sablonok kezelése</string>
@@ -19,21 +19,27 @@
     <string name="update_template">Frissíti a sablon értékét is?</string>
     <string name="Yes">Van</string>
     <string name="No">Nincs</string>
-    <string name="End">End</string>
+    <string name="Start">Kezdés</string>
+    <string name="End">Zárás</string>
     
  <!--	templates -->
     <string name="edit_template">Sablon szerkesztése</string>
     <string name="name_legend">Név:</string>
     <string name="default_legend">Alapértelmezett:</string>
+    <string name="key_legend">Kulcs:</string>
+    
     <string name="is_default">%1$s (alapértelmezett)</string>
     
      <string name="all_keys">Minden</string>
   	<string name="opening_hours_key">Nyitva tartás</string>
+  	<string name="service_times_key">Istentiszteletek ideje</string>
   	<string name="collection_times_key">Ürítési idő</string>
   	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Hétköznap ebédidővel</string>
-	<string name="weekdays">Hétköznap</string>
-	<!--	 -->
+	<string name="weekdays_with_lunch">A hét valamely napjain ebédidővel</string>
+	<string name="weekdays">A hét valamely napján</string>
+	<string name="collection_times_weekdays">A hét valamely napján egyszer</string>
+    
+<!--	 -->
     <string name="group_header">%1$s. csoport</string>
     <string name="rule_header">%1$s. szabály</string>
     
@@ -68,8 +74,16 @@
     <string name="variable_date_date">Változó dátum – dátum</string>
     <string name="date_variable_date">Dátum – változó dátum</string>
     <string name="variable_date_variable_date">Változó dátum – változó dátum</string>
+    <string name="occurrence_occurrence">Előfordulás hónapban – előfordulás hónapban</string>
+    <string name="occurrence_date">Előfordulás hónapban – dátum</string>
+    <string name="date_occurrence">Dátum – előfordulás hónapban</string>
+    <string name="occurrence_variable_date">Előfordulás hónapban – változó dátum</string>
+    <string name="variable_date_occurrence">Változó dátum – előfordulás hónapban</string>
+    
     <string name="date_open_end">Dátum – nyílt vég</string>
     <string name="variable_date_open_end">Változó dátum – nyílt vég</string>
+    <string name="occurrence_open_end">Előfordulás hónapban – nyílt vég</string>
+
     <string name="with_offsets">Eltolásokkal…</string>
     <string name="rule_type">Szabálytípus megjelenítése</string>
     <string name="move_up">Mozgatás felfelé</string>
@@ -99,6 +113,7 @@
     
     <string name="date_range">Dátumtartomány</string>
     <string name="date">Dátum</string>
+    <string name="date_weekday_occurrence">Dátum (a hét valamely napjának valahányadik előfordulása a hónapban)</string>
     <string name="week_range">Héttartomány</string>
     <string name="weeks">Hét</string>
     <string name="year_range">Évtartomány</string>
@@ -107,7 +122,7 @@
     <string name="modifier">Módosító</string>
     <string name="comment">Megjegyzés</string>
     
-    <string name="use_as_weekday">Használat a hét napjaként</string>
+    <string name="use_as_weekday">Használat hétköznapként</string>
     
     <string name="twentyfourseven">Napi 24 óra, heti 7 nap (non-stop)</string>
     
@@ -122,6 +137,8 @@
   	
   	<string name="public_holidays">Munkaszüneti nap</string>
   	<string name="school_holidays">Tanítási szünet</string>
+  	
+  	<string name="occurrence_in_month_title">Előfordulás hónapban</string>
   	
   	<string name="monday_short">H</string>
   	<string name="tuesday_short">K</string>

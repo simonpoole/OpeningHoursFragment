@@ -20,6 +20,7 @@
     <string name="is_default">%1$s (типово)</string>
     
      <string name="all_keys">Загальний</string>
+  	<string name="opening_hours_key">Часи роботи</string>
   	<!--	 -->
     <string name="group_header">Група %1$s</string>
     <string name="rule_header">Правило %1$s</string>
