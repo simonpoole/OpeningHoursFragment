@@ -455,6 +455,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 rules.clear();
                                 updateString();
                                 watcher.afterTextChanged(null); // hack to force rebuild of form
+                            } else {
+                                text.setText("");
+                                watcher.afterTextChanged(null);
                             }
                             return true;
                         }
