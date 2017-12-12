@@ -451,9 +451,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     clear.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            rules.clear();
-                            updateString();
-                            watcher.afterTextChanged(null); // hack to force rebuild of form
+                            if (rules != null) { // FIXME should likely disable the entry if there is actually nothing to clear
+                                rules.clear();
+                                updateString();
+                                watcher.afterTextChanged(null); // hack to force rebuild of form
+                            }
                             return true;
                         }
                     });
