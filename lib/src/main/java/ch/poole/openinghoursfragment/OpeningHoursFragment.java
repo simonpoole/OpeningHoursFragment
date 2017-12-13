@@ -509,9 +509,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         int pos = text.getSelectionStart();
         int prevLen = text.length();
         text.removeTextChangedListener(watcher); // avoid infinite loop
-        String t = Util.rulesToOpeningHoursString(rules);
-        text.setText(t);
-        // text.setText(text.getText().toString());
+        if (rules != null) {
+            String t = Util.rulesToOpeningHoursString(rules);
+            text.setText(t);
+            // text.setText(text.getText().toString());
+        }
         text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
         text.addTextChangedListener(watcher);
     }
@@ -3232,18 +3234,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     Runnable updateStringRunnable = new Runnable() {
         @Override
         public void run() {
-            int pos = text.getSelectionStart();
-            int prevLen = text.length();
-            text.removeTextChangedListener(watcher);
-            String oh = Util.rulesToOpeningHoursString(rules);
-            text.setText(oh);
-            text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
-            text.addTextChangedListener(watcher);
-            enableSaveButton(oh);
-            final int len = oh.length();
-            if (len > OSM_MAX_TAG_LENGTH) {
-                Log.d(DEBUG_TAG, "string too long");
-                ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.value_too_long, len));
+            if (rules != null) {
+                int pos = text.getSelectionStart();
+                int prevLen = text.length();
+                text.removeTextChangedListener(watcher);
+                String oh = Util.rulesToOpeningHoursString(rules);
+                text.setText(oh);
+                text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
+                text.addTextChangedListener(watcher);
+                enableSaveButton(oh);
+                final int len = oh.length();
+                if (len > OSM_MAX_TAG_LENGTH) {
+                    Log.d(DEBUG_TAG, "string too long");
+                    ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.value_too_long, len));
+                }
             }
         }
     };
