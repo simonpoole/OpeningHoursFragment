@@ -1,5 +1,13 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.3.4: Protect again NPE
+
+0.3.2: Fix clearing if string can't be parsed
+
+0.3.0: Add facilities to duplicate rules and clear existing ones completely
+
+0.2.2: Support wrap around weekday ranges
+
 0.2.1: Support "occurrence in month" notation for dates, bug fixes
 
 0.2.0: Support callbacks to a Fragment, support separate templates for the major OH like keys

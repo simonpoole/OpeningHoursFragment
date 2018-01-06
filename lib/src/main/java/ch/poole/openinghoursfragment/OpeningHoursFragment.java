@@ -263,7 +263,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
-        buildLayout(openingHoursLayout, openingHoursValue, initialRule);
+        buildLayout(openingHoursLayout, openingHoursValue == null ? "" : openingHoursValue, initialRule);
 
         // add callbacks for the buttons
         AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
@@ -298,7 +298,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param openingHoursValue the OH value
      * @param initialRule index of the rule to scroll to, currently ignored
      */
-    private ScrollView buildLayout(LinearLayout openingHoursLayout, String openingHoursValue, final int initialRule) {
+    private ScrollView buildLayout(@NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
         text = (EditText) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
         final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
         if (text != null && sv != null) {
