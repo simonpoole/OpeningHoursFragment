@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">保存</string>
     <string name="Yes">中古品の取り扱いあり</string>
     <string name="No">中古品の取り扱いなし</string>
     <string name="End">End</string>

@@ -3,6 +3,7 @@
 
     <string name="Cancel">Cancelar</string>
     <string name="Save">Gravar</string>
+    <string name="Done">Concluído</string>
     <string name="value_too_long">O comprimento do horário de abertura é %1$d que é mais longo do que o permitido de 255.\n\nPor favor simplifique antes de gravar!</string>
     <string name="add_rule">Adicionar regra</string>
     <string name="add_rule_247">Adicionar regra para 24/7</string>
@@ -11,6 +12,7 @@
     <string name="save_to_template">Gravar no modelo</string>
     <string name="manage_templates">Gerir modelos</string>
     <string name="refresh">Atualizar</string>
+    <string name="clear">Eliminar tudo</string>
     <string name="load_templates_title">Carregar modelos</string>
     <string name="manage_templates_title">Gerir modelos</string>
     <string name="save_template">Gravar modelo</string>
@@ -24,6 +26,8 @@
     <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>
+    <string name="key_legend">Chave:</string>
+    
     <string name="is_default">%1$s (padrão)</string>
     
      <string name="all_keys">Tudo</string>
@@ -56,9 +60,13 @@
     <string name="date_variable_date">Data - data variável</string>
     <string name="variable_date_variable_date">Data variável - data variável</string>
     <string name="rule_type">Mostrar tipo de regra</string>
+    <string name="duplicate_rule">Duplicar</string>
     <string name="move_up">Mover para cima</string>
     <string name="move_down">Mover para baixo</string>
     <string name="show_interval">Mostrar intervalo</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
     <string name="interval_minutes">Intervalo (minutos)</string>
     <string name="interval_years">Intervalo (anos)</string>
     <string name="interval_weeks">Intervalo (semanas)</string>

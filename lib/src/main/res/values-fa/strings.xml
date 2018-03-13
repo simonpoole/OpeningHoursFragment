@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Save">ذخیره کن</string>
+    <string name="Yes">بله</string>
+    <string name="No">نه</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">همه</string>
+  	<!--    menu items -->
+	<string name="Delete">Delete</string>
+	<string name="closed">بسته</string>
+  	<string name="unknown">ناشناخته</string>
+    
+  	</resources>

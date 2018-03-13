@@ -3,7 +3,10 @@
 
     <string name="Cancel">Zrušit</string>
     <string name="Save">Uložit</string>
+    <string name="Done">Hotovo</string>
     <string name="value_too_long">Délka hodnoty otevírací doby je %1$d, což je více, než povolených 255.\n\nPřed uložením jej prosím zjednosušte!</string>
+    <string name="would_overwrite_invalid_value">Nelze přidat pravidlo pro neplatný řetězec otevíracích hodin. Opravte jej nebo odstraňte!</string>
+    
     <string name="add_rule">Přidat pravidlo</string>
     <string name="add_rule_247">Přidat pravidlo pro 24/7</string>
     <string name="add_rule_closed_on_holidays">Přidat pravidlo pro svátky</string>
@@ -11,6 +14,7 @@
     <string name="save_to_template">Uložit jako předlohu</string>
     <string name="manage_templates">Spravovat šablony</string>
     <string name="refresh">Obnovit</string>
+    <string name="clear">Smazat vše</string>
     <string name="load_templates_title">Načíst předlohy</string>
     <string name="manage_templates_title">Spravovat šablony</string>
     <string name="save_template">Uložit předlohu</string>
@@ -35,7 +39,9 @@
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
 	<string name="weekdays">Pracovní dny</string>
-	<!--	 -->
+	<string name="collection_times_weekdays">Jednou v pracovní dny</string>
+    
+<!--	 -->
     <string name="group_header">Skupina %1$s</string>
     <string name="rule_header">Pravidlo %1$s</string>
     
@@ -82,6 +88,7 @@
 
     <string name="with_offsets">S ofsety...</string>
     <string name="rule_type">Zobrazit typ pravidla</string>
+    <string name="duplicate_rule">Duplikovat</string>
     <string name="move_up">Přesunout výš</string>
     <string name="move_down">Přesunout níž</string>
     <string name="display_time_picker">Zobrazit výběr času</string>

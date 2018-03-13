@@ -3,6 +3,7 @@
 
     <string name="Cancel">Mégse</string>
     <string name="Save">Mentés</string>
+    <string name="Done">Kész</string>
     <string name="value_too_long">A nyitva tartás címke értékének hossza %1$d karakter, ami több, mint a megengedett 255.\n\nMentés előtt egyszerűsíteni kell.</string>
     <string name="would_overwrite_invalid_value">Nem adható szabály érvénytelen nyitvatartásiidő-leíráshoz. Kérjük, javítsa vagy törölje.</string>
     
@@ -13,6 +14,7 @@
     <string name="save_to_template">Mentés sablonba</string>
     <string name="manage_templates">Sablonok kezelése</string>
     <string name="refresh">Frissítés</string>
+    <string name="clear">Az összes törlése</string>
     <string name="load_templates_title">Sablonok betöltése</string>
     <string name="manage_templates_title">Sablonok kezelése</string>
     <string name="save_template">Sablon mentése</string>
@@ -86,6 +88,7 @@
 
     <string name="with_offsets">Eltolásokkal…</string>
     <string name="rule_type">Szabálytípus megjelenítése</string>
+    <string name="duplicate_rule">Másolat készítése</string>
     <string name="move_up">Mozgatás felfelé</string>
     <string name="move_down">Mozgatás lefelé</string>
     <string name="display_time_picker">Időválasztó megjelenítése</string>

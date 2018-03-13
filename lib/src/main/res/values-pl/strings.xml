@@ -43,6 +43,9 @@
     <string name="date_date">Data - data</string>
     <string name="move_up">Przenieś w górę</string>
     <string name="move_down">Przenieś w dół</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Tryb zwykły</string>
     <string name="date_range">Zakres dat</string>
     <string name="date">Data</string>
     <string name="week_range">Zakres tygodni</string>

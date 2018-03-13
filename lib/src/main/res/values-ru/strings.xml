@@ -3,30 +3,45 @@
 
     <string name="Cancel">Отменить</string>
     <string name="Save">Сохранить</string>
+    <string name="Done">Сделано</string>
+    <string name="value_too_long">Длина значения времени работы составляет %1$d, что больше максимальной длины 255.\n\nПожалуйста, упростите значение перед сохранением!</string>
+    <string name="would_overwrite_invalid_value">Нельзя добавить правило к неверному значению времени работы. Пожалуйста, исправьте или удалите его!</string>
+    
     <string name="add_rule">Добавить правило</string>
     <string name="add_rule_247">Добавить правило 24/7</string>
+    <string name="add_rule_closed_on_holidays">Добавить правило для праздников</string>
     <string name="load_template">Загрузить шаблон</string>
     <string name="save_to_template">Сохранить как шаблон</string>
     <string name="manage_templates">Управлять шаблонами</string>
     <string name="refresh">Обновить</string>
+    <string name="clear">Удалить все</string>
     <string name="load_templates_title">Загрузить шаблоны</string>
     <string name="manage_templates_title">Управлять шаблонами</string>
     <string name="save_template">Сохранить шаблон</string>
+    <string name="update_template">Обновить также значение из шаблона?</string>
     <string name="Yes">Да</string>
     <string name="No">Нет</string>
-    <string name="End">End</string>
+    <string name="Start">Начало</string>
+    <string name="End">Конец</string>
     
  <!--	templates -->
     <string name="edit_template">Редактировать шаблон</string>
     <string name="name_legend">Название:</string>
     <string name="default_legend">По умолчанию:</string>
+    <string name="key_legend">Ключ:</string>
+    
     <string name="is_default">%1$s(по умолчанию)</string>
     
      <string name="all_keys">Всем</string>
+  	<string name="opening_hours_key">Время работы</string>
+  	<string name="service_times_key">Время обслуживания</string>
+  	<string name="collection_times_key">Время задержки для сбора</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
 	<string name="weekdays">Будние дни</string>
-	<!--	 -->
+	<string name="collection_times_weekdays">Ежедневно по будням</string>
+    
+<!--	 -->
     <string name="group_header">Группа %1$s</string>
     <string name="rule_header">Правило %1$s</string>
     
@@ -35,15 +50,22 @@
     
 <!--    menu items -->
 	<string name="Delete">Удалить</string>
+	<string name="add_modifier_comment">Добавить изменение/комментарий</string>
 	<string name="add_year_range">Добавить диапазон лет</string>
 	<string name="add_week_range">Добавить диапазон недель</string>
 	<string name="add_holiday">Добавить праздник</string>
 	
     <string name="timespan_menu">Добавить промежуток времени...</string>
     <string name="time_time">Время - время</string>
+    <string name="time_extended_time">Время - расширенное время</string>
     <string name="variable_time_time">Варьируещeеся время - время</string>
+    <string name="variable_time_extended_time">Варьируещeеся время - расширенное время</string>
+    <string name="time_variable_time">Время - варьируещeеся время</string>
+    <string name="variable_time_variable_time">Варьируещeеся время - варьируещeеся время</string>
     <string name="time">Время</string>
-    <string name="variable_time_open_end">Варьируещeеся время - неокончательное</string>
+    <string name="time_open_end">Время без окончания</string>
+    <string name="variable_time">Варьируещeеся время</string>
+    <string name="variable_time_open_end">Варьируещeеся время без окончания</string>
     <string name="start_at_midnight">Начинается в полночь</string>
     
     <string name="week_day_range">Добавить диапазон дней недели</string>
@@ -51,31 +73,50 @@
     
     <string name="daterange_menu">Добавить диапазон дат...</string>
     <string name="date_date">Дата - дата</string>
-    <string name="date_open_end">Дата - некончательная</string>
-    <string name="variable_date_open_end">Варьируещeяся дата - некончательная</string>
+    <string name="variable_date_date">Варьирующаяся дата - дата</string>
+    <string name="date_variable_date">Дата - варьирующаяся дата </string>
+    <string name="variable_date_variable_date">Варьирующаяся дата - варьирующаяся дата</string>
+    <string name="occurrence_occurrence">Месячное расписание - месячное расписание</string>
+    <string name="occurrence_date">Месячное расписание - дата</string>
+    <string name="date_occurrence">Дата - месячное расписание</string>
+    <string name="occurrence_variable_date">Месячное расписание - варьирующаяся дата</string>
+    <string name="variable_date_occurrence">Варьирующаяся дата - месячное расписание</string>
+    
+    <string name="date_open_end">Дата без окончания</string>
+    <string name="variable_date_open_end">Варьирующаяся дата без окончания</string>
+    <string name="occurrence_open_end">Месячное расписание без окончания</string>
+
+    <string name="with_offsets">Со смещениями...</string>
     <string name="rule_type">Показать тип правила</string>
+    <string name="duplicate_rule">Продублировать</string>
     <string name="move_up">Переместить вверх</string>
     <string name="move_down">Переместить вниз</string>
+    <string name="display_time_picker">Выбрать время из формы</string>
     <string name="ticks_15_minute">Переключить на 15-мин интервалы</string>
     <string name="ticks_5_minute">Переключить на 5-мин интервалы</string>
     <string name="ticks_1_minute">Переключить на 1-мин интервалы</string>
-    <string name="show_offset">Показатль смещение</string>
+    <string name="show_offset">Показать смещение</string>
+    <string name="show_start_offset">Показать смещение начала</string>
+    <string name="show_end_offset">Показать смещение конца</string>
     <string name="show_interval">Показать интервал</string>
-    <!--     opening hour elements -->
+    <string name="show_useAsWeekDay">Показать использование</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Нормальный</string>
     <string name="additive_rule">Добавочный</string>
     <string name="fallback_rule">Отступной</string>
     
-    <string name="interval_minutes">Интервал (минут)</string>
-    <string name="interval_years">Интервал (лет)</string>
-    <string name="interval_weeks">Интервал (недель)</string>
+    <string name="interval_minutes">Интервал (минуты)</string>
+    <string name="interval_years">Интервал (года)</string>
+    <string name="interval_weeks">Интервал (недели)</string>
     
     <string name="offset_mins">Смещение (±минут)</string>
     <string name="offset_days">Смещение (±дней)</string>
     
     <string name="date_range">Диапазон дат</string>
     <string name="date">Дата</string>
+    <string name="date_weekday_occurrence">Дата (номер дня в месяце)</string>
     <string name="week_range">Диапазон недель</string>
     <string name="weeks">Недели</string>
     <string name="year_range">Диапазон лет</string>
@@ -83,6 +124,8 @@
     
     <string name="modifier">Модификатор</string>
     <string name="comment">Комментарий</string>
+    
+    <string name="use_as_weekday">Как в будни</string>
     
     <string name="twentyfourseven">24 часа, 7 дней в неделю</string>
     
@@ -97,6 +140,8 @@
   	
   	<string name="public_holidays">Государственные праздники</string>
   	<string name="school_holidays">Школьные праздники</string>
+  	
+  	<string name="occurrence_in_month_title">Месячное расписание</string>
   	
   	<string name="monday_short">Пн</string>
   	<string name="tuesday_short">Вт</string>
@@ -121,6 +166,10 @@
   	
   	<string name="open">открыто</string>
  	<string name="closed">закрыто</string>
-  	<string name="unknown">неизвестно</string>
+  	<string name="off">закрыто</string>
+    <string name="unknown">неизвестно</string>
     
+  	<string name="before">раньше</string>
+    <string name="after">позже</string>
+  	
   	</resources>

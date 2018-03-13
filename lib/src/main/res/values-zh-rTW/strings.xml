@@ -3,6 +3,7 @@
 
     <string name="Cancel">取消</string>
     <string name="Save">儲存</string>
+    <string name="Done">完成</string>
     <string name="value_too_long">營業時間數值長度是 %1$d，比起 255 的最大值還要長。\n\n請在儲存前簡化數值！</string>
     <string name="would_overwrite_invalid_value">無法為無效的營業時間加上規則。請修正或刪除！</string>
     
@@ -13,6 +14,7 @@
     <string name="save_to_template">儲存到模版</string>
     <string name="manage_templates">管理模版</string>
     <string name="refresh">重整</string>
+    <string name="clear">全部刪除</string>
     <string name="load_templates_title">載入模版</string>
     <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
@@ -86,6 +88,7 @@
 
     <string name="with_offsets">有偏差...</string>
     <string name="rule_type">顯示規則種類</string>
+    <string name="duplicate_rule">重覆</string>
     <string name="move_up">往上移動</string>
     <string name="move_down">往下移動</string>
     <string name="display_time_picker">顯示時間選擇器</string>

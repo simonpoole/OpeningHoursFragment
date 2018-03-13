@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">Hætta við</string>
+    <string name="Save">Vista</string>
+    <string name="Yes">Já</string>
+    <string name="No">Nei</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">Allt</string>
+  	<!--    menu items -->
+	<string name="Delete">Eyða</string>
+	<string name="date">Dagsetning</string>
+    <string name="unknown">óþekkt</string>
+    
+  	</resources>

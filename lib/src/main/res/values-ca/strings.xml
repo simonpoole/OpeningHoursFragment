@@ -2,6 +2,7 @@
 <resources>
 
     <string name="Save">Desar</string>
+    <string name="Done">Fet</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
     <string name="End">Fin</string>
@@ -10,7 +11,13 @@
   	<string name="opening_hours_key">Horaris d\'apertura</string>
   	<!--    menu items -->
 	<string name="Delete">Supr</string>
-	<string name="closed">tancat</string>
+	<string name="move_up">Mou amunt</string>
+    <string name="move_down">Mou avall</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
+    <string name="date_range">Interval de dates</string>
+    <string name="closed">tancat</string>
   	<string name="unknown">desconeguda</string>
     
   	</resources>
