@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.3.4'
+version = '0.3.5'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -26,7 +26,7 @@ updateTranslations.description = 'Update translations by executing the transifex
 apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "24.0.3"
 
     defaultConfig {
@@ -58,7 +58,7 @@ android {
 }
 
 ext {
-    supportLibVersion = "24.1.1"
+    supportLibVersion = "25.3.1"
 }
 
 dependencies {

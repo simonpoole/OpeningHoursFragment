@@ -290,6 +290,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         return openingHoursLayout;
     }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+           dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
+    }
 
     /**
      * Build the parts of the layout that only need to be done once

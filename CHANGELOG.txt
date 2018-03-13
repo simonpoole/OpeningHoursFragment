@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.3.5: Make dialog fill all available space, update support lib and build target
+
 0.3.4: Protect again NPE
 
 0.3.2: Fix clearing if string can't be parsed
