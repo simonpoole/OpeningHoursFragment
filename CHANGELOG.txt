@@ -1,6 +1,6 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
-0.4.0: When displaying extended times use "normal" times when possible
+0.4.1: When displaying extended times use "normal" times when possible
 
 0.3.5: Make dialog fill all available space, update support lib and build target
 
