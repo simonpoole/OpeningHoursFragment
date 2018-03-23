@@ -48,7 +48,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -98,7 +97,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private static final String STYLE_KEY = "style";
 
     private static final String RULE_KEY = "rule";
-    
+
     private static final String FRAGMENT_KEY = "fragment";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
@@ -141,12 +140,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     private boolean parseErrorFound;
 
+    static PinTextFormatter extendedTimeFormater = new PinTextFormatter() {
+        @Override
+        public String getText(String value) {
+            int minutes = Integer.valueOf(value);
+            int tempMinutes = minutes - TimeSpan.MAX_TIME;
+            return String.format(Locale.US, "%02d", tempMinutes / 60) + ":" + String.format(Locale.US, "%02d", minutes % 60);
+        }
+    };
+
     static PinTextFormatter timeFormater = new PinTextFormatter() {
         @Override
         public String getText(String value) {
             int minutes = Integer.valueOf(value);
-            return String.format(Locale.US, "%02d", minutes / 60) + ":"
-                    + String.format(Locale.US, "%02d", minutes % 60);
+            return String.format(Locale.US, "%02d", minutes / 60) + ":" + String.format(Locale.US, "%02d", minutes % 60);
         }
     };
 
@@ -173,7 +180,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         return f;
     }
-    
+
     /**
      * Create a new OpeningHoursFragment with callback to a fragment
      * 
@@ -273,7 +280,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 dismiss();
             }
         });
-        
+
         if (useFragmentCallback) {
             saveListener = (OnSaveListener) getParentFragment();
         }
@@ -290,13 +297,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         return openingHoursLayout;
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-           dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
     }
 
@@ -320,8 +327,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Runnable rebuild = new Runnable() {
                         @Override
                         public void run() {
-                            OpeningHoursParser parser = new OpeningHoursParser(
-                                    new ByteArrayInputStream(text.getText().toString().getBytes()));
+                            OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(text.getText().toString().getBytes()));
                             try {
                                 rules = parser.rules(false);
                                 buildForm(sv, rules);
@@ -387,7 +393,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             Log.e(DEBUG_TAG, err.getMessage());
                         }
                         if (rules2 != null && !rules2.isEmpty()) {
-                            if (rules==null || hasParseError()) { // if there was an unparseable string it needs to be fixed first 
+                            if (rules == null || hasParseError()) { // if there was an unparseable string it needs to be
+                                                                    // fixed first
                                 ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
                                 return true;
                             }
@@ -403,7 +410,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }, 200);
 
                         }
-                    } 
+                    }
                     return true;
                 }
             }
@@ -460,7 +467,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     clear.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            if (rules != null) { // FIXME should likely disable the entry if there is actually nothing to clear
+                            if (rules != null) { // FIXME should likely disable the entry if there is actually nothing
+                                                 // to clear
                                 rules.clear();
                                 updateString();
                                 watcher.afterTextChanged(null); // hack to force rebuild of form
@@ -491,6 +499,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * Highlight the position of a parse error
      * 
      * Side effect sets parserErrorFound to true
+     * 
      * @param text he EditText the string is displayed in
      * @param pex the ParseException to use
      */
@@ -499,8 +508,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         int c = pex.currentToken.next.beginColumn - 1; // starts at 1
         int pos = text.getSelectionStart();
         Spannable spannable = new SpannableString(text.getText());
-        spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c, Math.min(c + 1, spannable.length())),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c, Math.min(c + 1, spannable.length())), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         text.removeTextChangedListener(watcher); // avoid infinite loop
         text.setText(spannable, TextView.BufferType.SPANNABLE);
         text.setSelection(Math.min(pos, spannable.length()));
@@ -511,6 +519,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * Remove all parse error highlighting
      * 
      * Side effect sets parserErrorFound to false
+     * 
      * @param text the EditText the string is displayed in
      */
     private void removeHighlight(EditText text) {
@@ -559,8 +568,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                          // always true
                 final LinearLayout groupHeader = (LinearLayout) inflater.inflate(R.layout.rule_header, null);
                 TextView header = (TextView) groupHeader.findViewById(R.id.header);
-                header.setText(
-                        getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
+                header.setText(getActivity().getString(groupMode ? R.string.group_header : R.string.rule_header, headerCount));
                 RadioButton normal = (RadioButton) groupHeader.findViewById(R.id.normal_rule);
                 if (!r.isAdditive() && !r.isFallBack()) {
                     normal.setChecked(true);
@@ -623,8 +631,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 });
 
                 if (r.getModifier() == null) {
-                    MenuItem addModifierAndComment = menu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                            R.string.add_modifier_comment);
+                    MenuItem addModifierAndComment = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_modifier_comment);
                     addModifierAndComment.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -676,8 +683,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.time_extended_time);
+                MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_extended_time);
                 addExtendedTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -696,8 +702,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addVarTimeTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_time_time);
+                MenuItem addVarTimeTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_time);
                 addVarTimeTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -718,8 +723,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addVarTimeExtendedTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_time_extended_time);
+                MenuItem addVarTimeExtendedTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_extended_time);
                 addVarTimeExtendedTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -740,8 +744,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.time_variable_time);
+                MenuItem addTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
                 addTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -762,8 +765,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addVarTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_time_variable_time);
+                MenuItem addVarTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_variable_time);
                 addVarTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -805,8 +807,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.time_open_end);
+                MenuItem addTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_open_end);
                 addTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -846,8 +847,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
 
-                MenuItem addVarTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_time_open_end);
+                MenuItem addVarTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_open_end);
                 addVarTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -908,8 +908,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setStartDate(dwo);
                     }
                 }));
-                MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_date);
+                MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
                 addVarDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -918,8 +917,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setStartDate(dwo);
                     }
                 }));
-                MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_variable_date);
+                MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
                 addDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -931,8 +929,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_variable_date);
+                MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
                 addVarDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -944,8 +941,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addOccurrenceOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_occurrence);
+                MenuItem addOccurrenceOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_occurrence);
                 addOccurrenceOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -959,8 +955,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addOccurrenceDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_date);
+                MenuItem addOccurrenceDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_date);
                 addOccurrenceDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -973,8 +968,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_occurrence);
+                MenuItem addDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_occurrence);
                 addDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -987,8 +981,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addOccurrenceVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_variable_date);
+                MenuItem addOccurrenceVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_variable_date);
                 addOccurrenceVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1001,8 +994,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addVarDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_occurrence);
+                MenuItem addVarDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_occurrence);
                 addVarDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1014,10 +1006,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         endDwo.setNth(WeekDay.MO, 1);
                         dateRange.setEndDate(endDwo);
                     }
-                })); 
-                    
-                MenuItem addDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_open_end);
+                }));
+
+                MenuItem addDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
                 addDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1027,8 +1018,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setStartDate(startDwo);
                     }
                 }));
-                MenuItem addVarDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_open_end);
+                MenuItem addVarDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
                 addVarDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1038,8 +1028,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setStartDate(startDwo);
                     }
                 }));
-                MenuItem addOccurrenceOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_open_end);
+                MenuItem addOccurrenceOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_open_end);
                 addOccurrenceOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1052,66 +1041,56 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }));
 
                 // the same with offsets
-                SubMenu dateRangeOffsetMenu = dateRangeMenu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.with_offsets);
-                MenuItem addDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_date);
-                addDateDateRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset dwo = new DateWithOffset();
-                                dwo.setMonth(Month.JAN);
-                                dwo.setDay(1);
-                                dwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(dwo);
-                            }
-                        }));
-                MenuItem addVarDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_date);
-                addVarDateDateRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset dwo = new DateWithOffset();
-                                dwo.setVarDate(VarDate.EASTER);
-                                dwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(dwo);
-                            }
-                        }));
-                MenuItem addDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_variable_date);
-                addDateVarDateRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset startDwo = new DateWithOffset();
-                                startDwo.setMonth(Month.JAN);
-                                startDwo.setDay(1);
-                                startDwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(startDwo);
-                                DateWithOffset endDwo = new DateWithOffset();
-                                endDwo.setVarDate(VarDate.EASTER);
-                                dateRange.setEndDate(endDwo);
-                            }
-                        }));
-                MenuItem addVarDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_variable_date);
-                addVarDateVarDateRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset startDwo = new DateWithOffset();
-                                startDwo.setVarDate(VarDate.EASTER);
-                                startDwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(startDwo);
-                                DateWithOffset endDwo = new DateWithOffset();
-                                endDwo.setVarDate(VarDate.EASTER);
-                                dateRange.setEndDate(endDwo);
-                            }
-                        }));
-                MenuItem addOccurrenceOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_occurrence);
+                SubMenu dateRangeOffsetMenu = dateRangeMenu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.with_offsets);
+                MenuItem addDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
+                addDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset dwo = new DateWithOffset();
+                        dwo.setMonth(Month.JAN);
+                        dwo.setDay(1);
+                        dwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(dwo);
+                    }
+                }));
+                MenuItem addVarDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
+                addVarDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset dwo = new DateWithOffset();
+                        dwo.setVarDate(VarDate.EASTER);
+                        dwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(dwo);
+                    }
+                }));
+                MenuItem addDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
+                addDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset startDwo = new DateWithOffset();
+                        startDwo.setMonth(Month.JAN);
+                        startDwo.setDay(1);
+                        startDwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(startDwo);
+                        DateWithOffset endDwo = new DateWithOffset();
+                        endDwo.setVarDate(VarDate.EASTER);
+                        dateRange.setEndDate(endDwo);
+                    }
+                }));
+                MenuItem addVarDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
+                addVarDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset startDwo = new DateWithOffset();
+                        startDwo.setVarDate(VarDate.EASTER);
+                        startDwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(startDwo);
+                        DateWithOffset endDwo = new DateWithOffset();
+                        endDwo.setVarDate(VarDate.EASTER);
+                        dateRange.setEndDate(endDwo);
+                    }
+                }));
+                MenuItem addOccurrenceOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_occurrence);
                 addOccurrenceOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1126,8 +1105,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addOccurrenceDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_date);
+                MenuItem addOccurrenceDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_date);
                 addOccurrenceDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1141,8 +1119,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_occurrence);
+                MenuItem addDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_occurrence);
                 addDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1156,8 +1133,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addOccurrenceVarDateRangeWithOffsets =dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_variable_date);
+                MenuItem addOccurrenceVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_variable_date);
                 addOccurrenceVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1171,8 +1147,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         dateRange.setEndDate(endDwo);
                     }
                 }));
-                MenuItem addVarDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_occurrence);
+                MenuItem addVarDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_occurrence);
                 addVarDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1185,36 +1160,31 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         endDwo.setNth(WeekDay.MO, 1);
                         dateRange.setEndDate(endDwo);
                     }
-                })); 
-                MenuItem addDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.date_open_end);
-                addDateOpenEndRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset startDwo = new DateWithOffset();
-                                startDwo.setMonth(Month.JAN);
-                                startDwo.setDay(1);
-                                startDwo.setOpenEnded(true);
-                                startDwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(startDwo);
-                            }
-                        }));
-                MenuItem addVarDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.variable_date_open_end);
-                addVarDateOpenEndRangeWithOffsets
-                        .setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                            @Override
-                            public void addDates(DateRange dateRange) {
-                                DateWithOffset startDwo = new DateWithOffset();
-                                startDwo.setVarDate(VarDate.EASTER);
-                                startDwo.setOpenEnded(true);
-                                startDwo.setWeekDayOffset(WeekDay.MO);
-                                dateRange.setStartDate(startDwo);
-                            }
-                        }));
-                MenuItem addOccurrenceOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE,
-                        R.string.occurrence_open_end);
+                }));
+                MenuItem addDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
+                addDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset startDwo = new DateWithOffset();
+                        startDwo.setMonth(Month.JAN);
+                        startDwo.setDay(1);
+                        startDwo.setOpenEnded(true);
+                        startDwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(startDwo);
+                    }
+                }));
+                MenuItem addVarDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
+                addVarDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
+                    @Override
+                    public void addDates(DateRange dateRange) {
+                        DateWithOffset startDwo = new DateWithOffset();
+                        startDwo.setVarDate(VarDate.EASTER);
+                        startDwo.setOpenEnded(true);
+                        startDwo.setWeekDayOffset(WeekDay.MO);
+                        dateRange.setStartDate(startDwo);
+                    }
+                }));
+                MenuItem addOccurrenceOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_open_end);
                 addOccurrenceOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
                     @Override
                     public void addDates(DateRange dateRange) {
@@ -1279,7 +1249,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         return true;
                     }
                 });
-                
+
                 if (!r.equals(rules.get(0))) { // don't show this for the first rule as it is meaningless
                     final View typeView = groupHeader.findViewById(R.id.rule_type_group);
                     MenuItem showRuleType = menu.add(R.string.rule_type);
@@ -1446,7 +1416,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     class DateRangeMenuListener implements OnMenuItemClickListener {
         final DateMenuInterface datesAdder;
-        final Rule r;
+        final Rule              r;
 
         DateRangeMenuListener(@NonNull Rule r, @NonNull DateMenuInterface datesAdder) {
             this.r = r;
@@ -1540,8 +1510,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (!withNth.isEmpty()) {
             for (final WeekDayRange d : withNth) {
                 final LinearLayout weekDayRowNth = (LinearLayout) inflater.inflate(R.layout.weekday_range_row, null);
-                final RelativeLayout weekDayContainerNth = (RelativeLayout) weekDayRowNth
-                        .findViewById(R.id.weekDayContainer);
+                final RelativeLayout weekDayContainerNth = (RelativeLayout) weekDayRowNth.findViewById(R.id.weekDayContainer);
                 WeekDay startDay = d.getStartDay();
                 List<Nth> nths = d.getNths();
                 checkWeekDay(weekDayContainerNth, startDay.toString());
@@ -1608,19 +1577,17 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
-
     SetDateRangeListener realDateRangeListener = null;
-    
+
     @Override
-    public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
-            Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {      
+    public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear, Month endMonth,
+            WeekDay endWeekday, int endDay, VarDate endVarDate) {
         if (realDateRangeListener != null) {
             realDateRangeListener.setDateRange(startYear, startMonth, startWeekday, startDay, startVarDate, endYear, endMonth, endWeekday, endDay, endVarDate);
         }
     }
-    
-    private void addDateRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r,
-            @NonNull final List<DateRange> dateRanges, final DateRange dateRange) {
+
+    private void addDateRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<DateRange> dateRanges, final DateRange dateRange) {
         // cases to consider
         // date - date
         // vardate - date
@@ -1642,7 +1609,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || startDate.getDayOffset() != 0);
         boolean hasStartOccurrence = startDate.getNthWeekDay() != null;
         boolean hasEndOccurrence = endDate != null && endDate.getNthWeekDay() != null;
-        
+
         int layoutRes = 0;
         if (hasStartOffset || hasEndOffset) {
             layoutRes = R.layout.daterange_with_offset_row;
@@ -1677,9 +1644,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     if (start.getVarDate() == null && start.getNthWeekDay() == null) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 start.setYear(startYear);
                                 start.setMonth(startMonth);
                                 start.setDay(startDay);
@@ -1692,9 +1658,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     } else if (start.getVarDate() != null && start.getNthWeekDay() == null) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 start.setYear(startYear);
                                 start.setVarDate(startVarDate);
                                 final LinearLayout finalRow = dateRangeRow;
@@ -1706,9 +1671,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     } else if (start.getNthWeekDay() != null) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 start.setYear(startYear);
                                 start.setMonth(startMonth);
                                 start.setNth(startWeekday, startDay);
@@ -1717,9 +1681,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 updateString();
                             }
                         };
-                        OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, start.getYear(), start.getMonth(), start.getNthWeekDay(), start.getNth());
+                        OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, start.getYear(), start.getMonth(),
+                                start.getNthWeekDay(), start.getNth());
                     } else {
-                        Log.e(DEBUG_TAG,"Unsupported date " + start);
+                        Log.e(DEBUG_TAG, "Unsupported date " + start);
                     }
                 }
             });
@@ -1736,15 +1701,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 // we are only using the first NPV thats why we need to use the startXXX values
                                 // here
                                 DateWithOffset tempDwo = endDate;
                                 if (tempDwo == null
-                                        && (startYear != YearRange.UNDEFINED_YEAR || startMonth != null
-                                                || startDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                        && (startYear != YearRange.UNDEFINED_YEAR || startMonth != null || startDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
                                     tempDwo = new DateWithOffset();
                                     dateRange.setEndDate(tempDwo);
                                 }
@@ -1774,9 +1737,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     } else if (endDate.getVarDate() != null && endDate.getNthWeekDay() == null) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 // we are only using the first NPV thats why we need to use the startXXX values
                                 // here
                                 endDate.setYear(startYear);
@@ -1790,9 +1752,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     } else if (endDate.getNthWeekDay() != null) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 endDate.setYear(startYear);
                                 endDate.setMonth(startMonth);
                                 endDate.setNth(startWeekday, startDay);
@@ -1801,9 +1762,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 updateString();
                             }
                         };
-                        OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, endDate.getYear(), endDate.getMonth(), endDate.getNthWeekDay(), endDate.getNth());
+                        OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, endDate.getYear(), endDate.getMonth(),
+                                endDate.getNthWeekDay(), endDate.getNth());
                     } else {
-                        Log.e(DEBUG_TAG,"Unsupported date " + endDate);
+                        Log.e(DEBUG_TAG, "Unsupported date " + endDate);
                     }
                 }
             });
@@ -1829,9 +1791,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         if (start.isOpenEnded()) {
                             realDateRangeListener = new SetDateRangeListener() {
                                 @Override
-                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                        VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                        VarDate endVarDate) {
+                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                        Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                     start.setYear(startYear);
                                     start.setMonth(startMonth);
                                     start.setDay(startDay);
@@ -1844,16 +1805,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         } else {
                             realDateRangeListener = new SetDateRangeListener() {
                                 @Override
-                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                        VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                        VarDate endVarDate) {
+                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                        Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                     start.setYear(startYear);
                                     start.setMonth(startMonth);
                                     start.setDay(startDay);
                                     DateWithOffset tempDwo = endDate;
                                     if (tempDwo == null
-                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
-                                                    || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
                                         tempDwo = new DateWithOffset();
                                         dateRange.setEndDate(tempDwo);
                                     }
@@ -1875,16 +1834,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                     }
                                 }
                             };
-                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
-                                    start.getMonth(), start.getDay(), tempEndYear, tempEndMonth, tempEndDay);
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getMonth(), start.getDay(),
+                                    tempEndYear, tempEndMonth, tempEndDay);
                         }
                     } else if (start.getVarDate() != null && (end == null || end.getVarDate() == null)) {
                         if (start.isOpenEnded()) {
                             realDateRangeListener = new SetDateRangeListener() {
                                 @Override
-                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                        VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                        VarDate endVarDate) {
+                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                        Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                     start.setYear(startYear);
                                     start.setVarDate(startVarDate);
                                     final LinearLayout finalRow = dateRangeRow;
@@ -1896,15 +1854,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         } else {
                             realDateRangeListener = new SetDateRangeListener() {
                                 @Override
-                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                        VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                        VarDate endVarDate) {
+                                public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                        Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                     start.setYear(startYear);
                                     start.setVarDate(startVarDate);
                                     DateWithOffset tempDwo = endDate;
                                     if (tempDwo == null
-                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null
-                                                    || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
+                                            && (endYear != YearRange.UNDEFINED_YEAR || endMonth != null || endDay != DateWithOffset.UNDEFINED_MONTH_DAY)) {
                                         tempDwo = new DateWithOffset();
                                         dateRange.setEndDate(tempDwo);
                                     }
@@ -1926,15 +1882,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                     }
                                 }
                             };
-                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
-                                    start.getVarDate(), tempEndYear, tempEndMonth, tempEndDay);
+                            DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getVarDate(), tempEndYear,
+                                    tempEndMonth, tempEndDay);
                         }
                     } else if (start.getVarDate() == null && (end != null && end.getVarDate() != null)) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 start.setYear(startYear);
                                 start.setMonth(startMonth);
                                 start.setDay(startDay);
@@ -1947,14 +1902,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 updateString();
                             }
                         };
-                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
-                                start.getMonth(), start.getDay(), tempEndYear, end.getVarDate());
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getMonth(), start.getDay(),
+                                tempEndYear, end.getVarDate());
                     } else if (start.getVarDate() != null && (end != null && end.getVarDate() != null)) {
                         realDateRangeListener = new SetDateRangeListener() {
                             @Override
-                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay,
-                                    VarDate startVarDate, int endYear, Month endMonth, WeekDay endWeekday, int endDay,
-                                    VarDate endVarDate) {
+                            public void setDateRange(int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
+                                    Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) {
                                 start.setYear(startYear);
                                 start.setVarDate(startVarDate);
 
@@ -1966,8 +1920,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 updateString();
                             }
                         };
-                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(),
-                                start.getVarDate(), tempEndYear, end.getVarDate());
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getVarDate(), tempEndYear,
+                                end.getVarDate());
                     }
                 }
             });
@@ -1975,8 +1929,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         ll.addView(dateRangeRow);
     }
 
-    private void setDateRangeValues(@NonNull final DateWithOffset start, @Nullable final DateWithOffset end,
-            @NonNull LinearLayout dateRangeRow, @NonNull Menu menu) {
+    private void setDateRangeValues(@NonNull final DateWithOffset start, @Nullable final DateWithOffset end, @NonNull LinearLayout dateRangeRow,
+            @NonNull Menu menu) {
         TextView startYearView = (TextView) dateRangeRow.findViewById(R.id.startYear);
         if (start.getYear() != YearRange.UNDEFINED_YEAR) {
             startYearView.setText(Integer.toString(start.getYear()));
@@ -1994,8 +1948,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 startWeekdayView.setVisibility(View.GONE);
             }
             if (start.getMonth() != null) {
-                startMonthView
-                        .setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
+                startMonthView.setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
             }
 
             if (start.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) {
@@ -2003,25 +1956,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             } else {
                 startDayView.setText("");
             }
-        } else if (start.getVarDate() != null && start.getNthWeekDay() == null){
+        } else if (start.getVarDate() != null && start.getNthWeekDay() == null) {
             startDelimiter.setVisibility(View.GONE);
             startDayView.setVisibility(View.GONE);
             if (startWeekdayView != null) {
                 startWeekdayView.setVisibility(View.GONE);
             }
-            startMonthView
-                    .setText(getResources().getStringArray(R.array.vardate_entries)[start.getVarDate().ordinal()]);
-        } else if (start.getNthWeekDay() != null){
+            startMonthView.setText(getResources().getStringArray(R.array.vardate_entries)[start.getVarDate().ordinal()]);
+        } else if (start.getNthWeekDay() != null) {
             startDelimiter.setVisibility(View.VISIBLE);
             startDayView.setVisibility(View.VISIBLE);
             startWeekdayView.setVisibility(View.VISIBLE);
             if (start.getMonth() != null) {
-                startMonthView
-                        .setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
+                startMonthView.setText(getResources().getStringArray(R.array.months_entries)[start.getMonth().ordinal()]);
             }
             if (start.getNthWeekDay() != null) {
-                startWeekdayView
-                        .setText(getResources().getStringArray(R.array.weekdays_entries)[start.getNthWeekDay().ordinal()]);
+                startWeekdayView.setText(getResources().getStringArray(R.array.weekdays_entries)[start.getNthWeekDay().ordinal()]);
             }
             if (start.getNth() != DateWithOffset.UNDEFINED_MONTH_DAY) {
                 startDayView.setText("[" + Integer.toString(start.getNth()) + "]");
@@ -2029,17 +1979,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 startDayView.setText("");
             }
         } else {
-            Log.e(DEBUG_TAG,"Unsupported date " + start);
+            Log.e(DEBUG_TAG, "Unsupported date " + start);
         }
         // offset stuff
         RelativeLayout startWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.startWeekDayContainer);
         if (startWeekDayContainer != null) {
-            checkWeekDay(startWeekDayContainer,
-                    start.getWeekDayOffset() != null ? start.getWeekDayOffset().toString() : null);
+            checkWeekDay(startWeekDayContainer, start.getWeekDayOffset() != null ? start.getWeekDayOffset().toString() : null);
             setWeekDayListeners(startWeekDayContainer, start);
             final Spinner offsetTypeSpinner = (Spinner) dateRangeRow.findViewById(R.id.startOffsetType);
-            setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner,
-                    start.isWeekDayOffsetPositive() ? "+" : "-");
+            setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, start.isWeekDayOffsetPositive() ? "+" : "-");
             setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
                 @Override
                 public void set(String value) {
@@ -2092,13 +2040,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             if (end.getVarDate() == null && end.getNthWeekDay() == null) {
                 endDelimiter.setVisibility(View.VISIBLE);
                 endDayView.setVisibility(View.VISIBLE);
-                if (endWeekdayView!=null) {
+                if (endWeekdayView != null) {
                     endWeekdayView.setVisibility(View.GONE);
                 }
 
                 if (end.getMonth() != null) {
-                    endMonthView
-                            .setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
+                    endMonthView.setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
                 } else {
                     endMonthView.setText("");
                 }
@@ -2107,25 +2054,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 } else {
                     endDayView.setText("");
                 }
-            } else if (end.getVarDate() != null &&  end.getNthWeekDay() == null){
+            } else if (end.getVarDate() != null && end.getNthWeekDay() == null) {
                 endDelimiter.setVisibility(View.GONE);
                 endDayView.setVisibility(View.GONE);
-                if (endWeekdayView!=null) {
+                if (endWeekdayView != null) {
                     endWeekdayView.setVisibility(View.GONE);
                 }
-                endMonthView
-                        .setText(getResources().getStringArray(R.array.vardate_entries)[end.getVarDate().ordinal()]);
-            } else if (end.getNthWeekDay() != null){
+                endMonthView.setText(getResources().getStringArray(R.array.vardate_entries)[end.getVarDate().ordinal()]);
+            } else if (end.getNthWeekDay() != null) {
                 endDelimiter.setVisibility(View.VISIBLE);
                 endDayView.setVisibility(View.VISIBLE);
                 endWeekdayView.setVisibility(View.VISIBLE);
                 if (end.getMonth() != null) {
-                    endMonthView
-                            .setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
+                    endMonthView.setText(getResources().getStringArray(R.array.months_entries)[end.getMonth().ordinal()]);
                 }
                 if (end.getNthWeekDay() != null) {
-                    endWeekdayView
-                            .setText(getResources().getStringArray(R.array.weekdays_entries)[end.getNthWeekDay().ordinal()]);
+                    endWeekdayView.setText(getResources().getStringArray(R.array.weekdays_entries)[end.getNthWeekDay().ordinal()]);
                 }
                 if (end.getNth() != DateWithOffset.UNDEFINED_MONTH_DAY) {
                     endDayView.setText("[" + Integer.toString(end.getNth()) + "]");
@@ -2133,22 +2077,18 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     endDayView.setText("");
                 }
             } else {
-                Log.e(DEBUG_TAG,"Unsupported date " + end);
+                Log.e(DEBUG_TAG, "Unsupported date " + end);
             }
             Log.d(DEBUG_TAG, "month " + end.getMonth() + " day " + end.getDay() + " var date " + end.getVarDate());
-            if ((end.getMonth() != null && end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY)
-                    || end.getVarDate() != null || end.getNthWeekDay() != null) {
+            if ((end.getMonth() != null && end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) || end.getVarDate() != null || end.getNthWeekDay() != null) {
                 // offset stuff
                 setEnableEndDateOffsets(dateRangeRow, true);
-                RelativeLayout endWeekDayContainer = (RelativeLayout) dateRangeRow
-                        .findViewById(R.id.endWeekDayContainer);
+                RelativeLayout endWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.endWeekDayContainer);
                 if (endWeekDayContainer != null) {
-                    checkWeekDay(endWeekDayContainer,
-                            end.getWeekDayOffset() != null ? end.getWeekDayOffset().toString() : null);
+                    checkWeekDay(endWeekDayContainer, end.getWeekDayOffset() != null ? end.getWeekDayOffset().toString() : null);
                     setWeekDayListeners(endWeekDayContainer, end);
                     final Spinner offsetTypeSpinner = (Spinner) dateRangeRow.findViewById(R.id.endOffsetType);
-                    setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner,
-                            end.isWeekDayOffsetPositive() ? "+" : "-");
+                    setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, end.isWeekDayOffsetPositive() ? "+" : "-");
                     setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2157,8 +2097,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                 }
-                final LinearLayout endOffsetContainer = (LinearLayout) dateRangeRow
-                        .findViewById(R.id.end_offset_container);
+                final LinearLayout endOffsetContainer = (LinearLayout) dateRangeRow.findViewById(R.id.end_offset_container);
                 if (endOffsetContainer != null) {
                     EditText offset = (EditText) endOffsetContainer.findViewById(R.id.end_offset);
                     setTextWatcher(offset, new SetValue() {
@@ -2209,12 +2148,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     /**
      * Check if a string resourse is already in use in a specific menu
      * 
-     * @param menu      menu to check
+     * @param menu menu to check
      * @param stringRes string resource we are interested in
      * @return true if found
      */
     private boolean itemExistsInMenu(Menu menu, int stringRes) {
-        for (int i=0;i<menu.size();i++) {
+        for (int i = 0; i < menu.size(); i++) {
             MenuItem mi = menu.getItem(i);
             if (mi.getTitle().equals(getString(stringRes))) {
                 return true;
@@ -2257,8 +2196,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
-    private void addHolidayUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<Holiday> holidays,
-            @NonNull final Holiday hd) {
+    private void addHolidayUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<Holiday> holidays, @NonNull final Holiday hd) {
         LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
         Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
         setSpinnerInitialEntryValue(R.array.holidays_values, holidaysSpinner, hd.getType().name());
@@ -2344,8 +2282,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         ll.addView(holidayRow);
     }
 
-    private void addYearRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<YearRange> years,
-            @NonNull final YearRange yr) {
+    private void addYearRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<YearRange> years, @NonNull final YearRange yr) {
         LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
         final int startYear = yr.getStartYear();
         final TextView startYearView = (TextView) yearLayout.findViewById(R.id.start_year);
@@ -2422,24 +2359,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     }
                 };
-                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd,
-                        yr.getStartYear(), tempEndYear);
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear);
             }
         });
         ll.addView(yearLayout);
     }
 
     SetRangeListener realSetRangeListener = null;
-    
+
     @Override
     public void setRange(int start, int end) {
         if (realSetRangeListener != null) {
             realSetRangeListener.setRange(start, end);
-        }   
+        }
     }
-    
-    private void addWeekRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<WeekRange> weeks,
-            @NonNull final WeekRange w) {
+
+    private void addWeekRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<WeekRange> weeks, @NonNull final WeekRange w) {
         LinearLayout weekLayout = (LinearLayout) inflater.inflate(R.layout.week_range, null);
         final TextView startWeekView = (TextView) weekLayout.findViewById(R.id.start_week);
         final int startWeek = w.getStartWeek();
@@ -2514,8 +2449,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     }
                 };
-                RangePicker.showDialog(OpeningHoursFragment.this, R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK,
-                        w.getStartWeek(), tempEndWeek);
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK, w.getStartWeek(), tempEndWeek);
             }
         });
         ll.addView(weekLayout);
@@ -2567,7 +2501,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private class DeleteTimeSpan implements Delete {
         final List<TimeSpan> times;
-        final TimeSpan ts;
+        final TimeSpan       ts;
 
         DeleteTimeSpan(final List<TimeSpan> times, final TimeSpan ts) {
             this.times = times;
@@ -2592,7 +2526,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             for (final TimeSpan ts : times) {
                 boolean hasStartEvent = ts.getStartEvent() != null;
                 boolean hasEndEvent = ts.getEndEvent() != null;
-                boolean extendedTime = ts.getEnd() > 1440;
+                final boolean extendedTime = ts.getEnd() > 1440;
                 boolean hasInterval = ts.getInterval() > 0;
                 if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() >= 0 && !extendedTime) {
                     Log.d(DEBUG_TAG, "t-t " + ts.toString());
@@ -2608,10 +2542,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     timeBar.setPinTextFormatter(timeFormater);
                     timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setStart(toMins(leftPinValue));
-                            ts.setEnd(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setStart((int) (leftPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
+                            ts.setEnd((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
@@ -2622,8 +2555,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     ll.addView(timeRangeRow);
                 } else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() >= 0 && extendedTime) {
                     Log.d(DEBUG_TAG, "t-x " + ts.toString());
-                    LinearLayout timeExtendedRangeRow = (LinearLayout) inflater
-                            .inflate(R.layout.time_extended_range_row, null);
+                    LinearLayout timeExtendedRangeRow = (LinearLayout) inflater.inflate(R.layout.time_extended_range_row, null);
                     RangeBar timeBar = (RangeBar) timeExtendedRangeRow.findViewById(R.id.timebar);
                     RangeBar extendedTimeBar = (RangeBar) timeExtendedRangeRow.findViewById(R.id.extendedTimebar);
                     int start = ts.getStart();
@@ -2634,19 +2566,17 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     timeBar.setPinTextFormatter(timeFormater);
                     timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setStart(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setStart((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
                     extendedTimeBar.setRangePinsByValue(1440, end);
-                    extendedTimeBar.setPinTextFormatter(timeFormater);
+                    extendedTimeBar.setPinTextFormatter(extendedTimeFormater);
                     extendedTimeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setEnd(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setEnd((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
@@ -2666,9 +2596,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
                     timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setStart(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setStart((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
@@ -2686,15 +2615,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     timeBar.setRangePinsByValue(0, start);
                     timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setStart(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setStart((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
                     Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, endEvent,
-                            ts.getEndEvent().getEvent().toString());
+                    setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2755,13 +2682,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         }
                         bar.setPinTextFormatter(timeFormater);
+
                         setGranuarlty(bar, 0, end);
                         bar.setRangePinsByValue(start, end);
                         bar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                             @Override
-                            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                    String leftPinValue, String rightPinValue) {
-                                ts.setEnd(toMins(rightPinValue));
+                            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue,
+                                    String rightPinValue) {
+                                ts.setEnd((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                                 updateString();
                             }
                         });
@@ -2770,8 +2698,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         extendedTimeBar.setVisibility(View.GONE);
                     }
                     Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent,
-                            ts.getStartEvent().getEvent().toString());
+                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2816,8 +2743,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Log.d(DEBUG_TAG, "e-e " + ts.toString());
                     LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
                     final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent,
-                            ts.getStartEvent().getEvent().toString());
+                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2825,8 +2751,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, endEvent,
-                            ts.getEndEvent().getEvent().toString());
+                    setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2891,9 +2816,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     timeBar.setRangePinsByValue(0, start);
                     timeBar.setOnRangeBarChangeListener(new OnRangeBarChangeListener() {
                         @Override
-                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex,
-                                String leftPinValue, String rightPinValue) {
-                            ts.setStart(toMins(rightPinValue));
+                        public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                            ts.setStart((int) (rightPinIndex * rangeBar.getTickInterval() + rangeBar.getTickStart()));
                             updateString();
                         }
                     });
@@ -2905,8 +2829,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Log.d(DEBUG_TAG, "e- " + ts.toString());
                     LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
                     final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent,
-                            ts.getStartEvent().getEvent().toString());
+                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2985,16 +2908,16 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             }
         }
     }
-    
+
     SetTimeRangeListener realSetTimeRangeListener = null;
-    
+
     @Override
     public void setTimeRange(int startHour, int startMinute, int endHour, int endMinute) {
-        if (realSetTimeRangeListener!= null) {
+        if (realSetTimeRangeListener != null) {
             realSetTimeRangeListener.setTimeRange(startHour, startMinute, endHour, endMinute);
         }
     }
-    
+
     /**
      * Add a menu item that displays a number picker for times
      * 
@@ -3046,9 +2969,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     private void changeTicks(@NonNull final RangeBar timeBar, int interval) {
-        int start = toMins(timeBar.getLeftPinValue());
+        double tickInterval = timeBar.getTickInterval();
+        float startTick = timeBar.getTickStart();
+        int start = (int) (timeBar.getLeftIndex() * tickInterval + startTick);
         start = Math.round(((float) start) / interval) * interval;
-        int end = toMins(timeBar.getRightPinValue());
+        int end = (int) (timeBar.getRightIndex() * tickInterval + startTick);
         end = Math.round(((float) end) / interval) * interval;
         timeBar.setTickInterval(interval);
         timeBar.setRangePinsByValue(start, end);
@@ -3056,17 +2981,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     private void changeStart(@NonNull final RangeBar timeBar, float newTickStart) {
-        int interval = (int) timeBar.getTickInterval();
-        int start = toMins(timeBar.getLeftPinValue());
-        start = Math.round(((float) start) / interval) * interval;
-        int end = toMins(timeBar.getRightPinValue());
-        end = Math.round(((float) end) / interval) * interval;
+        double tickInterval = timeBar.getTickInterval();
+        float startTick = timeBar.getTickStart();
+        int start = (int) (timeBar.getLeftIndex() * tickInterval + startTick);
+        int end = (int) (timeBar.getRightIndex() * tickInterval + startTick);
         timeBar.setTickStart(newTickStart);
         timeBar.setRangePinsByValue(start, end);
     }
 
-    private void addTimeSpanMenus(@NonNull final RangeBar timeBar, @Nullable final RangeBar timeBar2,
-            @NonNull Menu menu) {
+    private void addTimeSpanMenus(@NonNull final RangeBar timeBar, @Nullable final RangeBar timeBar2, @NonNull Menu menu) {
 
         final MenuItem item15 = menu.add(R.string.ticks_15_minute);
         final MenuItem item5 = menu.add(R.string.ticks_5_minute);
@@ -3169,14 +3092,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         Resources res = getResources();
         final TypedArray values = res.obtainTypedArray(valuesId);
         for (int i = 0; i < values.length(); i++) {
-            if ((value==null && "".equals(values.getString(i))) || value.equals(values.getString(i))) {
+            if ((value == null && "".equals(values.getString(i))) || value.equals(values.getString(i))) {
                 spinner.setSelection(i);
                 break;
             }
         }
         values.recycle();
     }
-    
+
     private String valueToEntry(int valuesId, int entriesId, @Nullable String value) {
         Resources res = getResources();
         final TypedArray values = res.obtainTypedArray(valuesId);
@@ -3194,8 +3117,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         return "Invalid value";
     }
 
-    private void setSpinnerListenerEntryValues(final int valuesId, @NonNull final Spinner spinner,
-            @NonNull final SetValue listener) {
+    private void setSpinnerListenerEntryValues(final int valuesId, @NonNull final Spinner spinner, @NonNull final SetValue listener) {
         final Resources res = getResources();
 
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -3270,24 +3192,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     /**
-     * Parse hh:mm and return minutes since midnight
-     * 
-     * Totally trivial implementation c&p from
-     * http://stackoverflow.com/questions/8909075/convert-time-field-hm-into-integer-field-minutes-in-java FIXME what
-     * happens when this throws an Exception?
-     * 
-     * @param t hh:mm format string
-     * @return number of minutes
-     */
-    private static int toMins(String t) {
-        String[] hourMin = t.split(":");
-        int hour = Integer.parseInt(hourMin[0]);
-        int mins = Integer.parseInt(hourMin[1]);
-        int hoursInMins = hour * 60;
-        return hoursInMins + mins;
-    }
-
-    /**
      * Set a check mark for the say specified
      * 
      * @param container layout containing the checkboxes
@@ -3308,8 +3212,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         Log.d(DEBUG_TAG, "checking " + nth);
         for (int i = 0; i < container.getChildCount(); i++) {
             View v = container.getChildAt(i);
-            if ((v instanceof CheckBox || v instanceof AppCompatCheckBox)
-                    && ((String) v.getTag()).equals(Integer.toString(nth))) {
+            if ((v instanceof CheckBox || v instanceof AppCompatCheckBox) && ((String) v.getTag()).equals(Integer.toString(nth))) {
                 ((CheckBox) v).setChecked(true);
                 return;
             }
@@ -3438,7 +3341,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                 range.setStartNth(nth);
                                 nths.add(range);
                             } else { // don't mix pos and neg valus
-                                if (Integer.signum(nth) !=  Integer.signum(range.getStartNth())) {
+                                if (Integer.signum(nth) != Integer.signum(range.getStartNth())) {
                                     range = new Nth();
                                     range.setStartNth(nth);
                                     nths.add(range);
@@ -3545,16 +3448,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param oh oh value to test against
      */
     private void enableSaveButton(String oh) {
-        saveButton.setEnabled(originalOpeningHoursValue == null
-                || (!originalOpeningHoursValue.equals(oh) && oh.length() <= OSM_MAX_TAG_LENGTH));
+        saveButton.setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && oh.length() <= OSM_MAX_TAG_LENGTH));
     }
 
     /**
      * Template database related methods and fields
      */
-    private Cursor templateCursor;
+    private Cursor          templateCursor;
     private TemplateAdapter templateAdapter;
-    private AlertDialog templateDialog;
+    private AlertDialog     templateDialog;
 
     private AppCompatButton saveButton;
 
@@ -3589,7 +3491,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private class TemplateAdapter extends CursorAdapter {
         final SQLiteDatabase db;
-        final boolean manage;
+        final boolean        manage;
 
         public TemplateAdapter(final SQLiteDatabase db, Context context, Cursor cursor, boolean manage) {
             super(context, cursor, 0);
@@ -3614,10 +3516,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
             String key = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
             TextView nameView = (TextView) view.findViewById(R.id.name);
-            nameView.setText(name) ;
+            nameView.setText(name);
             TextView keyView = (TextView) view.findViewById(R.id.key);
             String keyEntry = valueToEntry(R.array.key_values, R.array.key_entries, key);
-            keyView.setText((isDefault ? getActivity().getString(R.string.is_default, keyEntry) : keyEntry)) ;
+            keyView.setText((isDefault ? getActivity().getString(R.string.is_default, keyEntry) : keyEntry));
             final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
             if (manage) {
                 view.setOnClickListener(new OnClickListener() {
@@ -3656,7 +3558,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final CheckBox defaultCheck = (CheckBox) templateView.findViewById(R.id.is_default);
         final EditText nameEdit = (EditText) templateView.findViewById(R.id.template_name);
         final Spinner keySpinner = (Spinner) templateView.findViewById(R.id.template_key);
-        
+
         String template = null;
         String templateKey = key;
         if (existing) {
@@ -3666,7 +3568,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 defaultCheck.setChecked(isDefault);
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
                 template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
-                templateKey  = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
+                templateKey = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
                 nameEdit.setText(name);
             } else {
                 Log.e(DEBUG_TAG, "template id " + Integer.toString(id) + " not found");
@@ -3686,10 +3588,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             alertDialog.setTitle(R.string.save_template);
         }
         alertDialog.setNegativeButton(R.string.Cancel, null);
-        
+
         keySpinner.setSelection(0);
-        setSpinnerInitialEntryValue(R.array.key_values, keySpinner, templateKey); 
-        
+        setSpinnerInitialEntryValue(R.array.key_values, keySpinner, templateKey);
+
         final String finalTemplate = template;
         alertDialog.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
             @Override
@@ -3699,8 +3601,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 final String spinnerKey = spinnerPos == 0 ? null : values.getString(spinnerPos);
                 values.recycle();
                 if (!existing) {
-                    TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
-                            text.getText().toString());
+                    TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
                     db.close();
                 } else {
                     final String current = text.getText().toString();
@@ -3710,23 +3611,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         alertDialog.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
-                                        current);
+                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
                                 newCursor(db);
                             }
                         });
                         alertDialog.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
-                                        finalTemplate);
+                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate);
                                 newCursor(db);
                             }
                         });
                         alertDialog.show();
                     } else {
-                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
-                                current);
+                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
                         newCursor(db);
                     }
                 }
