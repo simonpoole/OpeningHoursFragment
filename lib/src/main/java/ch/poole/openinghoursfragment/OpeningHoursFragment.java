@@ -3447,8 +3447,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * 
      * @param oh oh value to test against
      */
-    private void enableSaveButton(String oh) {
-        saveButton.setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && oh.length() <= OSM_MAX_TAG_LENGTH));
+    private void enableSaveButton(@Nullable String oh) {
+        saveButton.setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && (oh==null || oh.length() <= OSM_MAX_TAG_LENGTH)));
     }
 
     /**
