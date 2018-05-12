@@ -100,6 +100,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private static final String FRAGMENT_KEY = "fragment";
 
+    private static final String SHOWTEMPLATES_KEY = "show_templates";
+
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
     private Context context = null;
@@ -135,6 +137,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private transient boolean loadedDefault = false;
 
+    private boolean showTemplates = false;
+
     /**
      * True if we encountered a parse error
      */
@@ -167,6 +171,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule) {
+        return newInstance(key, value, style, rule, false);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to an activity
+     * 
+     * @param key the key the OH values belongs to
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @return an OpeningHoursFragment
+     */
+    static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -174,6 +192,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putSerializable(VALUE_KEY, value);
         args.putInt(STYLE_KEY, style);
         args.putInt(RULE_KEY, rule);
+        args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, false);
 
         f.setArguments(args);
@@ -191,6 +210,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule) {
+        return newInstanceForFragment(key, value, style, rule, false);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to a fragment
+     * 
+     * @param key the key the OH values belongs to
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @return an OpeningHoursFragment
+     */
+    static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -198,6 +231,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putSerializable(VALUE_KEY, value);
         args.putInt(STYLE_KEY, style);
         args.putInt(RULE_KEY, rule);
+        args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, true);
 
         f.setArguments(args);
@@ -252,17 +286,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             originalOpeningHoursValue = openingHoursValue;
             styleRes = getArguments().getInt(STYLE_KEY);
             initialRule = getArguments().getInt(RULE_KEY);
+            showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
             useFragmentCallback = getArguments().getBoolean(FRAGMENT_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
         }
         if (openingHoursValue == null || "".equals(openingHoursValue)) {
-            openingHoursValue = TemplateDatabase.getDefault(mDatabase, key);
-            if (openingHoursValue == null) { // didn't find a key specific default try general default now
-                openingHoursValue = TemplateDatabase.getDefault(mDatabase, null);
+            if (!showTemplates) {
+                openingHoursValue = TemplateDatabase.getDefault(mDatabase, key);
+                if (openingHoursValue == null) { // didn't find a key specific default try general default now
+                    openingHoursValue = TemplateDatabase.getDefault(mDatabase, null);
+                }
+                loadedDefault = openingHoursValue != null;
             }
-            loadedDefault = openingHoursValue != null;
         }
 
         context = new ContextThemeWrapper(getActivity(), styleRes);
@@ -3402,6 +3439,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             Log.d(DEBUG_TAG, "Show toast");
             ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
         }
+        if (showTemplates) {
+            showTemplates = false;
+            loadOrManageTemplate(context, false);
+        }
     }
 
     @Override
@@ -3448,7 +3489,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param oh oh value to test against
      */
     private void enableSaveButton(@Nullable String oh) {
-        saveButton.setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && (oh==null || oh.length() <= OSM_MAX_TAG_LENGTH)));
+        saveButton
+                .setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && (oh == null || oh.length() <= OSM_MAX_TAG_LENGTH)));
     }
 
     /**
