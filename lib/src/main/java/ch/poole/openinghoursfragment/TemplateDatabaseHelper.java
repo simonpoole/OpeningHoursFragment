@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class TemplateDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DEBUG_TAG = "TemplateDatabase";
-    private static final String DATABASE_NAME = "openinghours_templates";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DEBUG_TAG        = "TemplateDatabase";
+    private static final String DATABASE_NAME    = "openinghours_templates";
+    private static final int    DATABASE_VERSION = 3;
 
     private final Context context;
 
@@ -22,10 +22,13 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL("CREATE TABLE templates (key TEXT DEFAULT NULL, name TEXT, is_default INTEGER DEFAULT 0, template TEXT DEFAULT '')");
-            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_with_lunch), true,
-                    "Mo-Fr 09:00-12:00,13:30-18:30;Sa 09:00-17:00;PH closed");
-            TemplateDatabase.add(db, null, context.getString(R.string.weekdays), false,
-                    "Mo-Fr 09:00-18:30;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_with_lunch), true, "Mo-Fr 09:00-12:00,13:30-18:30;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_with_lunch_late_shopping), false,
+                    "Mo,Tu,Th,Fr 09:00-12:00,13:30-18:30;We 09:00-12:00,13:30-20:00;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays), false, "Mo-Fr 09:00-18:30;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_late_shopping), false,
+                    "Mo,Tu,Th,Fr 09:00-18:30;We 09:00-20:00;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.twentyfourseven), false, "24/7");
             TemplateDatabase.add(db, "collection_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed");
         } catch (SQLException e) {
             Log.w(DEBUG_TAG, "Problem creating database", e);
@@ -38,6 +41,13 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion <= 1 && newVersion >= 2) {
             db.execSQL("ALTER TABLE templates ADD COLUMN key TEXT DEFAULT NULL");
             TemplateDatabase.add(db, "collection_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed");
+        }
+        if (oldVersion <= 2 && newVersion >= 3) {
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_with_lunch_late_shopping), false,
+                    "Mo,Tu,Th,Fr 09:00-12:00,13:30-18:30;We 09:00-12:00,13:30-20:00;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.weekdays_late_shopping), false,
+                    "Mo,Tu,Th,Fr 09:00-18:30;We 09:00-20:00;Sa 09:00-17:00;PH closed");
+            TemplateDatabase.add(db, null, context.getString(R.string.twentyfourseven), false, "24/7");
         }
     }
 }

@@ -52,7 +52,9 @@
   	
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Weekdays with lunch break</string>
+    <string name="weekdays_with_lunch_late_shopping">Weekdays with lunch break and late shopping</string>
 	<string name="weekdays">Weekdays</string>
+    <string name="weekdays_late_shopping">Weekdays with late shopping</string>
 	<string name="collection_times_weekdays">Once per weekday</string>
     
 <!--	 -->
