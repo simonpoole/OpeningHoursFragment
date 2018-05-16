@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,6 +47,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -55,6 +55,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -84,6 +85,12 @@ import ch.poole.rangebar.RangeBar;
 import ch.poole.rangebar.RangeBar.OnRangeBarChangeListener;
 import ch.poole.rangebar.RangeBar.PinTextFormatter;
 
+/**
+ * DialogFragment that implements an editor for OpenStreetMap opening_hours tags
+ * 
+ * @author Simon Poole
+ *
+ */
 public class OpeningHoursFragment extends DialogFragment implements SetDateRangeListener, SetRangeListener, SetTimeRangeListener {
 
     private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
@@ -98,9 +105,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private static final String RULE_KEY = "rule";
 
-    private static final String FRAGMENT_KEY = "fragment";
-
     private static final String SHOWTEMPLATES_KEY = "show_templates";
+
+    private static final String TEXTVALUES_KEY = "text_values";
+
+    private static final String FRAGMENT_KEY = "fragment";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
@@ -108,9 +117,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private LayoutInflater inflater = null;
 
-    private TextWatcher watcher;
-
-    private String key;
+    private ValueWithDescription key;
 
     private String openingHoursValue;
 
@@ -125,7 +132,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private ArrayList<Rule> rules;
 
-    private EditText text;
+    private AutoCompleteTextView text;
 
     private OnSaveListener saveListener = null;
 
@@ -139,10 +146,17 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private boolean showTemplates = false;
 
+    private List<ValueWithDescription> textValues;
+
+    private MyTextWatcher watcher;
+
     /**
      * True if we encountered a parse error
      */
     private boolean parseErrorFound;
+
+    /** record if we are not actually adding a OH value */
+    private boolean textMode = false;
 
     static PinTextFormatter extendedTimeFormater = new PinTextFormatter() {
         @Override
@@ -185,6 +199,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
+        return newInstance(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to an activity
+     * 
+     * @param key the key the OH values belongs to in an ValueWithDescription object
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @return an OpeningHoursFragment
+     */
+    static public OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule, boolean showTemplates,
+            @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -194,6 +224,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putInt(RULE_KEY, rule);
         args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, false);
+        args.putSerializable(TEXTVALUES_KEY, textValues);
 
         f.setArguments(args);
 
@@ -224,6 +255,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
+        return newInstanceForFragment(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to a fragment
+     * 
+     * @param key @param key the key the OH values belongs to in an ValueWithDescription objecto
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @return an OpeningHoursFragment
+     */
+    static public OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule,
+            boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -233,6 +280,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putInt(RULE_KEY, rule);
         args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, true);
+        args.putSerializable(TEXTVALUES_KEY, textValues);
 
         f.setArguments(args);
 
@@ -240,14 +288,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         Log.d(DEBUG_TAG, "onAttach");
         if (!useFragmentCallback) {
             try {
-                saveListener = (OnSaveListener) activity;
+                saveListener = (OnSaveListener) context;
             } catch (ClassCastException e) {
-                throw new ClassCastException(activity.toString() + " must implement OnSaveListener");
+                throw new ClassCastException(context.toString() + " must implement OnSaveListener");
             }
         }
     }
@@ -269,35 +317,35 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         return dialog;
     }
 
+    @SuppressWarnings("unchecked")
     @SuppressLint("InflateParams")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int initialRule = -1;
         if (savedInstanceState != null) {
             Log.d(DEBUG_TAG, "Restoring from saved state");
-            key = savedInstanceState.getString(KEY_KEY);
+            key = (ValueWithDescription) savedInstanceState.getSerializable(KEY_KEY);
             openingHoursValue = savedInstanceState.getString(VALUE_KEY);
             originalOpeningHoursValue = savedInstanceState.getString(ORIGINAL_VALUE_KEY);
             styleRes = savedInstanceState.getInt(STYLE_KEY);
             useFragmentCallback = savedInstanceState.getBoolean(FRAGMENT_KEY);
+            textValues = (List<ValueWithDescription>) savedInstanceState.getSerializable(TEXTVALUES_KEY);
         } else {
-            key = getArguments().getString(KEY_KEY);
+            key = (ValueWithDescription) getArguments().getSerializable(KEY_KEY);
             openingHoursValue = getArguments().getString(VALUE_KEY);
             originalOpeningHoursValue = openingHoursValue;
             styleRes = getArguments().getInt(STYLE_KEY);
             initialRule = getArguments().getInt(RULE_KEY);
             showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
             useFragmentCallback = getArguments().getBoolean(FRAGMENT_KEY);
+            textValues = (List<ValueWithDescription>) getArguments().getSerializable(TEXTVALUES_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
         }
         if (openingHoursValue == null || "".equals(openingHoursValue)) {
             if (!showTemplates) {
-                openingHoursValue = TemplateDatabase.getDefault(mDatabase, key);
-                if (openingHoursValue == null) { // didn't find a key specific default try general default now
-                    openingHoursValue = TemplateDatabase.getDefault(mDatabase, null);
-                }
+                loadDefault();
                 loadedDefault = openingHoursValue != null;
             }
         }
@@ -305,8 +353,36 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         context = new ContextThemeWrapper(getActivity(), styleRes);
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
+        final LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
+        final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
+        watcher = new MyTextWatcher(sv);
+
+        // check if this is a mixed value tag
+        final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
+        if (textValues != null) {
+            final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
+            final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
+            if (textValues.contains(openingHoursValue) || openingHoursValue == null || "".equals(openingHoursValue)) {
+                useText.setChecked(true);
+                textMode = true;
+            } else {
+                useOH.setChecked(true);
+            }
+            modeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    openingHoursValue = text.getText().toString();
+                    text.removeTextChangedListener(watcher);
+                    text.removeCallbacks(updateStringRunnable);
+                    removeHighlight(text);
+                    buildLayout(openingHoursLayout, openingHoursValue, -1);
+                }
+            });
+            modeGroup.setVisibility(View.VISIBLE);
+        } else {
+            modeGroup.setVisibility(View.GONE);
+        }
         buildLayout(openingHoursLayout, openingHoursValue == null ? "" : openingHoursValue, initialRule);
 
         // add callbacks for the buttons
@@ -327,12 +403,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         saveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveListener.save(key, text.getText().toString());
+                saveListener.save(key.getValue(), text.getText().toString());
                 dismiss();
             }
         });
 
         return openingHoursLayout;
+    }
+
+    /**
+     * 
+     */
+    private void loadDefault() {
+        openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue());
+        if (openingHoursValue == null) { // didn't find a key specific default try general default now
+            openingHoursValue = TemplateDatabase.getDefault(mDatabase, null);
+        }
     }
 
     @Override
@@ -344,6 +430,59 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
+    private class MyTextWatcher implements TextWatcher {
+        final ScrollView scrollView;
+
+        MyTextWatcher(@NonNull ScrollView scrollView) {
+            this.scrollView = scrollView;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            Runnable rebuild = new Runnable() {
+                @Override
+                public void run() {
+                    OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(text.getText().toString().getBytes()));
+                    try {
+                        rules = parser.rules(false);
+                        buildForm(scrollView, rules);
+                        removeHighlight(text);
+                    } catch (ParseException pex) {
+                        Log.d(DEBUG_TAG, pex.getMessage());
+                        highlightParseError(text, pex);
+                    } catch (TokenMgrError err) {
+                        // we currently can't do anything reasonable here except ignore
+                        Log.e(DEBUG_TAG, err.getMessage());
+                    }
+                    enableSaveButton(text.getText().toString());
+                }
+            };
+            text.removeCallbacks(rebuild);
+            if (s != null) {
+                text.postDelayed(rebuild, 500);
+            } else {
+                text.postDelayed(rebuild, 100); // a direct post currently doesn't work
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+    }
+
+    private OnClickListener autocompleteOnClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v.hasFocus()) {
+                ((AutoCompleteTextView) v).showDropDown();
+            }
+        }
+    };
+
     /**
      * Build the parts of the layout that only need to be done once
      * 
@@ -351,51 +490,53 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param openingHoursValue the OH value
      * @param initialRule index of the rule to scroll to, currently ignored
      */
-    private ScrollView buildLayout(@NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
-        text = (EditText) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
+    private ScrollView buildLayout(final @NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
+        text = (AutoCompleteTextView) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
+        String keyDescription = key.getDescription();
+        if (keyDescription != null && !"".equals(keyDescription)) {
+            text.setHint(keyDescription);
+        }
         final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
         if (text != null && sv != null) {
-            text.setText(openingHoursValue);
             sv.removeAllViews();
 
-            watcher = new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable s) {
-                    Runnable rebuild = new Runnable() {
-                        @Override
-                        public void run() {
-                            OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(text.getText().toString().getBytes()));
-                            try {
-                                rules = parser.rules(false);
-                                buildForm(sv, rules);
-                                removeHighlight(text);
-                            } catch (ParseException pex) {
-                                Log.d(DEBUG_TAG, pex.getMessage());
-                                highlightParseError(text, pex);
-                            } catch (TokenMgrError err) {
-                                // we currently can't do anything reasonable here except ignore
-                                Log.e(DEBUG_TAG, err.getMessage());
+            final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
+
+            // non-OH support
+            if (textValues != null) {
+                final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
+                final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
+                if (useText.isChecked()) {
+                    text.removeTextChangedListener(watcher);
+                    text.removeCallbacks(updateStringRunnable);
+                    ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
+                    text.setAdapter(adapter);
+                    text.setOnClickListener(autocompleteOnClick);
+                    text.setText(openingHoursValue);
+                    fab.setVisibility(View.GONE);
+                    textMode = true;
+                    return sv;
+                } else {
+                    text.setAdapter(null);
+                    text.setOnClickListener(null);
+                    textMode = false;
+                    if (openingHoursValue == null || "".equals(openingHoursValue)) {
+                        if (!showTemplates) {
+                            loadDefault();
+                            if (openingHoursValue != null && !"".equals(openingHoursValue)) {
+                                ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
                             }
-                            enableSaveButton(text.getText().toString());
+                        } else {
+                            showTemplates = false;
+                            loadOrManageTemplate(context, false);
                         }
-                    };
-                    text.removeCallbacks(rebuild);
-                    if (s != null) {
-                        text.postDelayed(rebuild, 500);
-                    } else {
-                        text.postDelayed(rebuild, 100); // a direct post currently doesn't work
                     }
                 }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-            };
+            }
+            text.setText(openingHoursValue);
+            text.removeTextChangedListener(watcher);
             text.addTextChangedListener(watcher);
+            fab.setVisibility(View.VISIBLE);
 
             OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
             try {
@@ -445,14 +586,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                     // bottom
                                 }
                             }, 200);
-
                         }
                     }
                     return true;
                 }
             }
 
-            final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
             fab.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -3229,7 +3368,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     /**
-     * Set a check mark for the say specified
+     * Set a check mark for the day specified
      * 
      * @param container layout containing the checkboxes
      * @param day two letter day as a string
@@ -3439,7 +3578,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             Log.d(DEBUG_TAG, "Show toast");
             ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
         }
-        if (showTemplates) {
+        if ((openingHoursValue == null || "".equals(openingHoursValue)) && showTemplates && !textMode) {
             showTemplates = false;
             loadOrManageTemplate(context, false);
         }
@@ -3517,7 +3656,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         alertDialog.setView(templateView);
         ListView lv = (ListView) templateView.findViewById(R.id.listView1);
         final SQLiteDatabase writableDb = new TemplateDatabaseHelper(context).getWritableDatabase();
-        templateCursor = TemplateDatabase.queryByKey(writableDb, manage ? null : key);
+        templateCursor = TemplateDatabase.queryByKey(writableDb, manage ? null : key.getValue());
         templateAdapter = new TemplateAdapter(writableDb, context, templateCursor, manage);
         lv.setAdapter(templateAdapter);
         alertDialog.setNegativeButton(R.string.Done, null);
@@ -3602,7 +3741,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final Spinner keySpinner = (Spinner) templateView.findViewById(R.id.template_key);
 
         String template = null;
-        String templateKey = key;
+        String templateKey = key.getValue();
         if (existing) {
             Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[] { Integer.toString(id) });
             if (cursor.moveToFirst()) {

@@ -1,5 +1,7 @@
 package ch.poole.ohfragmenttest;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import ch.poole.openinghoursfragment.OnSaveListener;
 import ch.poole.openinghoursfragment.OpeningHoursFragment;
+import ch.poole.openinghoursfragment.ValueWithDescription;
 
 
 public class Test extends AppCompatActivity implements OnSaveListener {
@@ -27,8 +30,15 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 	    }
 	    ft.commit();
 
+	    ArrayList<ValueWithDescription> textValues = new ArrayList<>();
+	    ValueWithDescription yes = new ValueWithDescription("yes", "Yes");
+	    textValues.add(yes);
+	    ValueWithDescription no = new ValueWithDescription("no", "No");
+	    textValues.add(no);
+	    
+	    ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
         OpeningHoursFragment openingHoursDialog 
-        	= OpeningHoursFragment.newInstance("opening_hours",SHORT_TEST,R.style.Theme_AppCompat_Light_Dialog_Alert, 5);
+        	= OpeningHoursFragment.newInstance(key,null,R.style.Theme_AppCompat_Light_Dialog_Alert, 5, true, textValues);
         openingHoursDialog.show(fm, "fragment_openinghours");
 	}
 

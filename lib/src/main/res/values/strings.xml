@@ -24,6 +24,10 @@
     <string name="Start">Start</string>
     <string name="End">End</string>
     
+    <string name="default_hint">Opening hours string</string>
+    
+    <string name="text_values">Text values</string>
+    
  <!--	templates -->
     <string name="edit_template">Edit template</string>
     <string name="name_legend">Name:</string>

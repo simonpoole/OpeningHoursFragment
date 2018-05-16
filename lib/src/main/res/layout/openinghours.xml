@@ -20,7 +20,7 @@
   		android:focusableInTouchMode="true"
         >
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/openinghours_string_edit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -28,9 +28,41 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:background="?attr/colorPrimary"
-            android:hint="oh string"
+            android:hint="@string/default_hint"
             android:inputType="textNoSuggestions"
-            android:singleLine="true" />
+            android:completionThreshold="1"
+            android:dropDownWidth="wrap_content"
+            android:maxLines="1" 
+            android:saveEnabled="false" />
+            
+         <RadioGroup
+            android:id="@+id/modeGroup"
+            android:saveEnabled="false"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:minHeight="34dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp">
+        
+        <RadioButton
+            android:id="@+id/use_oh"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/opening_hours_key" />
+
+        <RadioButton
+            android:id="@+id/use_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/text_values" />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout

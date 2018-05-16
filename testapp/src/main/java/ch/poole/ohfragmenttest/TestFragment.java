@@ -1,7 +1,7 @@
 package ch.poole.ohfragmenttest;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -72,8 +72,8 @@ public class TestFragment extends DialogFragment implements  OnSaveListener
 
     
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         Log.d(DEBUG_TAG, "onAttach");
     }
     
