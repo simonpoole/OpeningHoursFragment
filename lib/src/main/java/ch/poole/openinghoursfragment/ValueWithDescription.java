@@ -33,4 +33,31 @@ public class ValueWithDescription implements Serializable {
     public String toString() {
         return value;
     }
+ 
+    @Override
+    public int hashCode() {
+        return value == null ? 0 : value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ValueWithDescription other = (ValueWithDescription) obj;
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+        return true;
+    }
 }

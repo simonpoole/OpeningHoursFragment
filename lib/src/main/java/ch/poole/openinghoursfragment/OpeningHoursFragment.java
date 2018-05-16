@@ -363,7 +363,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (textValues != null) {
             final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
             final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
-            if (textValues.contains(openingHoursValue) || openingHoursValue == null || "".equals(openingHoursValue)) {
+            if (textValues.contains(new ValueWithDescription(openingHoursValue, null)) || openingHoursValue == null || "".equals(openingHoursValue)) {
                 useText.setChecked(true);
                 textMode = true;
             } else {
@@ -3282,7 +3282,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final TypedArray entries = res.obtainTypedArray(entriesId);
         try {
             for (int i = 0; i < values.length(); i++) {
-                if ((value == null && "".equals(values.getString(i))) || value.equals(values.getString(i))) {
+                if ((value == null && "".equals(values.getString(i))) || (value != null && value.equals(values.getString(i)))) {
                     return entries.getString(i);
                 }
             }
