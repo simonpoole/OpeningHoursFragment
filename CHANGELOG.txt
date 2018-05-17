@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.5.1: Properly enable save button
+
 0.5.0: Support showing the list of templates instead of applying the default for empty entries, support for mixed type values
 
 0.4.2: Protect against NPW when enabling save button

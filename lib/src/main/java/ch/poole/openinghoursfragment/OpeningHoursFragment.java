@@ -148,7 +148,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private List<ValueWithDescription> textValues;
 
-    private MyTextWatcher watcher;
+    private OhTextWatcher   watcher;
+    private TextTextWatcher textWatcher;
 
     /**
      * True if we encountered a parse error
@@ -356,7 +357,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
         final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
-        watcher = new MyTextWatcher(sv);
+        watcher = new OhTextWatcher(sv);
+        textWatcher = new TextTextWatcher();
 
         // check if this is a mixed value tag
         final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
@@ -374,6 +376,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     openingHoursValue = text.getText().toString();
                     text.removeTextChangedListener(watcher);
+                    text.removeTextChangedListener(textWatcher);
                     text.removeCallbacks(updateStringRunnable);
                     removeHighlight(text);
                     buildLayout(openingHoursLayout, openingHoursValue, -1);
@@ -430,10 +433,38 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
-    private class MyTextWatcher implements TextWatcher {
+    /**
+     * Enable the save button if the text has changed
+     * 
+     * @author simon
+     *
+     */
+    private class TextTextWatcher implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            enableSaveButton(text.getText().toString());
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+    }
+
+    /**
+     * Re-parses and rebuilds the form if the text is changed by typing
+     * 
+     * @author simon
+     *
+     */
+    private class OhTextWatcher implements TextWatcher {
         final ScrollView scrollView;
 
-        MyTextWatcher(@NonNull ScrollView scrollView) {
+        OhTextWatcher(@NonNull ScrollView scrollView) {
             this.scrollView = scrollView;
         }
 
@@ -513,6 +544,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     text.setAdapter(adapter);
                     text.setOnClickListener(autocompleteOnClick);
                     text.setText(openingHoursValue);
+                    text.removeTextChangedListener(textWatcher);
+                    text.addTextChangedListener(textWatcher);
                     fab.setVisibility(View.GONE);
                     textMode = true;
                     return sv;
@@ -534,6 +567,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
             }
             text.setText(openingHoursValue);
+            text.removeTextChangedListener(textWatcher);
             text.removeTextChangedListener(watcher);
             text.addTextChangedListener(watcher);
             fab.setVisibility(View.VISIBLE);
@@ -3628,8 +3662,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param oh oh value to test against
      */
     private void enableSaveButton(@Nullable String oh) {
-        saveButton
-                .setEnabled(originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && (oh == null || oh.length() <= OSM_MAX_TAG_LENGTH)));
+        if (saveButton != null) {
+            saveButton.setEnabled(
+                    originalOpeningHoursValue == null || (!originalOpeningHoursValue.equals(oh) && (oh == null || oh.length() <= OSM_MAX_TAG_LENGTH)));
+        }
     }
 
     /**
