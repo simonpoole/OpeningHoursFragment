@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical" >
 
@@ -25,15 +26,18 @@
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_alignParentTop="true" 
-            	android:layout_alignParentLeft="true" >
+            	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" >
 
             	<TextView
                 	android:id="@+id/textMo"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/monday_short" />
 
             	<CheckBox
@@ -41,6 +45,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                 	android:layout_below="@id/textMo"
                 	android:tag="@string/oh_monday" />
 
@@ -50,6 +55,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxMo"
                 	android:layout_toRightOf="@id/checkBoxMo"
+                    android:layout_toEndOf="@id/checkBoxMo"
                 	android:tag="@string/oh_tuesday" />
 
             	<CheckBox
@@ -58,6 +64,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxTu"
                 	android:layout_toRightOf="@id/checkBoxTu"
+                    android:layout_toEndOf="@id/checkBoxTu"
                 	android:tag="@string/oh_wednesday" />
 
             	<CheckBox
@@ -66,6 +73,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxWe"
                 	android:layout_toRightOf="@id/checkBoxWe"
+                    android:layout_toEndOf="@id/checkBoxWe"
                 	android:tag="@string/oh_thursday" />
 
             	<CheckBox
@@ -74,6 +82,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxTh"
                 	android:layout_toRightOf="@id/checkBoxTh"
+                    android:layout_toEndOf="@id/checkBoxTh"
                 	android:tag="@string/oh_friday" />
 
             	<CheckBox
@@ -82,6 +91,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxFr"
                 	android:layout_toRightOf="@id/checkBoxFr"
+                    android:layout_toEndOf="@id/checkBoxFr"
                 	android:tag="@string/oh_saturday" />
 
             	<CheckBox
@@ -90,6 +100,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/checkBoxSa"
                 	android:layout_toRightOf="@id/checkBoxSa"
+                    android:layout_toEndOf="@id/checkBoxSa"
                 	android:tag="@string/oh_sunday" />
 
             	<TextView
@@ -97,8 +108,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxTu"
                 	android:layout_alignLeft="@id/checkBoxTu"
+                    android:layout_alignStart="@id/checkBoxTu"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/tuesday_short" />
 
             	<TextView
@@ -106,8 +119,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxWe"
                 	android:layout_alignLeft="@id/checkBoxWe"
+                    android:layout_alignStart="@id/checkBoxWe"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/wednesday_short" />
 
             	<TextView
@@ -115,8 +130,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxTh"
                 	android:layout_alignLeft="@id/checkBoxTh"
+                    android:layout_alignStart="@id/checkBoxTh"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/thursday_short" />
 
             	<TextView
@@ -124,8 +141,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxFr"
                 	android:layout_alignLeft="@id/checkBoxFr"
+                    android:layout_alignStart="@id/checkBoxFr"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/friday_short" />
 
             	<TextView
@@ -133,8 +152,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxSa"
                 	android:layout_alignLeft="@id/checkBoxSa"
+                    android:layout_alignStart="@id/checkBoxSa"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/saturday_short" />
 
             	<TextView
@@ -142,8 +163,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/checkBoxSu"
                 	android:layout_alignLeft="@id/checkBoxSu"
+                    android:layout_alignStart="@id/checkBoxSu"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/sunday_short" />
         	</RelativeLayout>
 
@@ -152,8 +175,10 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
 				android:layout_below="@id/startWeekDayContainer"
 				android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
 				android:drawSelectorOnTop="true"
 				android:entries="@array/offset_type_entries"
 				android:paddingTop="12dp" />
@@ -163,6 +188,7 @@
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
     			android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
     			android:layout_below="@id/startOffsetType"
     			android:layout_marginTop="12dp"
 				>
@@ -218,6 +244,7 @@
             	android:layout_height="wrap_content"
             	android:layout_below="@id/startDate"
             	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
             	android:orientation="horizontal"
             	>
             	<TextView
@@ -241,6 +268,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/start_offset_container"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
@@ -254,15 +282,18 @@
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_below="@id/to"
-            	android:layout_alignParentLeft="true" >
+            	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" >
 
             	<TextView
                 	android:id="@+id/endTextMo"
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/monday_short" />
 
             	<CheckBox
@@ -270,6 +301,7 @@
                 	android:layout_width="wrap_content"
                 	android:layout_height="wrap_content"
                 	android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                 	android:layout_below="@id/endTextMo"
                 	android:tag="@string/oh_monday" />
 
@@ -279,6 +311,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxMo"
                 	android:layout_toRightOf="@id/endCheckBoxMo"
+                    android:layout_toEndOf="@id/endCheckBoxMo"
                 	android:tag="@string/oh_tuesday" />
 
             	<CheckBox
@@ -287,6 +320,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxTu"
                 	android:layout_toRightOf="@id/endCheckBoxTu"
+                    android:layout_toEndOf="@id/endCheckBoxTu"
                 	android:tag="@string/oh_wednesday" />
 
             	<CheckBox
@@ -295,6 +329,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxWe"
                 	android:layout_toRightOf="@id/endCheckBoxWe"
+                    android:layout_toEndOf="@id/endCheckBoxWe"
                 	android:tag="@string/oh_thursday" />
 
             	<CheckBox
@@ -303,6 +338,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxTh"
                 	android:layout_toRightOf="@id/endCheckBoxTh"
+                    android:layout_toEndOf="@id/endCheckBoxTh"
                 	android:tag="@string/oh_friday" />
 
             	<CheckBox
@@ -311,6 +347,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxFr"
                 	android:layout_toRightOf="@id/endCheckBoxFr"
+                    android:layout_toEndOf="@id/endCheckBoxFr"
                 	android:tag="@string/oh_saturday" />
 
             	<CheckBox
@@ -319,6 +356,7 @@
                 	android:layout_height="wrap_content"
                 	android:layout_alignTop="@id/endCheckBoxSa"
                 	android:layout_toRightOf="@id/endCheckBoxSa"
+                    android:layout_toEndOf="@id/endCheckBoxSa"
                 	android:tag="@string/oh_sunday" />
 
             	<TextView
@@ -326,8 +364,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxTu"
                 	android:layout_alignLeft="@id/endCheckBoxTu"
+                    android:layout_alignStart="@id/endCheckBoxTu"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/tuesday_short" />
 
             	<TextView
@@ -335,8 +375,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxWe"
                 	android:layout_alignLeft="@id/endCheckBoxWe"
+                    android:layout_alignStart="@id/endCheckBoxWe"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/wednesday_short" />
 
             	<TextView
@@ -344,8 +386,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxTh"
                 	android:layout_alignLeft="@id/endCheckBoxTh"
+                    android:layout_alignStart="@id/endCheckBoxTh"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/thursday_short" />
 
             	<TextView
@@ -353,8 +397,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxFr"
                 	android:layout_alignLeft="@id/endCheckBoxFr"
+                    android:layout_alignStart="@id/endCheckBoxFr"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/friday_short" />
 
             	<TextView
@@ -362,8 +408,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxSa"
                 	android:layout_alignLeft="@id/endCheckBoxSa"
+                    android:layout_alignStart="@id/endCheckBoxSa"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/saturday_short" />
 
             	<TextView
@@ -371,8 +419,10 @@
                 	android:layout_height="wrap_content"
                 	android:layout_above="@id/endCheckBoxSu"
                 	android:layout_alignLeft="@id/endCheckBoxSu"
+                    android:layout_alignStart="@id/endCheckBoxSu"
                 	android:layout_alignParentTop="true"
                 	android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
                 	android:text="@string/sunday_short" />
         	</RelativeLayout>  
         	
@@ -382,7 +432,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/endWeekDayContainer"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/offset_type_entries" /> 	 
@@ -392,6 +444,7 @@
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
     			android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
     			android:layout_below="@id/endOffsetType"
     			android:layout_marginTop="12dp"
     			android:layout_marginBottom="12dp"
@@ -447,6 +500,7 @@
             	android:layout_height="wrap_content"
             	android:layout_below="@id/endDate"
             	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
             	android:orientation="horizontal"
             	>
             	<TextView

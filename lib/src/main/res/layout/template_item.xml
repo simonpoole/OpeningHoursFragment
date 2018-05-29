@@ -10,6 +10,7 @@
 		android:layout_height="wrap_content"
 		android:paddingTop="10dp"
 		android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
 		android:layout_alignParentTop="true"
 		android:textAppearance="?android:attr/textAppearanceMedium" 
 		android:text="@string/name_legend"/>
@@ -22,6 +23,7 @@
 		android:layout_marginRight="?attr/dialogPreferredPadding"
 		android:layout_alignTop="@id/template_name_legend"
 		android:layout_toRightOf="@id/template_name_legend"
+        android:layout_toEndOf="@id/template_name_legend"
 		android:textAppearance="?android:attr/textAppearanceMedium" />
 		
 	<TextView
@@ -29,6 +31,7 @@
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
 		android:paddingTop="10dp"
 		android:layout_below="@id/template_name"
 		android:textAppearance="?android:attr/textAppearanceMedium" 
@@ -40,7 +43,9 @@
         android:layout_height="34dp"
         android:layout_marginBottom="1dp"
         android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp"
         android:layout_alignLeft="@id/template_name"
+        android:layout_alignStart="@id/template_name"
         android:layout_alignBaseline="@id/default_legend"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -52,6 +57,7 @@
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
 		android:paddingTop="10dp"
 		android:layout_below="@id/is_default"
 		android:textAppearance="?android:attr/textAppearanceMedium" 
@@ -63,7 +69,9 @@
         android:layout_height="34dp"
         android:layout_marginBottom="1dp"
         android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp"
         android:layout_alignLeft="@id/template_name"
+        android:layout_alignStart="@id/template_name"
         android:layout_alignBaseline="@id/key_legend"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"

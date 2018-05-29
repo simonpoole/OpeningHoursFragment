@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical" >
 
@@ -24,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_entries" />
@@ -34,6 +36,7 @@
             	android:layout_height="wrap_content"
             	android:layout_alignTop="@id/startEvent"
             	android:layout_toRightOf="@id/startEvent"
+                android:layout_toEndOf="@id/startEvent"
             	android:orientation="horizontal"
             	>
             	<TextView
@@ -61,6 +64,7 @@
                 android:layout_marginRight="0dp"
                 android:layout_below="@id/startEvent"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 custom:connectToRight="false"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorPrimary"
@@ -86,6 +90,7 @@
                 android:layout_marginRight="0dp"
                 android:layout_below="@id/timebar"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 custom:connectingLineColor="?attr/colorAccent"
                 custom:pinColor="?attr/colorPrimary"
                 custom:textColor="@android:color/black"

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical" >
 
@@ -26,6 +27,7 @@
     			android:layout_height="wrap_content" 
     			android:layout_marginTop="12dp"
     			android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
 				>
             	<TextView
                 	android:id="@+id/startYear"
@@ -79,6 +81,7 @@
             	android:layout_height="wrap_content"
             	android:layout_below="@id/startDate"
             	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
             	android:orientation="horizontal"
             	>
             	<TextView
@@ -102,6 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/start_offset_container"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
@@ -117,6 +121,7 @@
 				android:layout_width="wrap_content"
     			android:layout_height="wrap_content" 
     			android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
     			android:layout_below="@id/to"
     			android:layout_marginBottom="12dp"
 				>
@@ -171,6 +176,7 @@
             	android:layout_height="wrap_content"
             	android:layout_below="@id/endDate"
             	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
             	android:orientation="horizontal"
             	>
             	<TextView

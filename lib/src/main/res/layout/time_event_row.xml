@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical" >
 
@@ -25,7 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_entries" />
@@ -36,7 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@id/startEvent"
+                android:layout_toEndOf="@id/startEvent"
                 android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:paddingTop="12dp"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/events_entries" />
@@ -46,6 +51,7 @@
  				android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_alignLeft="@id/startEvent"
+                android:layout_alignStart="@id/startEvent"
             	android:layout_below="@id/startEvent"
             	android:orientation="horizontal"
             	>
@@ -69,6 +75,7 @@
  				android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_alignLeft="@id/endEvent"
+                android:layout_alignStart="@id/endEvent"
             	android:layout_below="@id/endEvent"
             	android:orientation="horizontal"
             	>

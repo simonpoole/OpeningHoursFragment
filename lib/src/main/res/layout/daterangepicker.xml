@@ -73,6 +73,7 @@
         	android:layout_centerHorizontal="true"
         	android:layout_marginTop="20dp"
         	android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
         	app:npv_ItemPaddingHorizontal="2dp"
         	app:npv_ItemPaddingVertical="5dp"
         	app:npv_ShowCount="5"

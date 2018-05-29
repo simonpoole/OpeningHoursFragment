@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
     android:orientation="vertical" >
 
@@ -22,8 +23,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:paddingLeft="6dp"
+                android:paddingStart="6dp"
                 android:text="@string/occurrence_in_month_title" />
                 
             <TextView
@@ -31,8 +34,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/title"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="1." />
 
             <CheckBox
@@ -40,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/text1"
                 android:tag="1" />
 
@@ -49,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBox1"
                 android:layout_toRightOf="@id/checkBox1"
+                android:layout_toEndOf="@id/checkBox1"
                 android:tag="2" />
 
             <CheckBox
@@ -57,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBox2"
                 android:layout_toRightOf="@id/checkBox2"
+                android:layout_toEndOf="@id/checkBox2"
                 android:tag="3" />
 
             <CheckBox
@@ -65,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBox3"
                 android:layout_toRightOf="@id/checkBox3"
+                android:layout_toEndOf="@id/checkBox3"
                 android:tag="4" />
 
             <CheckBox
@@ -73,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBox4"
                 android:layout_toRightOf="@id/checkBox4"
+                android:layout_toEndOf="@id/checkBox4"
                 android:tag="5" />
 
             <TextView
@@ -80,8 +90,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBox2"
                 android:layout_alignLeft="@id/checkBox2"
+                android:layout_alignStart="@id/checkBox2"
                 android:layout_alignTop="@id/text1"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="2." />
 
             <TextView
@@ -89,8 +101,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBox3"
                 android:layout_alignLeft="@id/checkBox3"
+                android:layout_alignStart="@id/checkBox3"
                 android:layout_alignTop="@id/text1"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="3." />
 
             <TextView
@@ -98,8 +112,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBox4"
                 android:layout_alignLeft="@id/checkBox4"
+                android:layout_alignStart="@id/checkBox4"
                 android:layout_alignTop="@id/text1"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="4." />
 
             <TextView
@@ -107,8 +123,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBox5"
                 android:layout_alignLeft="@id/checkBox5"
+                android:layout_alignStart="@id/checkBox5"
                 android:layout_alignTop="@id/text1"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="5." />
                 
              <TextView
@@ -116,8 +134,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/checkBox1"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="-1." />
                 
              <CheckBox
@@ -125,6 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/textLast"
                 android:tag="-1" />
                 
@@ -134,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBoxLast"
                 android:layout_toRightOf="@id/checkBoxLast"
+                android:layout_toEndOf="@id/checkBoxLast"
                 android:tag="-2" />
                 
             <CheckBox
@@ -142,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBoxLast2"
                 android:layout_toRightOf="@id/checkBoxLast2"
+                android:layout_toEndOf="@id/checkBoxLast2"
                 android:tag="-3" />
                 
              <CheckBox
@@ -150,6 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBoxLast3"
                 android:layout_toRightOf="@id/checkBoxLast3"
+                android:layout_toEndOf="@id/checkBoxLast3"
                 android:tag="-4" />
                 
              <CheckBox
@@ -158,6 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/checkBoxLast4"
                 android:layout_toRightOf="@id/checkBoxLast4"
+                android:layout_toEndOf="@id/checkBoxLast4"
                 android:tag="-5" />
                 
              <TextView
@@ -165,8 +190,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBoxLast2"
                 android:layout_alignLeft="@id/checkBoxLast2"
+                android:layout_alignStart="@id/checkBoxLast2"
                 android:layout_alignTop="@id/textLast"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="-2." />
                 
              <TextView
@@ -174,8 +201,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBoxLast3"
                 android:layout_alignLeft="@id/checkBoxLast3"
+                android:layout_alignStart="@id/checkBoxLast3"
                 android:layout_alignTop="@id/textLast"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="-3." />
                 
              <TextView
@@ -183,8 +212,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBoxLast4"
                 android:layout_alignLeft="@id/checkBoxLast4"
+                android:layout_alignStart="@id/checkBoxLast4"
                 android:layout_alignTop="@id/textLast"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="-4." />
                 
              <TextView
@@ -192,8 +223,10 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/checkBoxLast5"
                 android:layout_alignLeft="@id/checkBoxLast5"
+                android:layout_alignStart="@id/checkBoxLast5"
                 android:layout_alignTop="@id/textLast"
                 android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:text="-5." />
                 
  			<LinearLayout
@@ -202,6 +235,7 @@
             	android:layout_height="wrap_content"
             	android:layout_below="@id/checkBoxLast"
             	android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
             	android:orientation="horizontal"
             	>
             	<TextView
