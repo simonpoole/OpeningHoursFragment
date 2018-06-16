@@ -3,6 +3,7 @@
 
     <string name="Cancel">Cancelar</string>
     <string name="Save">Guardar</string>
+    <string name="Done">Listo</string>
     <string name="value_too_long">La duración del valor de las horas de apertura es %1$d que es más largo que el máximo de 255.\n\n ¡Simplifique la cadena antes de guardar, por favor!</string>
     <string name="would_overwrite_invalid_value">No se puede añadir la regla a la cadena de horas de apertura no válidas. ¡Por favor, corríjalo o elimínelo!</string>
     
@@ -13,6 +14,7 @@
     <string name="save_to_template">Guardar en la plantilla</string>
     <string name="manage_templates">Administrar plantillas</string>
     <string name="refresh">Actualizar</string>
+    <string name="clear">Borrar todo</string>
     <string name="load_templates_title">Cargar plantillas</string>
     <string name="manage_templates_title">Administrar plantillas</string>
     <string name="save_template">Guardar plantilla</string>
@@ -86,6 +88,7 @@
 
     <string name="with_offsets">Con compensaciones...</string>
     <string name="rule_type">Mostrar tipo de regla</string>
+    <string name="duplicate_rule">Duplicar</string>
     <string name="move_up">Subir</string>
     <string name="move_down">Bajar</string>
     <string name="display_time_picker">Mostrar el selector de tiempo</string>

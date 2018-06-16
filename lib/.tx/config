@@ -3,7 +3,7 @@ host = https://www.transifex.com
 
 [openinghoursfragment.stringsxml]
 file_filter = src/main/res/values-<lang>/strings.xml
-lang_map = cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh-Hans: zh-rCN, sv_SE: sv-rSE, id: in 
+lang_map = cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh-Hans: zh-rCN, sv_SE: sv-rSE, id: in, he: iw 
 source_file = src/main/res/values/strings.xml
 source_lang = en
 minimum_perc = 5

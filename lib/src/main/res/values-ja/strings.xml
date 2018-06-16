@@ -1,15 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Cancel">キャンセル</string>
     <string name="Save">保存</string>
-    <string name="Yes">中古品の取り扱いあり</string>
-    <string name="No">中古品の取り扱いなし</string>
-    <string name="End">End</string>
+    <string name="Done">完了</string>
+    <string name="Yes">はい</string>
+    <string name="No">いいえ</string>
+    <string name="Start">開始</string>
+    <string name="End">終了</string>
     
- <string name="all_keys">すべて</string>
+ <!--	templates -->
+    <string name="edit_template">編集テンプレート</string>
+    <string name="name_legend">名称:</string>
+    <string name="default_legend">デフォルト:</string>
+    <string name="key_legend">キー:</string>
+    
+    <string name="is_default">%1$s (デフォルト)</string>
+    
+     <string name="all_keys">すべて</string>
+  	<string name="opening_hours_key">オープン時間</string>
   	<!--    menu items -->
 	<string name="Delete">Delete</string>
-	<string name="closed">閉店中</string>
+	<string name="interval_minutes">間隔 (分)</string>
+    <string name="interval_years">間隔 (年)</string>
+    <string name="interval_weeks">間隔 (週)</string>
+    
+    <string name="offset_mins">オフセット (±分)</string>
+    <string name="offset_days">オフセット (±日数)</string>
+    
+    <string name="date_range">日付範囲</string>
+    <string name="date">日付</string>
+    <string name="date_weekday_occurrence">日付 (月内の曜日)</string>
+    <string name="week_range">週範囲</string>
+    <string name="weeks">週</string>
+    <string name="year_range">年範囲</string>
+    <string name="years">年</string>
+    
+    <string name="comment">コメント</string>
+    
+    <string name="twentyfourseven">24時間、週7日</string>
+    
+    <string name="easter">イースター</string>
+    
+    <string name="sunrise">日出</string>
+  	<string name="sunset">日没</string>
+  	<string name="public_holidays">祝日</string>
+  	<string name="school_holidays">学校休日</string>
+  	
+  	<string name="monday_short">月</string>
+  	<string name="tuesday_short">火</string>
+  	<string name="wednesday_short">水</string>
+  	<string name="thursday_short">木</string>
+  	<string name="friday_short">金</string>
+  	<string name="saturday_short">土</string>
+  	<string name="sunday_short">日</string>
+
+  	<string name="january">1月</string>
+  	<string name="february">2月</string>
+  	<string name="march">3月</string>
+  	<string name="april">4月</string>
+  	<string name="may">5月</string>
+  	<string name="june">6月</string>
+  	<string name="july">7月</string>
+  	<string name="august">8月</string>
+  	<string name="september">9月</string>
+  	<string name="october">10月</string>
+  	<string name="november">11月</string>
+  	<string name="december">12月</string>
+  	
+  	<string name="closed">閉店中</string>
   	<string name="unknown">不明</string>
     
+  	<string name="before">前</string>
+    <string name="after">後</string>
+  	
   	</resources>

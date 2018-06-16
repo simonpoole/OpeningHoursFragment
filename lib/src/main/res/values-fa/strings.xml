@@ -9,7 +9,8 @@
  <string name="all_keys">همه</string>
   	<!--    menu items -->
 	<string name="Delete">Delete</string>
-	<string name="closed">بسته</string>
+	<string name="date_range">محدوده زمانی</string>
+    <string name="closed">بسته</string>
   	<string name="unknown">ناشناخته</string>
     
   	</resources>

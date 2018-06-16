@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">Αποθήκευση</string>
+    <string name="Done">Έγινε</string>
     <string name="Yes">Ναι</string>
     <string name="No">Όχι</string>
     <string name="all_keys">Όλα</string>
+  	<string name="opening_hours_key">Ωρες λειτουργίας</string>
   	<!--    menu items -->
 	<string name="Delete">Διαγραφή </string>
-	<string name="closed">κλειστό</string>
+	<!--     opening hour elements -->
+         
+    <string name="normal_rule">Κανονικό</string>
+    <string name="closed">κλειστό</string>
   	<string name="unknown">άγνωστη</string>
     
   	</resources>

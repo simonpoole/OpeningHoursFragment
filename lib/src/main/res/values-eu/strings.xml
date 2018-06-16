@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Save">Gorde</string>
+    <string name="Done">Egina</string>
+    <string name="Yes">Bai</string>
+    <string name="No">Ez</string>
+    <string name="move_up">Eraman gora</string>
+    <string name="move_down">Eraman behera</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Arrunta</string>
+    <string name="unknown">ezezaguna</string>
+    
+  	</resources>

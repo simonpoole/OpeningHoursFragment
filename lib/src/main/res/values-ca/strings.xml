@@ -1,23 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Cancel">Cancel·lar</string>
     <string name="Save">Desar</string>
     <string name="Done">Fet</string>
+    <string name="load_template">Carregar plantilla</string>
+    <string name="manage_templates">Gestionar plantilles</string>
+    <string name="load_templates_title">Carregar plantilles</string>
+    <string name="manage_templates_title">Gestionar plantilles</string>
+    <string name="save_template">Desar plantilla</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
+    <string name="Start">Inici</string>
     <string name="End">Fin</string>
     
- <string name="all_keys">Tots</string>
+ <string name="name_legend">Nom:</string>
+    <string name="default_legend">Per defecte:</string>
+    <string name="key_legend">Clau:</string>
+    
+    <string name="is_default">%1$s (per defecte)</string>
+    
+     <string name="all_keys">Tots</string>
   	<string name="opening_hours_key">Horaris d\'apertura</string>
-  	<!--    menu items -->
+  	<string name="weekdays">Dies de la setmana</string>
+	<string name="collection_times_weekdays">Una vegada per setmana</string>
+    
+<!--	 -->
+    <string name="group_header">Grup %1$s</string>
+    <!--    menu items -->
 	<string name="Delete">Supr</string>
-	<string name="move_up">Mou amunt</string>
+	<string name="add_holiday">Afegir vacances</string>
+	
+    <string name="time_time">Hora - hora</string>
+    <string name="time">Hora</string>
+    <string name="date_date">Data - data</string>
+    <string name="move_up">Mou amunt</string>
     <string name="move_down">Mou avall</string>
     <!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
     <string name="date_range">Interval de dates</string>
-    <string name="closed">tancat</string>
+    <string name="date">Data</string>
+    <string name="weeks">Setmanes</string>
+    <string name="years">Anys</string>
+    
+    <string name="comment">Comentari</string>
+    
+    <string name="twentyfourseven">24 hores, 7 dies a la setmana</string>
+    
+    <string name="to">a</string>
+    
+    <string name="easter">Setmana Santa</string>
+    
+    <string name="sunrise">Sortida de sol</string>
+  	<string name="sunset">Posta de sol</string>
+  	<string name="dawn">Alba</string>
+  	<string name="dusk">Crepuscle</string>
+  	
+  	<string name="public_holidays">Dies festius</string>
+  	<string name="school_holidays">Vacances escolars</string>
+  	
+  	<string name="monday_short">Dl</string>
+  	<string name="tuesday_short">Dt</string>
+  	<string name="wednesday_short">Dc</string>
+  	<string name="thursday_short">Dj</string>
+  	<string name="friday_short">Dv</string>
+  	<string name="saturday_short">Ds</string>
+  	<string name="sunday_short">Dg</string>
+
+  	<string name="january">Gen</string>
+  	<string name="february">Feb</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Abr</string>
+  	<string name="may">Mai</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Ago</string>
+  	<string name="september">Set</string>
+  	<string name="october">Oct</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Des</string>
+  	
+  	<string name="open">obert</string>
+ 	<string name="closed">tancat</string>
   	<string name="unknown">desconeguda</string>
     
+  	<string name="before">abans</string>
+    <string name="after">després</string>
+  	
   	</resources>

@@ -9,6 +9,7 @@
     <string name="save_to_template">Zapisz do szablonu</string>
     <string name="manage_templates">Zarządzaj szablonami</string>
     <string name="refresh">Wczytaj ponownie</string>
+    <string name="clear">Usuń wszystkie</string>
     <string name="load_templates_title">Wczytaj szablony</string>
     <string name="manage_templates_title">Zarządzaj szablonami</string>
     <string name="save_template">Zapisz szablony</string>
