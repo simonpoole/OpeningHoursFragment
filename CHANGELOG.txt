@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.5.2: Enable RTL support (but there are no such translations currently), show templates for specific key at top of list, update translations.
+
 0.5.1: Properly enable save button
 
 0.5.0: Support showing the list of templates instead of applying the default for empty entries, support for mixed type values
