@@ -21,7 +21,7 @@ class TemplateDatabase {
 
     static final String QUERY_ALL = "SELECT rowid as _id, key, name, is_default, template FROM templates";
     static final String QUERY_BY_ROWID = "SELECT key, name, is_default, template FROM templates WHERE rowid=?";
-    static final String QUERY_BY_KEY = "SELECT rowid as _id, key, name, is_default, template FROM templates WHERE key is NULL OR key=?";
+    static final String QUERY_BY_KEY = "SELECT rowid as _id, key, name, is_default, template FROM templates WHERE key is NULL OR key=? ORDER BY key DESC";
 
     /**
      * Return the default template entry if any

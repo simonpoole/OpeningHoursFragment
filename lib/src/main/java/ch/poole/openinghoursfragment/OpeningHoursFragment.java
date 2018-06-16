@@ -520,6 +520,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param openingHoursLayout the layout
      * @param openingHoursValue the OH value
      * @param initialRule index of the rule to scroll to, currently ignored
+     * @return a ScrollView
      */
     private ScrollView buildLayout(final @NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
         text = (AutoCompleteTextView) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
@@ -561,7 +562,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         } else {
                             showTemplates = false;
-                            loadOrManageTemplate(context, false);
+                            loadOrManageTemplate(context, false, key.getValue());
                         }
                     }
                 }
@@ -3685,14 +3686,27 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param manage if true the template editor will be started otherwise the template will replace the current OH
      *            value
      */
-    void loadOrManageTemplate(Context context, boolean manage) {
+    void loadOrManageTemplate(@NonNull Context context, boolean manage) {
+        loadOrManageTemplate(context, manage, manage ? null : key.getValue());
+    }
+    
+    /**
+     * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
+     * it
+     * 
+     * @param context Android context
+     * @param manage if true the template editor will be started otherwise the template will replace the current OH
+     *            value
+     * @param loadKey the key to search for templates for in the DB, if null all
+     */
+    void loadOrManageTemplate(@NonNull Context context, boolean manage, @Nullable String loadKey) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         View templateView = (View) inflater.inflate(R.layout.template_list, null);
         alertDialog.setTitle(manage ? R.string.manage_templates_title : R.string.load_templates_title);
         alertDialog.setView(templateView);
         ListView lv = (ListView) templateView.findViewById(R.id.listView1);
         final SQLiteDatabase writableDb = new TemplateDatabaseHelper(context).getWritableDatabase();
-        templateCursor = TemplateDatabase.queryByKey(writableDb, manage ? null : key.getValue());
+        templateCursor = TemplateDatabase.queryByKey(writableDb, loadKey);
         templateAdapter = new TemplateAdapter(writableDb, context, templateCursor, manage);
         lv.setAdapter(templateAdapter);
         alertDialog.setNegativeButton(R.string.Done, null);
