@@ -8,3 +8,10 @@ source_file = src/main/res/values/strings.xml
 source_lang = en
 minimum_perc = 5
 
+[openinghoursfragment.opening-hoursmd]
+file_filter = documentation/docs/help/<lang>/Opening hours.md
+lang_map = cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh_CN: zh-rCN, sv_SE: sv-rSE, id: in, he: iw 
+source_file = documentation/docs/help/en/Opening hours.md
+source_lang = en
+minimum_perc = 50
+

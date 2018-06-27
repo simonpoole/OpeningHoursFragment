@@ -9,7 +9,9 @@
   	<string name="opening_hours_key">Ωρες λειτουργίας</string>
   	<!--    menu items -->
 	<string name="Delete">Διαγραφή </string>
-	<!--     opening hour elements -->
+	<string name="move_up">Μετακίνηση επάνω</string>
+    <string name="move_down">Μετακίνηση κάτω</string>
+    <!--     opening hour elements -->
          
     <string name="normal_rule">Κανονικό</string>
     <string name="closed">κλειστό</string>

@@ -4,6 +4,9 @@
     <string name="Cancel">Annulla</string>
     <string name="Save">Salva</string>
     <string name="Done">Completato</string>
+    <string name="value_too_long">La lunghezza del valore degli orari di apertura è %1$d che è più grande del massimo consentito di 255.\n\nSemplificare il testo prima di salvarlo!</string>
+    <string name="would_overwrite_invalid_value">Impossibile aggiungere la regola a degli orari di apertura non validi. Correggere o eliminare!</string>
+    
     <string name="add_rule">Aggiungi regola</string>
     <string name="add_rule_247">Aggiungi regola per 24/7</string>
     <string name="add_rule_closed_on_holidays">Aggiungi regola per le festività</string>
@@ -15,6 +18,7 @@
     <string name="load_templates_title">Carica modelli</string>
     <string name="manage_templates_title">Gestisci modelli</string>
     <string name="save_template">Salva modello</string>
+    <string name="update_template">Aggiornare anche il valore del modello?</string>
     <string name="Yes">Sì</string>
     <string name="No">No</string>
     <string name="Start">Inizia</string>
@@ -48,37 +52,80 @@
 	<string name="Delete">Elimina</string>
 	<string name="add_modifier_comment">Aggiungi modificatore/commento</string>
 	<string name="add_year_range">Aggiungi intervallo annuale</string>
-	<string name="add_week_range">Aggiungi intervallo settimanale</string>
+	<string name="add_week_range">Aggiungi intervallo di settimane</string>
 	<string name="add_holiday">Aggiungi festività</string>
 	
-    <string name="timespan_menu">Aggiungi intervallo temporale</string>
+    <string name="timespan_menu">Aggiungi intervallo temporale ...</string>
+    <string name="time_time">Orario - orario</string>
+    <string name="time_extended_time">Orario - orario esteso</string>
+    <string name="variable_time_time">Orario var. - orario</string>
+    <string name="variable_time_extended_time">Orario var. - orario esteso</string>
+    <string name="time_variable_time">Orario - orario var.</string>
+    <string name="variable_time_variable_time">Orario var. - orario var.</string>
+    <string name="time">Orario</string>
+    <string name="time_open_end">Senza orario di chiusura</string>
+    <string name="variable_time">Orario variabile</string>
+    <string name="variable_time_open_end">Orario di chiusura variabile</string>
     <string name="start_at_midnight">Inizia a mezzanotte</string>
     
     <string name="week_day_range">Aggiungi intervallo di giorni</string>
+    <string name="occurrence_in_month">Aggiungi occorrenza nel mese</string>
+    
+    <string name="daterange_menu">Aggiungi intervallo di date ...</string>
     <string name="date_date">Data - data</string>
-    <string name="duplicate_rule">Duplicato</string>
+    <string name="variable_date_date">Data variabile - data</string>
+    <string name="date_variable_date">Data - data variabile</string>
+    <string name="variable_date_variable_date">Data variabile - data variabile</string>
+    <string name="occurrence_occurrence">Occorrenza nel mese - occorrenza nel mese</string>
+    <string name="occurrence_date">Occorrenza nel mese - data</string>
+    <string name="date_occurrence">Data - occorrenza nel mese</string>
+    <string name="occurrence_variable_date">Occorrenza nel mese - data variabile</string>
+    <string name="variable_date_occurrence">Data variabile - occorrenza nel mese</string>
+    
+    <string name="date_open_end">Data - senza un termine</string>
+    <string name="variable_date_open_end">Data variabile - senza un termine</string>
+    <string name="occurrence_open_end">Occorrenza nel mese - senza un termine</string>
+
+    <string name="with_offsets">Con scostamenti...</string>
+    <string name="rule_type">Mostra tipo di regola</string>
+    <string name="duplicate_rule">Duplica</string>
     <string name="move_up">Sposta su</string>
     <string name="move_down">Sposta giù</string>
+    <string name="display_time_picker">Mostra selettore orario</string>
     <string name="ticks_15_minute">Passa a scatti di 15 minuti</string>
     <string name="ticks_5_minute">Passa a scatti di 5 minuti</string>
     <string name="ticks_1_minute">Passa a scatti di 1 minuto</string>
+    <string name="show_offset">Mostra scostamento</string>
+    <string name="show_start_offset">Mostra scostamento di partenza</string>
+    <string name="show_end_offset">Mostra scostamento dalla fine</string>
     <string name="show_interval">Mostra intervallo</string>
     <string name="show_useAsWeekDay">Mostra utilizzo</string>
     
 <!--     opening hour elements -->
          
     <string name="normal_rule">Normale</string>
+    <string name="additive_rule">Additivo</string>
+    <string name="fallback_rule">Di riserva</string>
+    
     <string name="interval_minutes">Intervallo (minuti)</string>
     <string name="interval_years">Intervallo (anni)</string>
     <string name="interval_weeks">Intervallo (settimane)</string>
     
+    <string name="offset_mins">Scostamento (±minuti)</string>
+    <string name="offset_days">Scostamento (±giorni)</string>
+    
     <string name="date_range">Intervallo di date</string>
     <string name="date">Data</string>
+    <string name="date_weekday_occurrence">Data (giorno settimanale nel mese)</string>
+    <string name="week_range">Intervallo di settimane</string>
     <string name="weeks">Settimane</string>
+    <string name="year_range">Intervallo di anni</string>
     <string name="years">Anni</string>
     
     <string name="modifier">Modificatore</string>
     <string name="comment">Commento</string>
+    
+    <string name="use_as_weekday">Usare come giorno settimanale</string>
     
     <string name="twentyfourseven">24 ore su 24, 7 giorni su 7</string>
     
@@ -93,6 +140,8 @@
   	
   	<string name="public_holidays">Festività pubbliche</string>
   	<string name="school_holidays">Festività scolastiche</string>
+  	
+  	<string name="occurrence_in_month_title">Occorrenza nel mese</string>
   	
   	<string name="monday_short">Lu</string>
   	<string name="tuesday_short">Ma</string>
