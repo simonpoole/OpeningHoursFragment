@@ -1817,7 +1817,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final DateWithOffset endDate = dateRange.getEndDate();
 
         boolean hasStartOffset = startDate.getWeekDayOffset() != null || startDate.getDayOffset() != 0;
-        boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || startDate.getDayOffset() != 0);
+        boolean hasEndOffset = endDate != null && (endDate.getWeekDayOffset() != null || endDate.getDayOffset() != 0);
         boolean hasStartOccurrence = startDate.getNthWeekDay() != null;
         boolean hasEndOccurrence = endDate != null && endDate.getNthWeekDay() != null;
 
@@ -2323,7 +2323,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             updateString();
                         }
                     });
-                    if (end.getDayOffset() > 0) {
+                    if (end.getDayOffset() != 0) {
                         offset.setText(Integer.toString(end.getDayOffset()));
                         endOffsetContainer.setVisibility(View.VISIBLE);
                     } else {
