@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Save">Spremi</string>
     <string name="Yes">Da</string>
     <string name="No">Ne</string>
     <string name="End">End</string>
     
  <string name="all_keys">Svi</string>
-  	<string name="closed">zatvoreno</string>
+  	<string name="comment">Komentar</string>
+    
+    <string name="closed">zatvoreno</string>
   	<string name="unknown">nepoznato</string>
     
   	</resources>

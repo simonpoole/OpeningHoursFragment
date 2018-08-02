@@ -11,6 +11,8 @@
   	<!--    menu items -->
 	<string name="Delete">Eyða</string>
 	<string name="date">Dagsetning</string>
+    <string name="comment">Athugasemd</string>
+    
     <string name="unknown">óþekkt</string>
     
   	</resources>

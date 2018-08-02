@@ -63,9 +63,9 @@
     <string name="time_variable_time">Idő – változó idő</string>
     <string name="variable_time_variable_time">Változó idő – változó idő</string>
     <string name="time">Idő</string>
-    <string name="time_open_end">Idő – nyílt vég</string>
+    <string name="time_open_end">Idő – örökké</string>
     <string name="variable_time">Változó idő</string>
-    <string name="variable_time_open_end">Változó idő – nyílt vég</string>
+    <string name="variable_time_open_end">Változó idő – örökké</string>
     <string name="start_at_midnight">Éjfélkor indul</string>
     
     <string name="week_day_range">Hét napjaiból álló tartomány hozzáadása</string>
@@ -82,9 +82,9 @@
     <string name="occurrence_variable_date">Előfordulás hónapban – változó dátum</string>
     <string name="variable_date_occurrence">Változó dátum – előfordulás hónapban</string>
     
-    <string name="date_open_end">Dátum – nyílt vég</string>
-    <string name="variable_date_open_end">Változó dátum – nyílt vég</string>
-    <string name="occurrence_open_end">Előfordulás hónapban – nyílt vég</string>
+    <string name="date_open_end">Dátum – örökké</string>
+    <string name="variable_date_open_end">Változó dátum – örökké</string>
+    <string name="occurrence_open_end">Előfordulás hónapban – örökké</string>
 
     <string name="with_offsets">Eltolásokkal…</string>
     <string name="rule_type">Szabálytípus megjelenítése</string>

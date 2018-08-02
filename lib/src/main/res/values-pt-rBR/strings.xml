@@ -8,7 +8,9 @@
     
  <string name="all_keys">Tudo</string>
   	<string name="collection_times_key">Tempos de coleta</string>
-  	<string name="closed">fechado</string>
+  	<string name="comment">Comentário</string>
+    
+    <string name="closed">fechado</string>
   	<string name="unknown">desconhecido</string>
     
   	</resources>

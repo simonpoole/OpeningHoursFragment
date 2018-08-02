@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Save">保存</string>
+    <string name="Yes">是</string>
+    <string name="No">否</string>
+    <string name="End">End</string>
+    
+ <string name="all_keys">全部交通方式</string>
+  	<string name="comment">评论</string>
+    
+    <string name="closed">已关闭</string>
+  	</resources>

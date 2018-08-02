@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="Cancel">Annuler</string>
     <string name="Save">Sauvegarder</string>
+    <string name="Done">Terminé</string>
+    <string name="add_rule">Ajouter une règle</string>
+    <string name="add_rule_247">Ajouter une règle pour 24h/24 7j/7</string>
+    <string name="add_rule_closed_on_holidays">Ajouter une règle pour les vacances</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="clear">Effacer tout</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
     <string name="End">Fin</string>
@@ -10,9 +17,45 @@
   	<string name="opening_hours_key">Horaires d\'ouverture</string>
   	<!--    menu items -->
 	<string name="Delete">Effacer</string>
-	<string name="move_up">Déplacer vers le haut</string>
+	<string name="duplicate_rule">Dupliquer</string>
+    <string name="move_up">Déplacer vers le haut</string>
     <string name="move_down">Déplacer en bas</string>
-    <string name="closed">fermé</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
+    <string name="interval_minutes">Intervalle (minutes)</string>
+    <string name="interval_years">Intervalle (années)</string>
+    <string name="interval_weeks">Intervalle (semaines)</string>
+    
+    <string name="comment">Commentaire</string>
+    
+    <string name="school_holidays">Vacances scolaires</string>
+  	
+  	<string name="monday_short">Lu</string>
+  	<string name="tuesday_short">Ma</string>
+  	<string name="wednesday_short">Me</string>
+  	<string name="thursday_short">Je</string>
+  	<string name="friday_short">Ve</string>
+  	<string name="saturday_short">Sa</string>
+  	<string name="sunday_short">Di</string>
+
+  	<string name="january">Jan</string>
+  	<string name="february">Fév</string>
+  	<string name="march">Mar</string>
+  	<string name="april">Avr</string>
+  	<string name="may">Mai</string>
+  	<string name="june">Jun</string>
+  	<string name="july">Jul</string>
+  	<string name="august">Aoû</string>
+  	<string name="september">Sep</string>
+  	<string name="october">Oct</string>
+  	<string name="november">Nov</string>
+  	<string name="december">Déc</string>
+  	
+  	<string name="closed">fermé</string>
   	<string name="unknown">inconnu</string>
     
+  	<string name="before">avant</string>
+    <string name="after">après</string>
+  	
   	</resources>

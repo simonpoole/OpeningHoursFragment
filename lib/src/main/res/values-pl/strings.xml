@@ -3,6 +3,7 @@
 
     <string name="Cancel">Anuluj</string>
     <string name="Save">Zapisz</string>
+    <string name="Done">Gotowe</string>
     <string name="add_rule">Dodaj regułę</string>
     <string name="add_rule_closed_on_holidays">Dodaj regułę dla dni świątecznych</string>
     <string name="load_template">Wczytaj szablon</string>

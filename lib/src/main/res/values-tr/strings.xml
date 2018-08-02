@@ -19,7 +19,9 @@
     <string name="name_legend">İsim:</string>
     <string name="default_legend">Varsayılan:</string>
     <string name="all_keys">Tüm</string>
-  	<string name="closed">kapalı</string>
+  	<string name="comment">Yorum</string>
+    
+    <string name="closed">kapalı</string>
   	<string name="unknown">bilinmeyen</string>
     
   	</resources>
