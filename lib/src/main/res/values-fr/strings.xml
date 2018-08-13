@@ -4,32 +4,144 @@
     <string name="Cancel">Annuler</string>
     <string name="Save">Sauvegarder</string>
     <string name="Done">Terminé</string>
+    <string name="value_too_long">La valeur des heures d\'ouverture fait %1$d caractères de long, ce qui est plus que la longueur maximale de 255.\n\nSimplifiez la chaîne avant d\'enregistrer !</string>
+    <string name="would_overwrite_invalid_value">Impossible d\'ajouter une règle à une chaîne d\'horaires d\'ouverture invalide. Corrigez ou supprimez-la !</string>
+    
     <string name="add_rule">Ajouter une règle</string>
     <string name="add_rule_247">Ajouter une règle pour 24h/24 7j/7</string>
     <string name="add_rule_closed_on_holidays">Ajouter une règle pour les vacances</string>
+    <string name="load_template">Charger un modèle</string>
+    <string name="save_to_template">Enregistrer dans un modèle</string>
+    <string name="manage_templates">Gérer les modèles</string>
     <string name="refresh">Rafraîchir</string>
-    <string name="clear">Effacer tout</string>
+    <string name="clear">Tout effacer</string>
+    <string name="load_templates_title">Charger des modèles</string>
+    <string name="manage_templates_title">Gérer les modèles</string>
+    <string name="save_template">Enregistrer le modèle</string>
+    <string name="update_template">Mettre aussi à jour la valeur du modèle ?</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
+    <string name="Start">Début</string>
     <string name="End">Fin</string>
     
- <string name="all_keys">Tous</string>
+ <!--	templates -->
+    <string name="edit_template">Modifier le modèle</string>
+    <string name="name_legend">Nom :</string>
+    <string name="default_legend">Par défaut :</string>
+    <string name="key_legend">Clef :</string>
+    
+    <string name="is_default">%1$s (par défaut)</string>
+    
+     <string name="all_keys">Tous</string>
   	<string name="opening_hours_key">Horaires d\'ouverture</string>
-  	<!--    menu items -->
+  	<string name="service_times_key">Horaires de service</string>
+  	<string name="collection_times_key">Horaires de collecte</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">En semaine avec pause-déjeuner</string>
+	<string name="weekdays">En semaine</string>
+	<string name="collection_times_weekdays">Une fois par jour en semaine</string>
+    
+<!--	 -->
+    <string name="group_header">Groupe %1$s</string>
+    <string name="rule_header">Règle %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">Modèle par défaut chargé</string>
+    
+<!--    menu items -->
 	<string name="Delete">Effacer</string>
-	<string name="duplicate_rule">Dupliquer</string>
+	<string name="add_modifier_comment">Ajouter un modificateur ou un commentaire</string>
+	<string name="add_year_range">Ajouter un intervalle d\'années</string>
+	<string name="add_week_range">Ajouter un intervalle de semaines</string>
+	<string name="add_holiday">Ajouter des jours fériés</string>
+	
+    <string name="timespan_menu">Ajouter un intervalle de temps…</string>
+    <string name="time_time">Heure fixe à heure fixe</string>
+    <string name="time_extended_time">Heure fixe à heure fixe étendue</string>
+    <string name="variable_time_time">Heure variable à heure fixe</string>
+    <string name="variable_time_extended_time">Heure variable à heure fixe étendue</string>
+    <string name="time_variable_time">Heure fixe à heure variable</string>
+    <string name="variable_time_variable_time">Heure variable à heure variable</string>
+    <string name="time">Heure fixe</string>
+    <string name="time_open_end">Heure fixe à durée indéterminée</string>
+    <string name="variable_time">Heure variable</string>
+    <string name="variable_time_open_end">Heure variable à durée indéterminée</string>
+    <string name="start_at_midnight">Commencer à minuit</string>
+    
+    <string name="week_day_range">Ajouter un intervalle de jours de semaine</string>
+    <string name="occurrence_in_month">Ajouter une occurrence dans le mois</string>
+    
+    <string name="daterange_menu">Ajouter un intervalle de dates…</string>
+    <string name="date_date">Date fixe à date fixe</string>
+    <string name="variable_date_date">Date variable à data fixe</string>
+    <string name="date_variable_date">Date fixe à date variable</string>
+    <string name="variable_date_variable_date">Date variable à date variable</string>
+    <string name="occurrence_occurrence">Occurrence dans le mois à occurrence dans le mois</string>
+    <string name="occurrence_date">Occurrence dans le mois à date fixe</string>
+    <string name="date_occurrence">Date fixe à occurrence dans le mois</string>
+    <string name="occurrence_variable_date">Occurrence dans le mois à date variable</string>
+    <string name="variable_date_occurrence">Date variable à occurrence dans le mois</string>
+    
+    <string name="date_open_end">Date fixe à durée indéterminée</string>
+    <string name="variable_date_open_end">Date variable à durée indéterminée</string>
+    <string name="occurrence_open_end">Occurrence dans le mois à durée indéterminée</string>
+
+    <string name="with_offsets">Avec décalages…</string>
+    <string name="rule_type">Montrer le type de règle</string>
+    <string name="duplicate_rule">Dupliquer</string>
     <string name="move_up">Déplacer vers le haut</string>
-    <string name="move_down">Déplacer en bas</string>
-    <!--     opening hour elements -->
+    <string name="move_down">Déplacer vers le bas</string>
+    <string name="display_time_picker">Montrer le sélecteur d\'heure</string>
+    <string name="ticks_15_minute">Passer à des intervalles de 15 minutes</string>
+    <string name="ticks_5_minute">Passer à des intervalles de 5 minutes</string>
+    <string name="ticks_1_minute">Passer à des intervalles d\'une minute</string>
+    <string name="show_offset">Montrer le décallage</string>
+    <string name="show_start_offset">Montrer le décalage de début</string>
+    <string name="show_end_offset">Montrer le décalage de fin</string>
+    <string name="show_interval">Montrer l\'intervalle</string>
+    <string name="show_useAsWeekDay">Montrer l\'utilisation</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
+    <string name="additive_rule">Additif</string>
+    <string name="fallback_rule">Par défaut</string>
+    
     <string name="interval_minutes">Intervalle (minutes)</string>
     <string name="interval_years">Intervalle (années)</string>
     <string name="interval_weeks">Intervalle (semaines)</string>
     
+    <string name="offset_mins">Décalage (± min)</string>
+    <string name="offset_days">Décalage (± jour)</string>
+    
+    <string name="date_range">Intervalle de dates</string>
+    <string name="date">Date</string>
+    <string name="date_weekday_occurrence">Date (jour de semaine dans le mois)</string>
+    <string name="week_range">Intervalle de semaines</string>
+    <string name="weeks">Semaines</string>
+    <string name="year_range">Intervalle d\'années</string>
+    <string name="years">Années</string>
+    
+    <string name="modifier">Modificateur</string>
     <string name="comment">Commentaire</string>
     
-    <string name="school_holidays">Vacances scolaires</string>
+    <string name="use_as_weekday">Utiliser comme un jour de semaine</string>
+    
+    <string name="twentyfourseven">24 heures sur 24, 7 jours sur 7</string>
+    
+    <string name="to">à</string>
+    
+    <string name="easter">Pâques</string>
+    
+    <string name="sunrise">Levé du soleil</string>
+  	<string name="sunset">Couché du soleil</string>
+  	<string name="dawn">Aube</string>
+  	<string name="dusk">Crépuscule</string>
+  	
+  	<string name="public_holidays">Vacances publiques</string>
+  	<string name="school_holidays">Vacances scolaires</string>
+  	
+  	<string name="occurrence_in_month_title">Occurrence dans le mois</string>
   	
   	<string name="monday_short">Lu</string>
   	<string name="tuesday_short">Ma</string>
@@ -52,8 +164,10 @@
   	<string name="november">Nov</string>
   	<string name="december">Déc</string>
   	
-  	<string name="closed">fermé</string>
-  	<string name="unknown">inconnu</string>
+  	<string name="open">ouvert</string>
+ 	<string name="closed">fermé</string>
+  	<string name="off">en vacance</string>
+    <string name="unknown">inconnu</string>
     
   	<string name="before">avant</string>
     <string name="after">après</string>
