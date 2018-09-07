@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Cancel">ביטול</string>
+    <string name="Save">שמירה</string>
+    <string name="Done">סיום</string>
+    <string name="value_too_long">אורך ערך שעות הפתיחה הוא %1$d שהוא אורך מהמגבלה המרבית שעומדת על 255 תווים.\n\nנא לפשט את המחרוזת בטרם שמירתה!</string>
+    <string name="would_overwrite_invalid_value">לא ניתן להוסיף כלל למחרוזת שעות פתיחה שגויה. נא לתקן או למחוק!</string>
+    
+    <string name="add_rule">הוספת כלל</string>
+    <string name="add_rule_247">הוספת כלל ל־24/7</string>
+    <string name="add_rule_closed_on_holidays">הוספת כלל לחגים</string>
+    <string name="load_template">טעינת תבנית</string>
+    <string name="save_to_template">שמירת לתבנית</string>
+    <string name="manage_templates">ניהול תבניות</string>
+    <string name="refresh">רענון</string>
+    <string name="clear">מחיקת הכול</string>
+    <string name="load_templates_title">טעינת תבניות</string>
+    <string name="manage_templates_title">ניהול תבניות</string>
+    <string name="save_template">שמירת תבנית</string>
+    <string name="update_template">לעדכן גם את הערך בתבנית?</string>
+    <string name="Yes">כן</string>
+    <string name="No">לא</string>
+    <string name="Start">התחלה</string>
+    <string name="End">סיום</string>
+    
+ <!--	templates -->
+    <string name="edit_template">עריכת תבנית</string>
+    <string name="name_legend">שם:</string>
+    <string name="default_legend">בררת מחדל:</string>
+    <string name="key_legend">מפתח:</string>
+    
+    <string name="is_default">%1$s (בררת מחדל)</string>
+    
+     <string name="all_keys">הכול</string>
+  	<string name="opening_hours_key">שעות פתיחה</string>
+  	<string name="service_times_key">זמני שירות</string>
+  	<string name="collection_times_key">זמני איסוף</string>
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">ימי השבוע עם הפסקת צהריים</string>
+	<string name="weekdays">ימי השבוע</string>
+	<string name="collection_times_weekdays">פעם ביום עבודה</string>
+    
+<!--	 -->
+    <string name="group_header">קבוצה %1$s</string>
+    <string name="rule_header">כלל %1$s</string>
+    
+<!--	messages -->
+    <string name="loaded_default">נטענה תבנית בררת המחדל</string>
+    
+<!--    menu items -->
+	<string name="Delete">מחיקה</string>
+	<string name="add_modifier_comment">הוספת מצב/תגובה</string>
+	<string name="add_year_range">הוספת טווח שנים</string>
+	<string name="add_week_range">הוספת טווח שבועות</string>
+	<string name="add_holiday">הוספת חג</string>
+	
+    <string name="timespan_menu">הוספת טווח זמן…</string>
+    <string name="time_time">שעה - שעה</string>
+    <string name="time_extended_time">שעה - שעה מורחבת</string>
+    <string name="variable_time_time">שעה משתנה - שעה</string>
+    <string name="variable_time_extended_time">שעה משתנה - שעה מורחבת</string>
+    <string name="time_variable_time">שעה - שעה משתנה</string>
+    <string name="variable_time_variable_time">שעה משתנה - שעה משתנה</string>
+    <string name="time">שעה</string>
+    <string name="time_open_end">שעה - הודעה חדשה</string>
+    <string name="variable_time">שעה משתנה</string>
+    <string name="variable_time_open_end">זמן משתנה - הודעה חדשה</string>
+    <string name="start_at_midnight">התחלה בחצות</string>
+    
+    <string name="week_day_range">הוספת טווח ליום בשבוע</string>
+    <string name="occurrence_in_month">הוספת פעם בחודש</string>
+    
+    <string name="daterange_menu">הוספת טווח תאריכים…</string>
+    <string name="date_date">תאריך - תאריך</string>
+    <string name="variable_date_date">תאריך משתנה - תאריך</string>
+    <string name="date_variable_date">תאריך - תאריך משתנה</string>
+    <string name="variable_date_variable_date">תאריך משתנה - תאריך משתנה</string>
+    <string name="occurrence_occurrence">פעם בחודש - פעם בחודש</string>
+    <string name="occurrence_date">פעם בחודש - תאריך</string>
+    <string name="date_occurrence">תאריך - פעם בחודש</string>
+    <string name="occurrence_variable_date">פעם בחודש - תאריך משתנה</string>
+    <string name="variable_date_occurrence">תאריך משתנה - פעם בחודש</string>
+    
+    <string name="date_open_end">תאריך - הודעה חדשה</string>
+    <string name="variable_date_open_end">שעה משתנה - הודעה חדשה</string>
+    <string name="occurrence_open_end">פעם בחודש - הודעה חדשה</string>
+
+    <string name="with_offsets">עם איזונים…</string>
+    <string name="rule_type">הצגת סוג כל</string>
+    <string name="duplicate_rule">שכפול</string>
+    <string name="move_up">העברה למעלה</string>
+    <string name="move_down">העברה למטה</string>
+    <string name="display_time_picker">הצגת בוחר זמן</string>
+    <string name="ticks_15_minute">מעבר לפעימות של 15 דקות</string>
+    <string name="ticks_5_minute">מעבר לפעימות של 5 דקות</string>
+    <string name="ticks_1_minute">מעבר לפעימות של דקה</string>
+    <string name="show_offset">הצגת איזון</string>
+    <string name="show_start_offset">הצגת איזון התחלה</string>
+    <string name="show_end_offset">הצגת איזון סיום</string>
+    <string name="show_interval">הצגת הפרש</string>
+    <string name="show_useAsWeekDay">הצגת שימוש</string>
+    
+<!--     opening hour elements -->
+         
+    <string name="normal_rule">רגיל</string>
+    <string name="additive_rule">מתווסף</string>
+    <string name="fallback_rule">עתודה</string>
+    
+    <string name="interval_minutes">הפרש (דקות)</string>
+    <string name="interval_years">הפרש (שנים)</string>
+    <string name="interval_weeks">הפרש (שבועות)</string>
+    
+    <string name="offset_mins">איזון (±דקות)</string>
+    <string name="offset_days">איזון (±ימים)</string>
+    
+    <string name="date_range">טווח תאריכים</string>
+    <string name="date">תאריך</string>
+    <string name="date_weekday_occurrence">תאריך (יום בשבוע מתוך חודש)</string>
+    <string name="week_range">טווח שבועות</string>
+    <string name="weeks">שבועות</string>
+    <string name="year_range">טווח שנים</string>
+    <string name="years">שנים</string>
+    
+    <string name="modifier">מצב</string>
+    <string name="comment">תגובה</string>
+    
+    <string name="use_as_weekday">להשתמש כמו יום בשבוע</string>
+    
+    <string name="twentyfourseven">24 שעות, 7 ימים בשבוע</string>
+    
+    <string name="to">עד</string>
+    
+    <string name="easter">פסחא</string>
+    
+    <string name="sunrise">זריחה</string>
+  	<string name="sunset">שקיעה</string>
+  	<string name="dawn">שחר</string>
+  	<string name="dusk">דמדומים</string>
+  	
+  	<string name="public_holidays">חגים ציבוריים</string>
+  	<string name="school_holidays">חגי בתי ספר</string>
+  	
+  	<string name="occurrence_in_month_title">פעמים בחודש</string>
+  	
+  	<string name="monday_short">ב׳</string>
+  	<string name="tuesday_short">ג׳</string>
+  	<string name="wednesday_short">ד׳</string>
+  	<string name="thursday_short">ה</string>
+  	<string name="friday_short">ו׳</string>
+  	<string name="saturday_short">ש׳</string>
+  	<string name="sunday_short">א׳</string>
+
+  	<string name="january">ינו׳</string>
+  	<string name="february">פבר׳</string>
+  	<string name="march">מרץ</string>
+  	<string name="april">אפר׳</string>
+  	<string name="may">מאי</string>
+  	<string name="june">יוני</string>
+  	<string name="july">יולי</string>
+  	<string name="august">אוג׳</string>
+  	<string name="september">ספט׳</string>
+  	<string name="october">אוק׳</string>
+  	<string name="november">נוב׳</string>
+  	<string name="december">דצמ׳</string>
+  	
+  	<string name="open">פתוח</string>
+ 	<string name="closed">סגור</string>
+  	<string name="off">כבוי</string>
+    <string name="unknown">לא ידוע</string>
+    
+  	<string name="before">לפני</string>
+    <string name="after">אחרי</string>
+  	
+  	</resources>
