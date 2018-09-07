@@ -3818,7 +3818,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         } else {
             alertDialog.setTitle(R.string.save_template);
         }
-        alertDialog.setNegativeButton(R.string.Cancel, null);
+        alertDialog.setNegativeButton(R.string.spd_ohf_cancel, null);
 
         keySpinner.setSelection(0);
         setSpinnerInitialEntryValue(R.array.key_values, keySpinner, templateKey);

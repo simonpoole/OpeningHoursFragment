@@ -181,7 +181,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
         npvOccurrence.setMaxValue(9);
         npvOccurrence.setValue(occurrence < 0 ? occurrence + 5 : occurrence + 4);
 
-        builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
+        builder.setPositiveButton(R.string.spd_ohf_ok, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int yearValue = getYearValue(npvYear);
@@ -225,7 +225,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
                 return occurrence -4;
             }
         });
-        builder.setNeutralButton(android.R.string.cancel, null);
+        builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 
         return builder.create();
     }

@@ -192,7 +192,7 @@ public class TimeRangePicker extends DialogFragment {
             npvEndMinute.setValue(endMinute);
         }
 
-        builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
+        builder.setPositiveButton(R.string.spd_ohf_ok, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int startHourValue = npvStartHour.getValue();
@@ -203,7 +203,7 @@ public class TimeRangePicker extends DialogFragment {
                 listener.setTimeRange(startHourValue, startMinuteValue, endHourValue, endMinuteValue);
             }
         });
-        builder.setNeutralButton(android.R.string.cancel, null);
+        builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 
         return builder.create();
     }

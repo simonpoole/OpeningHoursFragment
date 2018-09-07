@@ -410,7 +410,7 @@ public class DateRangePicker extends DialogFragment {
                 return varDateValue;
             }
         });
-        builder.setNeutralButton(android.R.string.cancel, null);
+        builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 
         return builder.create();
     }
