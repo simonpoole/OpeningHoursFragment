@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">取消</string>
+    <string name="spd_ohf_cancel">取消</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">儲存</string>
     <string name="Done">完成</string>
     <string name="value_too_long">營業時間數值長度是 %1$d，比起 255 的最大值還要長。\n\n請在儲存前簡化數值！</string>
@@ -24,7 +25,7 @@
     <string name="Start">開始</string>
     <string name="End">結束</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">編輯模版</string>
     <string name="name_legend">名稱：</string>
     <string name="default_legend">預設：</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">收集時間</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">平日午餐休息</string>
-	<string name="weekdays">平日</string>
-	<string name="collection_times_weekdays">週間一次</string>
+    <string name="weekdays">平日</string>
+    <string name="collection_times_weekdays">週間一次</string>
     
 <!--	 -->
     <string name="group_header">群組 %1$s</string>

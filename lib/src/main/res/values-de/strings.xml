@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Abbrechen</string>
+    <string name="spd_ohf_cancel">Abbrechen</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Speichern</string>
     <string name="Done">Fertig</string>
     <string name="value_too_long">Der Öffnungszeitenwert ist %1$d Zeichen lang, dies ist länger als das Maximum von 255,\n\nBitte vereinfache den Wert vor dem Speichern!</string>
@@ -24,7 +25,7 @@
     <string name="Start">Start</string>
     <string name="End">Ende</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Vorlage ändern</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Standard:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Leerungszeiten</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Wochentage mit Mittagspause</string>
-	<string name="weekdays">Wochentage</string>
-	<string name="collection_times_weekdays">Einmal pro Wochentag</string>
+    <string name="weekdays">Wochentage</string>
+    <string name="collection_times_weekdays">Einmal pro Wochentag</string>
     
 <!--	 -->
     <string name="group_header">Gruppe %1$s</string>

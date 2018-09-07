@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Zrušit</string>
+    <string name="spd_ohf_cancel">Zrušit</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Uložit</string>
     <string name="Done">Hotovo</string>
     <string name="value_too_long">Délka hodnoty otevírací doby je %1$d, což je více, než povolených 255.\n\nPřed uložením jej prosím zjednosušte!</string>
@@ -24,7 +25,7 @@
     <string name="Start">Začátek</string>
     <string name="End">Konec</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>
     <string name="default_legend">Výchozí:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Doba sběru</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
-	<string name="weekdays">Pracovní dny</string>
-	<string name="collection_times_weekdays">Jednou v pracovní dny</string>
+    <string name="weekdays">Pracovní dny</string>
+    <string name="collection_times_weekdays">Jednou v pracovní dny</string>
     
 <!--	 -->
     <string name="group_header">Skupina %1$s</string>

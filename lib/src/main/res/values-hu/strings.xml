@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Mégse</string>
+    <string name="spd_ohf_cancel">Mégse</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Mentés</string>
     <string name="Done">Kész</string>
     <string name="value_too_long">A nyitva tartás címke értékének hossza %1$d karakter, ami több, mint a megengedett 255.\n\nMentés előtt egyszerűsíteni kell.</string>
@@ -24,7 +25,7 @@
     <string name="Start">Kezdés</string>
     <string name="End">Zárás</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Sablon szerkesztése</string>
     <string name="name_legend">Név:</string>
     <string name="default_legend">Alapértelmezett:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Ürítési idő</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">A hét valamely napjain ebédidővel</string>
-	<string name="weekdays">A hét valamely napján</string>
-	<string name="collection_times_weekdays">A hét valamely napján egyszer</string>
+    <string name="weekdays">A hét valamely napján</string>
+    <string name="collection_times_weekdays">A hét valamely napján egyszer</string>
     
 <!--	 -->
     <string name="group_header">%1$s. csoport</string>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">キャンセル</string>
+    <string name="spd_ohf_cancel">キャンセル</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">保存</string>
     <string name="Done">完了</string>
     <string name="Yes">はい</string>
@@ -9,7 +10,7 @@
     <string name="Start">開始</string>
     <string name="End">終了</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">編集テンプレート</string>
     <string name="name_legend">名称:</string>
     <string name="default_legend">デフォルト:</string>

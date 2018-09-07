@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Cancelar</string>
+    <string name="spd_ohf_cancel">Cancelar</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Salvar</string>
     <string name="Done">Feito</string>
     <string name="add_rule">Adicionar regra</string>
@@ -19,7 +20,7 @@
     <string name="Start">Início</string>
     <string name="End">End</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>

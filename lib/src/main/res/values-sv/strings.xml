@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Avbryt</string>
+    <string name="spd_ohf_cancel">Avbryt</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Spara</string>
     <string name="add_rule">Lägg till regel</string>
     <string name="add_rule_247">Lägg till regel för 24/7</string>
@@ -16,7 +17,7 @@
     <string name="No">Nej</string>
     <string name="End">End</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Redigera mall</string>
     <string name="name_legend">Namn:</string>
     <string name="default_legend">Standard:</string>
@@ -26,8 +27,8 @@
   	<string name="opening_hours_key">Öppettider</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
-	<string name="weekdays">Veckodagar</string>
-	<!--	 -->
+    <string name="weekdays">Veckodagar</string>
+    <!--	 -->
     <string name="group_header">Grupp %1$s</string>
     <string name="rule_header">Regel %1$s</string>
     

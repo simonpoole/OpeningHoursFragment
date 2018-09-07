@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Cancelar</string>
+    <string name="spd_ohf_cancel">Cancelar</string>
+    <string name="spd_ohf_ok">Aceptar</string>
     <string name="Save">Guardar</string>
     <string name="Done">Listo</string>
     <string name="value_too_long">La duración del valor de las horas de apertura es %1$d que es más largo que el máximo de 255.\n\n ¡Simplifique la cadena antes de guardar, por favor!</string>
@@ -24,7 +25,7 @@
     <string name="Start">Iniciar</string>
     <string name="End">Fin</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nombre:</string>
     <string name="default_legend">Por defecto:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Tiempos de recogida</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Días de la semana con almuerzo</string>
-	<string name="weekdays">Días de la semana</string>
-	<string name="collection_times_weekdays">Una vez por semana</string>
+    <string name="weekdays">Días de la semana</string>
+    <string name="collection_times_weekdays">Una vez por semana</string>
     
 <!--	 -->
     <string name="group_header">Grupo %1$s</string>

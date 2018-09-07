@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Отменить</string>
+    <string name="spd_ohf_cancel">Отменить</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Сохранить</string>
     <string name="Done">Сделано</string>
     <string name="value_too_long">Длина значения времени работы составляет %1$d, что больше максимальной длины 255.\n\nПожалуйста, упростите значение перед сохранением!</string>
@@ -24,7 +25,7 @@
     <string name="Start">Начало</string>
     <string name="End">Конец</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Редактировать шаблон</string>
     <string name="name_legend">Название:</string>
     <string name="default_legend">По умолчанию:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Время задержки для сбора</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
-	<string name="weekdays">Будние дни</string>
-	<string name="collection_times_weekdays">Ежедневно по будням</string>
+    <string name="weekdays">Будние дни</string>
+    <string name="collection_times_weekdays">Ежедневно по будням</string>
     
 <!--	 -->
     <string name="group_header">Группа %1$s</string>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Anuluj</string>
+    <string name="spd_ohf_cancel">Anuluj</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Zapisz</string>
     <string name="Done">Gotowe</string>
     <string name="value_too_long">Długość wpisu godzin otwarcia wynosi %1$d, co przekracza masksmalną długość wynoszącą 255.\n\nUprość ten wpis przed zapisaniem!</string>
@@ -24,7 +25,7 @@
     <string name="Start">Początek</string>
     <string name="End">Koniec</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Edytuj szablon</string>
     <string name="name_legend">Nazwa:</string>
     <string name="default_legend">Domyślnie:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">Godziny odbioru</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Dni tygodnia z przerwą na lunch</string>
-	<string name="weekdays">Dni tygodnia</string>
-	<string name="collection_times_weekdays">Raz dziennie</string>
+    <string name="weekdays">Dni tygodnia</string>
+    <string name="collection_times_weekdays">Raz dziennie</string>
     
 <!--	 -->
     <string name="group_header">Grupa %1$s</string>

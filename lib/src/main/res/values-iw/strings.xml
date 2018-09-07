@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">ביטול</string>
+    <string name="spd_ohf_cancel">ביטול</string>
+    <string name="spd_ohf_ok">אישור</string>
     <string name="Save">שמירה</string>
     <string name="Done">סיום</string>
     <string name="value_too_long">אורך ערך שעות הפתיחה הוא %1$d שהוא אורך מהמגבלה המרבית שעומדת על 255 תווים.\n\nנא לפשט את המחרוזת בטרם שמירתה!</string>
@@ -24,7 +25,7 @@
     <string name="Start">התחלה</string>
     <string name="End">סיום</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">עריכת תבנית</string>
     <string name="name_legend">שם:</string>
     <string name="default_legend">בררת מחדל:</string>
@@ -38,8 +39,8 @@
   	<string name="collection_times_key">זמני איסוף</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">ימי השבוע עם הפסקת צהריים</string>
-	<string name="weekdays">ימי השבוע</string>
-	<string name="collection_times_weekdays">פעם ביום עבודה</string>
+    <string name="weekdays">ימי השבוע</string>
+    <string name="collection_times_weekdays">פעם ביום עבודה</string>
     
 <!--	 -->
     <string name="group_header">קבוצה %1$s</string>

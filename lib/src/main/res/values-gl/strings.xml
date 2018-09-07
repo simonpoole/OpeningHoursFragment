@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Cancelar</string>
+    <string name="spd_ohf_cancel">Cancelar</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Gardar</string>
     <string name="add_rule">Engadir regra</string>
     <string name="add_rule_247">Engadir regra para 24/7</string>
@@ -18,7 +19,7 @@
     <string name="No">Non</string>
     <string name="End">Fin</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Por defecto:</string>
@@ -29,8 +30,8 @@
   	<string name="collection_times_key">Tempos de recollida</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Días laborables con xantar</string>
-	<string name="weekdays">Días da semana</string>
-	<!--	 -->
+    <string name="weekdays">Días da semana</string>
+    <!--	 -->
     <string name="group_header">Grupo %1$s</string>
     <string name="rule_header">Norma %1$s</string>
     

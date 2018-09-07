@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Peruuta</string>
+    <string name="spd_ohf_cancel">Peruuta</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Tallenna</string>
     <string name="add_rule">Lisää sääntö</string>
     <string name="add_rule_247">Lisää sääntö 24/7</string>
@@ -16,7 +17,7 @@
     <string name="No">Ei</string>
     <string name="End">End</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Muokkaa mallinetta</string>
     <string name="name_legend">Nimi:</string>
     <string name="default_legend">Oletus:</string>
@@ -26,8 +27,8 @@
   	<string name="opening_hours_key">Aukioloajat</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kera</string>
-	<string name="weekdays">Arkipäivisin</string>
-	<!--	 -->
+    <string name="weekdays">Arkipäivisin</string>
+    <!--	 -->
     <string name="group_header">Ryhmä %1$s</string>
     <string name="rule_header">Sääntö %1$s</string>
     

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Cancel">Hủy bỏ</string>
+    <string name="spd_ohf_cancel">Hủy bỏ</string>
+    <string name="spd_ohf_ok">OK</string>
     <string name="Save">Lưu</string>
     <string name="Done">Xong</string>
     <string name="would_overwrite_invalid_value">Không thể thêm quy tắc vào chuỗi giờ mở cửa không hợp lệ. Xin vui lòng sửa chữa hoặc xóa chuỗi!</string>
@@ -23,7 +24,7 @@
     <string name="Start">Bắt đầu</string>
     <string name="End">End</string>
     
- <!--	templates -->
+    <!--	templates -->
     <string name="edit_template">Sửa đổi bản mẫu</string>
     <string name="name_legend">Tên:</string>
     <string name="default_legend">Mặc định:</string>
@@ -37,8 +38,8 @@
   	<string name="collection_times_key">Giờ lấy thư</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Ngày thường trừ bữa trưa</string>
-	<string name="weekdays">Ngày thường</string>
-	<string name="collection_times_weekdays">Mỗi ngày thường một lần</string>
+    <string name="weekdays">Ngày thường</string>
+    <string name="collection_times_weekdays">Mỗi ngày thường một lần</string>
     
 <!--	 -->
     <string name="group_header">Nhóm %1$s</string>
