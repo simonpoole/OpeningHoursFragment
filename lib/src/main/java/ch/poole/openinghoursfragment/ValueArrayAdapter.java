@@ -14,6 +14,13 @@ class ValueArrayAdapter extends ArrayAdapter<ValueWithDescription> {
     
     final List<ValueWithDescription> values;
    
+    /**
+     * Construct a new instance
+     * 
+     * @param context Android Context
+     * @param resource the resource id
+     * @param values a List of ValuesWithDescription
+     */
     public ValueArrayAdapter(@NonNull Context context, int resource, @NonNull List<ValueWithDescription> values) {
         super(context, resource, values);
         this.values = values;

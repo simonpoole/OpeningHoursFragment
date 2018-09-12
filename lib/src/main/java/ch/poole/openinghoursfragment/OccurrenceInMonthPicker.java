@@ -55,12 +55,10 @@ public class OccurrenceInMonthPicker extends DialogFragment {
      * 
      * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
-     * @param startYear initial start year
-     * @param startMonth initial start month
-     * @param startDay initial start day of the month
-     * @param endYear initial end year
-     * @param endMonth initial end month
-     * @param endDay initial end day of the month
+     * @param year initial year
+     * @param month initial month
+     * @param weekday initial weekday
+     * @param occurrence initial occurrence
      */
     static void showDialog(Fragment parentFragment, int title, int year, @NonNull Month month, @NonNull WeekDay weekday, int occurrence) {
         dismissDialog(parentFragment);
@@ -70,6 +68,11 @@ public class OccurrenceInMonthPicker extends DialogFragment {
         occurrenceInMontPickerFragment.show(fm, TAG);
     }
 
+    /**
+     * Dismiss any instance of this dialog
+     * 
+     * @param parentFragment the Fragement calling this
+     */
     private static void dismissDialog(Fragment parentFragment) {
         FragmentManager fm = parentFragment.getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -81,19 +84,14 @@ public class OccurrenceInMonthPicker extends DialogFragment {
     }
 
     /**
-     * Create a new instance of DateRangePicker
+     * Create a new instance of OccurrenceInMonthPicker
      * 
      * @param title resource id for the title to display
-     * @param startYear initial start year
-     * @param startMonth initial start month or null
-     * @param startDay initial start day of the month
-     * @param startVarDate initial start variable date ie easter or null
-     * @param startOnly only show a picker for one date
-     * @param endYear initial end year
-     * @param endMonth initial end month or null
-     * @param endDay initial end day of the month
-     * @param endVarDate initial end variable date ie easter or null
-     * @return an instance of DateRangePicker
+     * @param year initial year
+     * @param month initial month
+     * @param weekday initial weekday
+     * @param occurrence initial occurrence
+     * @return an instance of OccurrenceInMonthPicker
      */
     static private OccurrenceInMonthPicker newInstance(int title, int year, @Nullable Month month,  @Nullable WeekDay weekday, int occurrence) {
         OccurrenceInMonthPicker f = new OccurrenceInMonthPicker();

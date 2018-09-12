@@ -177,7 +177,12 @@ public class DateRangePicker extends DialogFragment {
         datePickerFragment.show(fm, TAG);
     }
 
-    private static void dismissDialog(Fragment parentFragment) {
+    /**
+     * Dismiss any instance of this dialog
+     * 
+     * @param parentFragment the Fragment calling this
+     */
+    private static void dismissDialog(@NonNull Fragment parentFragment) {
         FragmentManager fm = parentFragment.getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = fm.findFragmentByTag(TAG);

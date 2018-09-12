@@ -13,6 +13,11 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
 
     private final Context context;
 
+    /**
+     * Construct a new instance
+     * 
+     * @param context Android Context
+     */
     public TemplateDatabaseHelper(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;

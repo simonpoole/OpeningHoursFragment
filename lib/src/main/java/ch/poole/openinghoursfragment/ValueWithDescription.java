@@ -10,6 +10,12 @@ public class ValueWithDescription implements Serializable {
     private final String value;
     private final String description;
     
+    /**
+     * Construct a new instance
+     * 
+     * @param value the value
+     * @param description the description if any
+     */
     public ValueWithDescription(@NonNull final String value, @Nullable final String description) {
         this.value = value;
         this.description = description;

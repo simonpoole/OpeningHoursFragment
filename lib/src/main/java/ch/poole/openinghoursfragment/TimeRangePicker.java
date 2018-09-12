@@ -76,6 +76,11 @@ public class TimeRangePicker extends DialogFragment {
         timePickerFragment.show(fm, TAG);
     }
 
+    /**
+     * Dismiss any instance of this dialog
+     * 
+     * @param parentFragment the Fragement calling this
+     */
     private static void dismissDialog(Fragment parentFragment) {
         FragmentManager fm = parentFragment.getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
