@@ -22,10 +22,14 @@
     <string name="update_template">Atualizar também o valor do modelo?</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
-    <string name="Start">Começar</string>
-    <string name="End">End</string>
+    <string name="Start">Inicia</string>
+    <string name="End">Termina</string>
     
-    <!--	templates -->
+    <string name="default_hint">Expressão de horário de abertura</string>
+    
+    <string name="text_values">Valores de texto</string>
+    
+ <!--	templates -->
     <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>
@@ -38,9 +42,11 @@
   	<string name="service_times_key">Horário de serviços</string>
   	<string name="collection_times_key">Horário de recolha</string>
   	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Dias semana c/pausa almoço</string>
-    <string name="weekdays">Dias da semana</string>
-    <string name="collection_times_weekdays">Uma vez por semana</string>
+	<string name="weekdays_with_lunch">Dias semana c/pausa p/almoço</string>
+    <string name="weekdays_with_lunch_late_shopping">Dias semana c/pausa p/almoço e compras tardias</string>
+	<string name="weekdays">Dias da semana</string>
+    <string name="weekdays_late_shopping">Dias semana c/compras tardias</string>
+	<string name="collection_times_weekdays">Uma vez por semana</string>
     
 <!--	 -->
     <string name="group_header">Grupo %1$s</string>
@@ -130,7 +136,7 @@
     
     <string name="twentyfourseven">24 horas, 7 dias p/semana</string>
     
-    <string name="to">para</string>
+    <string name="to">a</string>
     
     <string name="easter">Páscoa</string>
     

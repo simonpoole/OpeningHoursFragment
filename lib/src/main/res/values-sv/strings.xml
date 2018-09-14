@@ -63,6 +63,9 @@
     <string name="ticks_5_minute">Flytta till närmaste 5 minuter</string>
     <string name="ticks_1_minute">Flytta till närmaste 1 minut</string>
     <string name="show_interval">Visa intervall</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">Normal</string>
     <string name="interval_minutes">Intervall (minuter)</string>
     <string name="interval_years">Intervall (år)</string>
     <string name="interval_weeks">Intervall (veckor)</string>

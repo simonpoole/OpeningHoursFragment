@@ -25,7 +25,11 @@
     <string name="Start">開始</string>
     <string name="End">結束</string>
     
-    <!--	templates -->
+    <string name="default_hint">開放時間字串</string>
+    
+    <string name="text_values">文字數值</string>
+    
+ <!--	templates -->
     <string name="edit_template">編輯模版</string>
     <string name="name_legend">名稱：</string>
     <string name="default_legend">預設：</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">收集時間</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">平日午餐休息</string>
-    <string name="weekdays">平日</string>
-    <string name="collection_times_weekdays">週間一次</string>
+    <string name="weekdays_with_lunch_late_shopping">平常日有中午休息時段，以及傍晚消費</string>
+	<string name="weekdays">平日</string>
+    <string name="weekdays_late_shopping">平日有傍晚消費時段</string>
+	<string name="collection_times_weekdays">週間一次</string>
     
 <!--	 -->
     <string name="group_header">群組 %1$s</string>

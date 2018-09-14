@@ -22,7 +22,12 @@
   	<string name="opening_hours_key">オープン時間</string>
   	<!--    menu items -->
 	<string name="Delete">Delete</string>
-	<string name="interval_minutes">間隔 (分)</string>
+	<string name="move_up">上に移動</string>
+    <string name="move_down">下に移動</string>
+    <!--     opening hour elements -->
+         
+    <string name="normal_rule">通常</string>
+    <string name="interval_minutes">間隔 (分)</string>
     <string name="interval_years">間隔 (年)</string>
     <string name="interval_weeks">間隔 (週)</string>
     

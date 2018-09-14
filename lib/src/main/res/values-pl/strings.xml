@@ -25,7 +25,11 @@
     <string name="Start">Początek</string>
     <string name="End">Koniec</string>
     
-    <!--	templates -->
+    <string name="default_hint">Łańcuch godzin otwarcia</string>
+    
+    <string name="text_values">Wartości tekstowe</string>
+    
+ <!--	templates -->
     <string name="edit_template">Edytuj szablon</string>
     <string name="name_legend">Nazwa:</string>
     <string name="default_legend">Domyślnie:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">Godziny odbioru</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Dni tygodnia z przerwą na lunch</string>
-    <string name="weekdays">Dni tygodnia</string>
-    <string name="collection_times_weekdays">Raz dziennie</string>
+    <string name="weekdays_with_lunch_late_shopping">Dni tygodnia z przerwą na lunch i późne zakupy</string>
+	<string name="weekdays">Dni tygodnia</string>
+    <string name="weekdays_late_shopping">Dni tygodnia z późnymi zakupami</string>
+	<string name="collection_times_weekdays">Raz dziennie</string>
     
 <!--	 -->
     <string name="group_header">Grupa %1$s</string>

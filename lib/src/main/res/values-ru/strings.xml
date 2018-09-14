@@ -25,7 +25,11 @@
     <string name="Start">Начало</string>
     <string name="End">Конец</string>
     
-    <!--	templates -->
+    <string name="default_hint">Строка времени работы</string>
+    
+    <string name="text_values">Текстовые значения</string>
+    
+ <!--	templates -->
     <string name="edit_template">Редактировать шаблон</string>
     <string name="name_legend">Название:</string>
     <string name="default_legend">По умолчанию:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">Время задержки для сбора</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
-    <string name="weekdays">Будние дни</string>
-    <string name="collection_times_weekdays">Ежедневно по будням</string>
+    <string name="weekdays_with_lunch_late_shopping">Будние дни с перерывом на обед и поздним закрытием</string>
+	<string name="weekdays">Будние дни</string>
+    <string name="weekdays_late_shopping">Будние дни с поздним закрытием</string>
+	<string name="collection_times_weekdays">Ежедневно по будням</string>
     
 <!--	 -->
     <string name="group_header">Группа %1$s</string>
@@ -59,14 +65,14 @@
     <string name="timespan_menu">Добавить промежуток времени...</string>
     <string name="time_time">Время - время</string>
     <string name="time_extended_time">Время - расширенное время</string>
-    <string name="variable_time_time">Варьируещeеся время - время</string>
-    <string name="variable_time_extended_time">Варьируещeеся время - расширенное время</string>
-    <string name="time_variable_time">Время - варьируещeеся время</string>
-    <string name="variable_time_variable_time">Варьируещeеся время - варьируещeеся время</string>
+    <string name="variable_time_time">Варьирующееся время - время</string>
+    <string name="variable_time_extended_time">Варьирующееся время - расширенное время</string>
+    <string name="time_variable_time">Время - варьирующееся время</string>
+    <string name="variable_time_variable_time">Варьирующееся время - варьирующееся время</string>
     <string name="time">Время</string>
     <string name="time_open_end">Время без окончания</string>
-    <string name="variable_time">Варьируещeеся время</string>
-    <string name="variable_time_open_end">Варьируещeеся время без окончания</string>
+    <string name="variable_time">Варьирующееся время</string>
+    <string name="variable_time_open_end">Варьирующееся время без окончания</string>
     <string name="start_at_midnight">Начинается в полночь</string>
     
     <string name="week_day_range">Добавить диапазон дней недели</string>

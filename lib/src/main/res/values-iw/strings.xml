@@ -25,7 +25,11 @@
     <string name="Start">התחלה</string>
     <string name="End">סיום</string>
     
-    <!--	templates -->
+    <string name="default_hint">מחרוזת שעות פתיחה</string>
+    
+    <string name="text_values">ערכי טקסט</string>
+    
+ <!--	templates -->
     <string name="edit_template">עריכת תבנית</string>
     <string name="name_legend">שם:</string>
     <string name="default_legend">בררת מחדל:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">זמני איסוף</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">ימי השבוע עם הפסקת צהריים</string>
-    <string name="weekdays">ימי השבוע</string>
-    <string name="collection_times_weekdays">פעם ביום עבודה</string>
+    <string name="weekdays_with_lunch_late_shopping">ימי השבוע עם הפסקות צהריים וקניות מאוחרות</string>
+	<string name="weekdays">ימי השבוע</string>
+    <string name="weekdays_late_shopping">ימי השבוע עם קניות מאוחרות</string>
+	<string name="collection_times_weekdays">פעם ביום עבודה</string>
     
 <!--	 -->
     <string name="group_header">קבוצה %1$s</string>
