@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.5.5: Translation improvements.
+
 0.5.4: Update translations.
 
 0.5.3: Fix issue with day offsets not being displayed for end dates, update translations.
