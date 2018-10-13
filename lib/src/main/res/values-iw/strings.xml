@@ -62,7 +62,7 @@
 	<string name="add_week_range">הוספת טווח שבועות</string>
 	<string name="add_holiday">הוספת חג</string>
 	
-    <string name="timespan_menu">הוספת טווח זמן…</string>
+    <string name="timespan_menu">הוספת טווח שעות…</string>
     <string name="time_time">שעה - שעה</string>
     <string name="time_extended_time">שעה - שעה מורחבת</string>
     <string name="variable_time_time">שעה משתנה - שעה</string>
@@ -72,10 +72,10 @@
     <string name="time">שעה</string>
     <string name="time_open_end">שעה - הודעה חדשה</string>
     <string name="variable_time">שעה משתנה</string>
-    <string name="variable_time_open_end">זמן משתנה - הודעה חדשה</string>
+    <string name="variable_time_open_end">שעה משתנה - הודעה חדשה</string>
     <string name="start_at_midnight">התחלה בחצות</string>
     
-    <string name="week_day_range">הוספת טווח ליום בשבוע</string>
+    <string name="week_day_range">הוספת טווח ימים בשבוע</string>
     <string name="occurrence_in_month">הוספת פעם בחודש</string>
     
     <string name="daterange_menu">הוספת טווח תאריכים…</string>
@@ -98,7 +98,7 @@
     <string name="duplicate_rule">שכפול</string>
     <string name="move_up">העברה למעלה</string>
     <string name="move_down">העברה למטה</string>
-    <string name="display_time_picker">הצגת בוחר זמן</string>
+    <string name="display_time_picker">הצגת בוחר שעה</string>
     <string name="ticks_15_minute">מעבר לפעימות של 15 דקות</string>
     <string name="ticks_5_minute">מעבר לפעימות של 5 דקות</string>
     <string name="ticks_1_minute">מעבר לפעימות של דקה</string>

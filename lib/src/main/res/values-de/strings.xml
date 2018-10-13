@@ -6,7 +6,7 @@
     <string name="Save">Speichern</string>
     <string name="Done">Fertig</string>
     <string name="value_too_long">Der Öffnungszeitenwert ist %1$d Zeichen lang, dies ist länger als das Maximum von 255,\n\nBitte vereinfache den Wert vor dem Speichern!</string>
-    <string name="would_overwrite_invalid_value">Zu einem ungültigen Öffnungszeitenwert, kann keine neue Regel hinzugefügt werden. Bitte korrigieren oder löschen!</string>
+    <string name="would_overwrite_invalid_value">Zu einem ungültigen Öffnungszeitenwert kann keine neue Regel hinzugefügt werden. Bitte korrigieren oder löschen!</string>
     
     <string name="add_rule">Regel hinzufügen</string>
     <string name="add_rule_247">Regel für 24/7 hinzufügen</string>
@@ -25,7 +25,11 @@
     <string name="Start">Start</string>
     <string name="End">Ende</string>
     
-    <!--	templates -->
+    <string name="default_hint">Öffnungszeitenwert</string>
+    
+    <string name="text_values">Textwerte</string>
+    
+ <!--	templates -->
     <string name="edit_template">Vorlage ändern</string>
     <string name="name_legend">Name:</string>
     <string name="default_legend">Standard:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">Leerungszeiten</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Wochentage mit Mittagspause</string>
-    <string name="weekdays">Wochentage</string>
-    <string name="collection_times_weekdays">Einmal pro Wochentag</string>
+    <string name="weekdays_with_lunch_late_shopping">Wochentage mit Mittagspause und Late-Night-Shopping</string>
+	<string name="weekdays">Wochentage</string>
+    <string name="weekdays_late_shopping">Wochentage mit Late-Night-Shopping</string>
+	<string name="collection_times_weekdays">Einmal pro Wochentag</string>
     
 <!--	 -->
     <string name="group_header">Gruppe %1$s</string>

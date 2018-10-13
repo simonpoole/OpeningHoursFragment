@@ -25,7 +25,11 @@
     <string name="Start">Iniciar</string>
     <string name="End">Fin</string>
     
-    <!--	templates -->
+    <string name="default_hint">Cadena de horarios de apertura</string>
+    
+    <string name="text_values">Valores de texto</string>
+    
+ <!--	templates -->
     <string name="edit_template">Editar plantilla</string>
     <string name="name_legend">Nombre:</string>
     <string name="default_legend">Por defecto:</string>
