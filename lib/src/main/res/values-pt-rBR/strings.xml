@@ -44,6 +44,7 @@
     <string name="interval_years">Intervalo (anos)</string>
     <string name="interval_weeks">Intervalo (semanas)</string>
     
+    <string name="date_range">Intervalo de datas</string>
     <string name="date">Data</string>
     <string name="weeks">Semanas</string>
     <string name="years">Anos</string>

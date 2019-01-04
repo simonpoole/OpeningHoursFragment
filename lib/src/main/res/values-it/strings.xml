@@ -25,7 +25,11 @@
     <string name="Start">Inizia</string>
     <string name="End">Fine</string>
     
-    <!--	templates -->
+    <string name="default_hint">Stringa degli orari di apertura</string>
+    
+    <string name="text_values">Valori del testo</string>
+    
+ <!--	templates -->
     <string name="edit_template">Modifica modello</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Predefinito:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">Orari di raccolta</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Giorni della settimana con pranzo</string>
-    <string name="weekdays">Giorni della settimana</string>
-    <string name="collection_times_weekdays">Una volta a settimana</string>
+    <string name="weekdays_with_lunch_late_shopping">Giorni della settimana con pausa pranzo e shopping serale</string>
+	<string name="weekdays">Giorni della settimana</string>
+    <string name="weekdays_late_shopping">Giorni della settimana con shopping serale</string>
+	<string name="collection_times_weekdays">Una volta a settimana</string>
     
 <!--	 -->
     <string name="group_header">Gruppo %1$s</string>

@@ -4,6 +4,7 @@
     <string name="spd_ohf_cancel">Avbryt</string>
     <string name="spd_ohf_ok">OK</string>
     <string name="Save">Spara</string>
+    <string name="Done">Klar</string>
     <string name="add_rule">Lägg till regel</string>
     <string name="add_rule_247">Lägg till regel för 24/7</string>
     <string name="load_template">Ladda mall</string>

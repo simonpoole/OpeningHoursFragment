@@ -25,7 +25,9 @@
     <string name="Start">Kezdés</string>
     <string name="End">Zárás</string>
     
-    <!--	templates -->
+    <string name="text_values">Szöveges értékek</string>
+    
+ <!--	templates -->
     <string name="edit_template">Sablon szerkesztése</string>
     <string name="name_legend">Név:</string>
     <string name="default_legend">Alapértelmezett:</string>
@@ -38,9 +40,11 @@
   	<string name="service_times_key">Istentiszteletek ideje</string>
   	<string name="collection_times_key">Ürítési idő</string>
   	<!--	default template entries -->
-	<string name="weekdays_with_lunch">A hét valamely napjain ebédidővel</string>
-    <string name="weekdays">A hét valamely napján</string>
-    <string name="collection_times_weekdays">A hét valamely napján egyszer</string>
+	<string name="weekdays_with_lunch">Hétköznap ebédidővel</string>
+    <string name="weekdays_with_lunch_late_shopping">Hétköznap ebédidővel és kései bevásárlással</string>
+	<string name="weekdays">Hétköznap</string>
+    <string name="weekdays_late_shopping">Hétköznap kései bevásárlással</string>
+	<string name="collection_times_weekdays">Hétköznaponként egyszer</string>
     
 <!--	 -->
     <string name="group_header">%1$s. csoport</string>

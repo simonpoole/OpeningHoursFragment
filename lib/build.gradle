@@ -10,7 +10,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.5.6'
+version = '0.5.7'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {

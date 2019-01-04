@@ -4,6 +4,7 @@
     <string name="spd_ohf_cancel">Cancelar</string>
     <string name="spd_ohf_ok">Feito</string>
     <string name="Save">Gardar</string>
+    <string name="Done">Feito</string>
     <string name="add_rule">Engadir regra</string>
     <string name="add_rule_247">Engadir regra para 24/7</string>
     <string name="add_rule_closed_on_holidays">Engadir regra para vacacións</string>
