@@ -2,6 +2,7 @@ package ch.poole.ohfragmenttest;
 
 import java.util.ArrayList;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,14 +32,15 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 	    ft.commit();
 
 	    ArrayList<ValueWithDescription> textValues = new ArrayList<>();
-	    ValueWithDescription yes = new ValueWithDescription("yes", "Yes");
-	    textValues.add(yes);
-	    ValueWithDescription no = new ValueWithDescription("no", "No");
-	    textValues.add(no);
-	    
-	    ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
+//	    ValueWithDescription yes = new ValueWithDescription("yes", "Yes");
+//	    textValues.add(yes);
+//	    ValueWithDescription no = new ValueWithDescription("no", "No");
+//	    textValues.add(no);
+//	    
+//	    ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
+	    ValueWithDescription key = new ValueWithDescription("collection_times", "Collection times");
         OpeningHoursFragment openingHoursDialog 
-        	= OpeningHoursFragment.newInstance(key,null,R.style.Theme_AppCompat_Light_Dialog_Alert, 5, true, textValues);
+        	= OpeningHoursFragment.newInstance(key,null,R.style.Theme_AppCompat_Light_Dialog_Alert, 5, true, null);
         openingHoursDialog.show(fm, "fragment_openinghours");
 	}
 
@@ -47,4 +49,10 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 		Log.d("Test", "save got " + openingHours + " for key " + key);
 		TestFragment.showDialog(this, openingHours);
 	}
+	
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        this.recreate();
+    }
 }

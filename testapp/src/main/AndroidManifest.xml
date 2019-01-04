@@ -16,7 +16,8 @@
         android:theme="@style/Theme.AppCompat.Light" >
         <activity
             android:name=".Test"
-            android:label="OHFragmentTest" >
+            android:label="OHFragmentTest" 
+            android:configChanges="orientation|screenSize|keyboardHidden|density|screenLayout|uiMode" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
