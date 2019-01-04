@@ -3739,6 +3739,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         @Override
         public void bindView(final View view, final Context context, Cursor cursor) {
+            if (!isAdded()) {
+                // this seems to be enough to protect against crashes, but doesn't solve the actual issue
+                return;
+            }
             Log.d(DEBUG_TAG, "bindView");
             final int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
             view.setTag(id);
