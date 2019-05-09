@@ -3020,7 +3020,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     private void addTimePickerMenu(@NonNull Menu menu, @NonNull final TimeSpan ts, @Nullable final RangeBar timeBar) {
         final MenuItem timePickerMenu = menu.add(R.string.display_time_picker);
-        timePickerMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        final OnMenuItemClickListener listener = new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int start = ts.getStart();
@@ -3060,7 +3060,16 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
                 return true;
             }
-        });
+        };
+        timePickerMenu.setOnMenuItemClickListener(listener);
+        if (timeBar != null) {
+            ((View)timeBar).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    listener.onMenuItemClick(null); // lazy hack
+                }
+            });
+        }
     }
 
     /**
