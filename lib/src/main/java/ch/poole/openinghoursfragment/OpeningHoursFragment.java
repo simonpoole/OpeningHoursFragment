@@ -2760,7 +2760,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     menu = addStandardMenuItems(timeRangeRow, new DeleteTimeSpan(times, ts));
-                    addTimePickerMenu(menu, ts);
+                    addTimePickerMenu(menu, ts, timeBar);
                     addTimeSpanMenus(timeBar, null, menu);
 
                     ll.addView(timeRangeRow);
@@ -2792,7 +2792,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     menu = addStandardMenuItems(timeExtendedRangeRow, new DeleteTimeSpan(times, ts));
-                    addTimePickerMenu(menu, ts);
+                    addTimePickerMenu(menu, ts, timeBar);
                     addTimeSpanMenus(timeBar, extendedTimeBar, menu);
                     ll.addView(timeExtendedRangeRow);
                 } else if (!ts.isOpenEnded() && !hasStartEvent && !hasEndEvent && ts.getEnd() < 0) {
@@ -2813,7 +2813,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-                    addTimePickerMenu(menu, ts);
+                    addTimePickerMenu(menu, ts, timeBar);
                     addTimeSpanMenus(timeBar, null, menu);
                     ll.addView(timeEventRow);
                 } else if (!ts.isOpenEnded() && !hasStartEvent && hasEndEvent) {
@@ -2840,7 +2840,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-                    addTimePickerMenu(menu, ts);
+                    addTimePickerMenu(menu, ts, timeBar);
                     addTimeSpanMenus(timeBar, null, menu);
 
                     final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);
@@ -2918,7 +2918,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     });
                     menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
                     if (timeBar.getVisibility() == View.VISIBLE) {
-                        addTimePickerMenu(menu, ts);
+                        addTimePickerMenu(menu, ts, timeBar);
                         addTimeSpanMenus(timeBar, null, menu);
                     }
                     final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);
@@ -3033,7 +3033,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
-                    addTimePickerMenu(menu, ts);
+                    addTimePickerMenu(menu, ts, timeBar);
                     addTimeSpanMenus(timeBar, null, menu);
                     ll.addView(timeEventRow);
                 } else if (ts.isOpenEnded() && hasStartEvent) {
@@ -3134,14 +3134,16 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * 
      * @param menu Menu to and the item to
      * @param ts TimeSpan to display and modify
+     * @param timeBar an optional RangeBar we are associated with
      */
-    private void addTimePickerMenu(Menu menu, final TimeSpan ts) {
+    private void addTimePickerMenu(@NonNull Menu menu, @NonNull final TimeSpan ts, @Nullable final RangeBar timeBar) {
         final MenuItem timePickerMenu = menu.add(R.string.display_time_picker);
         timePickerMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int start = ts.getStart();
                 int end = ts.getEnd();
+                int interval = timeBar != null ? (int) timeBar.getTickInterval() : 1;
                 if (ts.getStartEvent() == null && ts.getEndEvent() == null && end >= 0) { // t-t, t-x
                     realSetTimeRangeListener = new SetTimeRangeListener() {
                         @Override
@@ -3152,7 +3154,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             watcher.afterTextChanged(null);
                         }
                     };
-                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60);
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60, interval);
                 } else if (ts.getStartEvent() == null && (ts.getEndEvent() != null || end < 0)) { // t, t-, t-e
                     realSetTimeRangeListener = new SetTimeRangeListener() {
                         @Override
@@ -3162,7 +3164,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             watcher.afterTextChanged(null);
                         }
                     };
-                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60);
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
                 } else if (ts.getStartEvent() != null && ts.getEndEvent() == null || end >= 0) { // e-t
                     realSetTimeRangeListener = new SetTimeRangeListener() {
                         @Override
@@ -3172,13 +3174,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             watcher.afterTextChanged(null);
                         }
                     };
-                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60);
+                    TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
                 }
                 return true;
             }
         });
     }
 
+    /**
+     * Change the tick interval on a RangeBar
+     * 
+     * @param timeBar the RangeBar to modify
+     * @param interval the new interval
+     */
     private void changeTicks(@NonNull final RangeBar timeBar, int interval) {
         double tickInterval = timeBar.getTickInterval();
         float startTick = timeBar.getTickStart();
@@ -3689,7 +3697,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     void loadOrManageTemplate(@NonNull Context context, boolean manage) {
         loadOrManageTemplate(context, manage, manage ? null : key.getValue());
     }
-    
+
     /**
      * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
      * it

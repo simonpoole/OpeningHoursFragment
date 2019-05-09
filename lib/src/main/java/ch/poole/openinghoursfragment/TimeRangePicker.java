@@ -25,17 +25,13 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 public class TimeRangePicker extends DialogFragment {
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
-    private static final String TITLE = "title";
-
-    private static final String START_HOUR = "startHour";
-
+    private static final String TITLE        = "title";
+    private static final String START_HOUR   = "startHour";
     private static final String START_MINUTE = "startMinute";
-
-    private static final String START_ONLY = "startOnly";
-
-    private static final String END_HOUR = "endHour";
-
-    private static final String END_MINUTE = "endMinute";
+    private static final String START_ONLY   = "startOnly";
+    private static final String END_HOUR     = "endHour";
+    private static final String END_MINUTE   = "endMinute";
+    private static final String INCREMENT    = "increment";
 
     private static final String DEBUG_TAG = TimeRangePicker.class.getSimpleName();
 
@@ -50,29 +46,30 @@ public class TimeRangePicker extends DialogFragment {
      * @param startMinute initial start minute
      * @param endHour initial end hour
      * @param endMinute initial end minute
+     * @param increment minute tick size
      */
-    static void showDialog(Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute) {
+    static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute, int increment) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute);
+        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute, increment);
         timePickerFragment.show(fm, TAG);
     }
 
     /**
-     * Show the DateRangePicker dialog
+     * Show the TimeRangePicker dialog
      * 
      * @param parentFragment Fragment calling this
      * @param title resource id for the title to display
      * @param startHour initial start hour
      * @param startMinute initial start minute
+     * @param increment minute tick size
      */
-    static public void showDialog(Fragment parentFragment, int title, int startHour, int startMinute) {
+    static public void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED,
-                NOTHING_SELECTED);
+        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED, NOTHING_SELECTED, increment);
         timePickerFragment.show(fm, TAG);
     }
 
@@ -100,10 +97,10 @@ public class TimeRangePicker extends DialogFragment {
      * @param startOnly only show a picker for one time
      * @param endHour initial end hour
      * @param endMinute initial end minute
+     * @param increment minute tick size
      * @return an instance of TimeRangePicker
      */
-    static private TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly,
-            int endHour, int endMinute) {
+    static private TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly, int endHour, int endMinute, int increment) {
         TimeRangePicker f = new TimeRangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -112,6 +109,7 @@ public class TimeRangePicker extends DialogFragment {
         args.putBoolean(START_ONLY, startOnly);
         args.putInt(END_HOUR, endHour);
         args.putInt(END_MINUTE, endMinute);
+        args.putInt(INCREMENT, increment);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -135,13 +133,15 @@ public class TimeRangePicker extends DialogFragment {
     @SuppressLint("InflateParams")
     @Override
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
+
         int title = getArguments().getInt(TITLE);
 
         int startHour = getArguments().getInt(START_HOUR);
         int startMinute = getArguments().getInt(START_MINUTE);
         int endHour = getArguments().getInt(END_HOUR);
         int endMinute = getArguments().getInt(END_MINUTE);
-
+        int increment = getArguments().getInt(INCREMENT, 1);
+        ;
         boolean startOnly = getArguments().getBoolean(START_ONLY);
 
         final SetTimeRangeListener listener = (SetTimeRangeListener) getParentFragment();
@@ -166,17 +166,19 @@ public class TimeRangePicker extends DialogFragment {
         npvStartHour.setMaxValue(23);
         npvStartHour.setValue(startHour);
 
-        String[] minValues = new String[60];
-        for (int i = 0; i < 60; i++) {
-            minValues[i] = String.format("%02d", i);
+        int ticks = 60 / increment;
+        String[] minValues = new String[ticks];
+        for (int i = 0; i < ticks; i++) {
+            minValues[i] = String.format("%02d", i * increment);
         }
 
         final NumberPickerView npvStartMinute = (NumberPickerView) layout.findViewById(R.id.startMinute);
 
+        int maxMinutes = 59 / increment;
         npvStartMinute.setDisplayedValues(minValues);
         npvStartMinute.setMinValue(0);
-        npvStartMinute.setMaxValue(59);
-        npvStartMinute.setValue(startMinute);
+        npvStartMinute.setMaxValue(maxMinutes);
+        npvStartMinute.setValue(startMinute / increment);
 
         final NumberPickerView npvEndHour = (NumberPickerView) layout.findViewById(R.id.endHour);
         final NumberPickerView npvEndMinute = (NumberPickerView) layout.findViewById(R.id.endMinute);
@@ -193,17 +195,17 @@ public class TimeRangePicker extends DialogFragment {
 
             npvEndMinute.setDisplayedValues(minValues);
             npvEndMinute.setMinValue(0);
-            npvEndMinute.setMaxValue(59);
-            npvEndMinute.setValue(endMinute);
+            npvEndMinute.setMaxValue(maxMinutes);
+            npvEndMinute.setValue(endMinute / increment);
         }
 
         builder.setPositiveButton(R.string.spd_ohf_ok, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int startHourValue = npvStartHour.getValue();
-                int startMinuteValue = npvStartMinute.getValue();
+                int startMinuteValue = npvStartMinute.getValue() * increment;
                 int endHourValue = npvEndHour.getValue();
-                int endMinuteValue = npvEndMinute.getValue();
+                int endMinuteValue = npvEndMinute.getValue() * increment;
 
                 listener.setTimeRange(startHourValue, startMinuteValue, endHourValue, endMinuteValue);
             }
