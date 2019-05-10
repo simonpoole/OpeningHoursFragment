@@ -4,5 +4,4 @@
             android:layout_width="56dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@android:color/white"
             />
