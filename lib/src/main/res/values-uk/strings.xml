@@ -25,7 +25,11 @@
     <string name="Start">Початок</string>
     <string name="End">Кінець</string>
     
-    <!--	templates -->
+    <string name="default_hint">Рядок годин роботи</string>
+    
+    <string name="text_values">Текстове значення</string>
+    
+ <!--	templates -->
     <string name="edit_template">Редагувати шаблон</string>
     <string name="name_legend">Назва:</string>
     <string name="default_legend">Типово:</string>
@@ -39,8 +43,10 @@
   	<string name="collection_times_key">Час виїмки пошти</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Робочі дні з перервою на обід</string>
-    <string name="weekdays">Робочі дні</string>
-    <string name="collection_times_weekdays">Раз на день</string>
+    <string name="weekdays_with_lunch_late_shopping">У будні дні з перервами на обід і пізні покупки</string>
+	<string name="weekdays">Робочі дні</string>
+    <string name="weekdays_late_shopping">Будні з пізніми покупками</string>
+	<string name="collection_times_weekdays">Раз на день</string>
     
 <!--	 -->
     <string name="group_header">Група %1$s</string>

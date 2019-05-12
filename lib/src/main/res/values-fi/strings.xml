@@ -4,31 +4,51 @@
     <string name="spd_ohf_cancel">Peruuta</string>
     <string name="spd_ohf_ok">OK</string>
     <string name="Save">Tallenna</string>
+    <string name="Done">Valmis</string>
+    <string name="value_too_long">Aukioloajan määrityksestä tulee %1$d merkkiä pitkä, joten se ylittää ylärajan 255 merkkiä.\n\nYritä tehdä siitä yksinkertaisempi ja tallentaa uudelleen.</string>
+    <string name="would_overwrite_invalid_value">Sääntöjä ei voi lisätä virheelliseen aukioloaikamääritykseen. Korjaa tai poista se ensin.</string>
+    
     <string name="add_rule">Lisää sääntö</string>
     <string name="add_rule_247">Lisää sääntö 24/7</string>
-    <string name="load_template">Lataa malline</string>
+    <string name="add_rule_closed_on_holidays">Lisää sääntö vapaapäiville</string>
+    <string name="load_template">Käytä mallinetta</string>
     <string name="save_to_template">Tallenna mallineeksi</string>
     <string name="manage_templates">Hallitse mallineita</string>
     <string name="refresh">Päivitä</string>
-    <string name="load_templates_title">Lataa mallineita</string>
+    <string name="clear">Poista kaikki</string>
+    <string name="load_templates_title">Käytä mallinetta</string>
     <string name="manage_templates_title">Hallitse mallineita</string>
     <string name="save_template">Tallenna malline</string>
+    <string name="update_template">Päivitetäänkö myös mallineen arvo?</string>
     <string name="Yes">Kyllä</string>
     <string name="No">Ei</string>
-    <string name="End">End</string>
+    <string name="Start">Alku</string>
+    <string name="End">Loppu</string>
     
-    <!--	templates -->
+    <string name="default_hint">Aukioloajan merkkijono</string>
+    
+    <string name="text_values">Tekstiarvot</string>
+    
+ <!--	templates -->
     <string name="edit_template">Muokkaa mallinetta</string>
     <string name="name_legend">Nimi:</string>
     <string name="default_legend">Oletus:</string>
+    <string name="key_legend">Avain:</string>
+    
     <string name="is_default">%1$s (oletus)</string>
     
      <string name="all_keys">Kaikki</string>
   	<string name="opening_hours_key">Aukioloajat</string>
+  	<string name="service_times_key">Palveluajat</string>
+  	<string name="collection_times_key">Keräysajat</string>
   	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kera</string>
-    <string name="weekdays">Arkipäivisin</string>
-    <!--	 -->
+	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kanssa</string>
+    <string name="weekdays_with_lunch_late_shopping">Arkipäivisin + lounastauko + pitkät aukioloajat</string>
+	<string name="weekdays">Arkipäivisin</string>
+    <string name="weekdays_late_shopping">Arkipäivisin + pitkät aukioloajat</string>
+	<string name="collection_times_weekdays">Kerran joka arkipäivä</string>
+    
+<!--	 -->
     <string name="group_header">Ryhmä %1$s</string>
     <string name="rule_header">Sääntö %1$s</string>
     
@@ -44,55 +64,66 @@
 	
     <string name="timespan_menu">Lisää ajanjakso</string>
     <string name="time_time">Aika–aika</string>
-    <string name="time_extended_time">Aika–laajennettu aika</string>
+    <string name="time_extended_time">Aika–jatkettu aika</string>
     <string name="variable_time_time">Vaiht. aika–aika</string>
-    <string name="variable_time_extended_time">Vaiht. aika–laajennettu aika</string>
+    <string name="variable_time_extended_time">Vaiht. aika–jatkettu aika</string>
     <string name="time_variable_time">Aika–vaiht. aika</string>
     <string name="variable_time_variable_time">Vaiht. aika–vaiht. aika</string>
     <string name="time">Aika</string>
-    <string name="time_open_end">Aika, alkaen</string>
+    <string name="time_open_end">Aika–avoin loppu</string>
     <string name="variable_time">Vaihteleva aika</string>
-    <string name="variable_time_open_end">Vaihteleva aika, alkaen</string>
+    <string name="variable_time_open_end">Vaihteleva aika–avoin loppu</string>
     <string name="start_at_midnight">Aloita keskiyöstä</string>
     
     <string name="week_day_range">Lisää viikonpäiväjakso</string>
-    <string name="occurrence_in_month">Lisää tapahtumakerta kuun sisällä </string>
+    <string name="occurrence_in_month">Lisää esiintymiskerta kuun sisällä</string>
     
     <string name="daterange_menu">Lisää päivämääräjakso...</string>
     <string name="date_date">Pvm–pvm</string>
     <string name="variable_date_date">Vaihteleva pvm–pvm</string>
     <string name="date_variable_date">Pvm–vaihteleva pvm</string>
     <string name="variable_date_variable_date">Vaihteleva pvm–vaihteleva pvm</string>
-    <string name="date_open_end">Pvm, alkaen</string>
-    <string name="variable_date_open_end">Vaihteleva pvm, alkaen</string>
+    <string name="occurrence_occurrence">Esiintymiskerta kuussa–esiintymiskerta kuussa</string>
+    <string name="occurrence_date">Esiintymiskerta kuussa–pvm</string>
+    <string name="date_occurrence">Pvm–esiintymiskerta kuussa</string>
+    <string name="occurrence_variable_date">Esiintymiskerta kuussa–vaiht. pvm</string>
+    <string name="variable_date_occurrence">Vaiht. pvm–esiintymiskerta kuussa</string>
+    
+    <string name="date_open_end">Pvm–avoin loppu</string>
+    <string name="variable_date_open_end">Vaihteleva pvm–avoin loppu</string>
+    <string name="occurrence_open_end">Esiintymiskerta kuussa–avoin loppu</string>
+
     <string name="with_offsets">Poikkeama...</string>
     <string name="rule_type">Näytä sääntötyyppi</string>
+    <string name="duplicate_rule">Kahdenna</string>
     <string name="move_up">Siirrä ylöspäin</string>
     <string name="move_down">Siirrä alaspäin</string>
+    <string name="display_time_picker">Näytä ajanvalitsin</string>
     <string name="ticks_15_minute">15 minuutin jaotus</string>
     <string name="ticks_5_minute">5 minuutin jaotus</string>
     <string name="ticks_1_minute">1 minuutin jaotus</string>
     <string name="show_offset">Näytä poikkeama</string>
-    <string name="show_start_offset">Näytä alun poikkeama</string>
-    <string name="show_end_offset">Näytä lopun poikkeama</string>
-    <string name="show_interval">Näytä aikaväli</string>
+    <string name="show_start_offset">Alkuajan poikkeama</string>
+    <string name="show_end_offset">Loppuajan poikkeama</string>
+    <string name="show_interval">Näytä välistys</string>
     <string name="show_useAsWeekDay">Näytä käyttö</string>
     
 <!--     opening hour elements -->
          
     <string name="normal_rule">Tavallinen</string>
-    <string name="additive_rule">Lisäävä</string>
+    <string name="additive_rule">Lisäys</string>
     <string name="fallback_rule">Vara</string>
     
-    <string name="interval_minutes">Aikaväli (minuutteja)</string>
-    <string name="interval_years">Aikaväli (vuosia)</string>
-    <string name="interval_weeks">Aikaväli (viikkoja)</string>
+    <string name="interval_minutes">Monen minuutin välein</string>
+    <string name="interval_years">Monen vuoden välein</string>
+    <string name="interval_weeks">Monen viikon välein</string>
     
     <string name="offset_mins">Poikkeama (±minuuttia)</string>
     <string name="offset_days">Poikkeama (±päivää)</string>
     
     <string name="date_range">Päivämääräjakso</string>
     <string name="date">Päivämäärä</string>
+    <string name="date_weekday_occurrence">Päivämäärä (viikonpäivä kuussa)</string>
     <string name="week_range">Viikkojakso</string>
     <string name="weeks">Viikot</string>
     <string name="year_range">Vuosijakso</string>
@@ -116,6 +147,8 @@
   	
   	<string name="public_holidays">Yleiset vapaapäivät</string>
   	<string name="school_holidays">Koulujen vapaapäivät</string>
+  	
+  	<string name="occurrence_in_month_title">Esiintymiskera kuussa</string>
   	
   	<string name="monday_short">Ma</string>
   	<string name="tuesday_short">Ti</string>

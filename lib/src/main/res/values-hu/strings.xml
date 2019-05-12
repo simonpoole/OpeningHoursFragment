@@ -25,6 +25,8 @@
     <string name="Start">Kezdés</string>
     <string name="End">Zárás</string>
     
+    <string name="default_hint">Nyitva tartás karakterlánc</string>
+    
     <string name="text_values">Szöveges értékek</string>
     
  <!--	templates -->

@@ -26,6 +26,7 @@
     
      <string name="all_keys">Alla</string>
   	<string name="opening_hours_key">Öppettider</string>
+  	<string name="collection_times_key">Insamlingstid</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
     <string name="weekdays">Veckodagar</string>
