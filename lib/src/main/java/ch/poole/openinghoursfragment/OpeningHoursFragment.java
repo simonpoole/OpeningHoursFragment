@@ -95,21 +95,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
-    private static final String VALUE_KEY = "value";
-
+    private static final String VALUE_KEY          = "value";
     private static final String ORIGINAL_VALUE_KEY = "original_value";
-
-    private static final String KEY_KEY = "key";
-
-    private static final String STYLE_KEY = "style";
-
-    private static final String RULE_KEY = "rule";
-
-    private static final String SHOWTEMPLATES_KEY = "show_templates";
-
-    private static final String TEXTVALUES_KEY = "text_values";
-
-    private static final String FRAGMENT_KEY = "fragment";
+    private static final String KEY_KEY            = "key";
+    private static final String STYLE_KEY          = "style";
+    private static final String RULE_KEY           = "rule";
+    private static final String SHOWTEMPLATES_KEY  = "show_templates";
+    private static final String TEXTVALUES_KEY     = "text_values";
+    private static final String FRAGMENT_KEY       = "fragment";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
@@ -151,6 +144,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private OhTextWatcher   watcher;
     private TextTextWatcher textWatcher;
 
+    private AppCompatButton saveButton;
+
     /**
      * True if we encountered a parse error
      */
@@ -162,7 +157,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     static PinTextFormatter extendedTimeFormater = new PinTextFormatter() {
         @Override
         public String getText(String value) {
-            int minutes = Integer.valueOf(value);
+            int minutes = Integer.parseInt(value);
             int tempMinutes = minutes - TimeSpan.MAX_TIME;
             return String.format(Locale.US, "%02d", tempMinutes / 60) + ":" + String.format(Locale.US, "%02d", minutes % 60);
         }
@@ -171,7 +166,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     static PinTextFormatter timeFormater = new PinTextFormatter() {
         @Override
         public String getText(String value) {
-            int minutes = Integer.valueOf(value);
+            int minutes = Integer.parseInt(value);
             return String.format(Locale.US, "%02d", minutes / 60) + ":" + String.format(Locale.US, "%02d", minutes % 60);
         }
     };
@@ -185,7 +180,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param rule rule to scroll to or -1 (currently ignored)
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule) {
+    public static OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule) {
         return newInstance(key, value, style, rule, false);
     }
 
@@ -199,7 +194,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param showTemplates if value is empty show the template selector instead of using a default when true
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
+    public static OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
         return newInstance(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
     }
 
@@ -214,7 +209,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule, boolean showTemplates,
+    public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule, boolean showTemplates,
             @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
@@ -241,7 +236,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param rule rule to scroll to or -1 (currently ignored)
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule) {
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule) {
         return newInstanceForFragment(key, value, style, rule, false);
     }
 
@@ -255,7 +250,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param showTemplates if value is empty show the template selector instead of using a default when true
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
         return newInstanceForFragment(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
     }
 
@@ -270,7 +265,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
      * @return an OpeningHoursFragment
      */
-    static public OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule,
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule,
             boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
@@ -448,10 +443,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // empty
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // empty
         }
     }
 
@@ -498,10 +495,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // Empty
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // Empty
         }
     }
 
@@ -554,10 +553,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     text.setAdapter(null);
                     text.setOnClickListener(null);
                     textMode = false;
-                    if (openingHoursValue == null || "".equals(openingHoursValue)) {
+                    if ("".equals(openingHoursValue)) {
                         if (!showTemplates) {
                             loadDefault();
-                            if (openingHoursValue != null && !"".equals(openingHoursValue)) {
+                            if (!"".equals(openingHoursValue)) {
                                 ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
                             }
                         } else {
@@ -597,31 +596,29 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 public boolean onMenuItemClick(MenuItem item) {
                     OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(ruleString.getBytes()));
                     List<Rule> rules2 = null;
-                    if (parser != null) {
-                        try {
-                            rules2 = parser.rules(false);
-                        } catch (ParseException pex) {
-                            Log.e(DEBUG_TAG, pex.getMessage());
-                        } catch (TokenMgrError err) {
-                            Log.e(DEBUG_TAG, err.getMessage());
+                    try {
+                        rules2 = parser.rules(false);
+                    } catch (ParseException pex) {
+                        Log.e(DEBUG_TAG, pex.getMessage());
+                    } catch (TokenMgrError err) {
+                        Log.e(DEBUG_TAG, err.getMessage());
+                    }
+                    if (rules2 != null && !rules2.isEmpty()) {
+                        if (rules == null || hasParseError()) { // if there was an unparseable string it needs to be
+                                                                // fixed first
+                            ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
+                            return true;
                         }
-                        if (rules2 != null && !rules2.isEmpty()) {
-                            if (rules == null || hasParseError()) { // if there was an unparseable string it needs to be
-                                                                    // fixed first
-                                ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
-                                return true;
+                        rules.add(rules2.get(0));
+                        updateString();
+                        watcher.afterTextChanged(null); // hack to force rebuild of form
+                        text.postDelayed(new Runnable() { // use post to ensure view has been rebuilt
+                            @Override
+                            public void run() {
+                                ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false); // scroll to
+                                // bottom
                             }
-                            rules.add(rules2.get(0));
-                            updateString();
-                            watcher.afterTextChanged(null); // hack to force rebuild of form
-                            text.postDelayed(new Runnable() { // use post to ensure view has been rebuilt
-                                @Override
-                                public void run() {
-                                    ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false); // scroll to
-                                    // bottom
-                                }
-                            }, 200);
-                        }
+                        }, 200);
                     }
                     return true;
                 }
@@ -741,7 +738,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (rules != null) {
             String t = Util.rulesToOpeningHoursString(rules);
             text.setText(t);
-            // text.setText(text.getText().toString());
         }
         text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
         text.addTextChangedListener(watcher);
@@ -875,8 +871,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 });
 
                 SubMenu timespanMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.timespan_menu);
-                MenuItem addTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_time);
-                addTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                class SetTimeSpanListener implements OnMenuItemClickListener {
+                    private final int   start;
+                    private final Event startEvent;
+                    private final int   end;
+                    private final Event endEvent;
+
+                    SetTimeSpanListener(int start, @Nullable Event startEvent, int end, @Nullable Event endEvent) {
+                        this.start = start;
+                        this.startEvent = startEvent;
+                        this.end = end;
+                        this.endEvent = endEvent;
+                    }
+
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         List<TimeSpan> ts = r.getTimes();
@@ -885,138 +892,47 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             ts = r.getTimes();
                         }
                         TimeSpan t = new TimeSpan();
-                        t.setStart(360);
-                        t.setEnd(1440);
+                        if (startEvent == null) {
+                            t.setStart(start);
+                        } else {
+                            VariableTime vt = new VariableTime();
+                            vt.setEvent(startEvent);
+                            t.setStartEvent(vt);
+                        }
+                        if (endEvent == null && end > 0) {
+                            t.setEnd(end);
+                        } else if (endEvent != null) {
+                            VariableTime vt = new VariableTime();
+                            vt.setEvent(endEvent);
+                            t.setEndEvent(vt);
+                        }
                         ts.add(t);
                         updateString();
                         watcher.afterTextChanged(null);
                         return true;
                     }
-                });
+                }
+
+                MenuItem addTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_time);
+                addTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(360, null, 1440, null));
 
                 MenuItem addExtendedTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_extended_time);
-                addExtendedTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        t.setStart(0);
-                        t.setEnd(2880);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addExtendedTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(0, null, 2880, null));
 
                 MenuItem addVarTimeTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_time);
-                addVarTimeTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        VariableTime vt = new VariableTime();
-                        vt.setEvent(Event.DAWN);
-                        t.setStartEvent(vt);
-                        t.setEnd(1440);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addVarTimeTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(0, Event.DAWN, 1440, null));
 
                 MenuItem addVarTimeExtendedTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_extended_time);
-                addVarTimeExtendedTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        VariableTime vt = new VariableTime();
-                        vt.setEvent(Event.DAWN);
-                        t.setStartEvent(vt);
-                        t.setEnd(2880);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addVarTimeExtendedTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(0, Event.DAWN, 2880, null));
 
                 MenuItem addTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_variable_time);
-                addTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        t.setStart(360);
-                        VariableTime vt = new VariableTime();
-                        vt.setEvent(Event.DUSK);
-                        t.setEndEvent(vt);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addTimeVarTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(360, null, 2880, Event.DUSK));
 
                 MenuItem addVarTimeVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_variable_time);
-                addVarTimeVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        VariableTime startVt = new VariableTime();
-                        startVt.setEvent(Event.DAWN);
-                        t.setStartEvent(startVt);
-                        ;
-                        VariableTime endVt = new VariableTime();
-                        endVt.setEvent(Event.DUSK);
-                        t.setEndEvent(endVt);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addVarTimeVarTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(360, Event.DAWN, 2880, Event.DUSK));
 
                 MenuItem addTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time);
-                addTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        t.setStart(360);
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(360, null, -1, null));
 
                 MenuItem addTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.time_open_end);
                 addTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -1038,25 +954,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 });
 
                 MenuItem addVarTimeTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time);
-                addVarTimeTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        List<TimeSpan> ts = r.getTimes();
-                        if (ts == null) {
-                            r.setTimes(new ArrayList<TimeSpan>());
-                            ts = r.getTimes();
-                        }
-                        TimeSpan t = new TimeSpan();
-                        VariableTime startVt = new VariableTime();
-                        startVt.setEvent(Event.DAWN);
-                        t.setStartEvent(startVt);
-                        ;
-                        ts.add(t);
-                        updateString();
-                        watcher.afterTextChanged(null);
-                        return true;
-                    }
-                });
+                addVarTimeTimespan.setOnMenuItemClickListener(new SetTimeSpanListener(360, Event.DAWN, -1, null));
 
                 MenuItem addVarTimeOpenEndTimespan = timespanMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_time_open_end);
                 addVarTimeOpenEndTimespan.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -1071,7 +969,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         VariableTime startVt = new VariableTime();
                         startVt.setEvent(Event.DAWN);
                         t.setStartEvent(startVt);
-                        ;
                         t.setOpenEnded(true);
                         ts.add(t);
                         updateString();
@@ -1096,7 +993,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         } else {
                             // add a single day with nth
                             d.setStartDay("Mo");
-                            List<Nth> nths = new ArrayList<Nth>();
+                            List<Nth> nths = new ArrayList<>();
                             Nth nth = new Nth();
                             nth.setStartNth(1);
                             nths.add(nth);
@@ -1468,7 +1365,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             typeView.setVisibility(View.VISIBLE);
-                            ;
                             groupHeader.invalidate();
                             return true;
                         }
@@ -1540,21 +1436,21 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
                 // year range list
                 final List<YearRange> years = r.getYears();
-                if (years != null && years.size() > 0) {
+                if (years != null && !years.isEmpty()) {
                     for (final YearRange yr : years) {
                         addYearRangeUI(ll, r, years, yr);
                     }
                 }
                 // week range list
                 final List<WeekRange> weeks = r.getWeeks();
-                if (weeks != null && weeks.size() > 0) {
+                if (weeks != null && !weeks.isEmpty()) {
                     for (final WeekRange w : weeks) {
                         addWeekRangeUI(ll, r, weeks, w);
                     }
                 }
                 // date range list
                 final List<DateRange> dateRanges = r.getDates();
-                if (dateRanges != null && dateRanges.size() > 0) {
+                if (dateRanges != null && !dateRanges.isEmpty()) {
                     for (final DateRange dateRange : dateRanges) {
                         addDateRangeUI(ll, r, dateRanges, dateRange);
                     }
@@ -1571,14 +1467,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             // are supposedly pseudo days
             // holiday list
             final List<Holiday> holidays = r.getHolidays();
-            if (holidays != null && holidays.size() > 0) {
+            if (holidays != null && !holidays.isEmpty()) {
                 for (final Holiday hd : holidays) {
                     addHolidayUI(ll, r, holidays, hd);
                 }
             }
             // week day list
             final List<WeekDayRange> days = r.getDays();
-            if (days != null && days.size() > 0) {
+            if (days != null && !days.isEmpty()) {
                 addWeekDayUI(ll, days);
             }
 
@@ -1657,7 +1553,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         Menu menu = addStandardMenuItems(weekDayRow, new Delete() {
             @Override
             public void delete() {
-                List<WeekDayRange> temp = new ArrayList<WeekDayRange>(days);
+                List<WeekDayRange> temp = new ArrayList<>(days);
                 for (WeekDayRange d : temp) {
                     if (d.getNths() == null) {
                         days.remove(d);
@@ -1681,8 +1577,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             }
         });
 
-        List<WeekDayRange> normal = new ArrayList<WeekDayRange>();
-        List<WeekDayRange> withNth = new ArrayList<WeekDayRange>();
+        List<WeekDayRange> normal = new ArrayList<>();
+        List<WeekDayRange> withNth = new ArrayList<>();
         for (WeekDayRange d : days) {
             if (d.getNths() == null || d.getNths().isEmpty()) {
                 normal.add(d);
@@ -1740,7 +1636,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     }
                 }
-                List<WeekDayRange> inContainer = new ArrayList<WeekDayRange>();
+                List<WeekDayRange> inContainer = new ArrayList<>();
                 inContainer.add(d);
                 setWeekDayListeners(weekDayContainerNth, days, inContainer, true, nthMenuItem);
                 setNthListeners(nthContainer, d);
@@ -1755,22 +1651,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 });
 
                 final View offsetContainer = weekDayRowNth.findViewById(R.id.offset_container);
-                if (d.getOffset() != 0) {
-                    offsetContainer.setVisibility(View.VISIBLE);
-                } else {
-                    offsetContainer.setVisibility(View.GONE);
-                    MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
-                    showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            offsetContainer.setVisibility(View.VISIBLE);
-                            return true;
-                        }
-                    });
-                }
+                int offsetValue = d.getOffset();
+                setOffsetVisibility(offsetValue, menu, offsetContainer);
 
                 EditText offset = (EditText) nthLayout.findViewById(R.id.offset);
-                offset.setText(Integer.toString(d.getOffset()));
+                offset.setText(Integer.toString(offsetValue));
                 setTextWatcher(offset, new SetValue() {
                     @Override
                     public void set(String value) {
@@ -1778,6 +1663,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         try {
                             offset = Integer.parseInt(value);
                         } catch (NumberFormatException nfex) {
+                            // Empty
                         }
                         d.setOffset(offset);
                     }
@@ -2216,6 +2102,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     try {
                         offset = Integer.parseInt(value);
                     } catch (NumberFormatException nfex) {
+                        // Empty
                     }
                     start.setDayOffset(offset);
                 }
@@ -2318,6 +2205,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             end.setDayOffset(offset);
                             updateString();
@@ -2463,7 +2351,36 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
 
         final View offsetContainer = holidayRow.findViewById(R.id.offset_container);
-        if (hd.getOffset() != 0) {
+
+        int offsetValue = hd.getOffset();
+        setOffsetVisibility(offsetValue, menu, offsetContainer);
+
+        EditText offset = (EditText) holidayRow.findViewById(R.id.offset);
+        offset.setText(Integer.toString(offsetValue));
+        setTextWatcher(offset, new SetValue() {
+            @Override
+            public void set(String value) {
+                int offset = 0;
+                try {
+                    offset = Integer.parseInt(value);
+                } catch (NumberFormatException nfex) {
+                    // Empty
+                }
+                hd.setOffset(offset);
+            }
+        });
+        ll.addView(holidayRow);
+    }
+
+    /**
+     * Show or hide the offset field and if hidden add a menu entry
+     * 
+     * @param offset the current offset value
+     * @param menu the menu to add an entry to
+     * @param offsetContainer the container view
+     */
+    private void setOffsetVisibility(final int offset, @NonNull Menu menu, @NonNull final View offsetContainer) {
+        if (offset != 0) {
             offsetContainer.setVisibility(View.VISIBLE);
         } else {
             offsetContainer.setVisibility(View.GONE);
@@ -2476,21 +2393,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
             });
         }
-
-        EditText offset = (EditText) holidayRow.findViewById(R.id.offset);
-        offset.setText(Integer.toString(hd.getOffset()));
-        setTextWatcher(offset, new SetValue() {
-            @Override
-            public void set(String value) {
-                int offset = 0;
-                try {
-                    offset = Integer.parseInt(value);
-                } catch (NumberFormatException nfex) {
-                }
-                hd.setOffset(offset);
-            }
-        });
-        ll.addView(holidayRow);
     }
 
     private void addYearRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<YearRange> years, @NonNull final YearRange yr) {
@@ -2519,6 +2421,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 try {
                     interval = Integer.parseInt(value);
                 } catch (NumberFormatException nfex) {
+                    // Empty
                 }
                 yr.setInterval(interval);
             }
@@ -2534,14 +2437,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 watcher.afterTextChanged(null); // hack to force rebuild of form
             }
         });
-        MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
-        showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                intervalContainer.setVisibility(View.VISIBLE);
-                return true;
-            }
-        });
+        addShowIntervalItem(intervalContainer, menu);
 
         LinearLayout range = (LinearLayout) yearLayout.findViewById(R.id.range);
         range.setOnClickListener(new OnClickListener() {
@@ -2574,6 +2470,23 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             }
         });
         ll.addView(yearLayout);
+    }
+
+    /**
+     * Add a menu item to show the interval field
+     * 
+     * @param intervalContainer the container view
+     * @param menu the menu we want to add an item to
+     */
+    private void addShowIntervalItem(@NonNull final View intervalContainer, @NonNull Menu menu) {
+        MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
+        showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                intervalContainer.setVisibility(View.VISIBLE);
+                return true;
+            }
+        });
     }
 
     SetRangeListener realSetRangeListener = null;
@@ -2612,6 +2525,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 try {
                     interval = Integer.parseInt(value);
                 } catch (NumberFormatException nfex) {
+                    // Empty
                 }
                 w.setInterval(interval);
             }
@@ -2627,14 +2541,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 watcher.afterTextChanged(null); // hack to force rebuild of form
             }
         });
-        MenuItem showInterval = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_interval);
-        showInterval.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                intervalContainer.setVisibility(View.VISIBLE);
-                return true;
-            }
-        });
+        addShowIntervalItem(intervalContainer, menu);
 
         LinearLayout range = (LinearLayout) weekLayout.findViewById(R.id.range);
         range.setOnClickListener(new OnClickListener() {
@@ -2686,10 +2593,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Empty
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Empty
             }
 
             @Override
@@ -2731,7 +2640,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     private void addTimeSpanUIs(@NonNull final LinearLayout ll, @Nullable final List<TimeSpan> times) {
-        if (times != null && times.size() > 0) {
+        if (times != null && !times.isEmpty()) {
             Log.d(DEBUG_TAG, "#time spans " + times.size());
             Menu menu = null;
             for (final TimeSpan ts : times) {
@@ -2844,22 +2753,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     addTimeSpanMenus(timeBar, null, menu);
 
                     final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);
-                    if (ts.getEndEvent().getOffset() != 0) {
-                        offsetContainer.setVisibility(View.VISIBLE);
-                    } else {
-                        offsetContainer.setVisibility(View.GONE);
-                        MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
-                        showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                offsetContainer.setVisibility(View.VISIBLE);
-                                return true;
-                            }
-                        });
-                    }
+                    int offsetValue = ts.getEndEvent().getOffset();
+                    setOffsetVisibility(offsetValue, menu, offsetContainer);
 
                     EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
-                    offset.setText(Integer.toString(ts.getEndEvent().getOffset()));
+                    offset.setText(Integer.toString(offsetValue));
                     setTextWatcher(offset, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2867,6 +2765,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             ts.getEndEvent().setOffset(offset);
                         }
@@ -2922,22 +2821,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         addTimeSpanMenus(timeBar, null, menu);
                     }
                     final View offsetContainer = timeEventRow.findViewById(R.id.offset_container);
-                    if (ts.getStartEvent().getOffset() != 0) {
-                        offsetContainer.setVisibility(View.VISIBLE);
-                    } else {
-                        offsetContainer.setVisibility(View.GONE);
-                        MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
-                        showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                offsetContainer.setVisibility(View.VISIBLE);
-                                return true;
-                            }
-                        });
-                    }
+                    int offsetValue = ts.getStartEvent().getOffset();
+                    setOffsetVisibility(offsetValue, menu, offsetContainer);
 
                     EditText offset = (EditText) offsetContainer.findViewById(R.id.offset);
-                    offset.setText(Integer.toString(ts.getStartEvent().getOffset()));
+                    offset.setText(Integer.toString(offsetValue));
                     setTextWatcher(offset, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2945,6 +2833,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             ts.getStartEvent().setOffset(offset);
                         }
@@ -2999,6 +2888,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             ts.getStartEvent().setOffset(offset);
                         }
@@ -3012,6 +2902,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             ts.getEndEvent().setOffset(offset);
                         }
@@ -3053,22 +2944,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     endOffsetContainer.setVisibility(View.GONE);
                     menu = addStandardMenuItems(timeEventRow, new DeleteTimeSpan(times, ts));
                     final View offsetContainer = timeEventRow.findViewById(R.id.start_offset_container);
-                    if (ts.getStartEvent().getOffset() != 0) {
-                        offsetContainer.setVisibility(View.VISIBLE);
-                    } else {
-                        offsetContainer.setVisibility(View.GONE);
-                        MenuItem showOffset = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.show_offset);
-                        showOffset.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                offsetContainer.setVisibility(View.VISIBLE);
-                                return true;
-                            }
-                        });
-                    }
+                    int offsetValue = ts.getStartEvent().getOffset();
+                    setOffsetVisibility(offsetValue, menu, offsetContainer);
 
                     EditText offset = (EditText) offsetContainer.findViewById(R.id.start_offset);
-                    offset.setText(Integer.toString(ts.getStartEvent().getOffset()));
+                    offset.setText(Integer.toString(offsetValue));
                     setTextWatcher(offset, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -3076,6 +2956,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             try {
                                 offset = Integer.parseInt(value);
                             } catch (NumberFormatException nfex) {
+                                // Empty
                             }
                             ts.getStartEvent().setOffset(offset);
                         }
@@ -3098,6 +2979,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         try {
                             interval = Integer.parseInt(value);
                         } catch (NumberFormatException nfex) {
+                            // Empty
                         }
                         ts.setInterval(interval);
                     }
@@ -3319,23 +3201,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         values.recycle();
     }
 
-    private String valueToEntry(int valuesId, int entriesId, @Nullable String value) {
-        Resources res = getResources();
-        final TypedArray values = res.obtainTypedArray(valuesId);
-        final TypedArray entries = res.obtainTypedArray(entriesId);
-        try {
-            for (int i = 0; i < values.length(); i++) {
-                if ((value == null && "".equals(values.getString(i))) || (value != null && value.equals(values.getString(i)))) {
-                    return entries.getString(i);
-                }
-            }
-        } finally {
-            values.recycle();
-            entries.recycle();
-        }
-        return "Invalid value";
-    }
-
     private void setSpinnerListenerEntryValues(final int valuesId, @NonNull final Spinner spinner, @NonNull final SetValue listener) {
         final Resources res = getResources();
 
@@ -3350,6 +3215,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                // Empty
             }
         });
     }
@@ -3465,7 +3331,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         ((CheckBox) buttonView).setChecked(true);
                     }
                 } else {
-                    List<WeekDayRange> temp = new ArrayList<WeekDayRange>(days);
+                    List<WeekDayRange> temp = new ArrayList<>(days);
                     for (WeekDayRange d : temp) {
                         if (d.getNths() == null) {
                             days.remove(d);
@@ -3544,7 +3410,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 List<Nth> nths = days.getNths();
                 if (nths == null) {
-                    nths = new ArrayList<Nth>();
+                    nths = new ArrayList<>();
                     days.setNths(nths);
                 } else {
                     nths.clear();
@@ -3596,24 +3462,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(DEBUG_TAG, "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(DEBUG_TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(DEBUG_TAG, "onDestroy");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         Log.d(DEBUG_TAG, "onResume");
@@ -3625,11 +3473,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             showTemplates = false;
             loadOrManageTemplate(context, false);
         }
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
     }
 
     /**
@@ -3660,6 +3503,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         return null;
     }
 
+    /**
+     * Convert density independent pixels to screen pixels
+     * 
+     * @param dp the dip value
+     * @return the actual pixels
+     */
     private int dpToPixels(int dp) {
         Resources r = getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
@@ -3683,8 +3532,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private Cursor          templateCursor;
     private TemplateAdapter templateAdapter;
     private AlertDialog     templateDialog;
-
-    private AppCompatButton saveButton;
 
     /**
      * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
@@ -3732,7 +3579,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final SQLiteDatabase db;
         final boolean        manage;
 
-        public TemplateAdapter(final SQLiteDatabase db, Context context, Cursor cursor, boolean manage) {
+        public TemplateAdapter(@NonNull final SQLiteDatabase db, @NonNull Context context, @NonNull Cursor cursor, boolean manage) {
             super(context, cursor, 0);
             this.db = db;
             this.manage = manage;
@@ -3741,8 +3588,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             Log.d(DEBUG_TAG, "newView");
-            View view = LayoutInflater.from(context).inflate(R.layout.template_list_item, parent, false);
-            return view;
+            return LayoutInflater.from(context).inflate(R.layout.template_list_item, parent, false);
         }
 
         @Override
@@ -3756,12 +3602,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             view.setTag(id);
             Log.d(DEBUG_TAG, "bindView id " + id);
             boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
-            String key = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
+            String nameValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
+            String keyValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
             TextView nameView = (TextView) view.findViewById(R.id.name);
-            nameView.setText(name);
+            nameView.setText(nameValue);
             TextView keyView = (TextView) view.findViewById(R.id.key);
-            String keyEntry = valueToEntry(R.array.key_values, R.array.key_entries, key);
+            String keyEntry = valueToEntry(R.array.key_values, R.array.key_entries, keyValue);
             keyView.setText((isDefault ? getActivity().getString(R.string.is_default, keyEntry) : keyEntry));
             final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
             if (manage) {
@@ -3784,6 +3630,23 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                 });
             }
+        }
+
+        private String valueToEntry(int valuesId, int entriesId, @Nullable String value) {
+            Resources res = getResources();
+            final TypedArray values = res.obtainTypedArray(valuesId);
+            final TypedArray entries = res.obtainTypedArray(entriesId);
+            try {
+                for (int i = 0; i < values.length(); i++) {
+                    if ((value == null && "".equals(values.getString(i))) || (value != null && value.equals(values.getString(i)))) {
+                        return entries.getString(i);
+                    }
+                }
+            } finally {
+                values.recycle();
+                entries.recycle();
+            }
+            return "Invalid value";
         }
     }
 
