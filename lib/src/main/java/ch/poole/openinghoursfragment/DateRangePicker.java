@@ -1,20 +1,17 @@
 package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import ch.poole.openinghoursparser.DateWithOffset;
@@ -27,34 +24,21 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Display a dialog allowing the user to select values for a start date and optionally an end date
  *
  */
-public class DateRangePicker extends DialogFragment {
+public class DateRangePicker extends CancelableDialogFragment {
     private static final int MAX_YEAR = 2100;
 
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
-    private static final String LISTENER = "listener";
-
-    private static final String TITLE = "title";
-
-    private static final String START_YEAR = "startYear";
-
-    private static final String START_MONTH = "startMonth";
-
-    private static final String START_DAY = "startDay";
-
+    private static final String TITLE         = "title";
+    private static final String START_YEAR    = "startYear";
+    private static final String START_MONTH   = "startMonth";
+    private static final String START_DAY     = "startDay";
     private static final String START_VARDATE = "startVarDate";
-
-    private static final String START_ONLY = "startOnly";
-
-    private static final String END_YEAR = "endYear";
-
-    private static final String END_MONTH = "endMonth";
-
-    private static final String END_DAY = "endDay";
-
-    private static final String END_VARDATE = "endVarDate";
-
-    private static final String DEBUG_TAG = DateRangePicker.class.getSimpleName();
+    private static final String START_ONLY    = "startOnly";
+    private static final String END_YEAR      = "endYear";
+    private static final String END_MONTH     = "endMonth";
+    private static final String END_DAY       = "endDay";
+    private static final String END_VARDATE   = "endVarDate";
 
     private static final String TAG = "fragment_daterangepicker";
 
@@ -70,13 +54,12 @@ public class DateRangePicker extends DialogFragment {
      * @param endMonth initial end month
      * @param endDay initial end day of the month
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay,
-            int endYear, @Nullable Month endMonth, int endDay) {
+    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear, @Nullable Month endMonth,
+            int endDay) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear,
-                endMonth, endDay, null);
+        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear, endMonth, endDay, null);
         datePickerFragment.show(fm, TAG);
     }
 
@@ -91,13 +74,13 @@ public class DateRangePicker extends DialogFragment {
      * @param endMonth initial end month
      * @param endDay initial end day of the month
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate,
-            int endYear, @Nullable Month endMonth, int endDay) {
+    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @Nullable Month endMonth,
+            int endDay) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY,
-                startVarDate, false, endYear, endMonth, endDay, null);
+        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, false, endYear, endMonth,
+                endDay, null);
         datePickerFragment.show(fm, TAG);
     }
 
@@ -112,13 +95,13 @@ public class DateRangePicker extends DialogFragment {
      * @param endYear initial end year
      * @param endVarDate initial end variable date ie easter
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay,
-            int endYear, @NonNull VarDate endVarDate) {
+    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear,
+            @NonNull VarDate endVarDate) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear,
-                null, DateWithOffset.UNDEFINED_MONTH_DAY, endVarDate);
+        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear, null, DateWithOffset.UNDEFINED_MONTH_DAY,
+                endVarDate);
         datePickerFragment.show(fm, TAG);
     }
 
@@ -132,13 +115,12 @@ public class DateRangePicker extends DialogFragment {
      * @param endYear initial end year
      * @param endVarDate initial end variable date ie easter
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate,
-            int endYear, @NonNull VarDate endVarDate) {
+    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @NonNull VarDate endVarDate) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY,
-                startVarDate, false, endYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, endVarDate);
+        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, false, endYear, null,
+                DateWithOffset.UNDEFINED_MONTH_DAY, endVarDate);
         datePickerFragment.show(fm, TAG);
     }
 
@@ -151,29 +133,29 @@ public class DateRangePicker extends DialogFragment {
      * @param startMonth initial start month
      * @param startDay initial start day of the month
      */
-    static public void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay) {
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, true,
+        DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, true, YearRange.UNDEFINED_YEAR, null,
+                DateWithOffset.UNDEFINED_MONTH_DAY, null);
+        datePickerFragment.show(fm, TAG);
+    }
+
+    /**
+     * Show the DateRangePicker dialog
+     * 
+     * @param parentFragment Fragment calling this
+     * @param title resource id for the title to display
+     * @param startYear initial start year
+     * @param startVarDate initial start variable date ie easter
+     */
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate) {
+        dismissDialog(parentFragment);
+
+        FragmentManager fm = parentFragment.getChildFragmentManager();
+        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, true,
                 YearRange.UNDEFINED_YEAR, null, DateWithOffset.UNDEFINED_MONTH_DAY, null);
-        datePickerFragment.show(fm, TAG);
-    }
-
-    /**
-     * Show the DateRangePicker dialog
-     * 
-     * @param parentFragment Fragment calling this
-     * @param title resource id for the title to display
-     * @param startYear initial start year
-     * @param startVarDate initial start variable date ie easter
-     */
-    static public void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate) {
-        dismissDialog(parentFragment);
-
-        FragmentManager fm = parentFragment.getChildFragmentManager();
-        DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY,
-                startVarDate, true, YearRange.UNDEFINED_YEAR, null, DateWithOffset.UNDEFINED_MONTH_DAY, null);
         datePickerFragment.show(fm, TAG);
     }
 
@@ -207,9 +189,8 @@ public class DateRangePicker extends DialogFragment {
      * @param endVarDate initial end variable date ie easter or null
      * @return an instance of DateRangePicker
      */
-    static private DateRangePicker newInstance(int title, int startYear, @Nullable Month startMonth, int startDay,
-            @Nullable VarDate startVarDate, boolean startOnly, int endYear, @Nullable Month endMonth, int endDay,
-            @Nullable VarDate endVarDate) {
+    private static DateRangePicker newInstance(int title, int startYear, @Nullable Month startMonth, int startDay, @Nullable VarDate startVarDate,
+            boolean startOnly, int endYear, @Nullable Month endMonth, int endDay, @Nullable VarDate endVarDate) {
         DateRangePicker f = new DateRangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -227,18 +208,6 @@ public class DateRangePicker extends DialogFragment {
         f.setShowsDialog(true);
 
         return f;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.d(DEBUG_TAG, "onAttach");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(true);
     }
 
     @NonNull
@@ -261,13 +230,11 @@ public class DateRangePicker extends DialogFragment {
 
         final SetDateRangeListener listener = (SetDateRangeListener) getParentFragment();
 
-        // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
 
-        final LayoutInflater inflater = getActivity().getLayoutInflater(); // ThemeUtils.getLayoutInflater(getActivity());
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // DoNothingListener doNothingListener = new DoNothingListener();
         View layout = inflater.inflate(R.layout.daterangepicker, null);
         builder.setView(layout);
 
@@ -379,8 +346,8 @@ public class DateRangePicker extends DialogFragment {
                 VarDate startVarDateValue = getVarDateValue(npvStartVarDate);
                 VarDate endVarDateValue = getVarDateValue(npvEndVarDate);
 
-                listener.setDateRange(startYearValue, startMonthValue, null, startDayValue, startVarDateValue, 
-                                      endYearValue, endMonthValue, null, endDayValue, endVarDateValue);
+                listener.setDateRange(startYearValue, startMonthValue, null, startDayValue, startVarDateValue, endYearValue, endMonthValue, null, endDayValue,
+                        endVarDateValue);
             }
 
             private Month getMonthValue(final NumberPickerView npvMonth) {

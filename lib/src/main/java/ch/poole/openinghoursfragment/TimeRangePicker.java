@@ -1,19 +1,16 @@
 package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
@@ -22,7 +19,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Display a dialog allowing the user to select values for a start date and optionally an end date
  *
  */
-public class TimeRangePicker extends DialogFragment {
+public class TimeRangePicker extends CancelableDialogFragment {
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
     private static final String TITLE        = "title";
@@ -32,8 +29,6 @@ public class TimeRangePicker extends DialogFragment {
     private static final String END_HOUR     = "endHour";
     private static final String END_MINUTE   = "endMinute";
     private static final String INCREMENT    = "increment";
-
-    private static final String DEBUG_TAG = TimeRangePicker.class.getSimpleName();
 
     private static final String TAG = "fragment_timepicker";
 
@@ -65,7 +60,7 @@ public class TimeRangePicker extends DialogFragment {
      * @param startMinute initial start minute
      * @param increment minute tick size
      */
-    static public void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment) {
+    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment) {
         dismissDialog(parentFragment);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
@@ -100,7 +95,7 @@ public class TimeRangePicker extends DialogFragment {
      * @param increment minute tick size
      * @return an instance of TimeRangePicker
      */
-    static private TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly, int endHour, int endMinute, int increment) {
+    private static TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly, int endHour, int endMinute, int increment) {
         TimeRangePicker f = new TimeRangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -117,18 +112,6 @@ public class TimeRangePicker extends DialogFragment {
         return f;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.d(DEBUG_TAG, "onAttach");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(true);
-    }
-
     @NonNull
     @SuppressLint("InflateParams")
     @Override
@@ -141,18 +124,15 @@ public class TimeRangePicker extends DialogFragment {
         int endHour = getArguments().getInt(END_HOUR);
         int endMinute = getArguments().getInt(END_MINUTE);
         int increment = getArguments().getInt(INCREMENT, 1);
-        ;
         boolean startOnly = getArguments().getBoolean(START_ONLY);
 
         final SetTimeRangeListener listener = (SetTimeRangeListener) getParentFragment();
 
-        // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
 
-        final LayoutInflater inflater = getActivity().getLayoutInflater(); // ThemeUtils.getLayoutInflater(getActivity());
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // DoNothingListener doNothingListener = new DoNothingListener();
         View layout = inflater.inflate(R.layout.timerangepicker, null);
         builder.setView(layout);
 

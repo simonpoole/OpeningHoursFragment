@@ -3,6 +3,8 @@ package ch.poole.openinghoursfragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,9 +14,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Util {
+public final class Util {
     protected static final String DEBUG_TAG = "Util";
 
+    /**
+     * Private default constructor
+     */
+    private Util() {
+        // Empty
+    }
+    
     /**
      * Scroll to the supplied view
      * 
@@ -27,7 +36,7 @@ public class Util {
      * @param up if true scroll to top if row is null, otherwise scroll to bottom
      * @param force if true always try to scroll even if row is already on screen
      */
-    public static void scrollToRow(final View sv, final View row, final boolean up, boolean force) {
+    public static void scrollToRow(@NonNull final View sv, @Nullable final View row, final boolean up, boolean force) {
         Rect scrollBounds = new Rect();
         sv.getHitRect(scrollBounds);
         if (row != null && row.getLocalVisibleRect(scrollBounds) && !force) {
@@ -37,9 +46,9 @@ public class Util {
             sv.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sv != null && sv instanceof ScrollView) {
+                    if (sv instanceof ScrollView) {
                         ((ScrollView) sv).fullScroll(up ? ScrollView.FOCUS_UP : ScrollView.FOCUS_DOWN);
-                    } else if (sv != null && sv instanceof NestedScrollView) {
+                    } else if (sv instanceof NestedScrollView) {
                         ((NestedScrollView) sv).fullScroll(up ? ScrollView.FOCUS_UP : ScrollView.FOCUS_DOWN);
                     } else {
                         Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
@@ -52,9 +61,9 @@ public class Util {
                 @Override
                 public void run() {
                     final int target = up ? row.getTop() : row.getBottom();
-                    if (sv != null && sv instanceof ScrollView) {
+                    if (sv instanceof ScrollView) {
                         ((ScrollView) sv).smoothScrollTo(0, target);
-                    } else if (sv != null && sv instanceof NestedScrollView) {
+                    } else if (sv instanceof NestedScrollView) {
                         ((NestedScrollView) sv).smoothScrollTo(0, target);
                     } else {
                         Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
@@ -70,7 +79,7 @@ public class Util {
      * @param context android context
      * @param msg the message to display
      */
-    public static void toastTop(Context context, String msg) {
+    public static void toastTop(@NonNull Context context, String msg) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.toast, null);
         TextView text = (TextView) layout.findViewById(R.id.text);
@@ -88,7 +97,7 @@ public class Util {
      * @param context android context
      * @param msg the message resource id to display
      */
-    public static void toastTop(Context context, int msg) {
+    public static void toastTop(@NonNull Context context, int msg) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.toast, null);
         TextView text = (TextView) layout.findViewById(R.id.text);

@@ -6,8 +6,19 @@ apply plugin: 'eclipse'
 apply plugin: 'com.android.application'
 
 
-// apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android'
+apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android-3'
 // apply from: '../../gradle-tasks/eclipse-android-3-lib'
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://maven.google.com" }
+        flatDir {
+            dirs '../lib/build/outputs/aar/'
+        }
+    }
+}
 
 android {
     compileSdkVersion 25
@@ -41,11 +52,11 @@ android {
 
 ext {
     supportLibVersion = "25.3.1"
-    // supportLibVersion = "27.1.1"
 }
 
 dependencies {
-    implementation project(':lib')
+    // gradle-eclipse-aar-plugin currently can't resolve this so we add it explicitly implementation project(':lib')
+    implementation "ch.poole:OpeningHoursFragment:0.5.7"
     
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"

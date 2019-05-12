@@ -1,19 +1,16 @@
 package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
@@ -22,22 +19,14 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Display a dialog allowing the user to set a numeric range
  *
  */
-public class RangePicker extends DialogFragment {
+public class RangePicker extends CancelableDialogFragment {
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
-    private static final String LISTENER = "listener";
-
-    private static final String TITLE = "title";
-
-    private static final String MIN = "min";
-
-    private static final String MAX = "max";
-
+    private static final String TITLE         = "title";
+    private static final String MIN           = "min";
+    private static final String MAX           = "max";
     private static final String START_CURRENT = "startCurrent";
-
-    private static final String END_CURRENT = "endCurrent";
-
-    private static final String DEBUG_TAG = RangePicker.class.getSimpleName();
+    private static final String END_CURRENT   = "endCurrent";
 
     private static final String TAG = "fragment_rangepicker";
 
@@ -84,7 +73,7 @@ public class RangePicker extends DialogFragment {
      * @param endCurrent initial end value
      * @return an instance of RangePicker
      */
-    static private RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent) {
+    private static RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent) {
         RangePicker f = new RangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -99,18 +88,6 @@ public class RangePicker extends DialogFragment {
         return f;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.d(DEBUG_TAG, "onAttach");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(true);
-    }
-
     @NonNull
     @SuppressLint("InflateParams")
     @Override
@@ -122,13 +99,11 @@ public class RangePicker extends DialogFragment {
         int endCurrent = getArguments().getInt(END_CURRENT);
         final SetRangeListener listener = (SetRangeListener) getParentFragment();
 
-        // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
 
-        final LayoutInflater inflater = getActivity().getLayoutInflater(); // ThemeUtils.getLayoutInflater(getActivity());
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // DoNothingListener doNothingListener = new DoNothingListener();
         View layout = inflater.inflate(R.layout.rangepicker, null);
         builder.setView(layout);
 

@@ -1,25 +1,20 @@
 package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Month;
-import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.YearRange;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
@@ -28,25 +23,16 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Display a dialog allowing the user to select values for a start date and optionally an end date
  *
  */
-public class OccurrenceInMonthPicker extends DialogFragment {
+public class OccurrenceInMonthPicker extends CancelableDialogFragment {
     private static final int MAX_YEAR = 2100;
 
     public static final int NOTHING_SELECTED = Integer.MIN_VALUE;
 
-    private static final String LISTENER = "listener";
-
-    private static final String TITLE = "title";
-
-    private static final String YEAR = "startYear";
-
-    private static final String MONTH = "startMonth";
-
-    private static final String WEEKDAY = "weekday";
-    
+    private static final String TITLE      = "title";
+    private static final String YEAR       = "startYear";
+    private static final String MONTH      = "startMonth";
+    private static final String WEEKDAY    = "weekday";
     private static final String OCCURRENCE = "occurrence";
-
-
-    private static final String DEBUG_TAG = OccurrenceInMonthPicker.class.getSimpleName();
 
     private static final String TAG = "fragment_occurrenceinmonthpicker";
 
@@ -93,31 +79,19 @@ public class OccurrenceInMonthPicker extends DialogFragment {
      * @param occurrence initial occurrence
      * @return an instance of OccurrenceInMonthPicker
      */
-    static private OccurrenceInMonthPicker newInstance(int title, int year, @Nullable Month month,  @Nullable WeekDay weekday, int occurrence) {
+    private static OccurrenceInMonthPicker newInstance(int title, int year, @Nullable Month month, @Nullable WeekDay weekday, int occurrence) {
         OccurrenceInMonthPicker f = new OccurrenceInMonthPicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
         args.putInt(YEAR, year);
         args.putSerializable(MONTH, month);
-        args.putSerializable(WEEKDAY, weekday);    
+        args.putSerializable(WEEKDAY, weekday);
         args.putInt(OCCURRENCE, occurrence);
 
         f.setArguments(args);
         f.setShowsDialog(true);
 
         return f;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.d(DEBUG_TAG, "onAttach");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(true);
     }
 
     @NonNull
@@ -133,13 +107,11 @@ public class OccurrenceInMonthPicker extends DialogFragment {
 
         final SetDateRangeListener listener = (SetDateRangeListener) getParentFragment();
 
-        // Preferences prefs= new Preferences(getActivity());
         Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
 
-        final LayoutInflater inflater = getActivity().getLayoutInflater(); // ThemeUtils.getLayoutInflater(getActivity());
+        final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // DoNothingListener doNothingListener = new DoNothingListener();
         View layout = inflater.inflate(R.layout.occurrence_in_month_picker, null);
         builder.setView(layout);
 
@@ -158,7 +130,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
         String[] weekdayEntries = getActivity().getResources().getStringArray(R.array.weekdays_entries);
         String[] occurrenceValues = new String[10];
         for (int i = -5; i <= 5; i++) {
-            occurrenceValues[i>0?i+4:i+5] = "[" + Integer.toString(i) + "]";
+            occurrenceValues[i > 0 ? i + 4 : i + 5] = "[" + Integer.toString(i) + "]";
         }
 
         final NumberPickerView npvMonth = (NumberPickerView) layout.findViewById(R.id.month);
@@ -166,7 +138,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
         npvMonth.setMinValue(1);
         npvMonth.setMaxValue(12);
         npvMonth.setValue(month.ordinal() + 1);
-        
+
         final NumberPickerView npvWeekday = (NumberPickerView) layout.findViewById(R.id.weekday);
         npvWeekday.setDisplayedValues(weekdayEntries);
         npvWeekday.setMinValue(1);
@@ -187,8 +159,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
                 WeekDay weekday = getWeekdayValue(npvWeekday);
                 int occurrenceValue = getOccurrenceValue(npvOccurrence);
 
-               listener.setDateRange(yearValue, monthValue, weekday, occurrenceValue, null, 
-                                     NOTHING_SELECTED, null, null, NOTHING_SELECTED, null);
+                listener.setDateRange(yearValue, monthValue, weekday, occurrenceValue, null, NOTHING_SELECTED, null, null, NOTHING_SELECTED, null);
             }
 
             private Month getMonthValue(final NumberPickerView npvMonth) {
@@ -198,7 +169,7 @@ public class OccurrenceInMonthPicker extends DialogFragment {
                 }
                 return monthValue;
             }
-            
+
             private WeekDay getWeekdayValue(final NumberPickerView npvWeekday) {
                 WeekDay weekdayValue = null;
                 if (npvWeekday.getValue() != 0) {
@@ -218,9 +189,9 @@ public class OccurrenceInMonthPicker extends DialogFragment {
             private int getOccurrenceValue(final NumberPickerView npvDay) {
                 int occurrence = npvDay.getValue();
                 if (occurrence <= 4) {
-                    return occurrence -5;
+                    return occurrence - 5;
                 }
-                return occurrence -4;
+                return occurrence - 4;
             }
         });
         builder.setNeutralButton(R.string.spd_ohf_cancel, null);

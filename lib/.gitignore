@@ -3,3 +3,6 @@
 /.classpath
 /.settings/
 /bin/
+/project.properties
+/libs/
+/.externalToolBuilders/
