@@ -146,6 +146,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private AppCompatButton saveButton;
 
+    private View headerLine;
+
     /**
      * True if we encountered a parse error
      */
@@ -257,7 +259,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     /**
      * Create a new OpeningHoursFragment with callback to a fragment
      * 
-     * @param key @param key the key the OH values belongs to in an ValueWithDescription objecto
+     * @param key the key the OH values belongs to in an ValueWithDescription object
      * @param value the OH value
      * @param style resource id for the Android style to use
      * @param rule rule to scroll to or -1 (currently ignored)
@@ -356,15 +358,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         textWatcher = new TextTextWatcher();
 
         // check if this is a mixed value tag
-        final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
+        final LinearLayout modeContainer = (LinearLayout) openingHoursLayout.findViewById(R.id.modeContainer);
+        headerLine = openingHoursLayout.findViewById(R.id.headerLine);
         if (textValues != null) {
+            final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
             final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
             final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
             if (textValues.contains(new ValueWithDescription(openingHoursValue, null)) || openingHoursValue == null || "".equals(openingHoursValue)) {
                 useText.setChecked(true);
                 textMode = true;
+                headerLine.setVisibility(View.VISIBLE);
             } else {
                 useOH.setChecked(true);
+                headerLine.setVisibility(View.GONE);
             }
             modeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -377,9 +383,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     buildLayout(openingHoursLayout, openingHoursValue, -1);
                 }
             });
-            modeGroup.setVisibility(View.VISIBLE);
+            modeContainer.setVisibility(View.VISIBLE);
         } else {
-            modeGroup.setVisibility(View.GONE);
+            modeContainer.setVisibility(View.GONE);
+            headerLine.setVisibility(View.GONE);
         }
         buildLayout(openingHoursLayout, openingHoursValue == null ? "" : openingHoursValue, initialRule);
 
@@ -547,6 +554,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     text.removeTextChangedListener(textWatcher);
                     text.addTextChangedListener(textWatcher);
                     fab.setVisibility(View.GONE);
+                    headerLine.setVisibility(View.VISIBLE);
                     textMode = true;
                     return sv;
                 } else {
@@ -564,6 +572,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             loadOrManageTemplate(context, false, key.getValue());
                         }
                     }
+                    headerLine.setVisibility(View.GONE);
                 }
             }
             text.setText(openingHoursValue);
@@ -3063,7 +3072,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         };
         timePickerMenu.setOnMenuItemClickListener(listener);
         if (timeBar != null) {
-            ((View)timeBar).setOnClickListener(new OnClickListener() {
+            timeBar.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
                     listener.onMenuItemClick(null); // lazy hack

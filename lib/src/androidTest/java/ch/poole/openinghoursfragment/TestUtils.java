@@ -1,8 +1,6 @@
 package ch.poole.openinghoursfragment;
 
-import android.graphics.Rect;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
@@ -14,12 +12,6 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 import android.util.Log;
 
-import org.junit.Assert;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * Various methods to support testing
  * 
@@ -28,19 +20,6 @@ import java.io.InputStream;
  */
 public class TestUtils {
     private static final String DEBUG_TAG = "TestUtils";
-
-    /**
-     * Grant permissions by clicking on the dialogs, currently only works for English and German
-     */
-    public static void grantPermissons() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-            boolean notdone = true;
-            while (notdone) {
-                notdone = clickText(mDevice, true, "allow", true) || clickText(mDevice, true, "zulassen", false);
-            }
-        }
-    }
 
     /**
      * Click the overflow button in a menu bar
@@ -111,61 +90,6 @@ public class TestUtils {
     }
 
     /**
-     * Single click at a screen location
-     * 
-     * @param x screen X coordinate
-     * @param y screen y coordinate
-     */
-    public static void clickAt(float x, float y) {
-        System.out.println("clicking at " + x + " " + y);
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.click((int) x, (int) y);
-    }
-
-    /**
-     * An attempt at getting reliable long clicks with swiping
-     * 
-     * @param mDevice the current UiDevice
-     * @param o the UiObject to long click on
-     * @throws UiObjectNotFoundException if o is not found
-     */
-    public static void longClick(UiDevice mDevice, UiObject o) throws UiObjectNotFoundException {
-        Rect rect = o.getBounds();
-        mDevice.swipe(rect.centerX(), rect.centerY(), rect.centerX(), rect.centerY(), 200);
-        try {
-            Thread.sleep(2000); // NOSONAR
-        } catch (InterruptedException e1) {
-        }
-    }
-
-    /**
-     * Long click at a screen location
-     * 
-     * @param x screen X coordinate
-     * @param y screen y coordinate
-     */
-    public static void longClickAt(float x, float y) {
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.swipe((int) x, (int) y, (int) x, (int) y, 200);
-    }
-
-    /**
-     * Double click at a screen location
-     * 
-     * @param x screen X coordinate
-     * @param y screen y coordinate
-     */
-    public static void doubleClickAt(float x, float y) {
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        device.click((int) x, (int) y);
-        try {
-            Thread.sleep(100); // NOSONAR
-        } catch (InterruptedException e) {
-        }
-        device.click((int) x, (int) y);
-    }
-
-    /**
      * Execute a drag
      * 
      * @param startX start screen X coordinate
@@ -211,35 +135,6 @@ public class TestUtils {
                     button.click();
                     Log.e(DEBUG_TAG, ".... clicked");
                 }
-                return true;
-            } catch (UiObjectNotFoundException e) {
-                Log.e(DEBUG_TAG, "Object vanished.");
-                return false;
-            }
-        } else {
-            Log.e(DEBUG_TAG, "Object not found");
-            return false;
-        }
-    }
-
-    /**
-     * Long click a text on screen (case insensitive, start of a string)
-     * 
-     * @param device UiDevice object
-     * @param text text to search (case insensitive, uses textStartsWith)
-     * @return true if successful
-     */
-    public static boolean longClickText(UiDevice device, String text) {
-        Log.w(DEBUG_TAG, "Searching for object with " + text);
-        // Note: contrary to "text", "textStartsWith" is case insensitive
-        BySelector bySelector = By.textStartsWith(text);
-        UiSelector uiSelector = new UiSelector().textStartsWith(text);
-        device.wait(Until.findObject(bySelector), 500);
-        UiObject button = device.findObject(uiSelector);
-        if (button.exists()) {
-            try {
-                longClick(device, button);
-                Log.e(DEBUG_TAG, ".... clicked");
                 return true;
             } catch (UiObjectNotFoundException e) {
                 Log.e(DEBUG_TAG, "Object vanished.");
@@ -300,9 +195,10 @@ public class TestUtils {
      * @param device UiDevice object
      * @param clickable if true the search will be restricted to clickable objects
      * @param text the text to find
-     * @return true if successful
+     * @return an UiObject2 or null
      */
-    public static boolean findText(UiDevice device, boolean clickable, String text) {
+    @Nullable
+    public static UiObject2 findText(UiDevice device, boolean clickable, String text) {
         Log.w(DEBUG_TAG, "Searching for object with " + text);
         // Note: contrary to "text", "textStartsWith" is case insensitive
         BySelector bySelector = null;
@@ -311,8 +207,7 @@ public class TestUtils {
         } else {
             bySelector = By.textStartsWith(text);
         }
-        UiObject2 ob = device.wait(Until.findObject(bySelector), 500);
-        return ob != null;
+        return device.wait(Until.findObject(bySelector), 500);
     }
 
     /**
@@ -356,54 +251,5 @@ public class TestUtils {
             Log.e(DEBUG_TAG, "Object not found");
             return false;
         }
-    }
-
-    /**
-     * Click "Up" button in action modes
-     * 
-     * @param mDevice UiDevice object
-     * @return true if the button was clicked
-     */
-    public static boolean clickUp(@NonNull UiDevice mDevice) {
-        UiObject homeButton = mDevice.findObject(new UiSelector().clickable(true).descriptionStartsWith("Navigate up"));
-        if (!homeButton.exists()) {
-            homeButton = mDevice.findObject(new UiSelector().clickable(true).descriptionStartsWith("Nach oben"));
-        }
-        try {
-            return homeButton.clickAndWaitForNewWindow();
-        } catch (UiObjectNotFoundException e) {
-            Assert.fail(e.getMessage());
-            return false; // can't actually be reached
-        }
-    }
-
-    /**
-     * Click "Home" button in Activity app bars
-     * 
-     * @param mDevice UiDevice object
-     */
-    public static void clickHome(UiDevice mDevice) {
-        clickResource(mDevice, true, "de.blau.android:id/action_mode_close_button", true);
-    }
-
-    /**
-     * Buffered read an InputStream into a byte array
-     * 
-     * @param is the InputStream to read
-     * @return a byte array
-     * @throws IOException
-     */
-    public static byte[] readInputStream(InputStream is) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int readBytes = -1;
-        try {
-            while ((readBytes = is.read(buffer)) > -1) {
-                baos.write(buffer, 0, readBytes);
-            }
-        } finally {
-            is.close();
-        }
-        return baos.toByteArray();
     }
 }

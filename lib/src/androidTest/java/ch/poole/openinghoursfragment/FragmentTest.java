@@ -1,10 +1,15 @@
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
+ * distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 package ch.poole.openinghoursfragment;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
@@ -18,18 +23,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class FragmentTest{
+public class FragmentTest {
 
     private OpeningHoursFragment fragment;
-    private UiDevice device;
+    private UiDevice             device;
 
     @Rule
     public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
@@ -48,7 +47,7 @@ public class FragmentTest{
 
         ValueWithDescription key = new ValueWithDescription("collection_times", "Collection times");
 
-        fragment = OpeningHoursFragment.newInstance(key,null,R.style.Theme_AppCompat_Dialog_Alert, 5, true, null);
+        fragment = OpeningHoursFragment.newInstance(key, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null);
         fragment.show(fm, "fragment_openinghours");
     }
 
