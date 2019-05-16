@@ -1,4 +1,4 @@
-package ch.poole.openinghoursfragment;
+package ch.poole.openinghoursfragment.pickers;
 
 import android.support.annotation.Nullable;
 import ch.poole.openinghoursparser.Month;
@@ -26,6 +26,6 @@ public interface SetDateRangeListener {
      * @param endDay selected end day of the month or occurrence if endWeekday isn't null
      * @param endVarDate selected end variable date ie easter or null
      */
-    void setDateRange(int startYear, @Nullable Month startMonth, @Nullable WeekDay startWeekday, int startDay, @Nullable VarDate startVarDate,
-            int endYear, @Nullable Month endMonth, @Nullable WeekDay endWeekday, int endDay, @Nullable VarDate endVarDate);
+    void setDateRange(int startYear, @Nullable Month startMonth, @Nullable WeekDay startWeekday, int startDay, @Nullable VarDate startVarDate, int endYear,
+            @Nullable Month endMonth, @Nullable WeekDay endWeekday, int endDay, @Nullable VarDate endVarDate);
 }

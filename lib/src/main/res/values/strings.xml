@@ -20,6 +20,9 @@
     <string name="manage_templates_title">Manage templates</string>
     <string name="save_template">Save template</string>
     <string name="update_template">Update template value too?</string>
+    <string name="spd_ohf_save_to_file">Save to file</string>
+    <string name="spd_ohf_load_from_file">Load from file</string>
+    <string name="spd_ohf_load_from_file_replace">Load from file (replace)</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Start">Start</string>
@@ -34,6 +37,8 @@
     <string name="name_legend">Name:</string>
     <string name="default_legend">Default:</string>
     <string name="key_legend">Key:</string>
+    <string name="spd_ohf_region_legend">Region:</string>
+    <string name="spd_ohf_object_legend">Object:</string>
 
     <string name="is_default">%1$s (default)</string>
 
@@ -42,17 +47,29 @@
         <item>opening_hours</item>
         <item>service_times</item>
         <item>collection_times</item>
+        <item>fee</item>
+        <item>supervised</item>
+        <item>lit</item>
+        <item>delivery</item>
     </string-array>
 
     <string name="all_keys">All</string>
     <string name="opening_hours_key">Opening hours</string>
     <string name="service_times_key">Service times</string>
     <string name="collection_times_key">Collection times</string>
+    <string name="fee_key">Fee required</string>
+    <string name="supervised_key">Supervised</string>
+    <string name="lit_key">Lit</string>
+    <string name="delivery_key">Delivery times</string>
     <string-array name="key_entries" translatable="false">
         <item>@string/all_keys</item>
         <item>@string/opening_hours_key</item>
         <item>@string/service_times_key</item>
         <item>@string/collection_times_key</item>
+        <item>@string/fee_key</item>
+        <item>@string/supervised_key</item>
+        <item>@string/lit_key</item>
+        <item>@string/delivery_key</item>
     </string-array>
 
     <!--	default template entries -->

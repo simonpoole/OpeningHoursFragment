@@ -17,7 +17,8 @@
         	android:paddingLeft="5dp"
 	    	android:paddingRight="5dp"
         	android:textAppearance="?android:attr/textAppearanceMedium"
-			android:maxLines="1" />
+			android:maxLines="2"
+            android:lines="2" />
 		<TextView
         	android:id="@+id/key_legend"
     	    android:layout_width="wrap_content"

@@ -47,7 +47,7 @@ public class FragmentTest {
 
         ValueWithDescription key = new ValueWithDescription("collection_times", "Collection times");
 
-        fragment = OpeningHoursFragment.newInstance(key, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null);
+        fragment = OpeningHoursFragment.newInstance(key, null, null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null);
         fragment.show(fm, "fragment_openinghours");
     }
 

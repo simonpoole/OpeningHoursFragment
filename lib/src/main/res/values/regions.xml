@@ -1,0 +1,1241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spd_ohf_any">Any</string>
+    <string name="AC">Ascension Island</string>
+    <string name="AD">Andorra</string>
+    <string name="AE">United Arab Emirates</string>
+    <string name="AF">Afghanistan</string>
+    <string name="AG">Antigua and Barbuda</string>
+    <string name="AI">Anguilla</string>
+    <string name="AL">Albania</string>
+    <string name="AM">Armenia</string>
+    <string name="AO">Angola</string>
+    <string name="AQ">Antarctica</string>
+    <string name="AR">Argentina</string>
+    <string name="AS">American Samoa</string>
+    <string name="AT">Austria</string>
+    <string name="AU">Australia</string>
+    <string name="AU_ACT">Australian Capital Territory</string>
+    <string name="AU_NSW">Australia - New South Wales</string>
+    <string name="AU_NT">Australia - Northern Territory</string>
+    <string name="AU_QLD">Australia - Queensland</string>
+    <string name="AU_SA">Australia - South Australia</string>
+    <string name="AU_TAS">Australia - Tasmania</string>
+    <string name="AU_VIC">Australia - Victoria</string>
+    <string name="AU_WA">Australia - Western Australia</string>
+    <string name="AW">Aruba</string>
+    <string name="AX">Åland Islands</string>
+    <string name="AZ">Azerbaijan</string>
+    <string name="AZ_NX">Naxçıvan</string>
+    <string name="BA">Bosnia and Herzegovina</string>
+    <string name="BB">Barbados</string>
+    <string name="BD">Bangladesh</string>
+    <string name="BE">Belgium</string>
+    <string name="BF">Burkina Faso</string>
+    <string name="BG">Bulgaria</string>
+    <string name="BH">Bahrain</string>
+    <string name="BI">Burundi</string>
+    <string name="BJ">Benin</string>
+    <string name="BL">Saint Barthélemy</string>
+    <string name="BM">Bermuda</string>
+    <string name="BN">Brunei Darussalam</string>
+    <string name="BO">Bolivia</string>
+    <string name="BQ">Bonaire, Sint Eustatius and Saba</string>
+    <string name="BR">Brazil</string>
+    <string name="BS">Bahamas</string>
+    <string name="BT">Bhutan</string>
+    <string name="BV">Bouvet Island</string>
+    <string name="BW">Botswana</string>
+    <string name="BY">Belarus</string>
+    <string name="BZ">Belize</string>
+    <string name="CA">Canada</string>
+    <string name="CA_AB">Canada - Alberta</string>
+    <string name="CA_BC">Canada - British Columbia</string>
+    <string name="CA_MB">Canada - Manitoba</string>
+    <string name="CA_NB">Canada - New BrunswickB</string>
+    <string name="CA_NL">Canada - Newfoundland and Labrador</string>
+    <string name="CA_NS">Canada - Nova Scotia</string>
+    <string name="CA_NT">Canada - Northwest Territories</string>
+    <string name="CA_NU">Canada - Nunavut</string>
+    <string name="CA_ON">Canada - Ontario</string>
+    <string name="CA_PE">Canada - Prince Edward Island</string>
+    <string name="CA_QC">Canada - Quebec</string>
+    <string name="CA_SK">Canada - Saskatchewan</string>
+    <string name="CA_YT">Canada - Yukon</string>
+    <string name="CC">Cocos Islands</string>
+    <string name="CD">Democratic Republic of the Congo</string>
+    <string name="CF">Central African Republic</string>
+    <string name="CG">Congo</string>
+    <string name="CH">Switzerland</string>
+    <string name="CI">Côte d\'Ivoire</string>
+    <string name="CK">Cook Islands</string>
+    <string name="CL">Chile</string>
+    <string name="CM">Cameroon</string>
+    <string name="CN">China</string>
+    <string name="CN_AH">CN-AH</string>
+    <string name="CN_BJ">CN-BJ</string>
+    <string name="CN_CQ">CN-CQ</string>
+    <string name="CN_FJ">CN-FJ</string>
+    <string name="CN_GD">CN-GD</string>
+    <string name="CN_GS">CN-GS</string>
+    <string name="CN_GX">CN-GX</string>
+    <string name="CN_GZ">CN-GZ</string>
+    <string name="CN_HA">CN-HA</string>
+    <string name="CN_HB">CN-HB</string>
+    <string name="CN_HE">CN-HE</string>
+    <string name="CN_HI">CN-HI</string>
+    <string name="CN_HL">CN-HL</string>
+    <string name="CN_HN">CN-HN</string>
+    <string name="CN_JL">CN-JL</string>
+    <string name="CN_JS">CN-JS</string>
+    <string name="CN_JX">CN-JX</string>
+    <string name="CN_LN">CN-LN</string>
+    <string name="CN_NM">CN-NM</string>
+    <string name="CN_NX">CN-NX</string>
+    <string name="CN_QH">CN-QH</string>
+    <string name="CN_SC">CN-SC</string>
+    <string name="CN_SD">CN-SD</string>
+    <string name="CN_SH">CN-SH</string>
+    <string name="CN_SN">CN-SN</string>
+    <string name="CN_SX">CN-SX</string>
+    <string name="CN_TJ">CN-TJ</string>
+    <string name="CN_XJ">CN-XJ</string>
+    <string name="CN_XZ">CN-XZ</string>
+    <string name="CN_YN">CN-YN</string>
+    <string name="CN_ZJ">CN-ZJ</string>
+    <string name="CO">Colombia</string>
+    <string name="CP">Clipperton Island</string>
+    <string name="CR">Costa Rica</string>
+    <string name="CU">Cuba</string>
+    <string name="CV">Cabo Verde</string>
+    <string name="CW">Curaçao</string>
+    <string name="CX">Christmas Island</string>
+    <string name="CY">Cyprus</string>
+    <string name="CZ">Czechia</string>
+    <string name="DE">Germany</string>
+    <string name="DG">Diego Garcia</string>
+    <string name="DJ">Djibouti</string>
+    <string name="DK">Denmark</string>
+    <string name="DM">Dominica</string>
+    <string name="DO">Dominican Republic</string>
+    <string name="DZ">Algeria</string>
+    <string name="EA">Ceuta, Melilla</string>
+    <string name="EC">Ecuador</string>
+    <string name="EE">Estonia</string>
+    <string name="EG">Egypt</string>
+    <string name="EH">Western Sahara</string>
+    <string name="ER">Eritrea</string>
+    <string name="ES">Spain</string>
+    <string name="ES_CE">Spain - Ceuta</string>
+    <string name="ES_ML">Spain - Melilla</string>
+    <string name="ET">Ethiopia</string>
+    <string name="EU">European Union</string>
+    <string name="FI">Finland</string>
+    <string name="FJ">Fiji</string>
+    <string name="FK">Falkland Islands</string>
+    <string name="FM">Micronesia</string>
+    <string name="FO">Faroe Islands</string>
+    <string name="FR">France</string>
+    <string name="FX">France, Metropolitan</string>
+    <string name="GA">Gabon</string>
+    <string name="GB">United Kingdom</string>
+    <string name="GD">Grenada</string>
+    <string name="GE">Georgia</string>
+    <string name="GF">French Guiana</string>
+    <string name="GG">Guernsey</string>
+    <string name="GH">Ghana</string>
+    <string name="GI">Gibraltar</string>
+    <string name="GL">Greenland</string>
+    <string name="GM">Gambia</string>
+    <string name="GN">Guinea</string>
+    <string name="GP">Guadeloupe</string>
+    <string name="GQ">Equatorial Guinea</string>
+    <string name="GR">Greece</string>
+    <string name="GS">South Georgia and the South Sandwich Islands</string>
+    <string name="GT">Guatemala</string>
+    <string name="GU">Guam</string>
+    <string name="GW">Guinea-Bissau</string>
+    <string name="GY">Guyana</string>
+    <string name="HK">Hong Kong</string>
+    <string name="HM">Heard Island and McDonald Islands</string>
+    <string name="HN">Honduras</string>
+    <string name="HR">Croatia</string>
+    <string name="HT">Haiti</string>
+    <string name="HU">Hungary</string>
+    <string name="IC">Canary Islands</string>
+    <string name="ID">Indonesia</string>
+    <string name="IE">Ireland</string>
+    <string name="IL">Israel</string>
+    <string name="IM">Isle of Man</string>
+    <string name="IN">India</string>
+    <string name="IN_AN">IN-AN</string>
+    <string name="IN_AP">IN-AP</string>
+    <string name="IN_AR">IN-AR</string>
+    <string name="IN_AS">IN-AS</string>
+    <string name="IN_BR">IN-BR</string>
+    <string name="IN_CH">IN-CH</string>
+    <string name="IN_CT">IN-CT</string>
+    <string name="IN_DD">IN-DD</string>
+    <string name="IN_DL">IN-DL</string>
+    <string name="IN_DN">IN-DN</string>
+    <string name="IN_GA">IN-GA</string>
+    <string name="IN_GJ">IN-GJ</string>
+    <string name="IN_HP">IN-HP</string>
+    <string name="IN_HR">IN-HR</string>
+    <string name="IN_JH">IN-JH</string>
+    <string name="IN_JK">IN-JK</string>
+    <string name="IN_KA">IN-KA</string>
+    <string name="IN_KL">IN-KL</string>
+    <string name="IN_LD">IN-LD</string>
+    <string name="IN_MH">IN-MH</string>
+    <string name="IN_ML">IN-ML</string>
+    <string name="IN_MN">IN-MN</string>
+    <string name="IN_MP">IN-MP</string>
+    <string name="IN_MZ">IN-MZ</string>
+    <string name="IN_NL">IN-NL</string>
+    <string name="IN_OR">IN-OR</string>
+    <string name="IN_PB">IN-PB</string>
+    <string name="IN_PY">IN-PY</string>
+    <string name="IN_RJ">IN-RJ</string>
+    <string name="IN_SK">IN-SK</string>
+    <string name="IN_TG">IN-TG</string>
+    <string name="IN_TN">IN-TN</string>
+    <string name="IN_TR">IN-TR</string>
+    <string name="IN_UP">IN-UP</string>
+    <string name="IN_UT">IN-UT</string>
+    <string name="IN_WB">IN-WB</string>
+    <string name="IO">British Indian Ocean Territory</string>
+    <string name="IQ">Iraq</string>
+    <string name="IR">Iran</string>
+    <string name="IS">Iceland</string>
+    <string name="IT">Italy</string>
+    <string name="JE">Jersey</string>
+    <string name="JM">Jamaica</string>
+    <string name="JO">Jordan</string>
+    <string name="JP">Japan</string>
+    <string name="KE">Kenya</string>
+    <string name="KG">Kyrgyzstan</string>
+    <string name="KH">Cambodia</string>
+    <string name="KI">Kiribati</string>
+    <string name="KM">Comoros</string>
+    <string name="KN">Saint Kitts and Nevis</string>
+    <string name="KP">North Korea</string>
+    <string name="KR">South Korea</string>
+    <string name="KW">Kuwait</string>
+    <string name="KY">Cayman Islands</string>
+    <string name="KZ">Kazakhstan</string>
+    <string name="LA">Laos</string>
+    <string name="LB">Lebanon</string>
+    <string name="LC">Saint Lucia</string>
+    <string name="LI">Liechtensten</string>
+    <string name="LK">Sri Lanka</string>
+    <string name="LR">Liberia</string>
+    <string name="LS">Lesotho</string>
+    <string name="LT">Lithuania</string>
+    <string name="LU">Luxembourg</string>
+    <string name="LV">Latvia</string>
+    <string name="LY">Libya</string>
+    <string name="MA">Morocco</string>
+    <string name="MC">Monaco</string>
+    <string name="MD">Moldova</string>
+    <string name="ME">Montenegro</string>
+    <string name="MF">Saint Martin</string>
+    <string name="MG">Madagascar</string>
+    <string name="MH">Marshall Islans</string>
+    <string name="MK">North Macedonia</string>
+    <string name="ML">Mali</string>
+    <string name="MM">Myanmar</string>
+    <string name="MN">Mongolia</string>
+    <string name="MO">Macao</string>
+    <string name="MP">Northern Marinana Islands</string>
+    <string name="MQ">Martinique</string>
+    <string name="MR">Mauritania</string>
+    <string name="MS">Montserrat</string>
+    <string name="MT">Malta</string>
+    <string name="MU">Mauritius</string>
+    <string name="MV">Maldives</string>
+    <string name="MW">Malawi</string>
+    <string name="MX">Mexico</string>
+    <string name="MY">Malaysia</string>
+    <string name="MZ">Mozambique</string>
+    <string name="NA">Nambia</string>
+    <string name="NC">New Caledonia</string>
+    <string name="NE">Niger</string>
+    <string name="NF">Norfolk Island</string>
+    <string name="NG">Nigeria</string>
+    <string name="NI">Nicaragua</string>
+    <string name="NL">Netherlands</string>
+    <string name="NL_BQ1">Bonaire</string>
+    <string name="NL_BQ2">Saba</string>
+    <string name="NL_BQ3">Sint Eustatius</string>
+    <string name="NO">Norway</string>
+    <string name="NO_21">Svalbard</string>
+    <string name="NO_22">Jan Mayen</string>
+    <string name="NP">Nepal</string>
+    <string name="NR">Nazru</string>
+    <string name="NU">Niue</string>
+    <string name="NZ">New Zealand</string>
+    <string name="OM">Oman</string>
+    <string name="OM_MU">Musandam</string>
+    <string name="PA">Panama</string>
+    <string name="PE">Peru</string>
+    <string name="PF">French Polynesia</string>
+    <string name="PG">Papua New Guinea</string>
+    <string name="PH">Philippines</string>
+    <string name="PK">Pakistan</string>
+    <string name="PL">Poland</string>
+    <string name="PM">Saint Pierre ans Miquelon</string>
+    <string name="PN">Pitcarin</string>
+    <string name="PR">Puerto Rico</string>
+    <string name="PS">Palestine</string>
+    <string name="PT">Portugal</string>
+    <string name="PW">Palau</string>
+    <string name="PY">Paraguay</string>
+    <string name="QA">Qatar</string>
+    <string name="RE">Réunion</string>
+    <string name="RO">Romania</string>
+    <string name="RS">Serbia</string>
+    <string name="RS_KM">Kosovo-Metohija</string>
+    <string name="RU">Russia</string>
+    <string name="RU_KGD">Russia - Kaliningrad</string>
+    <string name="RW">Rwanda</string>
+    <string name="SA">Saudi Arabia</string>
+    <string name="SB">Solomon Islands</string>
+    <string name="SC">Seychelles</string>
+    <string name="SD">Sudan</string>
+    <string name="SE">Sweden</string>
+    <string name="SG">Singapore</string>
+    <string name="SH">Saint Helena, Ascension and Tristan da Cunha</string>
+    <string name="SI">Slovenia</string>
+    <string name="SJ">Svalbard and Jan Mayen</string>
+    <string name="SK">Slovakia</string>
+    <string name="SL">Sierra Leone</string>
+    <string name="SM">San Marino</string>
+    <string name="SN">Senegal</string>
+    <string name="SO">Somalia</string>
+    <string name="SR">Suriname</string>
+    <string name="SS">South Sudan</string>
+    <string name="ST">Sao Tome and Principe</string>
+    <string name="SV">El Salvador</string>
+    <string name="SX">Sint Maarten</string>
+    <string name="SY">Syria</string>
+    <string name="SZ">Eswatini</string>
+    <string name="TA">Tristan da Cunha</string>
+    <string name="TC">Turks and Caicos Islands</string>
+    <string name="TD">Chad</string>
+    <string name="TF">Franch Southern Territories</string>
+    <string name="TG">Togo</string>
+    <string name="TH">Thailand</string>
+    <string name="TJ">Tajikistan</string>
+    <string name="TK">Tokelau</string>
+    <string name="TL">Timor-Leste</string>
+    <string name="TM">Turkmenistan</string>
+    <string name="TN">Tunisia</string>
+    <string name="TO">Tonga</string>
+    <string name="TR">Turkey</string>
+    <string name="TT">Trinidad and Tobago</string>
+    <string name="TV">Tuvalu</string>
+    <string name="TW">Taiwan</string>
+    <string name="TZ">Tanzania</string>
+    <string name="UA">Ukraine</string>
+    <string name="UA_40">Ukraine - Sevastopol</string>
+    <string name="UA_43">Autonomous Republic of Crimea</string>
+    <string name="UG">Uganda</string>
+    <string name="UM">US Minor Outlying Islands</string>
+    <string name="US">USA</string>
+    <string name="US_AK">US - Alaska</string>
+    <string name="US_AL">US - Alabama</string>
+    <string name="US_AR">US - Arkansas</string>
+    <string name="US_AZ">US - Arizona</string>
+    <string name="US_CA">US - California</string>
+    <string name="US_CO">US - Colorado</string>
+    <string name="US_CT">US - Connecticut</string>
+    <string name="US_DC">US - Washington, D.C.</string>
+    <string name="US_DE">US - Delaware</string>
+    <string name="US_FL">US - Florida</string>
+    <string name="US_GA">US - Georgia</string>
+    <string name="US_HI">US - Hawaii</string>
+    <string name="US_IA">US - Iowa</string>
+    <string name="US_ID">US - Idaho</string>
+    <string name="US_IL">US - Illinois</string>
+    <string name="US_IN">US - IIndiana</string>
+    <string name="US_KS">US - Kansas</string>
+    <string name="US_KY">US - Kentucky</string>
+    <string name="US_LA">US - Louisiana</string>
+    <string name="US_MA">US - MMassachusetts</string>
+    <string name="US_MD">US - Maryland</string>
+    <string name="US_ME">US - Maine</string>
+    <string name="US_MI">US - Michigan</string>
+    <string name="US_MN">US - Minnesota</string>
+    <string name="US_MO">US - Missouri</string>
+    <string name="US_MS">US - Mississippi</string>
+    <string name="US_MT">US - Montana</string>
+    <string name="US_NC">US - North Carolina</string>
+    <string name="US_ND">US - North Dakota</string>
+    <string name="US_NE">US - Nebraska</string>
+    <string name="US_NH">US - New Hampshire</string>
+    <string name="US_NJ">US - New Jersey</string>
+    <string name="US_NM">US - New Mexico</string>
+    <string name="US_NV">US - Nevada</string>
+    <string name="US_NY">US - New York</string>
+    <string name="US_OH">US - Ohio</string>
+    <string name="US_OK">US - Oklahoma</string>
+    <string name="US_OR">US - Oregon</string>
+    <string name="US_PA">US - Pennsylvania</string>
+    <string name="US_RI">US - Rhode Island</string>
+    <string name="US_SC">US - South Carolina</string>
+    <string name="US_SD">US - South Dakota</string>
+    <string name="US_TN">US - Tennessee</string>
+    <string name="US_TX">US - Texas</string>
+    <string name="US_UT">US - Utah</string>
+    <string name="US_VA">US - Virginia</string>
+    <string name="US_VT">US - Vermont</string>
+    <string name="US_WA">US - Washington</string>
+    <string name="US_WI">US - Wisconsin</string>
+    <string name="US_WV">US - West Virginia</string>
+    <string name="US_WY">US - Wyoming</string>
+    <string name="UY">Uruguay</string>
+    <string name="UZ">Uzbekistan</string>
+    <string name="VA">Holy See</string>
+    <string name="VC">Saint Vincent and the Grenadines</string>
+    <string name="VE">Venezuela</string>
+    <string name="VG">Virgin Islands</string>
+    <string name="VI">Virgin Islands (US)</string>
+    <string name="VN">Viet Nam</string>
+    <string name="VU">Vanuatu</string>
+    <string name="WF">Wallis and Futuna</string>
+    <string name="WS">Samoa</string>
+    <string name="YE">Yemen</string>
+    <string name="YT">Mayotte</string>
+    <string name="ZA">South Africa</string>
+    <string name="ZM">Zambia</string>
+    <string name="ZW">Zimbabwe</string>
+    <string-array
+        name="region_entries"
+        translatable="false">
+        <item>@string/spd_ohf_any</item>
+        <item>@string/AC</item>
+        <item>@string/AD</item>
+        <item>@string/AE</item>
+        <item>@string/AF</item>
+        <item>@string/AG</item>
+        <item>@string/AI</item>
+        <item>@string/AL</item>
+        <item>@string/AM</item>
+        <item>@string/AO</item>
+        <item>@string/AQ</item>
+        <item>@string/AR</item>
+        <item>@string/AS</item>
+        <item>@string/AT</item>
+        <item>@string/AU</item>
+        <item>@string/AU_ACT</item>
+        <item>@string/AU_NSW</item>
+        <item>@string/AU_NT</item>
+        <item>@string/AU_QLD</item>
+        <item>@string/AU_SA</item>
+        <item>@string/AU_TAS</item>
+        <item>@string/AU_VIC</item>
+        <item>@string/AU_WA</item>
+        <item>@string/AW</item>
+        <item>@string/AX</item>
+        <item>@string/AZ</item>
+        <item>@string/AZ_NX</item>
+        <item>@string/BA</item>
+        <item>@string/BB</item>
+        <item>@string/BD</item>
+        <item>@string/BE</item>
+        <item>@string/BF</item>
+        <item>@string/BG</item>
+        <item>@string/BH</item>
+        <item>@string/BI</item>
+        <item>@string/BJ</item>
+        <item>@string/BL</item>
+        <item>@string/BM</item>
+        <item>@string/BN</item>
+        <item>@string/BO</item>
+        <item>@string/BQ</item>
+        <item>@string/BR</item>
+        <item>@string/BS</item>
+        <item>@string/BT</item>
+        <item>@string/BV</item>
+        <item>@string/BW</item>
+        <item>@string/BY</item>
+        <item>@string/BZ</item>
+        <item>@string/CA</item>
+        <item>@string/CA_AB</item>
+        <item>@string/CA_BC</item>
+        <item>@string/CA_MB</item>
+        <item>@string/CA_NB</item>
+        <item>@string/CA_NL</item>
+        <item>@string/CA_NS</item>
+        <item>@string/CA_NT</item>
+        <item>@string/CA_NU</item>
+        <item>@string/CA_ON</item>
+        <item>@string/CA_PE</item>
+        <item>@string/CA_QC</item>
+        <item>@string/CA_SK</item>
+        <item>@string/CA_YT</item>
+        <item>@string/CC</item>
+        <item>@string/CD</item>
+        <item>@string/CF</item>
+        <item>@string/CG</item>
+        <item>@string/CH</item>
+        <item>@string/CI</item>
+        <item>@string/CK</item>
+        <item>@string/CL</item>
+        <item>@string/CM</item>
+        <item>@string/CN</item>
+        <item>@string/CN_AH</item>
+        <item>@string/CN_BJ</item>
+        <item>@string/CN_CQ</item>
+        <item>@string/CN_FJ</item>
+        <item>@string/CN_GD</item>
+        <item>@string/CN_GS</item>
+        <item>@string/CN_GX</item>
+        <item>@string/CN_GZ</item>
+        <item>@string/CN_HA</item>
+        <item>@string/CN_HB</item>
+        <item>@string/CN_HE</item>
+        <item>@string/CN_HI</item>
+        <item>@string/CN_HL</item>
+        <item>@string/CN_HN</item>
+        <item>@string/CN_JL</item>
+        <item>@string/CN_JS</item>
+        <item>@string/CN_JX</item>
+        <item>@string/CN_LN</item>
+        <item>@string/CN_NM</item>
+        <item>@string/CN_NX</item>
+        <item>@string/CN_QH</item>
+        <item>@string/CN_SC</item>
+        <item>@string/CN_SD</item>
+        <item>@string/CN_SH</item>
+        <item>@string/CN_SN</item>
+        <item>@string/CN_SX</item>
+        <item>@string/CN_TJ</item>
+        <item>@string/CN_XJ</item>
+        <item>@string/CN_XZ</item>
+        <item>@string/CN_YN</item>
+        <item>@string/CN_ZJ</item>
+        <item>@string/CO</item>
+        <item>@string/CP</item>
+        <item>@string/CR</item>
+        <item>@string/CU</item>
+        <item>@string/CV</item>
+        <item>@string/CW</item>
+        <item>@string/CX</item>
+        <item>@string/CY</item>
+        <item>@string/CZ</item>
+        <item>@string/DE</item>
+        <item>@string/DG</item>
+        <item>@string/DJ</item>
+        <item>@string/DK</item>
+        <item>@string/DM</item>
+        <item>@string/DO</item>
+        <item>@string/DZ</item>
+        <item>@string/EA</item>
+        <item>@string/EC</item>
+        <item>@string/EE</item>
+        <item>@string/EG</item>
+        <item>@string/EH</item>
+        <item>@string/ER</item>
+        <item>@string/ES</item>
+        <item>@string/ES_CE</item>
+        <item>@string/ES_ML</item>
+        <item>@string/ET</item>
+        <item>@string/EU</item>
+        <item>@string/FI</item>
+        <item>@string/FJ</item>
+        <item>@string/FK</item>
+        <item>@string/FM</item>
+        <item>@string/FO</item>
+        <item>@string/FR</item>
+        <item>@string/FX</item>
+        <item>@string/GA</item>
+        <item>@string/GB</item>
+        <item>@string/GD</item>
+        <item>@string/GE</item>
+        <item>@string/GF</item>
+        <item>@string/GG</item>
+        <item>@string/GH</item>
+        <item>@string/GI</item>
+        <item>@string/GL</item>
+        <item>@string/GM</item>
+        <item>@string/GN</item>
+        <item>@string/GP</item>
+        <item>@string/GQ</item>
+        <item>@string/GR</item>
+        <item>@string/GS</item>
+        <item>@string/GT</item>
+        <item>@string/GU</item>
+        <item>@string/GW</item>
+        <item>@string/GY</item>
+        <item>@string/HK</item>
+        <item>@string/HM</item>
+        <item>@string/HN</item>
+        <item>@string/HR</item>
+        <item>@string/HT</item>
+        <item>@string/HU</item>
+        <item>@string/IC</item>
+        <item>@string/ID</item>
+        <item>@string/IE</item>
+        <item>@string/IL</item>
+        <item>@string/IM</item>
+        <item>@string/IN</item>
+        <item>@string/IN_AN</item>
+        <item>@string/IN_AP</item>
+        <item>@string/IN_AR</item>
+        <item>@string/IN_AS</item>
+        <item>@string/IN_BR</item>
+        <item>@string/IN_CH</item>
+        <item>@string/IN_CT</item>
+        <item>@string/IN_DD</item>
+        <item>@string/IN_DL</item>
+        <item>@string/IN_DN</item>
+        <item>@string/IN_GA</item>
+        <item>@string/IN_GJ</item>
+        <item>@string/IN_HP</item>
+        <item>@string/IN_HR</item>
+        <item>@string/IN_JH</item>
+        <item>@string/IN_JK</item>
+        <item>@string/IN_KA</item>
+        <item>@string/IN_KL</item>
+        <item>@string/IN_LD</item>
+        <item>@string/IN_MH</item>
+        <item>@string/IN_ML</item>
+        <item>@string/IN_MN</item>
+        <item>@string/IN_MP</item>
+        <item>@string/IN_MZ</item>
+        <item>@string/IN_NL</item>
+        <item>@string/IN_OR</item>
+        <item>@string/IN_PB</item>
+        <item>@string/IN_PY</item>
+        <item>@string/IN_RJ</item>
+        <item>@string/IN_SK</item>
+        <item>@string/IN_TG</item>
+        <item>@string/IN_TN</item>
+        <item>@string/IN_TR</item>
+        <item>@string/IN_UP</item>
+        <item>@string/IN_UT</item>
+        <item>@string/IN_WB</item>
+        <item>@string/IO</item>
+        <item>@string/IQ</item>
+        <item>@string/IR</item>
+        <item>@string/IS</item>
+        <item>@string/IT</item>
+        <item>@string/JE</item>
+        <item>@string/JM</item>
+        <item>@string/JO</item>
+        <item>@string/JP</item>
+        <item>@string/KE</item>
+        <item>@string/KG</item>
+        <item>@string/KH</item>
+        <item>@string/KI</item>
+        <item>@string/KM</item>
+        <item>@string/KN</item>
+        <item>@string/KP</item>
+        <item>@string/KR</item>
+        <item>@string/KW</item>
+        <item>@string/KY</item>
+        <item>@string/KZ</item>
+        <item>@string/LA</item>
+        <item>@string/LB</item>
+        <item>@string/LC</item>
+        <item>@string/LI</item>
+        <item>@string/LK</item>
+        <item>@string/LR</item>
+        <item>@string/LS</item>
+        <item>@string/LT</item>
+        <item>@string/LU</item>
+        <item>@string/LV</item>
+        <item>@string/LY</item>
+        <item>@string/MA</item>
+        <item>@string/MC</item>
+        <item>@string/MD</item>
+        <item>@string/ME</item>
+        <item>@string/MF</item>
+        <item>@string/MG</item>
+        <item>@string/MH</item>
+        <item>@string/MK</item>
+        <item>@string/ML</item>
+        <item>@string/MM</item>
+        <item>@string/MN</item>
+        <item>@string/MO</item>
+        <item>@string/MP</item>
+        <item>@string/MQ</item>
+        <item>@string/MR</item>
+        <item>@string/MS</item>
+        <item>@string/MT</item>
+        <item>@string/MU</item>
+        <item>@string/MV</item>
+        <item>@string/MW</item>
+        <item>@string/MX</item>
+        <item>@string/MY</item>
+        <item>@string/MZ</item>
+        <item>@string/NA</item>
+        <item>@string/NC</item>
+        <item>@string/NE</item>
+        <item>@string/NF</item>
+        <item>@string/NG</item>
+        <item>@string/NI</item>
+        <item>@string/NL</item>
+        <item>@string/NL_BQ1</item>
+        <item>@string/NL_BQ2</item>
+        <item>@string/NL_BQ3</item>
+        <item>@string/NO</item>
+        <item>@string/NO_21</item>
+        <item>@string/NO_22</item>
+        <item>@string/NP</item>
+        <item>@string/NR</item>
+        <item>@string/NU</item>
+        <item>@string/NZ</item>
+        <item>@string/OM</item>
+        <item>@string/OM_MU</item>
+        <item>@string/PA</item>
+        <item>@string/PE</item>
+        <item>@string/PF</item>
+        <item>@string/PG</item>
+        <item>@string/PH</item>
+        <item>@string/PK</item>
+        <item>@string/PL</item>
+        <item>@string/PM</item>
+        <item>@string/PN</item>
+        <item>@string/PR</item>
+        <item>@string/PS</item>
+        <item>@string/PT</item>
+        <item>@string/PW</item>
+        <item>@string/PY</item>
+        <item>@string/QA</item>
+        <item>@string/RE</item>
+        <item>@string/RO</item>
+        <item>@string/RS</item>
+        <item>@string/RS_KM</item>
+        <item>@string/RU</item>
+        <item>@string/RU_KGD</item>
+        <item>@string/RW</item>
+        <item>@string/SA</item>
+        <item>@string/SB</item>
+        <item>@string/SC</item>
+        <item>@string/SD</item>
+        <item>@string/SE</item>
+        <item>@string/SG</item>
+        <item>@string/SH</item>
+        <item>@string/SI</item>
+        <item>@string/SJ</item>
+        <item>@string/SK</item>
+        <item>@string/SL</item>
+        <item>@string/SM</item>
+        <item>@string/SN</item>
+        <item>@string/SO</item>
+        <item>@string/SR</item>
+        <item>@string/SS</item>
+        <item>@string/ST</item>
+        <item>@string/SV</item>
+        <item>@string/SX</item>
+        <item>@string/SY</item>
+        <item>@string/SZ</item>
+        <item>@string/TA</item>
+        <item>@string/TC</item>
+        <item>@string/TD</item>
+        <item>@string/TF</item>
+        <item>@string/TG</item>
+        <item>@string/TH</item>
+        <item>@string/TJ</item>
+        <item>@string/TK</item>
+        <item>@string/TL</item>
+        <item>@string/TM</item>
+        <item>@string/TN</item>
+        <item>@string/TO</item>
+        <item>@string/TR</item>
+        <item>@string/TT</item>
+        <item>@string/TV</item>
+        <item>@string/TW</item>
+        <item>@string/TZ</item>
+        <item>@string/UA</item>
+        <item>@string/UA_40</item>
+        <item>@string/UA_43</item>
+        <item>@string/UG</item>
+        <item>@string/UM</item>
+        <item>@string/US</item>
+        <item>@string/US_AK</item>
+        <item>@string/US_AL</item>
+        <item>@string/US_AR</item>
+        <item>@string/US_AZ</item>
+        <item>@string/US_CA</item>
+        <item>@string/US_CO</item>
+        <item>@string/US_CT</item>
+        <item>@string/US_DC</item>
+        <item>@string/US_DE</item>
+        <item>@string/US_FL</item>
+        <item>@string/US_GA</item>
+        <item>@string/US_HI</item>
+        <item>@string/US_IA</item>
+        <item>@string/US_ID</item>
+        <item>@string/US_IL</item>
+        <item>@string/US_IN</item>
+        <item>@string/US_KS</item>
+        <item>@string/US_KY</item>
+        <item>@string/US_LA</item>
+        <item>@string/US_MA</item>
+        <item>@string/US_MD</item>
+        <item>@string/US_ME</item>
+        <item>@string/US_MI</item>
+        <item>@string/US_MN</item>
+        <item>@string/US_MO</item>
+        <item>@string/US_MS</item>
+        <item>@string/US_MT</item>
+        <item>@string/US_NC</item>
+        <item>@string/US_ND</item>
+        <item>@string/US_NE</item>
+        <item>@string/US_NH</item>
+        <item>@string/US_NJ</item>
+        <item>@string/US_NM</item>
+        <item>@string/US_NV</item>
+        <item>@string/US_NY</item>
+        <item>@string/US_OH</item>
+        <item>@string/US_OK</item>
+        <item>@string/US_OR</item>
+        <item>@string/US_PA</item>
+        <item>@string/US_RI</item>
+        <item>@string/US_SC</item>
+        <item>@string/US_SD</item>
+        <item>@string/US_TN</item>
+        <item>@string/US_TX</item>
+        <item>@string/US_UT</item>
+        <item>@string/US_VA</item>
+        <item>@string/US_VT</item>
+        <item>@string/US_WA</item>
+        <item>@string/US_WI</item>
+        <item>@string/US_WV</item>
+        <item>@string/US_WY</item>
+        <item>@string/UY</item>
+        <item>@string/UZ</item>
+        <item>@string/VA</item>
+        <item>@string/VC</item>
+        <item>@string/VE</item>
+        <item>@string/VG</item>
+        <item>@string/VI</item>
+        <item>@string/VN</item>
+        <item>@string/VU</item>
+        <item>@string/WF</item>
+        <item>@string/WS</item>
+        <item>@string/YE</item>
+        <item>@string/YT</item>
+        <item>@string/ZA</item>
+        <item>@string/ZM</item>
+        <item>@string/ZW</item>
+    </string-array>
+        <string-array
+        name="region_values"
+        translatable="false">
+        <item></item>
+        <item>AC</item>
+        <item>AD</item>
+        <item>AE</item>
+        <item>AF</item>
+        <item>AG</item>
+        <item>AI</item>
+        <item>AL</item>
+        <item>AM</item>
+        <item>AO</item>
+        <item>AQ</item>
+        <item>AR</item>
+        <item>AS</item>
+        <item>AT</item>
+        <item>AU</item>
+        <item>AU-ACT</item>
+        <item>AU-NSW</item>
+        <item>AU-NT</item>
+        <item>AU-QLD</item>
+        <item>AU-SA</item>
+        <item>AU-TAS</item>
+        <item>AU-VIC</item>
+        <item>AU-WA</item>
+        <item>AW</item>
+        <item>AX</item>
+        <item>AZ</item>
+        <item>AZ-NX</item>
+        <item>BA</item>
+        <item>BB</item>
+        <item>BD</item>
+        <item>BE</item>
+        <item>BF</item>
+        <item>BG</item>
+        <item>BH</item>
+        <item>BI</item>
+        <item>BJ</item>
+        <item>BL</item>
+        <item>BM</item>
+        <item>BN</item>
+        <item>BO</item>
+        <item>BQ</item>
+        <item>BR</item>
+        <item>BS</item>
+        <item>BT</item>
+        <item>BV</item>
+        <item>BW</item>
+        <item>BY</item>
+        <item>BZ</item>
+        <item>CA</item>
+        <item>CA-AB</item>
+        <item>CA-BC</item>
+        <item>CA-MB</item>
+        <item>CA-NB</item>
+        <item>CA-NL</item>
+        <item>CA-NS</item>
+        <item>CA-NT</item>
+        <item>CA-NU</item>
+        <item>CA-ON</item>
+        <item>CA-PE</item>
+        <item>CA-QC</item>
+        <item>CA-SK</item>
+        <item>CA-YT</item>
+        <item>CC</item>
+        <item>CD</item>
+        <item>CF</item>
+        <item>CG</item>
+        <item>CH</item>
+        <item>CI</item>
+        <item>CK</item>
+        <item>CL</item>
+        <item>CM</item>
+        <item>CN</item>
+        <item>CN-AH</item>
+        <item>CN-BJ</item>
+        <item>CN-CQ</item>
+        <item>CN-FJ</item>
+        <item>CN-GD</item>
+        <item>CN-GS</item>
+        <item>CN-GX</item>
+        <item>CN-GZ</item>
+        <item>CN-HA</item>
+        <item>CN-HB</item>
+        <item>CN-HE</item>
+        <item>CN-HI</item>
+        <item>CN-HL</item>
+        <item>CN-HN</item>
+        <item>CN-JL</item>
+        <item>CN-JS</item>
+        <item>CN-JX</item>
+        <item>CN-LN</item>
+        <item>CN-NM</item>
+        <item>CN-NX</item>
+        <item>CN-QH</item>
+        <item>CN-SC</item>
+        <item>CN-SD</item>
+        <item>CN-SH</item>
+        <item>CN-SN</item>
+        <item>CN-SX</item>
+        <item>CN-TJ</item>
+        <item>CN-XJ</item>
+        <item>CN-XZ</item>
+        <item>CN-YN</item>
+        <item>CN-ZJ</item>
+        <item>CO</item>
+        <item>CP</item>
+        <item>CR</item>
+        <item>CU</item>
+        <item>CV</item>
+        <item>CW</item>
+        <item>CX</item>
+        <item>CY</item>
+        <item>CZ</item>
+        <item>DE</item>
+        <item>DG</item>
+        <item>DJ</item>
+        <item>DK</item>
+        <item>DM</item>
+        <item>DO</item>
+        <item>DZ</item>
+        <item>EA</item>
+        <item>EC</item>
+        <item>EE</item>
+        <item>EG</item>
+        <item>EH</item>
+        <item>ER</item>
+        <item>ES</item>
+        <item>ES-CE</item>
+        <item>ES-ML</item>
+        <item>ET</item>
+        <item>EU</item>
+        <item>FI</item>
+        <item>FJ</item>
+        <item>FK</item>
+        <item>FM</item>
+        <item>FO</item>
+        <item>FR</item>
+        <item>FX</item>
+        <item>GA</item>
+        <item>GB</item>
+        <item>GD</item>
+        <item>GE</item>
+        <item>GF</item>
+        <item>GG</item>
+        <item>GH</item>
+        <item>GI</item>
+        <item>GL</item>
+        <item>GM</item>
+        <item>GN</item>
+        <item>GP</item>
+        <item>GQ</item>
+        <item>GR</item>
+        <item>GS</item>
+        <item>GT</item>
+        <item>GU</item>
+        <item>GW</item>
+        <item>GY</item>
+        <item>HK</item>
+        <item>HM</item>
+        <item>HN</item>
+        <item>HR</item>
+        <item>HT</item>
+        <item>HU</item>
+        <item>IC</item>
+        <item>ID</item>
+        <item>IE</item>
+        <item>IL</item>
+        <item>IM</item>
+        <item>IN</item>
+        <item>IN-AN</item>
+        <item>IN-AP</item>
+        <item>IN-AR</item>
+        <item>IN-AS</item>
+        <item>IN-BR</item>
+        <item>IN-CH</item>
+        <item>IN-CT</item>
+        <item>IN-DD</item>
+        <item>IN-DL</item>
+        <item>IN-DN</item>
+        <item>IN-GA</item>
+        <item>IN-GJ</item>
+        <item>IN-HP</item>
+        <item>IN-HR</item>
+        <item>IN-JH</item>
+        <item>IN-JK</item>
+        <item>IN-KA</item>
+        <item>IN-KL</item>
+        <item>IN-LD</item>
+        <item>IN-MH</item>
+        <item>IN-ML</item>
+        <item>IN-MN</item>
+        <item>IN-MP</item>
+        <item>IN-MZ</item>
+        <item>IN-NL</item>
+        <item>IN-OR</item>
+        <item>IN-PB</item>
+        <item>IN-PY</item>
+        <item>IN-RJ</item>
+        <item>IN-SK</item>
+        <item>IN-TG</item>
+        <item>IN-TN</item>
+        <item>IN-TR</item>
+        <item>IN-UP</item>
+        <item>IN-UT</item>
+        <item>IN-WB</item>
+        <item>IO</item>
+        <item>IQ</item>
+        <item>IR</item>
+        <item>IS</item>
+        <item>IT</item>
+        <item>JE</item>
+        <item>JM</item>
+        <item>JO</item>
+        <item>JP</item>
+        <item>KE</item>
+        <item>KG</item>
+        <item>KH</item>
+        <item>KI</item>
+        <item>KM</item>
+        <item>KN</item>
+        <item>KP</item>
+        <item>KR</item>
+        <item>KW</item>
+        <item>KY</item>
+        <item>KZ</item>
+        <item>LA</item>
+        <item>LB</item>
+        <item>LC</item>
+        <item>LI</item>
+        <item>LK</item>
+        <item>LR</item>
+        <item>LS</item>
+        <item>LT</item>
+        <item>LU</item>
+        <item>LV</item>
+        <item>LY</item>
+        <item>MA</item>
+        <item>MC</item>
+        <item>MD</item>
+        <item>ME</item>
+        <item>MF</item>
+        <item>MG</item>
+        <item>MH</item>
+        <item>MK</item>
+        <item>ML</item>
+        <item>MM</item>
+        <item>MN</item>
+        <item>MO</item>
+        <item>MP</item>
+        <item>MQ</item>
+        <item>MR</item>
+        <item>MS</item>
+        <item>MT</item>
+        <item>MU</item>
+        <item>MV</item>
+        <item>MW</item>
+        <item>MX</item>
+        <item>MY</item>
+        <item>MZ</item>
+        <item>NA</item>
+        <item>NC</item>
+        <item>NE</item>
+        <item>NF</item>
+        <item>NG</item>
+        <item>NI</item>
+        <item>NL</item>
+        <item>NL-BQ1</item>
+        <item>NL-BQ2</item>
+        <item>NL-BQ3</item>
+        <item>NO</item>
+        <item>NO-21</item>
+        <item>NO-22</item>
+        <item>NP</item>
+        <item>NR</item>
+        <item>NU</item>
+        <item>NZ</item>
+        <item>OM</item>
+        <item>OM-MU</item>
+        <item>PA</item>
+        <item>PE</item>
+        <item>PF</item>
+        <item>PG</item>
+        <item>PH</item>
+        <item>PK</item>
+        <item>PL</item>
+        <item>PM</item>
+        <item>PN</item>
+        <item>PR</item>
+        <item>PS</item>
+        <item>PT</item>
+        <item>PW</item>
+        <item>PY</item>
+        <item>QA</item>
+        <item>RE</item>
+        <item>RO</item>
+        <item>RS</item>
+        <item>RS-KM</item>
+        <item>RU</item>
+        <item>RU-KGD</item>
+        <item>RW</item>
+        <item>SA</item>
+        <item>SB</item>
+        <item>SC</item>
+        <item>SD</item>
+        <item>SE</item>
+        <item>SG</item>
+        <item>SH</item>
+        <item>SI</item>
+        <item>SJ</item>
+        <item>SK</item>
+        <item>SL</item>
+        <item>SM</item>
+        <item>SN</item>
+        <item>SO</item>
+        <item>SR</item>
+        <item>SS</item>
+        <item>ST</item>
+        <item>SV</item>
+        <item>SX</item>
+        <item>SY</item>
+        <item>SZ</item>
+        <item>TA</item>
+        <item>TC</item>
+        <item>TD</item>
+        <item>TF</item>
+        <item>TG</item>
+        <item>TH</item>
+        <item>TJ</item>
+        <item>TK</item>
+        <item>TL</item>
+        <item>TM</item>
+        <item>TN</item>
+        <item>TO</item>
+        <item>TR</item>
+        <item>TT</item>
+        <item>TV</item>
+        <item>TW</item>
+        <item>TZ</item>
+        <item>UA</item>
+        <item>UA-40</item>
+        <item>UA-43</item>
+        <item>UG</item>
+        <item>UM</item>
+        <item>US</item>
+        <item>US-AK</item>
+        <item>US-AL</item>
+        <item>US-AR</item>
+        <item>US-AZ</item>
+        <item>US-CA</item>
+        <item>US-CO</item>
+        <item>US-CT</item>
+        <item>US-DC</item>
+        <item>US-DE</item>
+        <item>US-FL</item>
+        <item>US-GA</item>
+        <item>US-HI</item>
+        <item>US-IA</item>
+        <item>US-ID</item>
+        <item>US-IL</item>
+        <item>US-IN</item>
+        <item>US-KS</item>
+        <item>US-KY</item>
+        <item>US-LA</item>
+        <item>US-MA</item>
+        <item>US-MD</item>
+        <item>US-ME</item>
+        <item>US-MI</item>
+        <item>US-MN</item>
+        <item>US-MO</item>
+        <item>US-MS</item>
+        <item>US-MT</item>
+        <item>US-NC</item>
+        <item>US-ND</item>
+        <item>US-NE</item>
+        <item>US-NH</item>
+        <item>US-NJ</item>
+        <item>US-NM</item>
+        <item>US-NV</item>
+        <item>US-NY</item>
+        <item>US-OH</item>
+        <item>US-OK</item>
+        <item>US-OR</item>
+        <item>US-PA</item>
+        <item>US-RI</item>
+        <item>US-SC</item>
+        <item>US-SD</item>
+        <item>US-TN</item>
+        <item>US-TX</item>
+        <item>US-UT</item>
+        <item>US-VA</item>
+        <item>US-VT</item>
+        <item>US-WA</item>
+        <item>US-WI</item>
+        <item>US-WV</item>
+        <item>US-WY</item>
+        <item>UY</item>
+        <item>UZ</item>
+        <item>VA</item>
+        <item>VC</item>
+        <item>VE</item>
+        <item>VG</item>
+        <item>VI</item>
+        <item>VN</item>
+        <item>VU</item>
+        <item>WF</item>
+        <item>WS</item>
+        <item>YE</item>
+        <item>YT</item>
+        <item>ZA</item>
+        <item>ZM</item>
+        <item>ZW</item>
+    </string-array>
+</resources>

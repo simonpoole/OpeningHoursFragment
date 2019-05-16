@@ -1,4 +1,4 @@
-package ch.poole.openinghoursfragment;
+package ch.poole.openinghoursfragment.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -7,13 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import ch.poole.openinghoursfragment.CancelableDialogFragment;
+import ch.poole.openinghoursfragment.R;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import cn.carbswang.android.numberpickerview.library.NumberPickerView.OnValueChangeListener;
 
 /**
  * Display a dialog allowing the user to select values for a start date and optionally an end date
@@ -32,6 +34,9 @@ public class TimeRangePicker extends CancelableDialogFragment {
 
     private static final String TAG = "fragment_timepicker";
 
+    private static final int MAX_MINUTES        = 59;
+    private static final int MAX_EXTENDED_HOURS = 48;
+
     /**
      * Show the TimeRangePicker dialog
      * 
@@ -43,8 +48,8 @@ public class TimeRangePicker extends CancelableDialogFragment {
      * @param endMinute initial end minute
      * @param increment minute tick size
      */
-    static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute, int increment) {
-        dismissDialog(parentFragment);
+    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute, int increment) {
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute, increment);
@@ -61,26 +66,11 @@ public class TimeRangePicker extends CancelableDialogFragment {
      * @param increment minute tick size
      */
     public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment) {
-        dismissDialog(parentFragment);
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED, NOTHING_SELECTED, increment);
         timePickerFragment.show(fm, TAG);
-    }
-
-    /**
-     * Dismiss any instance of this dialog
-     * 
-     * @param parentFragment the Fragement calling this
-     */
-    private static void dismissDialog(Fragment parentFragment) {
-        FragmentManager fm = parentFragment.getChildFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = fm.findFragmentByTag(TAG);
-        if (fragment != null) {
-            ft.remove(fragment);
-        }
-        ft.commit();
     }
 
     /**
@@ -136,8 +126,8 @@ public class TimeRangePicker extends CancelableDialogFragment {
         View layout = inflater.inflate(R.layout.timerangepicker, null);
         builder.setView(layout);
 
-        String[] hourValues = new String[48];
-        for (int i = 0; i < 48; i++) {
+        String[] hourValues = new String[MAX_EXTENDED_HOURS + 1];
+        for (int i = 0; i <= MAX_EXTENDED_HOURS; i++) {
             hourValues[i] = String.format("%02d", i);
         }
         final NumberPickerView npvStartHour = (NumberPickerView) layout.findViewById(R.id.startHour);
@@ -154,7 +144,7 @@ public class TimeRangePicker extends CancelableDialogFragment {
 
         final NumberPickerView npvStartMinute = (NumberPickerView) layout.findViewById(R.id.startMinute);
 
-        int maxMinutes = 59 / increment;
+        int maxMinutes = MAX_MINUTES / increment;
         npvStartMinute.setDisplayedValues(minValues);
         npvStartMinute.setMinValue(0);
         npvStartMinute.setMaxValue(maxMinutes);
@@ -166,12 +156,31 @@ public class TimeRangePicker extends CancelableDialogFragment {
             npvEndHour.setVisibility(View.GONE);
             npvEndMinute.setVisibility(View.GONE);
         } else {
+            npvStartHour.setOnValueChangedListener(new OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                    if (newVal >= npvEndHour.getValue()) {
+                        npvEndHour.smoothScrollToValue(newVal);
+                    }
+                }
+            });
             npvEndHour.setVisibility(View.VISIBLE);
             npvEndMinute.setVisibility(View.VISIBLE);
             npvEndHour.setDisplayedValues(hourValues);
             npvEndHour.setMinValue(0);
-            npvEndHour.setMaxValue(47);
+            npvEndHour.setMaxValue(MAX_EXTENDED_HOURS);
             npvEndHour.setValue(endHour);
+            npvEndHour.setOnValueChangedListener(new OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                    if (newVal == MAX_EXTENDED_HOURS) {
+                        npvEndMinute.smoothScrollToValue(0);
+                        npvEndMinute.setMaxValue(0);
+                    } else {
+                        npvEndMinute.setMaxValue(maxMinutes);
+                    }
+                }
+            });
 
             npvEndMinute.setDisplayedValues(minValues);
             npvEndMinute.setMinValue(0);

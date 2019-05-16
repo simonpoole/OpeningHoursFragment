@@ -51,7 +51,7 @@ public class MixedModeTest {
         values.add(new ValueWithDescription("yes", "Yes"));
         values.add(new ValueWithDescription("no", "No"));
 
-        fragment = OpeningHoursFragment.newInstance(key, "no", R.style.Theme_AppCompat_Dialog_Alert, 5, false, values);
+        fragment = OpeningHoursFragment.newInstance(key, null, null, "no", R.style.Theme_AppCompat_Dialog_Alert, 5, false, values);
         fragment.show(fm, "fragment_openinghours");
     }
 

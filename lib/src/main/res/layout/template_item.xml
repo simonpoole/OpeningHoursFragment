@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content" 
-	android:paddingTop="?attr/dialogPreferredPadding">
-
-	<TextView
-		android:id="@+id/template_name_legend"
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:paddingTop="10dp"
-		android:layout_marginLeft="?attr/dialogPreferredPadding"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="?attr/dialogPreferredPadding">
+    <TextView
+        android:id="@+id/template_name_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
         android:layout_marginStart="?attr/dialogPreferredPadding"
-		android:layout_alignParentTop="true"
-		android:textAppearance="?android:attr/textAppearanceMedium" 
-		android:text="@string/name_legend"/>
-		
-	<EditText 
-		android:id="@+id/template_name"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="?attr/dialogPreferredPadding"
-		android:layout_marginRight="?attr/dialogPreferredPadding"
-		android:layout_alignTop="@id/template_name_legend"
-		android:layout_toRightOf="@id/template_name_legend"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/name_legend" />
+    <EditText
+        android:id="@+id/template_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginRight="?attr/dialogPreferredPadding"
+        android:layout_alignTop="@id/template_name_legend"
+        android:layout_toRightOf="@id/template_name_legend"
         android:layout_toEndOf="@id/template_name_legend"
-		android:textAppearance="?android:attr/textAppearanceMedium" />
-		
-	<TextView
-		android:id="@+id/default_legend"
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/default_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
         android:layout_marginStart="?attr/dialogPreferredPadding"
-		android:paddingTop="10dp"
-		android:layout_below="@id/template_name"
-		android:textAppearance="?android:attr/textAppearanceMedium" 
-		android:text="@string/default_legend"/>
-		
-	<android.support.v7.widget.AppCompatCheckBox
+        android:paddingTop="10dp"
+        android:layout_below="@id/template_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/default_legend" />
+    <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/is_default"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
@@ -51,20 +48,18 @@
         android:paddingRight="5dp"
         android:saveEnabled="false"
         android:text="" />
-        
     <TextView
-		android:id="@+id/key_legend"
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:id="@+id/key_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
         android:layout_marginStart="?attr/dialogPreferredPadding"
-		android:paddingTop="10dp"
-		android:layout_below="@id/is_default"
-		android:textAppearance="?android:attr/textAppearanceMedium" 
-		android:text="@string/key_legend"/>  
-		  
+        android:paddingTop="10dp"
+        android:layout_below="@id/is_default"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/key_legend" />
     <Spinner
-      	android:id="@+id/template_key"
+        android:id="@+id/template_key"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_marginBottom="1dp"
@@ -73,9 +68,49 @@
         android:layout_alignLeft="@id/template_name"
         android:layout_alignStart="@id/template_name"
         android:layout_alignBaseline="@id/key_legend"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:saveEnabled="false"
         android:drawSelectorOnTop="true"
         android:entries="@array/key_entries" />
+    <TextView
+        android:id="@+id/region_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
+        android:paddingTop="10dp"
+        android:layout_below="@id/key_legend"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/spd_ohf_region_legend" />
+    <Spinner
+        android:id="@+id/template_region"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_alignLeft="@id/template_name"
+        android:layout_alignStart="@id/template_name"
+        android:layout_alignBaseline="@id/region_legend"
+        android:saveEnabled="false"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/region_entries" />
+    <TextView
+        android:id="@+id/template_object_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="?attr/dialogPreferredPadding"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
+        android:layout_below="@id/region_legend"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/spd_ohf_object_legend" />
+    <EditText
+        android:id="@+id/template_object"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="?attr/dialogPreferredPadding"
+        android:layout_alignTop="@id/template_object_legend"
+        android:layout_alignLeft="@id/template_name"
+        android:layout_alignStart="@id/template_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>

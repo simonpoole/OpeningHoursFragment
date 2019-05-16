@@ -1,4 +1,4 @@
-package ch.poole.openinghoursfragment;
+package ch.poole.openinghoursfragment.pickers;
 
 /**
  * Interface for listeners that return date values from RangePicker

@@ -11,9 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 class ValueArrayAdapter extends ArrayAdapter<ValueWithDescription> {
-    
+
     final List<ValueWithDescription> values;
-   
+
     /**
      * Construct a new instance
      * 

@@ -1,4 +1,4 @@
-package ch.poole.openinghoursfragment;
+package ch.poole.openinghoursfragment.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -8,17 +8,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import ch.poole.openinghoursfragment.CancelableDialogFragment;
+import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.YearRange;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import cn.carbswang.android.numberpickerview.library.NumberPickerView.OnValueChangeListener;
 
 /**
  * Display a dialog allowing the user to select values for a start date and optionally an end date
@@ -54,9 +56,9 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param endMonth initial end month
      * @param endDay initial end day of the month
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear, @Nullable Month endMonth,
-            int endDay) {
-        dismissDialog(parentFragment);
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear,
+            @Nullable Month endMonth, int endDay) {
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear, endMonth, endDay, null);
@@ -74,9 +76,9 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param endMonth initial end month
      * @param endDay initial end day of the month
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @Nullable Month endMonth,
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @Nullable Month endMonth,
             int endDay) {
-        dismissDialog(parentFragment);
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, false, endYear, endMonth,
@@ -95,9 +97,9 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param endYear initial end year
      * @param endVarDate initial end variable date ie easter
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear,
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay, int endYear,
             @NonNull VarDate endVarDate) {
-        dismissDialog(parentFragment);
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, false, endYear, null, DateWithOffset.UNDEFINED_MONTH_DAY,
@@ -115,8 +117,8 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param endYear initial end year
      * @param endVarDate initial end variable date ie easter
      */
-    static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @NonNull VarDate endVarDate) {
-        dismissDialog(parentFragment);
+    public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate, int endYear, @NonNull VarDate endVarDate) {
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, false, endYear, null,
@@ -134,7 +136,7 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param startDay initial start day of the month
      */
     public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull Month startMonth, int startDay) {
-        dismissDialog(parentFragment);
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, startMonth, startDay, null, true, YearRange.UNDEFINED_YEAR, null,
@@ -151,27 +153,12 @@ public class DateRangePicker extends CancelableDialogFragment {
      * @param startVarDate initial start variable date ie easter
      */
     public static void showDialog(Fragment parentFragment, int title, int startYear, @NonNull VarDate startVarDate) {
-        dismissDialog(parentFragment);
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         DateRangePicker datePickerFragment = newInstance(title, startYear, null, DateWithOffset.UNDEFINED_MONTH_DAY, startVarDate, true,
                 YearRange.UNDEFINED_YEAR, null, DateWithOffset.UNDEFINED_MONTH_DAY, null);
         datePickerFragment.show(fm, TAG);
-    }
-
-    /**
-     * Dismiss any instance of this dialog
-     * 
-     * @param parentFragment the Fragment calling this
-     */
-    private static void dismissDialog(@NonNull Fragment parentFragment) {
-        FragmentManager fm = parentFragment.getChildFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = fm.findFragmentByTag(TAG);
-        if (fragment != null) {
-            ft.remove(fragment);
-        }
-        ft.commit();
     }
 
     /**
@@ -291,6 +278,15 @@ public class DateRangePicker extends CancelableDialogFragment {
         npvEndYear.setMinValue(YearRange.FIRST_VALID_YEAR - 1);
         npvEndYear.setMaxValue(MAX_YEAR);
         npvEndYear.setValue(endYear != YearRange.UNDEFINED_YEAR ? endYear : YearRange.FIRST_VALID_YEAR - 1);
+        OnValueChangeListener startYearChangeListener = new OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                int endYear = npvEndYear.getValue();
+                if (newVal >= endYear && endYear >= YearRange.FIRST_VALID_YEAR) {
+                    npvEndYear.smoothScrollToValue(newVal);
+                }
+            }
+        };
 
         final NumberPickerView npvEndVarDate = (NumberPickerView) layout.findViewById(R.id.endVarDate);
         final NumberPickerView npvEndMonth = (NumberPickerView) layout.findViewById(R.id.endMonth);
@@ -321,6 +317,34 @@ public class DateRangePicker extends CancelableDialogFragment {
                 npvEndDay.setMinValue(0);
                 npvEndDay.setMaxValue(31);
                 npvEndDay.setValue(endDay != DateWithOffset.UNDEFINED_MONTH_DAY ? endDay : 0);
+
+                npvStartYear.setOnValueChangedListener(startYearChangeListener);
+
+                if (npvStartMonth.getVisibility() == View.VISIBLE) {
+                    npvStartMonth.setOnValueChangedListener(new OnValueChangeListener() {
+                        @Override
+                        public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                            int endMonth = npvEndMonth.getValue();
+                            if (npvStartYear.getValue() == npvEndYear.getValue() && newVal >= endMonth && endMonth != 0) {
+                                npvEndMonth.smoothScrollToValue(newVal);
+                            }
+                        }
+                    });
+                }
+
+                if (npvStartDay.getVisibility() == View.VISIBLE) {
+                    npvStartDay.setOnValueChangedListener(new OnValueChangeListener() {
+                        @Override
+                        public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                            int endDay = npvEndDay.getValue();
+                            if (npvStartYear.getValue() == npvEndYear.getValue() && npvStartMonth.getValue() == npvEndMonth.getValue() && newVal >= endDay
+                                    && endDay != 0) {
+                                npvEndDay.smoothScrollToValue(newVal);
+                            }
+                        }
+                    });
+                }
+
             } else {
                 npvEndVarDate.setVisibility(View.VISIBLE);
                 npvEndMonth.setVisibility(View.GONE);
@@ -330,6 +354,7 @@ public class DateRangePicker extends CancelableDialogFragment {
                 npvEndVarDate.setMinValue(1);
                 npvEndVarDate.setMaxValue(VarDate.values().length);
                 npvEndVarDate.setValue(endVarDate.ordinal() + 1);
+                npvStartYear.setOnValueChangedListener(startYearChangeListener);
             }
         }
 

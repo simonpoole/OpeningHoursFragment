@@ -1,4 +1,4 @@
-package ch.poole.openinghoursfragment;
+package ch.poole.openinghoursfragment.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import ch.poole.openinghoursfragment.CancelableDialogFragment;
+import ch.poole.openinghoursfragment.R;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 /**
@@ -40,27 +41,12 @@ public class RangePicker extends CancelableDialogFragment {
      * @param startCurrent initial start value
      * @param endCurrent initial end value
      */
-    static void showDialog(Fragment parentFragment, int title, int min, int max, int startCurrent, int endCurrent) {
-        dismissDialog(parentFragment);
+    public static void showDialog(Fragment parentFragment, int title, int min, int max, int startCurrent, int endCurrent) {
+        dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
         RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent);
         rangePickerFragment.show(fm, TAG);
-    }
-
-    /**
-     * Dismiss any instance of this dialog
-     * 
-     * @param parentFragment the Fragement calling this
-     */
-    private static void dismissDialog(Fragment parentFragment) {
-        FragmentManager fm = parentFragment.getChildFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = fm.findFragmentByTag(TAG);
-        if (fragment != null) {
-            ft.remove(fragment);
-        }
-        ft.commit();
     }
 
     /**

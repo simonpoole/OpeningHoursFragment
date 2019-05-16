@@ -68,8 +68,9 @@ dependencies {
     implementation "com.android.support:support-annotations:$supportLibVersion"
     implementation "com.android.support:support-compat:$supportLibVersion"
     implementation "ch.poole:OpeningHoursParser:0.16.0"
-    implementation "ch.poole:rangebar:0.1.3"
+    implementation "ch.poole:rangebar:0.1.4"
     implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
+    implementation "com.google.code.gson:gson:2.8.5"
 
     // Instrumentation tests
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

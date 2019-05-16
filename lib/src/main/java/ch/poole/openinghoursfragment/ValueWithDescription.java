@@ -7,9 +7,9 @@ import android.support.annotation.Nullable;
 
 public class ValueWithDescription implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final String value;
-    private final String description;
-    
+    private final String      value;
+    private final String      description;
+
     /**
      * Construct a new instance
      * 
@@ -20,18 +20,18 @@ public class ValueWithDescription implements Serializable {
         this.value = value;
         this.description = description;
     }
-    
+
     /**
      * @return the value
      */
-    String getValue() {
+    public String getValue() {
         return value;
     }
 
     /**
      * @return the description
      */
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -39,7 +39,7 @@ public class ValueWithDescription implements Serializable {
     public String toString() {
         return value;
     }
- 
+
     @Override
     public int hashCode() {
         return value == null ? 0 : value.hashCode();

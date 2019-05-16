@@ -9,11 +9,8 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,8 +19,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -53,13 +48,24 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import ch.poole.openinghoursfragment.pickers.DateRangePicker;
+import ch.poole.openinghoursfragment.pickers.OccurrenceInMonthPicker;
+import ch.poole.openinghoursfragment.pickers.RangePicker;
+import ch.poole.openinghoursfragment.pickers.SetDateRangeListener;
+import ch.poole.openinghoursfragment.pickers.SetRangeListener;
+import ch.poole.openinghoursfragment.pickers.SetTimeRangeListener;
+import ch.poole.openinghoursfragment.pickers.TimeRangePicker;
+import ch.poole.openinghoursfragment.templates.TemplateDatabase;
+import ch.poole.openinghoursfragment.templates.TemplateDatabaseHelper;
+import ch.poole.openinghoursfragment.templates.TemplateDialog;
+import ch.poole.openinghoursfragment.templates.TemplateMangementDialog;
+import ch.poole.openinghoursfragment.templates.UpdateTextListener;
 import ch.poole.openinghoursparser.DateRange;
 import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Event;
@@ -74,7 +80,6 @@ import ch.poole.openinghoursparser.RuleModifier;
 import ch.poole.openinghoursparser.RuleModifier.Modifier;
 import ch.poole.openinghoursparser.TimeSpan;
 import ch.poole.openinghoursparser.TokenMgrError;
-import ch.poole.openinghoursparser.Util;
 import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.VariableTime;
 import ch.poole.openinghoursparser.WeekDay;
@@ -91,13 +96,14 @@ import ch.poole.rangebar.RangeBar.PinTextFormatter;
  * @author Simon Poole
  *
  */
-public class OpeningHoursFragment extends DialogFragment implements SetDateRangeListener, SetRangeListener, SetTimeRangeListener {
-
+public class OpeningHoursFragment extends DialogFragment implements SetDateRangeListener, SetRangeListener, SetTimeRangeListener, UpdateTextListener {
     private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
     private static final String VALUE_KEY          = "value";
     private static final String ORIGINAL_VALUE_KEY = "original_value";
     private static final String KEY_KEY            = "key";
+    private static final String REGION_KEY         = "region";
+    private static final String OBJECT_KEY         = "object";
     private static final String STYLE_KEY          = "style";
     private static final String RULE_KEY           = "rule";
     private static final String SHOWTEMPLATES_KEY  = "show_templates";
@@ -111,6 +117,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private LayoutInflater inflater = null;
 
     private ValueWithDescription key;
+
+    private String region;
+
+    private String object;
 
     private String openingHoursValue;
 
@@ -197,7 +207,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     public static OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
-        return newInstance(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
+        return newInstance(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null);
     }
 
     /**
@@ -213,10 +223,30 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule, boolean showTemplates,
             @Nullable ArrayList<ValueWithDescription> textValues) {
+        return newInstance(key, null, null, value, style, rule, showTemplates, textValues);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to an activity
+     * 
+     * @param key the key the OH values belongs to in an ValueWithDescription object
+     * @param region the current region
+     * @param object the object in question (typically the main osm tag)
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @return an OpeningHoursFragment
+     */
+    public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style, int rule,
+            boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
         args.putSerializable(KEY_KEY, key);
+        args.putString(REGION_KEY, region);
+        args.putString(OBJECT_KEY, object);
         args.putSerializable(VALUE_KEY, value);
         args.putInt(STYLE_KEY, style);
         args.putInt(RULE_KEY, rule);
@@ -253,7 +283,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     public static OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
-        return newInstanceForFragment(new ValueWithDescription(key, null), value, style, rule, showTemplates, null);
+        return newInstanceForFragment(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null);
     }
 
     /**
@@ -269,10 +299,30 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule,
             boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
+        return newInstanceForFragment(key, null, null, value, style, rule, showTemplates, textValues);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to a fragment
+     * 
+     * @param key the key the OH values belongs to in an ValueWithDescription object
+     * @param region the current region
+     * @param object the object in question (typically the main osm tag)
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @return an OpeningHoursFragment
+     */
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style,
+            int rule, boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
         args.putSerializable(KEY_KEY, key);
+        args.putString(REGION_KEY, region);
+        args.putString(OBJECT_KEY, object);
         args.putSerializable(VALUE_KEY, value);
         args.putInt(STYLE_KEY, style);
         args.putInt(RULE_KEY, rule);
@@ -323,6 +373,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (savedInstanceState != null) {
             Log.d(DEBUG_TAG, "Restoring from saved state");
             key = (ValueWithDescription) savedInstanceState.getSerializable(KEY_KEY);
+            region = savedInstanceState.getString(REGION_KEY);
+            object = savedInstanceState.getString(OBJECT_KEY);
             openingHoursValue = savedInstanceState.getString(VALUE_KEY);
             originalOpeningHoursValue = savedInstanceState.getString(ORIGINAL_VALUE_KEY);
             styleRes = savedInstanceState.getInt(STYLE_KEY);
@@ -330,6 +382,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             textValues = (List<ValueWithDescription>) savedInstanceState.getSerializable(TEXTVALUES_KEY);
         } else {
             key = (ValueWithDescription) getArguments().getSerializable(KEY_KEY);
+            region = getArguments().getString(REGION_KEY);
+            object = getArguments().getString(OBJECT_KEY);
             openingHoursValue = getArguments().getString(VALUE_KEY);
             originalOpeningHoursValue = openingHoursValue;
             styleRes = getArguments().getInt(STYLE_KEY);
@@ -417,12 +471,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     /**
-     * 
+     * Try to locate a reasonable default value There probably is a more elegant way to do this
      */
     private void loadDefault() {
-        openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue());
-        if (openingHoursValue == null) { // didn't find a key specific default try general default now
-            openingHoursValue = TemplateDatabase.getDefault(mDatabase, null);
+        openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), region, object);
+        if (openingHoursValue == null) {
+            openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), null, object);
+            if (openingHoursValue == null) {
+                openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), null, null);
+                if (openingHoursValue == null) {
+                    // didn't find a more specific default try general default now
+                    openingHoursValue = TemplateDatabase.getDefault(mDatabase, null, null, null);
+                }
+            }
         }
     }
 
@@ -569,7 +630,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         } else {
                             showTemplates = false;
-                            loadOrManageTemplate(context, false, key.getValue());
+                            TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
                         }
                     }
                     headerLine.setVisibility(View.GONE);
@@ -651,7 +712,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            loadOrManageTemplate(context, false);
+                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, null, null, text.getText().toString());
                             return true;
                         }
                     });
@@ -659,7 +720,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     saveTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            showTemplateDialog(new TemplateDatabaseHelper(context).getWritableDatabase(), false, -1);
+                            TemplateDialog.showDialog(OpeningHoursFragment.this, text.getText().toString(), key, false, -1);
                             return true;
                         }
                     });
@@ -667,7 +728,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            loadOrManageTemplate(context, true);
+                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, null, null, text.getText().toString());
                             return true;
                         }
                     });
@@ -745,7 +806,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         int prevLen = text.length();
         text.removeTextChangedListener(watcher); // avoid infinite loop
         if (rules != null) {
-            String t = Util.rulesToOpeningHoursString(rules);
+            String t = ch.poole.openinghoursparser.Util.rulesToOpeningHoursString(rules);
             text.setText(t);
         }
         text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
@@ -1496,7 +1557,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             if (rm != null) {
                 LinearLayout modifierLayout = (LinearLayout) inflater.inflate(R.layout.modifier, null);
                 final Spinner modifierSpinner = (Spinner) modifierLayout.findViewById(R.id.modifier);
-                setSpinnerInitialEntryValue(R.array.modifier_values, modifierSpinner, rm.getModifier() == null ? "" : rm.getModifier().toString());
+                Util.setSpinnerInitialEntryValue(getResources(), R.array.modifier_values, modifierSpinner,
+                        rm.getModifier() == null ? "" : rm.getModifier().toString());
                 setSpinnerListenerEntryValues(R.array.modifier_values, modifierSpinner, new SetValue() {
                     @Override
                     public void set(String value) {
@@ -2093,7 +2155,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             checkWeekDay(startWeekDayContainer, start.getWeekDayOffset() != null ? start.getWeekDayOffset().toString() : null);
             setWeekDayListeners(startWeekDayContainer, start);
             final Spinner offsetTypeSpinner = (Spinner) dateRangeRow.findViewById(R.id.startOffsetType);
-            setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, start.isWeekDayOffsetPositive() ? "+" : "-");
+            Util.setSpinnerInitialEntryValue(getResources(), R.array.offset_type_values, offsetTypeSpinner, start.isWeekDayOffsetPositive() ? "+" : "-");
             setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
                 @Override
                 public void set(String value) {
@@ -2195,7 +2257,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     checkWeekDay(endWeekDayContainer, end.getWeekDayOffset() != null ? end.getWeekDayOffset().toString() : null);
                     setWeekDayListeners(endWeekDayContainer, end);
                     final Spinner offsetTypeSpinner = (Spinner) dateRangeRow.findViewById(R.id.endOffsetType);
-                    setSpinnerInitialEntryValue(R.array.offset_type_values, offsetTypeSpinner, end.isWeekDayOffsetPositive() ? "+" : "-");
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.offset_type_values, offsetTypeSpinner, end.isWeekDayOffsetPositive() ? "+" : "-");
                     setSpinnerListenerEntryValues(R.array.offset_type_values, offsetTypeSpinner, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2307,7 +2369,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private void addHolidayUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<Holiday> holidays, @NonNull final Holiday hd) {
         LinearLayout holidayRow = (LinearLayout) inflater.inflate(R.layout.holiday_row, null);
         Spinner holidaysSpinner = (Spinner) holidayRow.findViewById(R.id.holidays);
-        setSpinnerInitialEntryValue(R.array.holidays_values, holidaysSpinner, hd.getType().name());
+        Util.setSpinnerInitialEntryValue(getResources(), R.array.holidays_values, holidaysSpinner, hd.getType().name());
         setSpinnerListenerEntryValues(R.array.holidays_values, holidaysSpinner, new SetValue() {
             @Override
             public void set(String value) {
@@ -2618,16 +2680,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         });
     }
 
-    /**
-     * Interface for call backs that delete a Rule
-     * 
-     * @author simon
-     *
-     */
-    interface Delete {
-        void delete();
-    }
-
     private class DeleteTimeSpan implements Delete {
         final List<TimeSpan> times;
         final TimeSpan       ts;
@@ -2750,7 +2802,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2817,7 +2869,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         extendedTimeBar.setVisibility(View.GONE);
                     }
                     Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2852,7 +2904,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Log.d(DEBUG_TAG, "e-e " + ts.toString());
                     LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
                     final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2860,7 +2912,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     });
                     Spinner endEvent = (Spinner) timeEventRow.findViewById(R.id.endEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.events_values, endEvent, ts.getEndEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, endEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -2940,7 +2992,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Log.d(DEBUG_TAG, "e- " + ts.toString());
                     LinearLayout timeEventRow = (LinearLayout) inflater.inflate(R.layout.time_event_row, null);
                     final Spinner startEvent = (Spinner) timeEventRow.findViewById(R.id.startEvent);
-                    setSpinnerInitialEntryValue(R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
+                    Util.setSpinnerInitialEntryValue(getResources(), R.array.events_values, startEvent, ts.getStartEvent().getEvent().toString());
                     setSpinnerListenerEntryValues(R.array.events_values, startEvent, new SetValue() {
                         @Override
                         public void set(String value) {
@@ -3207,18 +3259,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         void set(String value);
     }
 
-    private void setSpinnerInitialEntryValue(int valuesId, @NonNull Spinner spinner, @NonNull String value) {
-        Resources res = getResources();
-        final TypedArray values = res.obtainTypedArray(valuesId);
-        for (int i = 0; i < values.length(); i++) {
-            if ((value == null && "".equals(values.getString(i))) || value.equals(values.getString(i))) {
-                spinner.setSelection(i);
-                break;
-            }
-        }
-        values.recycle();
-    }
-
     private void setSpinnerListenerEntryValues(final int valuesId, @NonNull final Spinner spinner, @NonNull final SetValue listener) {
         final Resources res = getResources();
 
@@ -3272,7 +3312,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 int pos = text.getSelectionStart();
                 int prevLen = text.length();
                 text.removeTextChangedListener(watcher);
-                String oh = Util.rulesToOpeningHoursString(rules);
+                String oh = ch.poole.openinghoursparser.Util.rulesToOpeningHoursString(rules);
                 text.setText(oh);
                 text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
                 text.addTextChangedListener(watcher);
@@ -3474,6 +3514,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         // super.onSaveInstanceState(outState); avoid trying to save views, this is a hack
         Log.d(DEBUG_TAG, "onSaveInstanceState");
         outState.putSerializable(KEY_KEY, key);
+        outState.putString(REGION_KEY, region);
+        outState.putString(OBJECT_KEY, object);
         outState.putSerializable(VALUE_KEY, text.getText().toString());
         outState.putSerializable(ORIGINAL_VALUE_KEY, originalOpeningHoursValue);
         outState.putInt(STYLE_KEY, styleRes);
@@ -3489,7 +3531,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
         if ((openingHoursValue == null || "".equals(openingHoursValue)) && showTemplates && !textMode) {
             showTemplates = false;
-            loadOrManageTemplate(context, false);
+            TemplateMangementDialog.showDialog(this, false, key, region, object, text.getText().toString());
         }
     }
 
@@ -3544,228 +3586,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
-    /**
-     * Template database related methods and fields
-     */
-    private Cursor          templateCursor;
-    private TemplateAdapter templateAdapter;
-    private AlertDialog     templateDialog;
-
-    /**
-     * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
-     * it
-     * 
-     * @param context Android context
-     * @param manage if true the template editor will be started otherwise the template will replace the current OH
-     *            value
-     */
-    void loadOrManageTemplate(@NonNull Context context, boolean manage) {
-        loadOrManageTemplate(context, manage, manage ? null : key.getValue());
-    }
-
-    /**
-     * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
-     * it
-     * 
-     * @param context Android context
-     * @param manage if true the template editor will be started otherwise the template will replace the current OH
-     *            value
-     * @param loadKey the key to search for templates for in the DB, if null all
-     */
-    void loadOrManageTemplate(@NonNull Context context, boolean manage, @Nullable String loadKey) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        View templateView = (View) inflater.inflate(R.layout.template_list, null);
-        alertDialog.setTitle(manage ? R.string.manage_templates_title : R.string.load_templates_title);
-        alertDialog.setView(templateView);
-        ListView lv = (ListView) templateView.findViewById(R.id.listView1);
-        final SQLiteDatabase writableDb = new TemplateDatabaseHelper(context).getWritableDatabase();
-        templateCursor = TemplateDatabase.queryByKey(writableDb, loadKey);
-        templateAdapter = new TemplateAdapter(writableDb, context, templateCursor, manage);
-        lv.setAdapter(templateAdapter);
-        alertDialog.setNegativeButton(R.string.Done, null);
-        alertDialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                templateCursor.close();
-                writableDb.close();
-            }
-        });
-        templateDialog = alertDialog.show();
-    }
-
-    private class TemplateAdapter extends CursorAdapter {
-        final SQLiteDatabase db;
-        final boolean        manage;
-
-        public TemplateAdapter(@NonNull final SQLiteDatabase db, @NonNull Context context, @NonNull Cursor cursor, boolean manage) {
-            super(context, cursor, 0);
-            this.db = db;
-            this.manage = manage;
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            Log.d(DEBUG_TAG, "newView");
-            return LayoutInflater.from(context).inflate(R.layout.template_list_item, parent, false);
-        }
-
-        @Override
-        public void bindView(final View view, final Context context, Cursor cursor) {
-            if (!isAdded()) {
-                // this seems to be enough to protect against crashes, but doesn't solve the actual issue
-                return;
-            }
-            Log.d(DEBUG_TAG, "bindView");
-            final int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-            view.setTag(id);
-            Log.d(DEBUG_TAG, "bindView id " + id);
-            boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
-            String nameValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
-            String keyValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
-            TextView nameView = (TextView) view.findViewById(R.id.name);
-            nameView.setText(nameValue);
-            TextView keyView = (TextView) view.findViewById(R.id.key);
-            String keyEntry = valueToEntry(R.array.key_values, R.array.key_entries, keyValue);
-            keyView.setText((isDefault ? getActivity().getString(R.string.is_default, keyEntry) : keyEntry));
-            final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
-            if (manage) {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Integer id = (Integer) view.getTag();
-                        showTemplateDialog(db, true, id != null ? id.intValue() : -1);
-                    }
-                });
-            } else {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        text.removeTextChangedListener(watcher);
-                        text.setText(template);
-                        text.addTextChangedListener(watcher);
-                        watcher.afterTextChanged(null);
-                        templateDialog.dismiss();
-                    }
-                });
-            }
-        }
-
-        private String valueToEntry(int valuesId, int entriesId, @Nullable String value) {
-            Resources res = getResources();
-            final TypedArray values = res.obtainTypedArray(valuesId);
-            final TypedArray entries = res.obtainTypedArray(entriesId);
-            try {
-                for (int i = 0; i < values.length(); i++) {
-                    if ((value == null && "".equals(values.getString(i))) || (value != null && value.equals(values.getString(i)))) {
-                        return entries.getString(i);
-                    }
-                }
-            } finally {
-                values.recycle();
-                entries.recycle();
-            }
-            return "Invalid value";
-        }
-    }
-
-    /**
-     * Show a dialog for editing and saving a template
-     * 
-     * @param db a writable instance of the template database
-     * @param existing true if this is not a new template
-     * @param id the rowid of the template in the database or -1 if not saved yet
-     */
-    private void showTemplateDialog(@NonNull final SQLiteDatabase db, final boolean existing, final int id) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        View templateView = (View) inflater.inflate(R.layout.template_item, null);
-        alertDialog.setView(templateView);
-        final CheckBox defaultCheck = (CheckBox) templateView.findViewById(R.id.is_default);
-        final EditText nameEdit = (EditText) templateView.findViewById(R.id.template_name);
-        final Spinner keySpinner = (Spinner) templateView.findViewById(R.id.template_key);
-
-        String template = null;
-        String templateKey = key.getValue();
-        if (existing) {
-            Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[] { Integer.toString(id) });
-            if (cursor.moveToFirst()) {
-                boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
-                defaultCheck.setChecked(isDefault);
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
-                template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
-                templateKey = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
-                nameEdit.setText(name);
-            } else {
-                Log.e(DEBUG_TAG, "template id " + Integer.toString(id) + " not found");
-            }
-            cursor.close();
-
-            alertDialog.setTitle(R.string.edit_template);
-            alertDialog.setNeutralButton(R.string.Delete, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d(DEBUG_TAG, "deleting template " + Integer.toString(id));
-                    TemplateDatabase.delete(db, id);
-                    newCursor(db);
-                }
-            });
-        } else {
-            alertDialog.setTitle(R.string.save_template);
-        }
-        alertDialog.setNegativeButton(R.string.spd_ohf_cancel, null);
-
-        keySpinner.setSelection(0);
-        setSpinnerInitialEntryValue(R.array.key_values, keySpinner, templateKey);
-
-        final String finalTemplate = template;
-        alertDialog.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final TypedArray values = context.getResources().obtainTypedArray(R.array.key_values);
-                int spinnerPos = keySpinner.getSelectedItemPosition();
-                final String spinnerKey = spinnerPos == 0 ? null : values.getString(spinnerPos);
-                values.recycle();
-                if (!existing) {
-                    TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), text.getText().toString());
-                    db.close();
-                } else {
-                    final String current = text.getText().toString();
-                    if (!current.equals(finalTemplate)) {
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                        alertDialog.setTitle(R.string.update_template);
-                        alertDialog.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
-                                newCursor(db);
-                            }
-                        });
-                        alertDialog.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate);
-                                newCursor(db);
-                            }
-                        });
-                        alertDialog.show();
-                    } else {
-                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current);
-                        newCursor(db);
-                    }
-                }
-            }
-        });
-        alertDialog.show();
-    }
-
-    /**
-     * Replace the current cursor for the template database
-     * 
-     * @param db the template database
-     */
-    private void newCursor(@NonNull final SQLiteDatabase db) {
-        Cursor newCursor = TemplateDatabase.queryByKey(db, null);
-        Cursor oldCursor = templateAdapter.swapCursor(newCursor);
-        oldCursor.close();
-        templateAdapter.notifyDataSetChanged();
+    @Override
+    public void updateText(String newText) {
+        text.removeTextChangedListener(watcher);
+        text.setText(newText);
+        text.addTextChangedListener(watcher);
+        watcher.afterTextChanged(null);
     }
 }

@@ -2,6 +2,8 @@ package ch.poole.openinghoursfragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +26,7 @@ public final class Util {
     private Util() {
         // Empty
     }
-    
+
     /**
      * Scroll to the supplied view
      * 
@@ -90,7 +93,7 @@ public final class Util {
         toast.setView(layout);
         toast.show();
     }
-    
+
     /**
      * Display a toast at the top of the screen
      * 
@@ -107,5 +110,24 @@ public final class Util {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+
+    /**
+     * Set initially selected value on a spinner
+     * 
+     * @param res the Resources
+     * @param valuesId the value array resource id
+     * @param spinner the Spinner
+     * @param value the value to set
+     */
+    public static void setSpinnerInitialEntryValue(@NonNull Resources res, int valuesId, @NonNull Spinner spinner, @Nullable String value) {
+        final TypedArray values = res.obtainTypedArray(valuesId);
+        for (int i = 0; i < values.length(); i++) {
+            if ((value == null && "".equals(values.getString(i))) || (value != null && value.equals(values.getString(i)))) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+        values.recycle();
     }
 }
