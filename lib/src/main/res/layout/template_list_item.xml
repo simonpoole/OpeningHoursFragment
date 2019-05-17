@@ -14,31 +14,23 @@
     	    android:layout_width="wrap_content"
        	 	android:layout_height="wrap_content"
        	 	android:minHeight="32dp"
-        	android:paddingLeft="5dp"
-	    	android:paddingRight="5dp"
         	android:textAppearance="?android:attr/textAppearanceMedium"
 			android:maxLines="2"
             android:lines="2" />
 		<TextView
-        	android:id="@+id/key_legend"
+        	android:id="@+id/meta"
     	    android:layout_width="wrap_content"
        	 	android:layout_height="wrap_content"
-       	 	android:minHeight="32dp"
-       	 	android:layout_below="@id/name"
-        	android:paddingLeft="5dp"
-	    	android:paddingRight="5dp"
-        	android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="@string/key_legend" />
-		<TextView
-        	android:id="@+id/key"
-    	    android:layout_width="wrap_content"
-       	 	android:layout_height="wrap_content"
-       	 	android:minHeight="32dp"
-       	 	android:layout_toRightOf="@id/key_legend"
-            android:layout_toEndOf="@id/key_legend"
        	 	android:layout_below="@id/name"
         	android:textAppearance="?android:attr/textAppearanceSmall"
 			android:maxLines="1" />
+        <TextView
+            android:id="@+id/region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/meta"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:maxLines="1" />
      </RelativeLayout>
      <View
         android:layout_width="fill_parent"

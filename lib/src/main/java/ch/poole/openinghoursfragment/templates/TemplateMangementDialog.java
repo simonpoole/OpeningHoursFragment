@@ -1,6 +1,8 @@
 package ch.poole.openinghoursfragment.templates;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
@@ -78,7 +81,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             @Nullable String object, @NonNull String currentText) {
         dismissDialog(parentFragment, TAG);
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TemplateMangementDialog templateDialog = newInstance(manage, key, null, null, currentText);
+        TemplateMangementDialog templateDialog = newInstance(manage, key, region, object, currentText);
         templateDialog.show(fm, TAG);
     }
 
@@ -124,7 +127,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
-        View templateView = (View) inflater.inflate(R.layout.template_list, null);
+        View templateView = inflater.inflate(R.layout.template_list, null);
         final FloatingActionButton fab = (FloatingActionButton) templateView.findViewById(R.id.more);
         alertDialog.setTitle(manage ? R.string.manage_templates_title : R.string.load_templates_title);
         alertDialog.setView(templateView);
@@ -135,7 +138,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         lv.setAdapter(templateAdapter);
         alertDialog.setNegativeButton(R.string.Done, null);
 
-        if (manage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (manage || key != null || region != null || object != null) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new OnClickListener() {
                 @Override
@@ -150,44 +153,48 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                             return true;
                         }
                     });
-                    MenuItem loadTemplate = popup.getMenu().add(R.string.spd_ohf_save_to_file);
-                    loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                            i.setType("*/*");
-                            startActivityForResult(i, WRITE_CODE);
-                            return true;
-                        }
-                    });
-                    MenuItem saveTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file_replace);
-                    saveTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                            i.setType("*/*");
-                            startActivityForResult(i, READ_REPLACE_CODE);
-                            return true;
-                        }
-                    });
-                    MenuItem manageTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file);
-                    manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                            i.setType("*/*");
-                            startActivityForResult(i, READ_CODE);
-                            return true;
-                        }
-                    });
 
+                    if (manage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        MenuItem loadTemplate = popup.getMenu().add(R.string.spd_ohf_save_to_file);
+                        loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                                i.setType("*/*");
+                                startActivityForResult(i, WRITE_CODE);
+                                return true;
+                            }
+                        });
+                        MenuItem saveTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file_replace);
+                        saveTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                i.setType("*/*");
+                                startActivityForResult(i, READ_REPLACE_CODE);
+                                return true;
+                            }
+                        });
+                        MenuItem manageTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file);
+                        manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                i.setType("*/*");
+                                startActivityForResult(i, READ_CODE);
+                                return true;
+                            }
+                        });
+                    }
                     popup.show();// showing popup menu
                 }
             });
         } else {
             fab.setVisibility(View.GONE);
         }
+
         alertDialog.setOnDismissListener(new OnDismissListener() {
+
             @Override
             public void onDismiss(DialogInterface dialog) {
                 templateCursor.close();
@@ -198,7 +205,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
     }
 
     private class TemplateAdapter extends CursorAdapter {
-        final boolean manage;
+        final boolean             manage;
+        final Map<String, String> regionsMap = new HashMap<>();
 
         /**
          * Adapter to the template database
@@ -210,6 +218,15 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         public TemplateAdapter(@NonNull Context context, @NonNull Cursor cursor, boolean manage) {
             super(context, cursor, 0);
             this.manage = manage;
+
+            // setting up the region spinner is a bit involved as we want to be able to sort it
+            final TypedArray values = getResources().obtainTypedArray(R.array.region_values);
+            final TypedArray entries = getResources().obtainTypedArray(R.array.region_entries);
+            for (int i = 0; i < values.length(); i++) {
+                regionsMap.put(values.getString(i), entries.getString(i));
+            }
+            values.recycle();
+            entries.recycle();
         }
 
         @Override
@@ -231,11 +248,24 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
             String nameValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
             String keyValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
+            String regionValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.REGION_FIELD));
+            String objectValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.OBJECT_FIELD));
             TextView nameView = (TextView) view.findViewById(R.id.name);
             nameView.setText(nameValue);
-            TextView keyView = (TextView) view.findViewById(R.id.key);
-            String keyEntry = valueToEntry(R.array.key_values, R.array.key_entries, keyValue);
-            keyView.setText((isDefault ? getActivity().getString(R.string.is_default, keyEntry) : keyEntry));
+            TextView metaView = (TextView) view.findViewById(R.id.meta);
+            FragmentActivity activity = getActivity();
+            String keyEntry = activity.getString(R.string.spd_ohf_meta, valueToEntry(R.array.key_values, R.array.key_entries, keyValue));
+            keyEntry = isDefault ? activity.getString(R.string.is_default, keyEntry) : keyEntry;
+            keyEntry = objectValue != null ? activity.getString(R.string.spd_ohf_with_object, keyEntry, objectValue) : keyEntry;
+            metaView.setText(keyEntry);
+            TextView regionView = (TextView) view.findViewById(R.id.region);
+            if (regionValue != null) {
+                regionView.setVisibility(View.VISIBLE);
+                regionView.setText(activity.getString(R.string.spd_ohf_region, regionsMap.get(regionValue)));
+            } else {
+                regionView.setVisibility(View.GONE);
+            }
+
             final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
             if (manage) {
                 view.setOnClickListener(new OnClickListener() {
@@ -247,11 +277,13 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 });
             } else {
                 view.setOnClickListener(new OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         updateListener.updateText(template);
                         TemplateMangementDialog.this.dismissAllowingStateLoss();
                     }
+
                 });
             }
         }
@@ -272,6 +304,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             }
             return "Invalid value";
         }
+
     }
 
     @Override
@@ -282,19 +315,16 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 try (SQLiteDatabase readableDb = new TemplateDatabaseHelper(getContext()).getReadableDatabase()) {
                     TemplateDatabase.writeJSON(readableDb, getActivity().getContentResolver().openOutputStream(uri));
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    Log.e(DEBUG_TAG, "Uri " + uri + " not found for writing");
                 }
             }
         } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
-
             Uri uri = data.getData();
             if (uri != null) {
                 try (SQLiteDatabase writableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
                     TemplateDatabase.loadJson(writableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    Log.e(DEBUG_TAG, "Uri " + uri + " not found for reading");
                 }
             }
         }

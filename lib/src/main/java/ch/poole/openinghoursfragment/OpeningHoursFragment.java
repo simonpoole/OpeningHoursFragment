@@ -599,7 +599,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (text != null && sv != null) {
             sv.removeAllViews();
 
-            final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.add);
+            final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
 
             // non-OH support
             if (textValues != null) {
@@ -712,7 +712,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, null, null, text.getText().toString());
+                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, region, object, text.getText().toString());
                             return true;
                         }
                     });
@@ -728,7 +728,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, null, null, text.getText().toString());
+                            TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, region, object, text.getText().toString());
                             return true;
                         }
                     });

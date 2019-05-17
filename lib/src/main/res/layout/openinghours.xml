@@ -91,7 +91,7 @@
                 android:layout_height="fill_parent">
             </ScrollView>
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add"
+                android:id="@+id/more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -99,6 +99,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="top"
                 android:clickable="true"
+                android:contentDescription="more button"
                 android:src="@drawable/ic_more_vert_white_36dp"
                 app:backgroundTint="?attr/colorAccent"
                 app:fabSize="mini"

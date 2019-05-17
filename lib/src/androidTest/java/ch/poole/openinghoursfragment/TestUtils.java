@@ -211,6 +211,26 @@ public class TestUtils {
     }
 
     /**
+     * Find text on screen (case sensitive)
+     * 
+     * @param device UiDevice object
+     * @param clickable if true the search will be restricted to clickable objects
+     * @param text the text to find
+     * @return an UiObject2 or null
+     */
+    @Nullable
+    public static UiObject2 findTextContains(UiDevice device, boolean clickable, String text) {
+        Log.w(DEBUG_TAG, "Searching for object with " + text);
+        BySelector bySelector = null;
+        if (clickable) {
+            bySelector = By.clickable(true).textContains(text);
+        } else {
+            bySelector = By.textContains(text);
+        }
+        return device.wait(Until.findObject(bySelector), 500);
+    }
+
+    /**
      * Click on an object
      * 
      * @param device UiDevice object

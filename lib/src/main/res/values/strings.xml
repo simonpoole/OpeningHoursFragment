@@ -41,7 +41,10 @@
     <string name="spd_ohf_region_legend">Region:</string>
     <string name="spd_ohf_object_legend">Object:</string>
 
+    <string name="spd_ohf_meta">Key: %1$s</string>
     <string name="is_default">%1$s (default)</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Region: %1$s</string>
 
     <string-array name="key_values" translatable="false">
         <item></item>

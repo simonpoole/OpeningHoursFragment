@@ -21,6 +21,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="top"
         android:clickable="true"
+        android:contentDescription="more button"
         android:src="@drawable/ic_more_vert_white_36dp"
         app:backgroundTint="?attr/colorAccent"
         app:fabSize="mini"

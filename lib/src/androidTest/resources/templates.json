@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Weekdays with lunch break",
+        "is_default": 1,
+        "template": "Mo-Fr 09:00-12:00,13:30-18:30;Sa 09:00-17:00;PH closed",
+        "key": null,
+        "region": "CH",
+        "object": null
+    },
+    {
+        "name": "Weekdays with lunch break and late shopping",
+        "is_default": 0,
+        "template": "Mo,Tu,Th,Fr 09:00-12:00,13:30-18:30;We 09:00-12:00,13:30-20:00;Sa 09:00-17:00;PH closed",
+        "key": null,
+        "region": "AT",
+        "object": null
+    },
+    {
+        "name": "Weekdays",
+        "is_default": 0,
+        "template": "Mo-Fr 09:00-18:30;Sa 09:00-17:00;PH closed",
+        "key": null,
+        "region": "CH",
+        "object": null
+    },
+    {
+        "name": "Weekdays with late shopping",
+        "is_default": 0,
+        "template": "Mo,Tu,Th,Fr 09:00-18:30;We 09:00-20:00;Sa 09:00-17:00;PH closed",
+        "key": "opening_hours",
+        "region": "CH",
+        "object": null
+    },
+    {
+        "name": "24 hours, 7 days a week",
+        "is_default": 0,
+        "template": "24/7",
+        "key": null,
+        "region": "CH",
+        "object": "amenity=restaurant"
+    },
+    {
+        "name": "Once per weekday",
+        "is_default": 1,
+        "template": "Mo-Fr 09:00; Sa 07:00; PH closed",
+        "key": "collection_times",
+        "region": "CH",
+        "object": null
+    }
+]
