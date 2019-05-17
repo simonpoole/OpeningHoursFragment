@@ -142,6 +142,14 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(getContext(), fab);
                     // menu items
+                    MenuItem showAll = popup.getMenu().add(R.string.spd_ohf_show_all);
+                    showAll.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            newCursor(readableDb);
+                            return true;
+                        }
+                    });
                     MenuItem loadTemplate = popup.getMenu().add(R.string.spd_ohf_save_to_file);
                     loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override

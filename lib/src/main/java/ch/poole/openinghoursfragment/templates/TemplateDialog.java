@@ -1,5 +1,11 @@
 package ch.poole.openinghoursfragment.templates;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -20,6 +26,7 @@ import android.widget.Spinner;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursfragment.Util;
+import ch.poole.openinghoursfragment.ValueArrayAdapter;
 import ch.poole.openinghoursfragment.ValueWithDescription;
 
 public class TemplateDialog extends CancelableDialogFragment {
@@ -134,8 +141,33 @@ public class TemplateDialog extends CancelableDialogFragment {
         keySpinner.setSelection(0);
         Util.setSpinnerInitialEntryValue(getResources(), R.array.key_values, keySpinner, templateKey);
 
+        // setting up the region spinner is a bit involved as we want to be able to sort it
+        final TypedArray values = getResources().obtainTypedArray(R.array.region_values);
+        final TypedArray entries = getResources().obtainTypedArray(R.array.region_entries);
+        Set<ValueWithDescription> regionsSet = new TreeSet<>(new Comparator<ValueWithDescription>() {
+            @Override
+            public int compare(ValueWithDescription v1, ValueWithDescription v2) {
+                return v1.getDescription().compareTo(v2.getDescription());
+            }
+        });
+        for (int i = 0; i < values.length(); i++) {
+            regionsSet.add(new ValueWithDescription(values.getString(i), entries.getString(i)));
+        }
+        values.recycle();
+        entries.recycle();
+        List<ValueWithDescription> regions = new ArrayList<>(regionsSet);
+        regions.add(0, new ValueWithDescription("", getString(R.string.spd_ohf_any)));
+        ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, regions);
+        regionSpinner.setAdapter(adapter);
         regionSpinner.setSelection(0);
-        Util.setSpinnerInitialEntryValue(getResources(), R.array.region_values, regionSpinner, templateRegion);
+        if (templateRegion != null) {
+            for (int i = 0; i < regions.size(); i++) {
+                if (templateRegion.equals(regions.get(i).getValue())) {
+                    regionSpinner.setSelection(i);
+                    break;
+                }
+            }
+        }
 
         objectEdit.setText(templateObject == null ? "" : templateObject);
 
@@ -147,9 +179,8 @@ public class TemplateDialog extends CancelableDialogFragment {
                 int spinnerPos = keySpinner.getSelectedItemPosition();
                 final String spinnerKey = spinnerPos == 0 ? null : keyValues.getString(spinnerPos);
                 keyValues.recycle();
-                final TypedArray regionValues = getContext().getResources().obtainTypedArray(R.array.region_values);
                 spinnerPos = regionSpinner.getSelectedItemPosition();
-                final String spinnerRegion = spinnerPos == 0 ? null : regionValues.getString(spinnerPos);
+                final String spinnerRegion = spinnerPos == 0 ? null : regions.get(spinnerPos).getValue();
                 final String object = objectEdit.length() == 0 ? null : objectEdit.getText().toString();
                 if (!existing) {
                     TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);

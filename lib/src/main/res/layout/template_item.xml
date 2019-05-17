@@ -92,8 +92,7 @@
         android:layout_alignStart="@id/template_name"
         android:layout_alignBaseline="@id/region_legend"
         android:saveEnabled="false"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/region_entries" />
+        android:drawSelectorOnTop="true" />
     <TextView
         android:id="@+id/template_object_legend"
         android:layout_width="wrap_content"

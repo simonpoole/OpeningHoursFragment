@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-class ValueArrayAdapter extends ArrayAdapter<ValueWithDescription> {
+public class ValueArrayAdapter extends ArrayAdapter<ValueWithDescription> {
 
     final List<ValueWithDescription> values;
 

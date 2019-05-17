@@ -20,6 +20,7 @@
     <string name="manage_templates_title">Manage templates</string>
     <string name="save_template">Save template</string>
     <string name="update_template">Update template value too?</string>
+    <string name="spd_ohf_show_all">Show all</string>
     <string name="spd_ohf_save_to_file">Save to file</string>
     <string name="spd_ohf_load_from_file">Load from file</string>
     <string name="spd_ohf_load_from_file_replace">Load from file (replace)</string>

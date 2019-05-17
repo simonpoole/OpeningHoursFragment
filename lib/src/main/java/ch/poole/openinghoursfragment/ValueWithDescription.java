@@ -37,7 +37,7 @@ public class ValueWithDescription implements Serializable {
 
     @Override
     public String toString() {
-        return value;
+        return getDescription() != null ? getDescription() : getValue();
     }
 
     @Override
