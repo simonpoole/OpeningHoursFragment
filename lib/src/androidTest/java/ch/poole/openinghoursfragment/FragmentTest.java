@@ -70,14 +70,51 @@ public class FragmentTest {
         TestUtils.clickOverflowButton();
         Assert.assertTrue(TestUtils.clickText(device, false, "Add date range", true));
         Assert.assertTrue(TestUtils.clickText(device, false, "Date - date", true));
+        UiSelector uiSelector = new UiSelector().resourceIdMatches(".*startMonth.*").instance(0);
+        UiObject date = device.findObject(uiSelector);
+        try {
+            date.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        uiSelector = new UiSelector().resourceIdMatches(".*startMonth.*");
+        UiObject months = device.findObject(uiSelector);
+        try {
+            months.clickBottomRight(); // should select Mar
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        Assert.assertTrue(TestUtils.clickText(device, false, "OK", true));
         Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
-        Assert.assertEquals("Jan Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+        Assert.assertEquals("Mar Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void weekdays3() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        UiSelector uiSelector = new UiSelector().resourceIdMatches(".*timebar.*").instance(0);
+        UiObject bar = device.findObject(uiSelector);
+        try {
+            bar.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        uiSelector = new UiSelector().resourceIdMatches(".*startHour.*");
+        UiObject hours = device.findObject(uiSelector);
+        try {
+            hours.clickTopLeft(); // should select 7
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        Assert.assertTrue(TestUtils.clickText(device, false, "OK", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr 07:00-12:00,13:30-18:30; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
     }
 
     /**
      * Click via instance count as using the res id doesn't seem to work
      *
-     * @param instance the o based occurance of the checkbox
+     * @param instance the 0 based occurance of the checkbox
      */
     private void clickCheckBox(int instance) {
         UiSelector uiSelector = new UiSelector().className("android.widget.CheckBox").instance(instance);
