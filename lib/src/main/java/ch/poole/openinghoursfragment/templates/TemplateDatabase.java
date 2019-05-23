@@ -283,7 +283,6 @@ public final class TemplateDatabase {
         int row = 1;
         try (JsonReader reader = new JsonReader(new InputStreamReader(in))) {
             reader.beginArray();
-
             while (reader.hasNext()) {
                 addRowFromJson(database, reader);
                 row++;
@@ -291,7 +290,7 @@ public final class TemplateDatabase {
             reader.endArray();
             database.setTransactionSuccessful();
             return true;
-        } catch (IOException e) {
+        } catch (IOException | IllegalStateException e) {
             Log.e(DEBUG_TAG, "Error reading JSON " + e.getMessage() + " row " + row);
             return false;
         } finally {

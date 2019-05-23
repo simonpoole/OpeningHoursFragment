@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
+import ch.poole.openinghoursfragment.Util;
 import ch.poole.openinghoursfragment.ValueWithDescription;
 
 public class TemplateMangementDialog extends CancelableDialogFragment implements UpdateCursorListener {
@@ -64,6 +65,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
     private String               current;
 
     private UpdateTextListener updateListener;
+
+    private SQLiteDatabase readableDb;
 
     /**
      * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
@@ -132,7 +135,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         alertDialog.setTitle(manage ? R.string.manage_templates_title : R.string.load_templates_title);
         alertDialog.setView(templateView);
         ListView lv = (ListView) templateView.findViewById(R.id.listView1);
-        final SQLiteDatabase readableDb = new TemplateDatabaseHelper(getContext()).getReadableDatabase();
+        readableDb = new TemplateDatabaseHelper(getContext()).getReadableDatabase();
         templateCursor = TemplateDatabase.queryBy(readableDb, key == null ? null : key.getValue(), region, object);
         templateAdapter = new TemplateAdapter(getContext(), templateCursor, manage);
         lv.setAdapter(templateAdapter);
@@ -193,15 +196,17 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             fab.setVisibility(View.GONE);
         }
 
-        alertDialog.setOnDismissListener(new OnDismissListener() {
-
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                templateCursor.close();
-                readableDb.close();
-            }
-        });
         return alertDialog.create();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (templateCursor != null) {
+            templateCursor.close();
+        }
+        if (readableDb != null) {
+            readableDb.close();
+        }
     }
 
     private class TemplateAdapter extends CursorAdapter {
@@ -309,6 +314,10 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            Log.e(DEBUG_TAG, "null data in onActivityResult");
+            return;
+        }
         if (requestCode == WRITE_CODE) {
             Uri uri = data.getData();
             if (uri != null) {
@@ -321,10 +330,16 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
             Uri uri = data.getData();
             if (uri != null) {
-                try (SQLiteDatabase writableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
-                    TemplateDatabase.loadJson(writableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);
+                boolean worked = false;
+                try (SQLiteDatabase writeableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
+                    worked = TemplateDatabase.loadJson(writeableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);
                 } catch (FileNotFoundException e) {
                     Log.e(DEBUG_TAG, "Uri " + uri + " not found for reading");
+                } finally {
+                    newCursor(readableDb);
+                }
+                if (!worked) {
+                    Util.toastTop(getContext(), R.string.spd_ohf_toast_file_read_failure);
                 }
             }
         }

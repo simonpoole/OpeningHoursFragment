@@ -40,6 +40,7 @@
     <string name="key_legend">Key:</string>
     <string name="spd_ohf_region_legend">Region:</string>
     <string name="spd_ohf_object_legend">Object:</string>
+    <string name="spd_ohf_toast_file_read_failure">Unable to read file!</string>
 
     <string name="spd_ohf_meta">Key: %1$s</string>
     <string name="is_default">%1$s (default)</string>
