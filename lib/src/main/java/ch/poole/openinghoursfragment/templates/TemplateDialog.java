@@ -87,7 +87,7 @@ public class TemplateDialog extends CancelableDialogFragment {
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
         final SQLiteDatabase db = new TemplateDatabaseHelper(getContext()).getWritableDatabase();
 
-        final UpdateCursorListener updateListener = (UpdateCursorListener) getParentFragment();
+        final UpdateCursorListener updateListener = getParentFragment() instanceof UpdateCursorListener ? (UpdateCursorListener) getParentFragment() : null;
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -130,7 +130,9 @@ public class TemplateDialog extends CancelableDialogFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     Log.d(DEBUG_TAG, "deleting template " + Integer.toString(id));
                     TemplateDatabase.delete(db, id);
-                    updateListener.newCursor(db);
+                    if (updateListener != null) {
+                        updateListener.newCursor(db);
+                    }
                 }
             });
         } else {
@@ -194,7 +196,9 @@ public class TemplateDialog extends CancelableDialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion,
                                         object);
-                                updateListener.newCursor(db);
+                                if (updateListener != null) {
+                                    updateListener.newCursor(db);
+                                }
 
                             }
                         });
@@ -203,13 +207,17 @@ public class TemplateDialog extends CancelableDialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate,
                                         spinnerRegion, object);
-                                updateListener.newCursor(db);
+                                if (updateListener != null) {
+                                    updateListener.newCursor(db);
+                                }
                             }
                         });
                         alertDialog.show();
                     } else {
                         TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, null, null);
-                        updateListener.newCursor(db);
+                        if (updateListener != null) {
+                            updateListener.newCursor(db);
+                        }
                     }
                 }
             }
