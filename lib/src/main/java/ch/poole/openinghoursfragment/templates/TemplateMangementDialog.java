@@ -53,7 +53,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
     private static final int READ_CODE         = 23456;
     private static final int READ_REPLACE_CODE = 34567;
-    private static final int WRITE_CODE        = 12345;
+    private static final int WRITE_CODE        = 24679;
 
     /**
      * Template database related methods and fields
@@ -126,7 +126,10 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         String object = getArguments().getString(OBJECT_KEY);
         current = getArguments().getString(CURRENT_KEY);
 
-        updateListener = (UpdateTextListener) getParentFragment();
+        updateListener = getParentFragment() instanceof UpdateTextListener ? (UpdateTextListener) getParentFragment() : null;
+        if (!manage && updateListener == null) {
+            throw new IllegalStateException("parent must implement UpdateTextListener");
+        }
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         final LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -246,10 +249,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 // this seems to be enough to protect against crashes, but doesn't solve the actual issue
                 return;
             }
-            Log.d(DEBUG_TAG, "bindView");
             final int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
             view.setTag(id);
-            Log.d(DEBUG_TAG, "bindView id " + id);
             boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
             String nameValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
             String keyValue = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
@@ -282,13 +283,11 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 });
             } else {
                 view.setOnClickListener(new OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
                         updateListener.updateText(template);
                         TemplateMangementDialog.this.dismissAllowingStateLoss();
                     }
-
                 });
             }
         }

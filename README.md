@@ -46,5 +46,8 @@ repositories {
 
 ``` groovy
 dependencies {
-    compile "ch.poole:OpeningHoursFragment:0.6.0"
+    compile "ch.poole:OpeningHoursFragment:0.6.3"
 }
+```
+
+If you are overriding onActivityResult in the Activity calling the Fragment, you need to check that you calling through to super, or else loading and saving templates will fail silently. 

@@ -106,34 +106,40 @@ public final class TemplateDatabase {
         } else {
             List<String> params = new ArrayList<>();
             StringBuilder query = new StringBuilder();
-            StringBuilder order = new StringBuilder();
+            List<String> orderCols = new ArrayList<String>();
             if (key != null) {
                 query.append("(key is NULL OR key=?)");
                 params.add(key);
-                order.append("key");
+                orderCols.add("key");
             }
             if (region != null) {
                 if (query.length() > 0) {
-                    query.append(" AND ");
-                    order.append(",");
+                    query.append(" AND ");                    
                 }
-                query.append("(region is NULL OR region=?)");
-                params.add(region);
-                order.append("region");
+                String[] regionParts = region.split("-");
+                if (regionParts.length > 1) { // this will add a check for the country
+                    query.append("(region is NULL OR region=? OR region=?)");
+                    params.add(region);
+                    params.add(regionParts[0]);
+                } else {
+                    query.append("(region is NULL OR region=?)");
+                    params.add(region);   
+                }
+                orderCols.add("region");
             }
             if (object != null) {
                 if (query.length() > 0) {
-                    query.append(" AND ");
-                    order.append(",");
+                    query.append(" AND ");                
                 }
                 query.append("(object IS NULL OR object LIKE ?)");
                 params.add(object);
-                order.append("object");
+                orderCols.add("object");
             }
             query.append(" ORDER BY ");
-            query.append(order);
-            if (order.length() > 0) {
-                query.append(",");
+            for (String col:orderCols) {
+                query.append("LENGTH(");
+                query.append(col);
+                query.append(") DESC, ");
             }
             query.append("is_default DESC");
             return database.rawQuery(TemplateDatabase.QUERY_BY + query.toString(), params.toArray(new String[0]));
@@ -234,8 +240,12 @@ public final class TemplateDatabase {
                 while (cursor.moveToNext()) {
                     rowToJson(writer, cursor);
                 }
+            } else {
+                Log.e(DEBUG_TAG, "Template database empty");
             }
             writer.endArray();
+            writer.flush();
+            Log.i(DEBUG_TAG, "Written " + rows + " templates");
             return true;
         } catch (IOException e) {
             Log.e(DEBUG_TAG, "Error writing JSON " + e.getMessage());

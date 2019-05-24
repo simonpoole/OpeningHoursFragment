@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -67,7 +68,7 @@ public class TemplateDialog extends CancelableDialogFragment {
      * @param id the rowid of the template in the database or -1 if not saved yet
      * @return a TemplateDialog instance
      */
-    private static TemplateDialog newInstance(@NonNull final String current, @NonNull final ValueWithDescription key, final boolean existing, final int id) {
+    private static TemplateDialog newInstance(@NonNull final String current, @Nullable final ValueWithDescription key, final boolean existing, final int id) {
         TemplateDialog f = new TemplateDialog();
         Bundle args = new Bundle();
         args.putString(CURRENT_KEY, current);
@@ -105,7 +106,7 @@ public class TemplateDialog extends CancelableDialogFragment {
         final ValueWithDescription key = (ValueWithDescription) getArguments().getSerializable(KEY_KEY);
 
         String template = null;
-        String templateKey = key.getValue();
+        String templateKey = key != null ? key.getValue() : null;
         String templateRegion = null;
         String templateObject = null;
         if (existing) {
