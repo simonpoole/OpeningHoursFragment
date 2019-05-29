@@ -158,6 +158,13 @@ task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
 
 group "ch.poole"
 
+task replaceVersion << {
+    ant.replaceregexp(match:'ch\\.poole\\:OpeningHoursFragment\\:([0-9\\.]+)', replace:"ch.poole:OpeningHoursFragment:${version}", flags:'g', byline:true) {
+        fileset(dir: '..', includes: 'README.md')
+    }
+}
+build.dependsOn replaceVersion
+
 publishing {
     publications {
         openinghoursfragment(MavenPublication) {
