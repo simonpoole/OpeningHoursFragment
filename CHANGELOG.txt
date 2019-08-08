@@ -1,5 +1,11 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.6.5: Call through to onDismiss in the TemplateManagementDialog, fixes crash in onResume in the parent activity.
+
+0.6.4: Update Rangebar to 1.5 the previous version had issues with handling clicks on real devices.
+
+0.6.3: Fix various small issues which turned up when integrating the new functionality in 0.6 with Vespucci.
+
 0.5.5: Translation improvements.
 
 0.5.4: Update translations.
