@@ -203,7 +203,14 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        Log.d(DEBUG_TAG, "onDismiss");
+        super.onActivityCreated(savedInstanceState);
+    }
+    
+    @Override
     public void onDismiss(DialogInterface dialog) {
+        Log.d(DEBUG_TAG, "onDismiss");
         super.onDismiss(dialog);
         if (templateCursor != null) {
             templateCursor.close();
