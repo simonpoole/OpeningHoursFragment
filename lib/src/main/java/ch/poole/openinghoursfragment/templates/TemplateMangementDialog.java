@@ -204,6 +204,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         if (templateCursor != null) {
             templateCursor.close();
         }
