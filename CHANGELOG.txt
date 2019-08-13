@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.6.8: Fix issue with using description instead of value in mixed mode
+
 0.6.5: Call through to onDismiss in the TemplateManagementDialog, fixes crash in onResume in the parent activity.
 
 0.6.4: Update Rangebar to 1.5 the previous version had issues with handling clicks on real devices.

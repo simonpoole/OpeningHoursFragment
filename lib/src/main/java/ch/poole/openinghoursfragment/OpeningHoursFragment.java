@@ -41,6 +41,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -611,6 +612,18 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
                     text.setAdapter(adapter);
                     text.setOnClickListener(autocompleteOnClick);
+                    text.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Object o = parent.getItemAtPosition(position);
+                            if (o instanceof ValueWithDescription) {
+                                text.setText(((ValueWithDescription) o).getValue());
+                            } else if (o instanceof String) {
+                                text.setText((String) o);
+                            }
+                        }
+                    });
+
                     text.setText(openingHoursValue);
                     text.removeTextChangedListener(textWatcher);
                     text.addTextChangedListener(textWatcher);
