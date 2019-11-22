@@ -1618,7 +1618,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         public boolean onMenuItemClick(MenuItem item) {
             List<DateRange> mdr = r.getDates();
             if (mdr == null) {
-                r.setMonthdays(new ArrayList<DateRange>());
+                r.setDates(new ArrayList<DateRange>());
                 mdr = r.getDates();
             }
             DateRange dateRange = new DateRange();
@@ -1807,7 +1807,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             public void delete() {
                 dateRanges.remove(dateRange);
                 if (dateRanges.isEmpty()) {
-                    r.setMonthdays(null);
+                    r.setDates(null);
                 }
                 updateString();
                 watcher.afterTextChanged(null); // hack to force rebuild of form
