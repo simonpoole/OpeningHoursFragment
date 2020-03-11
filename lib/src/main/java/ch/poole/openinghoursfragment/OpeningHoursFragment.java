@@ -1454,7 +1454,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             years = r.getYears();
                         }
                         YearRange yearRange = new YearRange();
-                        yearRange.setStartYear(2000);
+                        yearRange.setStartYear(Calendar.getInstance().get(Calendar.YEAR));
                         years.add(yearRange);
                         updateString();
                         watcher.afterTextChanged(null);
