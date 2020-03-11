@@ -72,8 +72,10 @@ import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Event;
 import ch.poole.openinghoursparser.Holiday;
 import ch.poole.openinghoursparser.Holiday.Type;
+import ch.poole.openinghoursparser.I18n;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.Nth;
+import ch.poole.openinghoursparser.OpeningHoursParseException;
 import ch.poole.openinghoursparser.OpeningHoursParser;
 import ch.poole.openinghoursparser.ParseException;
 import ch.poole.openinghoursparser.Rule;
@@ -110,6 +112,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private static final String SHOWTEMPLATES_KEY  = "show_templates";
     private static final String TEXTVALUES_KEY     = "text_values";
     private static final String FRAGMENT_KEY       = "fragment";
+    private static final String LOCALE_KEY         = "locale";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
@@ -117,26 +120,26 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private LayoutInflater inflater = null;
 
+    /**
+     * Saved state
+     */
     private ValueWithDescription key;
-
-    private String region;
-
-    private String object;
-
-    private String openingHoursValue;
-
-    private String originalOpeningHoursValue;
-
-    private int styleRes = 0;
+    private String               region;
+    private String               object;
+    private String               openingHoursValue;
+    private String               originalOpeningHoursValue;
+    private int                  styleRes = 0;
+    private Locale               locale;
 
     /**
      * If true we use a call back to the parent fragment
      */
     private boolean useFragmentCallback;
 
-    private ArrayList<Rule> rules;
+    private List<Rule> rules;
 
     private AutoCompleteTextView text;
+    private TextView             errorMessage;
 
     private OnSaveListener saveListener = null;
 
@@ -208,7 +211,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     public static OpeningHoursFragment newInstance(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
-        return newInstance(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null);
+        return newInstance(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null, null);
     }
 
     /**
@@ -224,7 +227,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule, boolean showTemplates,
             @Nullable ArrayList<ValueWithDescription> textValues) {
-        return newInstance(key, null, null, value, style, rule, showTemplates, textValues);
+        return newInstance(key, null, null, value, style, rule, showTemplates, textValues, null);
     }
 
     /**
@@ -242,6 +245,25 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style, int rule,
             boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
+        return newInstance(key, region, object, value, style, rule, showTemplates, textValues, null);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to an activity
+     * 
+     * @param key the key the OH values belongs to in an ValueWithDescription object
+     * @param region the current region
+     * @param object the object in question (typically the main osm tag)
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @param locale if not null use a different Locale than the default for parser error messages
+     * @return an OpeningHoursFragment
+     */
+    public static OpeningHoursFragment newInstance(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style, int rule,
+            boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues, @Nullable Locale locale) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -254,6 +276,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, false);
         args.putSerializable(TEXTVALUES_KEY, textValues);
+        args.putSerializable(LOCALE_KEY, locale);
 
         f.setArguments(args);
 
@@ -284,7 +307,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @return an OpeningHoursFragment
      */
     public static OpeningHoursFragment newInstanceForFragment(@NonNull String key, @NonNull String value, int style, int rule, boolean showTemplates) {
-        return newInstanceForFragment(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null);
+        return newInstanceForFragment(new ValueWithDescription(key, null), null, null, value, style, rule, showTemplates, null, null);
     }
 
     /**
@@ -300,7 +323,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @NonNull String value, int style, int rule,
             boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
-        return newInstanceForFragment(key, null, null, value, style, rule, showTemplates, textValues);
+        return newInstanceForFragment(key, null, null, value, style, rule, showTemplates, textValues, null);
     }
 
     /**
@@ -318,6 +341,25 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style,
             int rule, boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues) {
+        return newInstanceForFragment(key, region, object, value, style, rule, showTemplates, textValues, null);
+    }
+
+    /**
+     * Create a new OpeningHoursFragment with callback to a fragment
+     * 
+     * @param key the key the OH values belongs to in an ValueWithDescription object
+     * @param region the current region
+     * @param object the object in question (typically the main osm tag)
+     * @param value the OH value
+     * @param style resource id for the Android style to use
+     * @param rule rule to scroll to or -1 (currently ignored)
+     * @param showTemplates if value is empty show the template selector instead of using a default when true
+     * @param textValues for tags that can contain both OH and other values a list of possible non-OH values, or null
+     * @param locale if not null use a different Locale than the default for parser error messages
+     * @return an OpeningHoursFragment
+     */
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style,
+            int rule, boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues, @Nullable Locale locale) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -330,6 +372,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         args.putBoolean(SHOWTEMPLATES_KEY, showTemplates);
         args.putBoolean(FRAGMENT_KEY, true);
         args.putSerializable(TEXTVALUES_KEY, textValues);
+        args.putSerializable(LOCALE_KEY, locale);
 
         f.setArguments(args);
 
@@ -381,6 +424,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             styleRes = savedInstanceState.getInt(STYLE_KEY);
             useFragmentCallback = savedInstanceState.getBoolean(FRAGMENT_KEY);
             textValues = (List<ValueWithDescription>) savedInstanceState.getSerializable(TEXTVALUES_KEY);
+            locale = (Locale) savedInstanceState.getSerializable(LOCALE_KEY);
         } else {
             key = (ValueWithDescription) getArguments().getSerializable(KEY_KEY);
             region = getArguments().getString(REGION_KEY);
@@ -392,6 +436,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
             useFragmentCallback = getArguments().getBoolean(FRAGMENT_KEY);
             textValues = (List<ValueWithDescription>) getArguments().getSerializable(TEXTVALUES_KEY);
+            locale = (Locale) getArguments().getSerializable(LOCALE_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
@@ -412,9 +457,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         watcher = new OhTextWatcher(sv);
         textWatcher = new TextTextWatcher();
 
+        // set parser locale singleton
+        I18n.setLocale(locale != null ? locale : Locale.getDefault());
+
         // check if this is a mixed value tag
         final LinearLayout modeContainer = (LinearLayout) openingHoursLayout.findViewById(R.id.modeContainer);
         headerLine = openingHoursLayout.findViewById(R.id.headerLine);
+        errorMessage = (TextView) openingHoursLayout.findViewById(R.id.openinghours_error_message);
         if (textValues != null) {
             final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
             final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
@@ -530,6 +579,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private class OhTextWatcher implements TextWatcher {
         final ScrollView scrollView;
 
+        /**
+         * Construct a new instance
+         * 
+         * @param scrollView the ScrollView holding the bits that we will want to update
+         */
         OhTextWatcher(@NonNull ScrollView scrollView) {
             this.scrollView = scrollView;
         }
@@ -544,9 +598,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         rules = parser.rules(false);
                         buildForm(scrollView, rules);
                         removeHighlight(text);
-                    } catch (ParseException pex) {
+                        errorMessage.setText("");
+                    } catch (OpeningHoursParseException pex) {
                         Log.d(DEBUG_TAG, pex.getMessage());
                         highlightParseError(text, pex);
+                        errorMessage.setText(pex.getMessage());
                     } catch (TokenMgrError err) {
                         // we currently can't do anything reasonable here except ignore
                         Log.e(DEBUG_TAG, err.getMessage());
@@ -3532,6 +3588,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         outState.putSerializable(VALUE_KEY, text.getText().toString());
         outState.putSerializable(ORIGINAL_VALUE_KEY, originalOpeningHoursValue);
         outState.putInt(STYLE_KEY, styleRes);
+        outState.putSerializable(LOCALE_KEY, locale);
     }
 
     @Override

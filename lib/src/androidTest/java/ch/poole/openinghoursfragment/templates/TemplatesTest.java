@@ -60,7 +60,7 @@ public class TemplatesTest {
 
         ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
 
-        fragment = OpeningHoursFragment.newInstance(key, "AT", null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null);
+        fragment = OpeningHoursFragment.newInstance(key, "AT", null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null, null);
         fragment.show(fm, "fragment_openinghours");
     }
 
