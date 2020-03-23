@@ -1,7 +1,7 @@
 package ch.poole.openinghoursfragment.templates;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface UpdateCursorListener {
 

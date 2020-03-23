@@ -1,6 +1,6 @@
 package ch.poole.openinghoursfragment.templates;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface UpdateTextListener {
 

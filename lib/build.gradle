@@ -9,7 +9,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.6.10'
+version = '0.8.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -26,14 +26,14 @@ apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/ec
 // apply from: '../../gradle-tasks/eclipse-android-3'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 100
         versionName "${project.version}"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${libName}")
     }
 
@@ -57,29 +57,29 @@ android {
 }
 
 ext {
-    supportLibVersion = "25.3.1"
+    androidxVersion = "1.0.0"
     adb = android.getAdbExe().toString()
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
-    implementation "com.android.support:preference-v7:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support:support-annotations:$supportLibVersion"
-    implementation "com.android.support:support-compat:$supportLibVersion"
+    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.recyclerview:recyclerview:$androidxVersion"
+    implementation "androidx.preference:preference:$androidxVersion"
+    implementation "com.google.android.material:material:$androidxVersion"
+    implementation "androidx.annotation:annotation:$androidxVersion"
+    implementation "androidx.core:core:$androidxVersion"
     implementation "ch.poole:OpeningHoursParser:0.21.1"
     implementation "ch.poole:rangebar:0.1.5"
     implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
     implementation "com.google.code.gson:gson:2.8.5"
 
     // Instrumentation tests
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    androidTestImplementation "com.android.support.test:runner:1.0.2"
-    androidTestImplementation "com.android.support.test:rules:1.0.2"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation "org.hamcrest:hamcrest-library:1.3"
     // androidTestImplementation "com.android.support.test.espresso:espresso-core:2.2.2"    
-    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 }
 
 android.libraryVariants.all { variant ->

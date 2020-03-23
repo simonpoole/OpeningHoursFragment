@@ -1,6 +1,6 @@
 package ch.poole.openinghoursfragment.pickers;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.WeekDay;

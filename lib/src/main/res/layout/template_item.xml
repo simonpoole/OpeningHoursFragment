@@ -34,7 +34,7 @@
         android:layout_below="@id/template_name"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/default_legend" />
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/is_default"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
