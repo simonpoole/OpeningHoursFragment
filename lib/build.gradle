@@ -9,7 +9,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.7.0'
+version = '0.8.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -57,17 +57,17 @@ android {
 }
 
 ext {
-    supportLibVersion = "28.0.0"
+    androidxVersion = "1.0.0"
     adb = android.getAdbExe().toString()
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.preference:preference:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.0'
-    implementation 'androidx.core:core:1.0.0'
+    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.recyclerview:recyclerview:$androidxVersion"
+    implementation "androidx.preference:preference:$androidxVersion"
+    implementation "com.google.android.material:material:$androidxVersion"
+    implementation "androidx.annotation:annotation:$androidxVersion"
+    implementation "androidx.core:core:$androidxVersion"
     implementation "ch.poole:OpeningHoursParser:0.21.1"
     implementation "ch.poole:rangebar:0.1.5"
     implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
