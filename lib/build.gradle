@@ -9,7 +9,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.6.10'
+version = '0.7.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -26,11 +26,11 @@ apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/ec
 // apply from: '../../gradle-tasks/eclipse-android-3'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 100
         versionName "${project.version}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -57,7 +57,7 @@ android {
 }
 
 ext {
-    supportLibVersion = "25.3.1"
+    supportLibVersion = "28.0.0"
     adb = android.getAdbExe().toString()
 }
 
