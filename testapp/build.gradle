@@ -21,11 +21,11 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 100
         versionName "1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
