@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import ch.poole.openinghoursfragment.OnSaveListener;
 import ch.poole.openinghoursfragment.OpeningHoursFragment;

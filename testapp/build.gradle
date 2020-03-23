@@ -28,7 +28,7 @@ android {
         targetSdkVersion 25
         versionCode 100
         versionName "1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -58,20 +58,20 @@ dependencies {
     // gradle-eclipse-aar-plugin currently can't resolve this so we add it explicitly implementation project(':lib')
     implementation "ch.poole:OpeningHoursFragment:0.5.7"
     
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
-    implementation "com.android.support:preference-v7:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support:support-annotations:$supportLibVersion"
-    implementation "com.android.support:support-compat:$supportLibVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.core:core:1.0.0'
     
     // Instrumentation tests
     // androidTestCompile "com.android.support:support-annotations:24.0.0"
-    androidTestImplementation "com.android.support:support-annotations:24.1.1"
-    androidTestImplementation "com.android.support.test:runner:0.5"
-    androidTestImplementation "com.android.support.test:rules:0.5"
+    androidTestImplementation 'androidx.annotation:annotation:1.0.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation"org.hamcrest:hamcrest-library:1.3"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:2.2.2"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
         
  
     // androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"

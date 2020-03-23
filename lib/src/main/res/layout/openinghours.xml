@@ -101,7 +101,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
             </ScrollView>
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancel"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
@@ -127,7 +127,7 @@
                 android:text="@string/spd_ohf_cancel"
                 android:textColor="?attr/colorAccent"
                 android:backgroundTint="?attr/colorPrimary" />
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/save"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
