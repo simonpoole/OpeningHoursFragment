@@ -43,8 +43,10 @@
   	<string name="collection_times_key">Tiempos de recogida</string>
   	<!--	default template entries -->
 	<string name="weekdays_with_lunch">Días de la semana con almuerzo</string>
-    <string name="weekdays">Días de la semana</string>
-    <string name="collection_times_weekdays">Una vez por semana</string>
+    <string name="weekdays_with_lunch_late_shopping">Entre semana con almuerzo y compras tardías</string>
+	<string name="weekdays">Días de la semana</string>
+    <string name="weekdays_late_shopping">Entre semana con compras tardías</string>
+	<string name="collection_times_weekdays">Una vez por semana</string>
     
 <!--	 -->
     <string name="group_header">Grupo %1$s</string>
@@ -170,9 +172,9 @@
   	<string name="december">Dic</string>
   	
   	<string name="open">abierto</string>
- 	<string name="closed">cerrada</string>
+ 	<string name="closed">cerrado</string>
   	<string name="off">apagado</string>
-    <string name="unknown">desconocida</string>
+    <string name="unknown">desconocido</string>
     
   	<string name="before">antes</string>
     <string name="after">después</string>

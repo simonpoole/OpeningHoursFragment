@@ -105,6 +105,9 @@
 <!--     opening hour elements -->
          
     <string name="normal_rule">Normální</string>
+    <string name="additive_rule">Přísada</string>
+    <string name="fallback_rule">Ustoupit</string>
+    
     <string name="interval_minutes">Interval (minut)</string>
     <string name="interval_years">Interval (let)</string>
     <string name="interval_weeks">Interval (týdnů)</string>
