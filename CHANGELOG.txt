@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.8.1: Update parser dependency, update translations.
+
 0.8.0: Migrate to androidx.
 
 0.7.0: Update parser dependency, add locale parameter to factory methods, add error message display, use current year as default start year for new date ranges. 
