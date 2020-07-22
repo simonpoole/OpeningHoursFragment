@@ -14,6 +14,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url "https://maven.google.com" }
+        mavenLocal()
         flatDir {
             dirs '../lib/build/outputs/aar/'
         }
@@ -56,8 +57,7 @@ ext {
 
 dependencies {
     // gradle-eclipse-aar-plugin currently can't resolve this so we add it explicitly implementation project(':lib')
-    // implementation "ch.poole:OpeningHoursFragment:0.8.0"
-    compile project(':lib')
+    implementation "ch.poole:OpeningHoursFragment:0.8.1"
     
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "androidx.recyclerview:recyclerview:1.0.0"

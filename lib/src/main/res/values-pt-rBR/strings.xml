@@ -11,6 +11,7 @@
     <string name="load_template">Carregar modelo</string>
     <string name="save_to_template">Salvar para modelo</string>
     <string name="manage_templates">Gerenciar modelos</string>
+    <string name="refresh">Atualizar</string>
     <string name="clear">Excluir tudo</string>
     <string name="load_templates_title">Carregar modelos</string>
     <string name="manage_templates_title">Gerenciar modelos</string>
