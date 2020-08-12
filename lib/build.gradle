@@ -87,7 +87,9 @@ android.libraryVariants.all { variant ->
         description "Generates Javadoc for $variant.name."
         group "Documentation"
         source = variant.javaCompile.source
-        classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath) + files(variant.javaCompile.destinationDir)
+        doFirst {
+            classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath) + files(variant.javaCompile.destinationDir)
+        }
         options.links("http://docs.oracle.com/javase/7/docs/api/");
         options.links("http://d.android.com/reference/");
         exclude '**/BuildConfig.java'
@@ -158,9 +160,11 @@ task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
 
 group "ch.poole"
 
-task replaceVersion << {
-    ant.replaceregexp(match:'ch\\.poole\\:OpeningHoursFragment\\:([0-9\\.]+)', replace:"ch.poole:OpeningHoursFragment:${version}", flags:'g', byline:true) {
-        fileset(dir: '..', includes: 'README.md')
+task replaceVersion {
+    doLast {
+        ant.replaceregexp(match:'ch\\.poole\\:OpeningHoursFragment\\:([0-9\\.]+)', replace:"ch.poole:OpeningHoursFragment:${version}", flags:'g', byline:true) {
+            fileset(dir: '..', includes: 'README.md')
+        }
     }
 }
 build.dependsOn replaceVersion
