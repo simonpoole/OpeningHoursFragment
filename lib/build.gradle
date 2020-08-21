@@ -9,7 +9,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
 
-version = '0.8.2'
+version = '0.8.3'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -176,7 +176,7 @@ publishing {
             artifactId 'OpeningHoursFragment'
             artifact sourcesJar 
             artifact javadocJar 
-			artifact("$buildDir/outputs/aar/OpeningHoursFragment-release.aar")
+			artifact("$buildDir/outputs/aar/OpeningHoursFragment-${project.version}.aar")
 			
 			//The publication doesn't know about our dependencies, so we have to manually add them to the pom
 			// see https://stackoverflow.com/questions/24743562/gradle-not-including-dependencies-in-published-pom-xml
