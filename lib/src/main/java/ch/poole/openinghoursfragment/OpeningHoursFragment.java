@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,18 +16,10 @@ import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.fragment.app.DialogFragment;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.widget.ActionMenuView;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.PopupMenu;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -55,6 +49,15 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.ActionMenuView;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.DialogFragment;
 import ch.poole.openinghoursfragment.pickers.DateRangePicker;
 import ch.poole.openinghoursfragment.pickers.OccurrenceInMonthPicker;
 import ch.poole.openinghoursfragment.pickers.RangePicker;
@@ -139,7 +142,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private List<Rule> rules;
 
     private AutoCompleteTextView text;
-    private TextView             errorMessage;
+    private LinearLayout         errorMessages;
 
     private OnSaveListener saveListener = null;
 
@@ -463,7 +466,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         // check if this is a mixed value tag
         final LinearLayout modeContainer = (LinearLayout) openingHoursLayout.findViewById(R.id.modeContainer);
         headerLine = openingHoursLayout.findViewById(R.id.headerLine);
-        errorMessage = (TextView) openingHoursLayout.findViewById(R.id.openinghours_error_message);
+        errorMessages = (LinearLayout) openingHoursLayout.findViewById(R.id.openinghours_error_messages);
         if (textValues != null) {
             final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
             final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
@@ -598,11 +601,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         rules = parser.rules(false);
                         buildForm(scrollView, rules);
                         removeHighlight(text);
-                        errorMessage.setText("");
+                        errorMessages.removeAllViews();
                     } catch (OpeningHoursParseException pex) {
                         Log.d(DEBUG_TAG, pex.getMessage());
                         highlightParseError(text, pex);
-                        errorMessage.setText(pex.getMessage());
+                        errorMessages.removeAllViews();
+                        for (OpeningHoursParseException ex : pex.getExceptions()) {
+                            TextView message = new TextView(getContext());
+                            message.setSingleLine();
+                            message.setText(ex.getMessage());
+                            message.setTextColor(ContextCompat.getColor(getContext(), R.color.error_text));
+                            final int column = ex.getColumn() + 1;
+                            message.setOnClickListener(v -> {
+                                text.setSelection(column, Math.min(column + 1, message.length()));
+                            });
+                            errorMessages.addView(message);
+                        }
                     } catch (TokenMgrError err) {
                         // we currently can't do anything reasonable here except ignore
                         Log.e(DEBUG_TAG, err.getMessage());
@@ -716,7 +730,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 rules = parser.rules(false);
                 buildForm(sv, rules);
                 removeHighlight(text);
-            } catch (ParseException pex) {
+            } catch (OpeningHoursParseException pex) {
                 Log.d(DEBUG_TAG, pex.getMessage());
                 highlightParseError(text, pex);
             } catch (TokenMgrError err) {
@@ -850,15 +864,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param text he EditText the string is displayed in
      * @param pex the ParseException to use
      */
-    private void highlightParseError(EditText text, ParseException pex) {
+    private void highlightParseError(@NonNull EditText text, @NonNull OpeningHoursParseException ohpex) {
         parseErrorFound = true;
-        int c = pex.currentToken.next.beginColumn - 1; // starts at 1
-        int pos = text.getSelectionStart();
         Spannable spannable = new SpannableString(text.getText());
-        spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c, Math.min(c + 1, spannable.length())), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        boolean first = true;
+        int pos = 0;
+        for (OpeningHoursParseException pex : ohpex.getExceptions()) {
+            int c = pex.currentToken.next.beginColumn - 1; // starts at 1
+            spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c, Math.min(c + 1, spannable.length())), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (first) {
+                pos = c;
+                first = false;
+            }
+        }
         text.removeTextChangedListener(watcher); // avoid infinite loop
         text.setText(spannable, TextView.BufferType.SPANNABLE);
-        text.setSelection(Math.min(pos, spannable.length()));
+        text.setSelection(pos, Math.min(pos + 1, spannable.length()));
         text.addTextChangedListener(watcher);
     }
 
@@ -869,7 +890,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * 
      * @param text the EditText the string is displayed in
      */
-    private void removeHighlight(EditText text) {
+    private void removeHighlight(@NonNull EditText text) {
         parseErrorFound = false;
         int pos = text.getSelectionStart();
         int prevLen = text.length();
