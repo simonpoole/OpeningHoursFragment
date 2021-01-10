@@ -1,29 +1,27 @@
 package ch.poole.openinghoursfragment.templates;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursfragment.Util;
@@ -126,14 +124,11 @@ public class TemplateDialog extends CancelableDialogFragment {
             cursor.close();
 
             alertDialog.setTitle(R.string.edit_template);
-            alertDialog.setNeutralButton(R.string.Delete, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d(DEBUG_TAG, "deleting template " + Integer.toString(id));
-                    TemplateDatabase.delete(db, id);
-                    if (updateListener != null) {
-                        updateListener.newCursor(db);
-                    }
+            alertDialog.setNeutralButton(R.string.Delete, (dialog, which) -> {
+                Log.d(DEBUG_TAG, "deleting template " + Integer.toString(id));
+                TemplateDatabase.delete(db, id);
+                if (updateListener != null) {
+                    updateListener.newCursor(db);
                 }
             });
         } else {
@@ -147,12 +142,7 @@ public class TemplateDialog extends CancelableDialogFragment {
         // setting up the region spinner is a bit involved as we want to be able to sort it
         final TypedArray values = getResources().obtainTypedArray(R.array.region_values);
         final TypedArray entries = getResources().obtainTypedArray(R.array.region_entries);
-        Set<ValueWithDescription> regionsSet = new TreeSet<>(new Comparator<ValueWithDescription>() {
-            @Override
-            public int compare(ValueWithDescription v1, ValueWithDescription v2) {
-                return v1.getDescription().compareTo(v2.getDescription());
-            }
-        });
+        Set<ValueWithDescription> regionsSet = new TreeSet<>((v1, v2) -> v1.getDescription().compareTo(v2.getDescription()));
         for (int i = 0; i < values.length(); i++) {
             regionsSet.add(new ValueWithDescription(values.getString(i), entries.getString(i)));
         }
@@ -175,50 +165,39 @@ public class TemplateDialog extends CancelableDialogFragment {
         objectEdit.setText(templateObject == null ? "" : templateObject);
 
         final String finalTemplate = template;
-        alertDialog.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                final TypedArray keyValues = getContext().getResources().obtainTypedArray(R.array.key_values);
-                int spinnerPos = keySpinner.getSelectedItemPosition();
-                final String spinnerKey = spinnerPos == 0 ? null : keyValues.getString(spinnerPos);
-                keyValues.recycle();
-                spinnerPos = regionSpinner.getSelectedItemPosition();
-                final String spinnerRegion = spinnerPos == 0 ? null : regions.get(spinnerPos).getValue();
-                final String object = objectEdit.length() == 0 ? null : objectEdit.getText().toString();
-                if (!existing) {
-                    TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);
-                    db.close();
-                } else {
-                    if (!current.equals(finalTemplate)) {
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                        alertDialog.setTitle(R.string.update_template);
-                        alertDialog.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion,
-                                        object);
-                                if (updateListener != null) {
-                                    updateListener.newCursor(db);
-                                }
-
-                            }
-                        });
-                        alertDialog.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate,
-                                        spinnerRegion, object);
-                                if (updateListener != null) {
-                                    updateListener.newCursor(db);
-                                }
-                            }
-                        });
-                        alertDialog.show();
-                    } else {
-                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, null, null);
+        alertDialog.setPositiveButton(R.string.Save, (dialog, which) -> {
+            final TypedArray keyValues = getContext().getResources().obtainTypedArray(R.array.key_values);
+            int spinnerPos = keySpinner.getSelectedItemPosition();
+            final String spinnerKey = spinnerPos == 0 ? null : keyValues.getString(spinnerPos);
+            keyValues.recycle();
+            spinnerPos = regionSpinner.getSelectedItemPosition();
+            final String spinnerRegion = spinnerPos == 0 ? null : regions.get(spinnerPos).getValue();
+            final String object = objectEdit.length() == 0 ? null : objectEdit.getText().toString();
+            if (!existing) {
+                TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);
+                db.close();
+            } else {
+                if (!current.equals(finalTemplate)) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    alert.setTitle(R.string.update_template);
+                    alert.setPositiveButton(R.string.Yes, (d, w) -> {
+                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);
                         if (updateListener != null) {
                             updateListener.newCursor(db);
                         }
+                    });
+                    alert.setNegativeButton(R.string.No, (d, w) -> {
+                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate, spinnerRegion,
+                                object);
+                        if (updateListener != null) {
+                            updateListener.newCursor(db);
+                        }
+                    });
+                    alert.show();
+                } else {
+                    TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, null, null);
+                    if (updateListener != null) {
+                        updateListener.newCursor(db);
                     }
                 }
             }

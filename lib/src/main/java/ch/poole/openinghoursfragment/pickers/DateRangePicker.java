@@ -4,15 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
-import android.view.LayoutInflater;
-import android.view.View;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursparser.DateWithOffset;
@@ -278,13 +278,10 @@ public class DateRangePicker extends CancelableDialogFragment {
         npvEndYear.setMinValue(YearRange.FIRST_VALID_YEAR - 1);
         npvEndYear.setMaxValue(MAX_YEAR);
         npvEndYear.setValue(endYear != YearRange.UNDEFINED_YEAR ? endYear : YearRange.FIRST_VALID_YEAR - 1);
-        OnValueChangeListener startYearChangeListener = new OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                int endYear = npvEndYear.getValue();
-                if (newVal >= endYear && endYear >= YearRange.FIRST_VALID_YEAR) {
-                    npvEndYear.smoothScrollToValue(newVal);
-                }
+        OnValueChangeListener startYearChangeListener = (picker, oldVal, newVal) -> {
+            int endY = npvEndYear.getValue();
+            if (newVal >= endY && endY >= YearRange.FIRST_VALID_YEAR) {
+                npvEndYear.smoothScrollToValue(newVal);
             }
         };
 
@@ -321,26 +318,20 @@ public class DateRangePicker extends CancelableDialogFragment {
                 npvStartYear.setOnValueChangedListener(startYearChangeListener);
 
                 if (npvStartMonth.getVisibility() == View.VISIBLE) {
-                    npvStartMonth.setOnValueChangedListener(new OnValueChangeListener() {
-                        @Override
-                        public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                            int endMonth = npvEndMonth.getValue();
-                            if (npvStartYear.getValue() == npvEndYear.getValue() && newVal >= endMonth && endMonth != 0) {
-                                npvEndMonth.smoothScrollToValue(newVal);
-                            }
+                    npvStartMonth.setOnValueChangedListener((picker, oldVal, newVal) -> {
+                        int endM = npvEndMonth.getValue();
+                        if (npvStartYear.getValue() == npvEndYear.getValue() && newVal >= endM && endM != 0) {
+                            npvEndMonth.smoothScrollToValue(newVal);
                         }
                     });
                 }
 
                 if (npvStartDay.getVisibility() == View.VISIBLE) {
-                    npvStartDay.setOnValueChangedListener(new OnValueChangeListener() {
-                        @Override
-                        public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                            int endDay = npvEndDay.getValue();
-                            if (npvStartYear.getValue() == npvEndYear.getValue() && npvStartMonth.getValue() == npvEndMonth.getValue() && newVal >= endDay
-                                    && endDay != 0) {
-                                npvEndDay.smoothScrollToValue(newVal);
-                            }
+                    npvStartDay.setOnValueChangedListener((NumberPickerView picker, int oldVal, int newVal) -> {
+                        int endD = npvEndDay.getValue();
+                        if (npvStartYear.getValue() == npvEndYear.getValue() && npvStartMonth.getValue() == npvEndMonth.getValue() && newVal >= endD
+                                && endD != 0) {
+                            npvEndDay.smoothScrollToValue(newVal);
                         }
                     });
                 }
