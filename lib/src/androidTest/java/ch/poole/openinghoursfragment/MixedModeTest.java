@@ -13,22 +13,23 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject2;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MixedModeTest {
 
-    private OpeningHoursFragment fragment;
-    private UiDevice             device;
+    private FragmentActivity activity;
+    private UiDevice         device;
 
     @Rule
     public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
@@ -36,8 +37,8 @@ public class MixedModeTest {
     @Before
     public void setup() {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-
-        FragmentManager fm = mActivityRule.getActivity().getSupportFragmentManager();
+        activity = mActivityRule.getActivity();
+        FragmentManager fm = activity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("fragment_openinghours");
         if (prev != null) {
@@ -51,21 +52,21 @@ public class MixedModeTest {
         values.add(new ValueWithDescription("yes", "Yes"));
         values.add(new ValueWithDescription("no", "No"));
 
-        fragment = OpeningHoursFragment.newInstance(key, null, null, "no", R.style.Theme_AppCompat_Dialog_Alert, 5, false, values, null);
+        OpeningHoursFragment fragment = OpeningHoursFragment.newInstance(key, null, null, "no", R.style.Theme_AppCompat_Dialog_Alert, 5, false, values, null);
         fragment.show(fm, "fragment_openinghours");
     }
 
     @Test
     public void switchMode() {
-        UiObject2 buttonText = TestUtils.findText(device, false, "Text values");
+        Assert.assertNotNull(TestUtils.findText(device, false, "no"));
+        UiObject2 buttonText = TestUtils.findText(device, false, activity.getString(R.string.text_values));
         Assert.assertTrue(buttonText.isChecked());
-        UiObject2 buttonOH = TestUtils.findText(device, false, "Opening hours");
+        UiObject2 buttonOH = TestUtils.findText(device, false, activity.getString(R.string.opening_hours_key));
         buttonOH.click();
         Assert.assertTrue(buttonOH.isChecked());
+        Assert.assertNotNull(TestUtils.findText(device, false, "Encountered"));
         buttonText.click();
-        UiObject2 textField = TestUtils.findText(device, false, "no");
-        textField.click();
-        textField.click();
-        Assert.assertNotNull(TestUtils.findText(device, false, "Yes"));
+        Assert.assertTrue(buttonText.isChecked());
+        Assert.assertNull(TestUtils.findText(device, false, "Encountered"));
     }
 }

@@ -15,10 +15,12 @@ allprojects {
         jcenter()
         maven { url "https://maven.google.com" }
         mavenLocal()
-        flatDir {
-            dirs '../lib/build/outputs/aar/'
-        }
     }
+}
+
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 android {
@@ -56,8 +58,7 @@ ext {
 }
 
 dependencies {
-    // gradle-eclipse-aar-plugin currently can't resolve this so we add it explicitly implementation project(':lib')
-    implementation "ch.poole:OpeningHoursFragment:0.8.1"
+    implementation ("ch.poole:OpeningHoursFragment:0.9.0") { changing = true }
     
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "androidx.recyclerview:recyclerview:1.0.0"

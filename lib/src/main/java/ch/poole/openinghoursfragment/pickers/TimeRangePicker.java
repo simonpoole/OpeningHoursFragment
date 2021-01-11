@@ -1,21 +1,18 @@
 package ch.poole.openinghoursfragment.pickers;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
-import android.view.LayoutInflater;
-import android.view.View;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView.OnValueChangeListener;
 
 /**
  * Display a dialog allowing the user to select values for a start date and optionally an end date
@@ -156,12 +153,9 @@ public class TimeRangePicker extends CancelableDialogFragment {
             npvEndHour.setVisibility(View.GONE);
             npvEndMinute.setVisibility(View.GONE);
         } else {
-            npvStartHour.setOnValueChangedListener(new OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                    if (newVal >= npvEndHour.getValue()) {
-                        npvEndHour.smoothScrollToValue(newVal);
-                    }
+            npvStartHour.setOnValueChangedListener((picker, oldVal, newVal) -> {
+                if (newVal >= npvEndHour.getValue()) {
+                    npvEndHour.smoothScrollToValue(newVal);
                 }
             });
             npvEndHour.setVisibility(View.VISIBLE);
@@ -170,15 +164,12 @@ public class TimeRangePicker extends CancelableDialogFragment {
             npvEndHour.setMinValue(0);
             npvEndHour.setMaxValue(MAX_EXTENDED_HOURS);
             npvEndHour.setValue(endHour);
-            npvEndHour.setOnValueChangedListener(new OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                    if (newVal == MAX_EXTENDED_HOURS) {
-                        npvEndMinute.smoothScrollToValue(0);
-                        npvEndMinute.setMaxValue(0);
-                    } else {
-                        npvEndMinute.setMaxValue(maxMinutes);
-                    }
+            npvEndHour.setOnValueChangedListener((picker, oldVal, newVal) -> {
+                if (newVal == MAX_EXTENDED_HOURS) {
+                    npvEndMinute.smoothScrollToValue(0);
+                    npvEndMinute.setMaxValue(0);
+                } else {
+                    npvEndMinute.setMaxValue(maxMinutes);
                 }
             });
 
@@ -188,16 +179,13 @@ public class TimeRangePicker extends CancelableDialogFragment {
             npvEndMinute.setValue(endMinute / increment);
         }
 
-        builder.setPositiveButton(R.string.spd_ohf_ok, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int startHourValue = npvStartHour.getValue();
-                int startMinuteValue = npvStartMinute.getValue() * increment;
-                int endHourValue = npvEndHour.getValue();
-                int endMinuteValue = npvEndMinute.getValue() * increment;
+        builder.setPositiveButton(R.string.spd_ohf_ok, (dialog, which) -> {
+            int startHourValue = npvStartHour.getValue();
+            int startMinuteValue = npvStartMinute.getValue() * increment;
+            int endHourValue = npvEndHour.getValue();
+            int endMinuteValue = npvEndMinute.getValue() * increment;
 
-                listener.setTimeRange(startHourValue, startMinuteValue, endHourValue, endMinuteValue);
-            }
+            listener.setTimeRange(startHourValue, startMinuteValue, endHourValue, endMinuteValue);
         });
         builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 

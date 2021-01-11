@@ -2,16 +2,15 @@ package ch.poole.openinghoursfragment.pickers;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
-import android.view.LayoutInflater;
-import android.view.View;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
@@ -117,15 +116,12 @@ public class RangePicker extends CancelableDialogFragment {
         }
         npvEnd.setValue(endCurrent);
 
-        builder.setPositiveButton(R.string.spd_ohf_ok, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int endValue = npvEnd.getValue();
-                if (endValue == min - 1) {
-                    endValue = NOTHING_SELECTED;
-                }
-                listener.setRange(npvStart.getValue(), endValue);
+        builder.setPositiveButton(R.string.spd_ohf_ok, (DialogInterface dialog, int which) -> {
+            int endValue = npvEnd.getValue();
+            if (endValue == min - 1) {
+                endValue = NOTHING_SELECTED;
             }
+            listener.setRange(npvStart.getValue(), endValue);
         });
         builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 

@@ -68,17 +68,18 @@
             android:dropDownWidth="wrap_content"
             android:maxLines="1"
             android:saveEnabled="false" />
-        <TextView
-            android:id="@+id/openinghours_error_message"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:textSize="12sp"
-            android:textColor="@color/error_text"
-            android:maxLines="1"
-            android:saveEnabled="false" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="1dp"
+            android:fillViewport="true">
+            <LinearLayout
+                android:id="@+id/openinghours_error_messages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </HorizontalScrollView>
         <View
             android:id="@+id/headerLine"
             android:layout_width="fill_parent"

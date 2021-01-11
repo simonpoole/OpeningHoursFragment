@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,25 +17,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.cursoradapter.widget.CursorAdapter;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.appcompat.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursfragment.Util;
@@ -145,54 +144,39 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
         if (manage || key != null || region != null || object != null) {
             fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(getContext(), fab);
-                    // menu items
-                    MenuItem showAll = popup.getMenu().add(R.string.spd_ohf_show_all);
-                    showAll.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            newCursor(readableDb);
-                            return true;
-                        }
-                    });
+            fab.setOnClickListener(v -> {
+                PopupMenu popup = new PopupMenu(getContext(), fab);
+                // menu items
+                MenuItem showAll = popup.getMenu().add(R.string.spd_ohf_show_all);
+                showAll.setOnMenuItemClickListener(item -> {
+                    newCursor(readableDb);
+                    return true;
+                });
 
-                    if (manage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        MenuItem loadTemplate = popup.getMenu().add(R.string.spd_ohf_save_to_file);
-                        loadTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                                i.setType("*/*");
-                                startActivityForResult(i, WRITE_CODE);
-                                return true;
-                            }
-                        });
-                        MenuItem saveTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file_replace);
-                        saveTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                i.setType("*/*");
-                                startActivityForResult(i, READ_REPLACE_CODE);
-                                return true;
-                            }
-                        });
-                        MenuItem manageTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file);
-                        manageTemplate.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                i.setType("*/*");
-                                startActivityForResult(i, READ_CODE);
-                                return true;
-                            }
-                        });
-                    }
-                    popup.show();// showing popup menu
+                if (manage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    MenuItem loadTemplate = popup.getMenu().add(R.string.spd_ohf_save_to_file);
+                    loadTemplate.setOnMenuItemClickListener(item -> {
+                        Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                        i.setType("*/*");
+                        startActivityForResult(i, WRITE_CODE);
+                        return true;
+                    });
+                    MenuItem saveTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file_replace);
+                    saveTemplate.setOnMenuItemClickListener(item -> {
+                        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        i.setType("*/*");
+                        startActivityForResult(i, READ_REPLACE_CODE);
+                        return true;
+                    });
+                    MenuItem manageTemplate = popup.getMenu().add(R.string.spd_ohf_load_from_file);
+                    manageTemplate.setOnMenuItemClickListener(item -> {
+                        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        i.setType("*/*");
+                        startActivityForResult(i, READ_CODE);
+                        return true;
+                    });
                 }
+                popup.show();// showing popup menu
             });
         } else {
             fab.setVisibility(View.GONE);
@@ -206,7 +190,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         Log.d(DEBUG_TAG, "onDismiss");
         super.onActivityCreated(savedInstanceState);
     }
-    
+
     @Override
     public void onDismiss(DialogInterface dialog) {
         Log.d(DEBUG_TAG, "onDismiss");
@@ -281,20 +265,14 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
             final String template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
             if (manage) {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Integer id = (Integer) view.getTag();
-                        TemplateDialog.showDialog(TemplateMangementDialog.this, current, key, true, id != null ? id.intValue() : -1);
-                    }
+                view.setOnClickListener(v -> {
+                    Integer localId = (Integer) view.getTag();
+                    TemplateDialog.showDialog(TemplateMangementDialog.this, current, key, true, localId != null ? localId.intValue() : -1);
                 });
             } else {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        updateListener.updateText(template);
-                        TemplateMangementDialog.this.dismissAllowingStateLoss();
-                    }
+                view.setOnClickListener(v -> {
+                    updateListener.updateText(template);
+                    TemplateMangementDialog.this.dismissAllowingStateLoss();
                 });
             }
         }

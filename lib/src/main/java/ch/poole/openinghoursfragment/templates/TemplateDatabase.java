@@ -106,7 +106,7 @@ public final class TemplateDatabase {
         } else {
             List<String> params = new ArrayList<>();
             StringBuilder query = new StringBuilder();
-            List<String> orderCols = new ArrayList<String>();
+            List<String> orderCols = new ArrayList<>();
             if (key != null) {
                 query.append("(key is NULL OR key=?)");
                 params.add(key);
@@ -114,7 +114,7 @@ public final class TemplateDatabase {
             }
             if (region != null) {
                 if (query.length() > 0) {
-                    query.append(" AND ");                    
+                    query.append(" AND ");
                 }
                 String[] regionParts = region.split("-");
                 if (regionParts.length > 1) { // this will add a check for the country
@@ -123,20 +123,20 @@ public final class TemplateDatabase {
                     params.add(regionParts[0]);
                 } else {
                     query.append("(region is NULL OR region=?)");
-                    params.add(region);   
+                    params.add(region);
                 }
-                orderCols.add("region");
+                orderCols.add(REGION_FIELD);
             }
             if (object != null) {
                 if (query.length() > 0) {
-                    query.append(" AND ");                
+                    query.append(" AND ");
                 }
                 query.append("(object IS NULL OR object LIKE ?)");
                 params.add(object);
-                orderCols.add("object");
+                orderCols.add(OBJECT_FIELD);
             }
             query.append(" ORDER BY ");
-            for (String col:orderCols) {
+            for (String col : orderCols) {
                 query.append("LENGTH(");
                 query.append(col);
                 query.append(") DESC, ");
@@ -353,6 +353,5 @@ public final class TemplateDatabase {
             Log.e(DEBUG_TAG, "Insert failed");
             throw new IOException("Insert of row failed");
         }
-        ;
     }
 }

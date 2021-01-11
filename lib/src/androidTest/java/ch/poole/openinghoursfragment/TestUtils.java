@@ -1,9 +1,11 @@
 package ch.poole.openinghoursfragment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.BySelector;
+import androidx.test.uiautomator.Configurator;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
@@ -198,7 +200,21 @@ public class TestUtils {
      * @return an UiObject2 or null
      */
     @Nullable
-    public static UiObject2 findText(UiDevice device, boolean clickable, String text) {
+    public static UiObject2 findText(@NonNull UiDevice device, boolean clickable, @NonNull String text) {
+        return findText(device, clickable, text, 500);
+    }
+
+    /**
+     * Find text on screen (case insensitive)
+     * 
+     * @param device UiDevice object
+     * @param clickable if true the search will be restricted to clickable objects
+     * @param text the text to find
+     * @param waot ms to wait for text to appear
+     * @return an UiObject2 or null
+     */
+    @Nullable
+    public static UiObject2 findText(@NonNull UiDevice device, boolean clickable, @NonNull String text, int wait) {
         Log.w(DEBUG_TAG, "Searching for object with " + text);
         // Note: contrary to "text", "textStartsWith" is case insensitive
         BySelector bySelector = null;
@@ -207,7 +223,7 @@ public class TestUtils {
         } else {
             bySelector = By.textStartsWith(text);
         }
-        return device.wait(Until.findObject(bySelector), 500);
+        return device.wait(Until.findObject(bySelector), wait);
     }
 
     /**
@@ -219,7 +235,7 @@ public class TestUtils {
      * @return an UiObject2 or null
      */
     @Nullable
-    public static UiObject2 findTextContains(UiDevice device, boolean clickable, String text) {
+    public static UiObject2 findTextContains(@NonNull UiDevice device, boolean clickable, @NonNull String text) {
         Log.w(DEBUG_TAG, "Searching for object with " + text);
         BySelector bySelector = null;
         if (clickable) {
@@ -271,5 +287,24 @@ public class TestUtils {
             Log.e(DEBUG_TAG, "Object not found");
             return false;
         }
+    }
+
+    /**
+     * Double click at an object
+     * 
+     * @param device the UiDevice
+     * @param object the object
+     */
+    public static void doubleClick(@NonNull UiDevice device, @NonNull UiObject2 object) {
+        Configurator cc = Configurator.getInstance();
+        long defaultAckTimeout = cc.getActionAcknowledgmentTimeout();
+        cc.setActionAcknowledgmentTimeout(0);
+        object.click();
+        try {
+            Thread.sleep(50); // NOSONAR
+        } catch (InterruptedException e) {
+        }
+        object.click();
+        cc.setActionAcknowledgmentTimeout(defaultAckTimeout);
     }
 }

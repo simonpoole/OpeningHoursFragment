@@ -32,6 +32,8 @@ The calling Fragment needs to implement ch.poole.openinghoursfragement.OnSaveLis
 
 For other variants please see the javadoc.
 
+If you are overriding onActivityResult in the Activity calling the Fragment, you need to check that you calling through to super, or else loading and saving templates will fail silently. 
+
 ## Including in your project
 
 Add the following to your *build.gradle* file(s):
@@ -46,8 +48,6 @@ repositories {
 
 ``` groovy
 dependencies {
-    compile "ch.poole:OpeningHoursFragment:0.8.3"
+    compile "ch.poole:OpeningHoursFragment:0.9.0"
 }
 ```
-
-If you are overriding onActivityResult in the Activity calling the Fragment, you need to check that you calling through to super, or else loading and saving templates will fail silently. 
