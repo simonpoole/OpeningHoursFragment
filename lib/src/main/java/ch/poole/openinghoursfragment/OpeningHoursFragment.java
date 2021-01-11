@@ -32,7 +32,6 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -477,6 +476,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 text.removeTextChangedListener(textWatcher);
                 text.removeCallbacks(updateStringRunnable);
                 removeHighlight(text);
+                errorMessages.removeAllViews();
                 buildLayout(openingHoursLayout, openingHoursValue, -1);
             });
             modeContainer.setVisibility(View.VISIBLE);
@@ -3118,12 +3118,13 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * Add the standard menu entries for a Rule
      * 
      * @param row the layout containing the Rule UI
-     * @param listener the listerner for the deleting the rule
+     * @param listener the listener for the deleting the rule
      * @return the created Menu
      */
     private Menu addStandardMenuItems(@NonNull LinearLayout row, @Nullable final Delete listener) {
         ActionMenuView amv = (ActionMenuView) row.findViewById(R.id.menu);
         Menu menu = amv.getMenu();
+        amv.setOnLongClickListener(v -> true);
         MenuItem mi = menu.add(Menu.NONE, Menu.NONE, Menu.CATEGORY_SECONDARY, R.string.Delete);
         mi.setOnMenuItemClickListener(item -> {
             if (listener != null) {
