@@ -1,5 +1,9 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.9.1: Move to sonatype / maven central for publishing
+
+0.9.0: Multi-error support
+
 0.8.2: Update parser dependency, update translations.
 
 0.8.1: Update parser dependency, update translations.
