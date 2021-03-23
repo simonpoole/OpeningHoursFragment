@@ -1,15 +1,15 @@
 // Project level build file starts here
 plugins {
-    id "com.jfrog.bintray" version "1.8.4"
     id "org.sonarqube" version "3.0"
 }
 
 apply plugin: 'eclipse'
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 apply plugin: "jacoco"
 
-version = '0.9.0'
+version = '0.9.1'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -208,6 +208,11 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
     sourceDirectories = files(coverageSourceDirs)
 }
 
+ext {
+    repoUrl = 'https://github.com/simonpoole/OpeningHoursFragment.git'
+    spdxId = 'MIT'
+}
+
 publishing {
     publications {
         openinghoursfragment(MavenPublication) {
@@ -217,6 +222,25 @@ publishing {
             artifact javadocJar 
 			artifact("$buildDir/outputs/aar/OpeningHoursFragment-${project.version}.aar")
 			
+			pom {
+                name = artifactId
+                description = 'This is an Android component for editing OSM "opening_hours" tags'    
+                url = 'https://github.com/simonpoole/OpeningHoursFragment'
+                scm {
+                    url = repoUrl
+                }
+                licenses {
+                    license {
+                        name = spdxId
+                        url = 'https://raw.githubusercontent.com/simonpoole/OpeningHoursFragment/master/LICENCE.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Simon Poole'
+                    }
+                }
+            }
 			//The publication doesn't know about our dependencies, so we have to manually add them to the pom
 			// see https://stackoverflow.com/questions/24743562/gradle-not-including-dependencies-in-published-pom-xml
 			pom.withXml {
@@ -230,26 +254,23 @@ publishing {
         			dependencyNode.appendNode('version', it.version)
     			}
 			}
+
+            repositories {
+                maven {
+                    name = 'sonatype'
+                    credentials {
+                        username ossrhUsername
+                        password ossrhPassword
+                    }
+                    def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                    url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                }
+            }
         }
     }
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['openinghoursfragment']
-    pkg {
-        repo = 'osm'
-        name = "${libName}"
-        licenses = ['BSD 3-Clause']
-        vcsUrl = 'https://github.com/simonpoole/OpeningHoursFragment.git'
-        version {
-        	name = "${project.version}"
-			released  = new Date()
-			gpg {
-				sign = true //Determines whether to GPG sign the files. The default is false
-				passphrase = System.getenv('BINTRAY_PASSPHRASE')
-			}
-        }
-    }
+signing {
+    sign publishing.publications.openinghoursfragment
 }

@@ -41,13 +41,13 @@ Add the following to your *build.gradle* file(s):
 ``` groovy
 repositories {
     maven {
-    	jcenter()
+    	mavenCentral()
     }
 }
 ```
 
 ``` groovy
 dependencies {
-    compile "ch.poole:OpeningHoursFragment:0.9.0"
+    compile "ch.poole:OpeningHoursFragment:0.9.1"
 }
 ```
