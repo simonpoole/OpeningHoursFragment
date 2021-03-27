@@ -85,6 +85,8 @@
     <string name="modifier">수정자</string>
     <string name="comment">댓글</string>
     
+    <string name="to">까지</string>
+    
     <string name="public_holidays">공휴일</string>
   	<string name="school_holidays">학교 휴일</string>
   	

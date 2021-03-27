@@ -41,29 +41,98 @@
   	<string name="opening_hours_key">Openingstijden</string>
   	<string name="service_times_key">Diensttijden</string>
   	<string name="collection_times_key">Lichtingstijden</string>
-  	<!--	 -->
+  	<!--	default template entries -->
+	<string name="weekdays_with_lunch">Doordeweekse dagen met lunchpauze</string>
+    <string name="weekdays_with_lunch_late_shopping">Doordeweekse dagen met lunchpauze en koopavond</string>
+	<string name="weekdays">Doordeweekse dagen</string>
+    <string name="weekdays_late_shopping">Doordeweekse dagen met koopavond</string>
+	<string name="collection_times_weekdays">Eens per doordeweekse dag</string>
+    
+<!--	 -->
     <string name="group_header">Groep %1$s</string>
     <string name="rule_header">Regel %1$s</string>
     
+<!--	messages -->
+    <string name="loaded_default">Standaardsjabloon geladen</string>
+    
 <!--    menu items -->
 	<string name="Delete">Verwijder</string>
-	<string name="time_time">Tijd - tijd</string>
+	<string name="add_modifier_comment">Voeg bewerker/commentaar toe</string>
+	<string name="add_year_range">Voeg jaarbereik toe</string>
+	<string name="add_week_range">Voeg weekbereik toe</string>
+	<string name="add_holiday">Voeg vakantie toe</string>
+	
+    <string name="timespan_menu">Voeg tijdsbereik toe ...</string>
+    <string name="time_time">Tijd - tijd</string>
+    <string name="time_extended_time">Tijd - langere tijd</string>
+    <string name="variable_time_time">Var. tijd - tijd</string>
+    <string name="variable_time_extended_time">Var. tijd - langere tijd</string>
+    <string name="time_variable_time">Tijd - var. tijd</string>
+    <string name="variable_time_variable_time">Var. tijd - var. tijd</string>
     <string name="time">Tijd</string>
+    <string name="time_open_end">Tijd-open eind</string>
     <string name="variable_time">Variabele tijd</string>
+    <string name="variable_time_open_end">Variabele tijd-open eind</string>
+    <string name="start_at_midnight">Begin op middernacht</string>
+    
+    <string name="week_day_range">Voeg dag van de week bereik toe</string>
+    <string name="occurrence_in_month">Voeg voorkomen in maand toe</string>
+    
+    <string name="daterange_menu">Voeg datumbereik toe ...</string>
     <string name="date_date">Datum - datum</string>
     <string name="variable_date_date">Variabele datum - datum</string>
     <string name="date_variable_date">Datum - variabele datum</string>
     <string name="variable_date_variable_date">Variabele datum - variabele datum</string>
+    <string name="occurrence_occurrence">Voorkomen in maand - voorkomen in maand</string>
+    <string name="occurrence_date">Voorkomen in maand - datum</string>
+    <string name="date_occurrence">Datum - voorkomen in maand</string>
+    <string name="occurrence_variable_date">Voorkomen in maand - variabele datum </string>
+    <string name="variable_date_occurrence">Variabele datum - voorkomen in maand</string>
+    
+    <string name="date_open_end">Datum - open eind</string>
+    <string name="variable_date_open_end">Variabele datum - open eind</string>
+    <string name="occurrence_open_end">Voorkomen in maand - open eind</string>
+
+    <string name="with_offsets">Met verplaatsingen...</string>
+    <string name="rule_type">Toon regeltype</string>
+    <string name="duplicate_rule">Dupliceer</string>
     <string name="move_up">Verplaats omhoog</string>
     <string name="move_down">Verplaats omlaag</string>
-    <!--     opening hour elements -->
+    <string name="display_time_picker">Toon tijdkiezer</string>
+    <string name="ticks_15_minute">Wissel naar stappen van 15 minuten</string>
+    <string name="ticks_5_minute">Wissel naar stappen van 5 minuten</string>
+    <string name="ticks_1_minute">Wissel naar stappen van 1 minuut</string>
+    <string name="show_offset">Toon verplaatsing</string>
+    <string name="show_start_offset">Toon beginverplaatsing</string>
+    <string name="show_end_offset">Toon eindverplaatsing</string>
+    <string name="show_interval">Toon interval</string>
+    <string name="show_useAsWeekDay">Toon gebruik</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normaal</string>
+    <string name="additive_rule">Additief</string>
+    <string name="fallback_rule">Terugval</string>
+    
+    <string name="interval_minutes">Interval (minuten)</string>
+    <string name="interval_years">Interval (jaren)</string>
+    <string name="interval_weeks">Interval (weken)</string>
+    
+    <string name="offset_mins">Verplaatsing (±minuten)</string>
+    <string name="offset_days">Verplaatsing (±dagen)</string>
+    
+    <string name="date_range">Datumbereik</string>
     <string name="date">Datum</string>
+    <string name="date_weekday_occurrence">Datum (doordeweekse dagin maand)</string>
+    <string name="week_range">Weekbereik</string>
     <string name="weeks">Weken</string>
+    <string name="year_range">Jaarbereik</string>
     <string name="years">Jaren</string>
     
+    <string name="modifier">Bewerker</string>
     <string name="comment">Opmerking</string>
+    
+    <string name="use_as_weekday">Gebruik als doordeweekse dag</string>
     
     <string name="twentyfourseven">24 uur, 7 dagen per week</string>
     
@@ -73,6 +142,14 @@
     
     <string name="sunrise">Zonsopkomst</string>
   	<string name="sunset">Zonsondergang</string>
+  	<string name="dawn">Zonsopgang</string>
+  	<string name="dusk">Zonsondergang</string>
+  	
+  	<string name="public_holidays">Feestdagen</string>
+  	<string name="school_holidays">Schoolvakanties</string>
+  	
+  	<string name="occurrence_in_month_title">Voorkomen in maand</string>
+  	
   	<string name="monday_short">Ma</string>
   	<string name="tuesday_short">Di</string>
   	<string name="wednesday_short">Wo</string>
@@ -96,7 +173,8 @@
   	
   	<string name="open">open</string>
  	<string name="closed">gesloten</string>
-  	<string name="unknown">onbekend</string>
+  	<string name="off">uit</string>
+    <string name="unknown">onbekend</string>
     
   	<string name="before">voor</string>
     <string name="after">na</string>

@@ -43,15 +43,35 @@
     
 <!--    menu items -->
 	<string name="Delete">Sil</string>
-	<string name="date_open_end">Tarih - açık uçlu</string>
+	<string name="add_year_range">Yıl aralığı ekle</string>
+	<string name="add_week_range">Hafta aralığı ekle</string>
+	<string name="add_holiday">Tatil ekle</string>
+	
+    <string name="timespan_menu">Zaman aralığı ekle ...</string>
+    <string name="start_at_midnight">Gece yarısında başla</string>
+    
+    <string name="week_day_range">Hafta içi gün aralığı ekle</string>
+    <string name="daterange_menu">Tarih aralığı ekle ...</string>
+    <string name="date_open_end">Tarih - açık uçlu</string>
     <string name="variable_date_open_end">Değişken tarih - açık  uçlu</string>
     <string name="rule_type">Kural türünü göster</string>
     <string name="duplicate_rule">Tıpkısı</string>
     <string name="move_up">Yukarı taşı</string>
     <string name="move_down">Aşağı taşı</string>
-    <!--     opening hour elements -->
+    <string name="display_time_picker">Zaman seçiciyi görüntüle</string>
+    <string name="ticks_15_minute">15 dakikalık işarete geç</string>
+    <string name="ticks_5_minute">5 dakikalık işarete geç</string>
+    <string name="ticks_1_minute">1 dakikalık işarete geç</string>
+    <string name="show_interval">Aralığı göster</string>
+    <string name="show_useAsWeekDay">Kullanımı göster</string>
+    
+<!--     opening hour elements -->
          
     <string name="normal_rule">Normal</string>
+    <string name="interval_minutes">Aralık (dakika)</string>
+    <string name="interval_years">Aralık (yıl)</string>
+    <string name="interval_weeks">Aralık (hafta)</string>
+    
     <string name="date_range">Tarih aralığı</string>
     <string name="date">Tarih</string>
     <string name="date_weekday_occurrence">Tarih (ayın hafta içi)</string>
@@ -64,7 +84,19 @@
     
     <string name="use_as_weekday">Haftaiçi gibi kullanın</string>
     
-    <string name="school_holidays">Okul tatilleri</string>
+    <string name="twentyfourseven">Haftada 7 gün 24 saat</string>
+    
+    <string name="to">a (e)</string>
+    
+    <string name="easter">Paskalya</string>
+    
+    <string name="sunrise">Gündoğumu</string>
+  	<string name="sunset">Gün batımı</string>
+  	<string name="dawn">Şafak</string>
+  	<string name="dusk">Alacakaranlık</string>
+  	
+  	<string name="public_holidays">Resmi tatil</string>
+  	<string name="school_holidays">Okul tatilleri</string>
   	
   	<string name="occurrence_in_month_title">Ay içinde meydana gelme</string>
   	
