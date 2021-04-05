@@ -79,9 +79,9 @@ dependencies {
     implementation "com.google.android.material:material:$androidxVersion"
     implementation "androidx.annotation:annotation:$androidxVersion"
     implementation "androidx.core:core:$androidxVersion"
-    implementation "ch.poole:OpeningHoursParser:0.23.0"
-    implementation "ch.poole:rangebar:0.1.5"
-    implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
+    implementation "ch.poole:OpeningHoursParser:0.23.2"
+    implementation "ch.poole.android:rangebar:0.1.6"
+    implementation 'cn.carbswang.android:NumberPickerView:1.2.0'
     implementation "com.google.code.gson:gson:2.8.5"
 
     // Instrumentation tests

@@ -55,7 +55,7 @@
 					android:digits="+-0123456789" />
 			</LinearLayout>
                 
-            <ch.poole.rangebar.RangeBar
+            <ch.poole.android.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/timebar"
                 android:layout_width="fill_parent"
@@ -81,7 +81,7 @@
                 custom:tickStart="0"
                 custom:visibleTickInterval="12" />    
             
-            <ch.poole.rangebar.RangeBar
+            <ch.poole.android.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/extendedTimebar"
                 android:layout_width="fill_parent"

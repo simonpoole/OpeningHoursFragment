@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical" >
 
-            <ch.poole.rangebar.RangeBar
+            <ch.poole.android.rangebar.RangeBar
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/timebar"
                 android:layout_width="fill_parent"

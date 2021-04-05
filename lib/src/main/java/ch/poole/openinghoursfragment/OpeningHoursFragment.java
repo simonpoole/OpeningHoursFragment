@@ -90,8 +90,8 @@ import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.WeekDayRange;
 import ch.poole.openinghoursparser.WeekRange;
 import ch.poole.openinghoursparser.YearRange;
-import ch.poole.rangebar.RangeBar;
-import ch.poole.rangebar.RangeBar.PinTextFormatter;
+import ch.poole.android.rangebar.RangeBar;
+import ch.poole.android.rangebar.RangeBar.PinTextFormatter;
 
 /**
  * DialogFragment that implements an editor for OpenStreetMap opening_hours tags
