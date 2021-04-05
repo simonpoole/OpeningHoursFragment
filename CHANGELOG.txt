@@ -1,5 +1,7 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.9.3: Update number picker view and rangebar dependencies
+
 0.9.2: Update translations
 
 0.9.1: Move to sonatype / maven central for publishing

@@ -48,6 +48,6 @@ repositories {
 
 ``` groovy
 dependencies {
-    compile "ch.poole:OpeningHoursFragment:0.9.2"
+    compile "ch.poole:OpeningHoursFragment:0.9.3"
 }
 ```
