@@ -1,13 +1,9 @@
 package ch.poole.openinghoursfragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +12,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 public final class Util {
     protected static final String DEBUG_TAG = "Util";
@@ -46,31 +45,24 @@ public final class Util {
             return; // already on screen
         }
         if (row == null) {
-            sv.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (sv instanceof ScrollView) {
-                        ((ScrollView) sv).fullScroll(up ? ScrollView.FOCUS_UP : ScrollView.FOCUS_DOWN);
-                    } else if (sv instanceof NestedScrollView) {
-                        ((NestedScrollView) sv).fullScroll(up ? ScrollView.FOCUS_UP : ScrollView.FOCUS_DOWN);
-                    } else {
-                        Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
-                    }
+            sv.post(() -> {
+                if (sv instanceof ScrollView) {
+                    ((ScrollView) sv).fullScroll(up ? View.FOCUS_UP : View.FOCUS_DOWN);
+                } else if (sv instanceof NestedScrollView) {
+                    ((NestedScrollView) sv).fullScroll(up ? View.FOCUS_UP : View.FOCUS_DOWN);
+                } else {
+                    Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
                 }
             });
         } else {
-            sv.post(new Runnable() {
-                @SuppressLint("NewApi")
-                @Override
-                public void run() {
-                    final int target = up ? row.getTop() : row.getBottom();
-                    if (sv instanceof ScrollView) {
-                        ((ScrollView) sv).smoothScrollTo(0, target);
-                    } else if (sv instanceof NestedScrollView) {
-                        ((NestedScrollView) sv).smoothScrollTo(0, target);
-                    } else {
-                        Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
-                    }
+            sv.post(() -> {
+                final int target = up ? row.getTop() : row.getBottom();
+                if (sv instanceof ScrollView) {
+                    ((ScrollView) sv).smoothScrollTo(0, target);
+                } else if (sv instanceof NestedScrollView) {
+                    ((NestedScrollView) sv).smoothScrollTo(0, target);
+                } else {
+                    Log.e(DEBUG_TAG, "scrollToRow unexpected view " + sv);
                 }
             });
         }

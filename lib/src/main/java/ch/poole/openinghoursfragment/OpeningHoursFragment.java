@@ -929,13 +929,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 });
 
                 // add menu items for rules
-                Menu menu = addStandardMenuItems(groupHeader, new Delete() {
-                    @Override
-                    public void delete() {
-                        rules.remove(r);
-                        updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
-                    }
+                Menu menu = addStandardMenuItems(groupHeader, () -> {
+                    rules.remove(r);
+                    updateString();
+                    watcher.afterTextChanged(null); // hack to force rebuild of form
                 });
 
                 if (r.getModifier() == null) {
@@ -1102,301 +1099,229 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
                 SubMenu dateRangeMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.daterange_menu);
                 MenuItem addDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
-                addDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset dwo = new DateWithOffset();
-                        dwo.setMonth(Month.JAN);
-                        dateRange.setStartDate(dwo);
-                    }
+                addDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset dwo = new DateWithOffset();
+                    dwo.setMonth(Month.JAN);
+                    dateRange.setStartDate(dwo);
                 }));
                 MenuItem addVarDateDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
-                addVarDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset dwo = new DateWithOffset();
-                        dwo.setVarDate(VarDate.EASTER);
-                        dateRange.setStartDate(dwo);
-                    }
+                addVarDateDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset dwo = new DateWithOffset();
+                    dwo.setVarDate(VarDate.EASTER);
+                    dateRange.setStartDate(dwo);
                 }));
                 MenuItem addDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
-                addDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addVarDateVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
-                addVarDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addVarDateVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_occurrence);
-                addOccurrenceOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.FEB);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.FEB);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_date);
-                addOccurrenceDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.JAN);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.JAN);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_occurrence);
-                addDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.FEB);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.FEB);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceVarDateRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_variable_date);
-                addOccurrenceVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceVarDateRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addVarDateOccurrenceRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_occurrence);
-                addVarDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.JAN);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addVarDateOccurrenceRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.JAN);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
 
                 MenuItem addDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
-                addDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setOpenEnded(true);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setOpenEnded(true);
+                    dateRange.setStartDate(startDwo);
                 }));
                 MenuItem addVarDateOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
-                addVarDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        startDwo.setOpenEnded(true);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addVarDateOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    startDwo.setOpenEnded(true);
+                    dateRange.setStartDate(startDwo);
                 }));
                 MenuItem addOccurrenceOpenEndRange = dateRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_open_end);
-                addOccurrenceOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        startDwo.setOpenEnded(true);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addOccurrenceOpenEndRange.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    startDwo.setOpenEnded(true);
+                    dateRange.setStartDate(startDwo);
                 }));
 
                 // the same with offsets
                 SubMenu dateRangeOffsetMenu = dateRangeMenu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.with_offsets);
                 MenuItem addDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_date);
-                addDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset dwo = new DateWithOffset();
-                        dwo.setMonth(Month.JAN);
-                        dwo.setDay(1);
-                        dwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(dwo);
-                    }
+                addDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset dwo = new DateWithOffset();
+                    dwo.setMonth(Month.JAN);
+                    dwo.setDay(1);
+                    dwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(dwo);
                 }));
                 MenuItem addVarDateDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_date);
-                addVarDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset dwo = new DateWithOffset();
-                        dwo.setVarDate(VarDate.EASTER);
-                        dwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(dwo);
-                    }
+                addVarDateDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset dwo = new DateWithOffset();
+                    dwo.setVarDate(VarDate.EASTER);
+                    dwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(dwo);
                 }));
                 MenuItem addDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_variable_date);
-                addDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setDay(1);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setDay(1);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addVarDateVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_variable_date);
-                addVarDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addVarDateVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_occurrence);
-                addOccurrenceOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.FEB);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.FEB);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_date);
-                addOccurrenceDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.JAN);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.JAN);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_occurrence);
-                addDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.FEB);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.FEB);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addOccurrenceVarDateRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_variable_date);
-                addOccurrenceVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addOccurrenceVarDateRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addVarDateOccurrenceRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_occurrence);
-                addVarDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        dateRange.setStartDate(startDwo);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        DateWithOffset endDwo = new DateWithOffset();
-                        endDwo.setMonth(Month.JAN);
-                        endDwo.setNth(WeekDay.MO, 1);
-                        dateRange.setEndDate(endDwo);
-                    }
+                addVarDateOccurrenceRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    dateRange.setStartDate(startDwo);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    DateWithOffset endDwo = new DateWithOffset();
+                    endDwo.setMonth(Month.JAN);
+                    endDwo.setNth(WeekDay.MO, 1);
+                    dateRange.setEndDate(endDwo);
                 }));
                 MenuItem addDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.date_open_end);
-                addDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setDay(1);
-                        startDwo.setOpenEnded(true);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setDay(1);
+                    startDwo.setOpenEnded(true);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
                 }));
                 MenuItem addVarDateOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.variable_date_open_end);
-                addVarDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setVarDate(VarDate.EASTER);
-                        startDwo.setOpenEnded(true);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addVarDateOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setVarDate(VarDate.EASTER);
+                    startDwo.setOpenEnded(true);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
                 }));
                 MenuItem addOccurrenceOpenEndRangeWithOffsets = dateRangeOffsetMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.occurrence_open_end);
-                addOccurrenceOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, new DateMenuInterface() {
-                    @Override
-                    public void addDates(DateRange dateRange) {
-                        DateWithOffset startDwo = new DateWithOffset();
-                        startDwo.setMonth(Month.JAN);
-                        startDwo.setNth(WeekDay.MO, 1);
-                        startDwo.setOpenEnded(true);
-                        startDwo.setWeekDayOffset(WeekDay.MO);
-                        dateRange.setStartDate(startDwo);
-                    }
+                addOccurrenceOpenEndRangeWithOffsets.setOnMenuItemClickListener(new DateRangeMenuListener(r, (DateRange dateRange) -> {
+                    DateWithOffset startDwo = new DateWithOffset();
+                    startDwo.setMonth(Month.JAN);
+                    startDwo.setNth(WeekDay.MO, 1);
+                    startDwo.setOpenEnded(true);
+                    startDwo.setWeekDayOffset(WeekDay.MO);
+                    dateRange.setStartDate(startDwo);
                 }));
 
                 MenuItem addYearRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_year_range);
@@ -1560,17 +1485,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 final Spinner modifierSpinner = (Spinner) modifierLayout.findViewById(R.id.modifier);
                 Util.setSpinnerInitialEntryValue(getResources(), R.array.modifier_values, modifierSpinner,
                         rm.getModifier() == null ? "" : rm.getModifier().toString());
-                setSpinnerListenerEntryValues(R.array.modifier_values, modifierSpinner, value -> rm.setModifier(value));
+                setSpinnerListenerEntryValues(R.array.modifier_values, modifierSpinner, rm::setModifier);
                 EditText modifierComment = (EditText) modifierLayout.findViewById(R.id.comment);
                 modifierComment.setText(rm.getComment());
                 setTextWatcher(modifierComment, rm::setComment);
-                addStandardMenuItems(modifierLayout, new Delete() {
-                    @Override
-                    public void delete() {
-                        r.setModifier(null);
-                        updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
-                    }
+                addStandardMenuItems(modifierLayout, () -> {
+                    r.setModifier(null);
+                    updateString();
+                    watcher.afterTextChanged(null); // hack to force rebuild of form
                 });
                 ll.addView(modifierLayout);
             }
