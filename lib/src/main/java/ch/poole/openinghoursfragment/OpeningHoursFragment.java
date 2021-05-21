@@ -352,8 +352,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param locale if not null use a different Locale than the default for parser error messages
      * @return an OpeningHoursFragment
      */
-    public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, String region, String object, @NonNull String value, int style,
-            int rule, boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues, @Nullable Locale locale) {
+    public static OpeningHoursFragment newInstanceForFragment(@NonNull ValueWithDescription key, @Nullable String region, @Nullable String object,
+            @NonNull String value, int style, int rule, boolean showTemplates, @Nullable ArrayList<ValueWithDescription> textValues, @Nullable Locale locale) {
         OpeningHoursFragment f = new OpeningHoursFragment();
 
         Bundle args = new Bundle();
@@ -505,20 +505,17 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     /**
-     * Try to locate a reasonable default value There probably is a more elegant way to do this
+     * Try to locate a reasonable default value
      */
     private void loadDefault() {
-        openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), region, object);
-        if (openingHoursValue == null) {
-            openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), null, object);
-            if (openingHoursValue == null) {
-                openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), null, null);
-                if (openingHoursValue == null) {
-                    // didn't find a more specific default try general default now
-                    openingHoursValue = TemplateDatabase.getDefault(mDatabase, null, null, null);
-                }
+        String[][] values = new String[][] { { region, object }, { null, object }, { region, null } };
+        for (String[] v : values) {
+            openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), region, object);
+            if (openingHoursValue != null) {
+                return;
             }
         }
+        openingHoursValue = TemplateDatabase.getDefault(mDatabase, null, null, null);
     }
 
     @Override
@@ -2799,24 +2796,24 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             int interval = timeBar != null ? (int) timeBar.getTickInterval() : 1;
             if (ts.getStartEvent() == null && ts.getEndEvent() == null && end >= 0) { // t-t, t-x
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
-                        ts.setStart(startHour * 60 + startMinute);
-                        ts.setEnd(endHour * 60 + endMinute);
-                        updateString();
-                        watcher.afterTextChanged(null);
+                    ts.setStart(startHour * 60 + startMinute);
+                    ts.setEnd(endHour * 60 + endMinute);
+                    updateString();
+                    watcher.afterTextChanged(null);
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60, interval);
             } else if (ts.getStartEvent() == null && (ts.getEndEvent() != null || end < 0)) { // t, t-, t-e
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
-                        ts.setStart(startHour * 60 + startMinute);
-                        updateString();
-                        watcher.afterTextChanged(null);
+                    ts.setStart(startHour * 60 + startMinute);
+                    updateString();
+                    watcher.afterTextChanged(null);
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
             } else if (ts.getStartEvent() != null && ts.getEndEvent() == null || end >= 0) { // e-t
-                realSetTimeRangeListener =(int startHour, int startMinute, int endHour, int endMinute) -> {
-                        ts.setEnd(startHour * 60 + startMinute);
-                        updateString();
-                        watcher.afterTextChanged(null);
+                realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
+                    ts.setEnd(startHour * 60 + startMinute);
+                    updateString();
+                    watcher.afterTextChanged(null);
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
             }

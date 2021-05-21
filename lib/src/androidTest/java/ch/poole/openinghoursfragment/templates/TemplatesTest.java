@@ -5,25 +5,34 @@
 
 package ch.poole.openinghoursfragment.templates;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import ch.poole.openinghoursfragment.OpeningHoursFragment;
 import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursfragment.TestActivity;
@@ -36,6 +45,9 @@ public class TemplatesTest {
 
     private OpeningHoursFragment fragment;
     private UiDevice             device;
+    FragmentManager              fm;
+    TemplateDatabaseHelper       db;
+    FragmentActivity             activity;
 
     @Rule
     public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule<>(TestActivity.class);
@@ -43,8 +55,8 @@ public class TemplatesTest {
     @Before
     public void setup() {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-
-        FragmentManager fm = mActivityRule.getActivity().getSupportFragmentManager();
+        activity = mActivityRule.getActivity();
+        fm = activity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("fragment_openinghours");
         if (prev != null) {
@@ -53,37 +65,58 @@ public class TemplatesTest {
         ft.commit();
 
         // create the template database
-        TemplateDatabaseHelper db = new TemplateDatabaseHelper(mActivityRule.getActivity());
+        db = new TemplateDatabaseHelper(activity);
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         InputStream is = loader.getResourceAsStream("templates.json");
         TemplateDatabase.loadJson(db.getWritableDatabase(), is, true);
-
-        ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
-
-        fragment = OpeningHoursFragment.newInstance(key, "AT", null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null, null);
-        fragment.show(fm, "fragment_openinghours");
     }
 
     @Test
     public void manageTemplates() {
-        Assert.assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
-        Assert.assertNull(TestUtils.findTextContains(device, false, "Switzerland"));
-        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
-        Assert.assertTrue(TestUtils.clickMenuButton("more button", false, true));
-        Assert.assertTrue(TestUtils.clickText(device, false, "Manage templates", true));
-        Assert.assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
-        Assert.assertNull(TestUtils.findTextContains(device, false, "Switzerland"));
-        Assert.assertTrue(TestUtils.clickMenuButton("more button", false, true));
-        Assert.assertTrue(TestUtils.clickText(device, false, "Show all", true));
-        Assert.assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
-        Assert.assertNotNull(TestUtils.findTextContains(device, false, "Switzerland"));
+        ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
+        fragment = OpeningHoursFragment.newInstance(key, "AT", null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, true, null, null);
+        fragment.show(fm, "fragment_openinghours");
+        assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
+        assertNull(TestUtils.findTextContains(device, false, "Switzerland"));
+        assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        assertTrue(TestUtils.clickMenuButton("more button", false, true));
+        assertTrue(TestUtils.clickText(device, false, "Manage templates", true));
+        assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
+        assertNull(TestUtils.findTextContains(device, false, "Switzerland"));
+        assertTrue(TestUtils.clickMenuButton("more button", false, true));
+        assertTrue(TestUtils.clickText(device, false, "Show all", true));
+        assertNotNull(TestUtils.findTextContains(device, false, "Austria"));
+        assertNotNull(TestUtils.findTextContains(device, false, "Switzerland"));
         UiObject template = device.findObject(new UiSelector().textContains("Austria"));
         try {
-            Assert.assertTrue(template.clickAndWaitForNewWindow());
+            assertTrue(template.clickAndWaitForNewWindow());
         } catch (UiObjectNotFoundException e) {
-            Assert.fail(e.getMessage());
+            fail(e.getMessage());
         }
-        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
-        Assert.assertNull(TestUtils.findTextContains(device, false, "Austria"));
+        assertTrue(TestUtils.clickText(device, false, "Delete", true));
+        assertNull(TestUtils.findTextContains(device, false, "Austria"));
+    }
+
+    @Test
+    public void useDefault() {
+        ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
+        fragment = OpeningHoursFragment.newInstance(key, "CH", null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, false, null, null);
+        fragment.show(fm, "fragment_openinghours");
+        assertNotNull(TestUtils.findTextContains(device, false, "Mo-Fr 09:00-12:00,13:30-18:30; Sa 09:00-17:00; PH closed"));
+    }
+
+    @Test
+    public void exportImportTemplates() {
+        File dir = activity.getExternalCacheDir();
+        final File file = new File(dir, "template_out.json");
+        try {
+            assertTrue(TemplateDatabase.writeJSON(db.getWritableDatabase(), new FileOutputStream(file)));
+            TemplateDatabase.loadJson(db.getWritableDatabase(), new FileInputStream(file), true);
+        } catch (FileNotFoundException e) {
+            fail(e.getMessage());
+        } finally {
+            file.delete();
+        }
+        manageTemplates();
     }
 }

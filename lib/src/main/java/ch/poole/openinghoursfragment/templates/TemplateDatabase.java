@@ -35,9 +35,10 @@ public final class TemplateDatabase {
     static final String         REGION_FIELD    = "region";
     static final String         OBJECT_FIELD    = "object";
 
-    static final String QUERY_ALL      = "SELECT rowid as _id, key, name, is_default, template, region, object FROM templates";
-    static final String QUERY_BY_ROWID = "SELECT key, name, is_default, template, region, object FROM templates WHERE rowid=?";
-    static final String QUERY_BY       = "SELECT rowid as _id, key, name, is_default, template, region, object FROM templates WHERE ";
+    static final String QUERY_ALL         = "SELECT rowid as _id, key, name, is_default, template, region, object FROM templates";
+    static final String QUERY_BY_ROWID    = "SELECT key, name, is_default, template, region, object FROM templates WHERE rowid=?";
+    static final String QUERY_BY          = "SELECT rowid as _id, key, name, is_default, template, region, object FROM templates WHERE ";
+    static final String QUERY_TEMPLATE_BY = "SELECT template FROM templates WHERE ";
 
     /**
      * Private default constructor
@@ -82,7 +83,7 @@ public final class TemplateDatabase {
             query.append(" AND ");
         }
         query.append("is_default=1");
-        Cursor dbresult = database.rawQuery(TemplateDatabase.QUERY_BY + query.toString(), params.toArray(new String[0]));
+        Cursor dbresult = database.rawQuery(TemplateDatabase.QUERY_TEMPLATE_BY + query.toString(), params.toArray(new String[0]));
         dbresult.moveToFirst();
         if (dbresult.getCount() >= 1) {
             result = dbresult.getString(0);
