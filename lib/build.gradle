@@ -22,8 +22,8 @@ task updateTranslations(type: Exec) {
 updateTranslations.group = 'translation'
 updateTranslations.description = 'Update translations by executing the transifex tx utility'
 
-apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android-3'
-// apply from: '../../gradle-tasks/eclipse-android-3'
+apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/eclipse-android-4-lib'
+// apply from: '../../gradle-tasks/eclipse-android-3-lib'
 
 android {
     compileSdkVersion 28
@@ -55,6 +55,10 @@ android {
                 events "passed", "skipped", "failed", "standardOut", "standardError"
                 outputs.upToDateWhen {false}
                 showStandardStreams = true
+                showExceptions true
+                exceptionFormat "full"
+                showCauses true
+                showStackTraces true
             }
         }
     }
