@@ -10,8 +10,12 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
+
+import org.junit.Assert;
+
 import android.util.Log;
 
 /**
@@ -126,6 +130,49 @@ public class TestUtils {
         } else {
             bySelector = By.textStartsWith(text);
             uiSelector = new UiSelector().textStartsWith(text);
+        }
+        device.wait(Until.findObject(bySelector), 500);
+        UiObject button = device.findObject(uiSelector);
+        if (button.exists()) {
+            try {
+                if (waitForNewWindow) {
+                    button.clickAndWaitForNewWindow();
+                } else {
+                    button.click();
+                    Log.e(DEBUG_TAG, ".... clicked");
+                }
+                return true;
+            } catch (UiObjectNotFoundException e) {
+                Log.e(DEBUG_TAG, "Object vanished.");
+                return false;
+            }
+        } else {
+            Log.e(DEBUG_TAG, "Object not found");
+            return false;
+        }
+    }
+    
+    /**
+     * Click a text on screen (exact)
+     * 
+     * @param device UiDevice object
+     * @param clickable clickable if true the search will be restricted to clickable objects
+     * @param text text to search (case insensitive, uses textStartsWith)
+     * @param waitForNewWindow set the wait for new window flag if true
+     * @return true if successful
+     */
+    public static boolean clickTextExact(UiDevice device, boolean clickable, String text, boolean waitForNewWindow) {
+        Log.w(DEBUG_TAG, "Searching for object with " + text);
+        // Note: contrary to "text", "textStartsWith" is case insensitive
+        BySelector bySelector = null;
+        UiSelector uiSelector = null;
+        // NOTE order of the selector terms is significant
+        if (clickable) {
+            bySelector = By.clickable(true).text(text);
+            uiSelector = new UiSelector().clickable(true).text(text);
+        } else {
+            bySelector = By.text(text);
+            uiSelector = new UiSelector().text(text);
         }
         device.wait(Until.findObject(bySelector), 500);
         UiObject button = device.findObject(uiSelector);
@@ -306,5 +353,20 @@ public class TestUtils {
         }
         object.click();
         cc.setActionAcknowledgmentTimeout(defaultAckTimeout);
+    }
+    
+    /**
+     * Scroll to a specific text
+     * 
+     * @param text the text
+     * @throws UiObjectNotFoundException if the UiScrollable couldn't be found
+     */
+    public static void scrollTo(@NonNull String text) {
+        UiScrollable appView = new UiScrollable(new UiSelector().scrollable(true));
+        try {
+            appView.scrollIntoView(new UiSelector().textStartsWith(text));
+        } catch (UiObjectNotFoundException e) {
+            Assert.fail(text + " not found");
+        }
     }
 }

@@ -5,6 +5,8 @@
 
 package ch.poole.openinghoursfragment;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -63,12 +65,8 @@ public class FragmentTest {
     }
 
     @Test
-    public void weekdays2() {
-        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
-        TestUtils.clickOverflowButton();
-        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
-        TestUtils.clickOverflowButton();
-        Assert.assertTrue(TestUtils.clickText(device, false, "Add date range", true));
+    public void addDaterange1() {
+        clickAddDateRange();
         Assert.assertTrue(TestUtils.clickText(device, false, "Date - date", true));
         UiSelector uiSelector = new UiSelector().resourceIdMatches(".*startMonth.*").instance(0);
         UiObject date = device.findObject(uiSelector);
@@ -90,7 +88,119 @@ public class FragmentTest {
     }
 
     @Test
-    public void weekdays3() {
+    public void addDaterange2() {
+        clickAddDateRange();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Variable date - date", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("easter Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addDaterange3() {
+        clickAddDateRange();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Occurrence in month - occurrence", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Jan Mo[1]-Feb Mo[1] Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addDaterange4() {
+        clickAddDateRange();
+        TestUtils.scrollTo("With offsets");
+        Assert.assertTrue(TestUtils.clickText(device, false, "With offsets", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Variable date - occurrence", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("easter+Mo-Jan Mo[1] Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addDaterange5() {
+        clickAddDateRange();
+        TestUtils.scrollTo("With offsets");
+        Assert.assertTrue(TestUtils.clickText(device, false, "With offsets", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Date - variable date", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Jan 1+Mo-easter Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addDaterange6() {
+        clickAddDateRange();
+        TestUtils.scrollTo("With offsets");
+        Assert.assertTrue(TestUtils.clickText(device, false, "With offsets", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Variable date - variable date", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("easter+Mo-easter Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    /**
+     * 
+     */
+    private void clickAddDateRange() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Add date range", true));
+    }
+
+    public void occurranceInMonth() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
+        TestUtils.clickOverflowButton();
+        UiSelector uiSelector = new UiSelector().description("More options").instance(1);
+        UiObject overflowButton = device.findObject(uiSelector);
+        try {
+            overflowButton.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        Assert.assertTrue(TestUtils.clickText(device, false, "Add occurrence", true));
+        clickCheckBox(10);
+        Assert.assertEquals("Sa[3] 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addWeekRange() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Add week range", true));
+        UiSelector uiSelector = new UiSelector().description("More options").instance(1);
+        UiObject overflowButton = device.findObject(uiSelector);
+        try {
+            overflowButton.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        Assert.assertTrue(TestUtils.clickText(device, false, "Show interval", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("week 01 Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addYearRange() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Add year range", true));
+        UiSelector uiSelector = new UiSelector().description("More options").instance(1);
+        UiObject overflowButton = device.findObject(uiSelector);
+        try {
+            overflowButton.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        Assert.assertTrue(TestUtils.clickText(device, false, "Show interval", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("2021 Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void timerange() {
         Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
         UiSelector uiSelector = new UiSelector().resourceIdMatches(".*timebar.*").instance(0);
         UiObject bar = device.findObject(uiSelector);
@@ -114,7 +224,7 @@ public class FragmentTest {
     /**
      * Click via instance count as using the res id doesn't seem to work
      *
-     * @param instance the 0 based occurance of the checkbox
+     * @param instance the 0 based occurrence of the checkbox
      */
     private void clickCheckBox(int instance) {
         UiSelector uiSelector = new UiSelector().className("android.widget.CheckBox").instance(instance);
@@ -124,5 +234,98 @@ public class FragmentTest {
         } catch (UiObjectNotFoundException ex) {
             Assert.fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void addTimeRange1() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Time - extended time", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr 00:00-48:00; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addTimeRange2() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Var. time - time", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr dawn-24:00; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    /**
+     * 
+     */
+    private void clickAddTimeSpan() {
+        TestUtils.clickOverflowButton();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Add time span", true));
+    }
+
+    @Test
+    public void addTimeRange3() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Var. time - var. time", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr dawn-dusk; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addTimeRange4() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Time-open end", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr 06:00+; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addTimeRange5() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Variable time-open end", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr dawn+; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addTimeRange6() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickText(device, false, "Time - var. time", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr 06:00-dusk; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    @Test
+    public void addTimeRange7() {
+        deleteTimeBars();
+        clickAddTimeSpan();
+        Assert.assertTrue(TestUtils.clickTextExact(device, false, "Time", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
+        Assert.assertEquals("Mo-Fr 06:00; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+    }
+
+    /**
+     * 
+     */
+    private void deleteTimeBars() {
+        Assert.assertTrue(TestUtils.clickText(device, false, "Weekdays", true));
+        UiSelector uiSelector = new UiSelector().resourceIdMatches(".*timebar.*").instance(0);
+        UiObject overflowButton = device.findObject(uiSelector.fromParent(new UiSelector().description("More options")));
+        try {
+            overflowButton.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        TestUtils.clickText(device, false, "Delete", true);
+        overflowButton = device.findObject(uiSelector.fromParent(new UiSelector().description("More options")));
+        try {
+            overflowButton.clickAndWaitForNewWindow();
+        } catch (UiObjectNotFoundException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        TestUtils.clickText(device, false, "Delete", true);
     }
 }

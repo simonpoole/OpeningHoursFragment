@@ -1,95 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
     android:layout_marginStart="0dp"
     android:layout_marginTop="0dp"
-    android:orientation="vertical" >
-
+    android:orientation="vertical">
     <include layout="@layout/divider" />
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-    	<RelativeLayout
-    		android:layout_width="match_parent"
-    		android:layout_height="wrap_content"
-    		android:layout_gravity="center_vertical"
-    		android:layout_weight="1" >
-    		<TextView
-        		android:id="@+id/label"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-            	android:layout_alignParentTop="true"
-            	android:text="@string/weeks" />
+                android:layout_alignParentTop="true"
+                android:text="@string/weeks" />
             <LinearLayout
-            	android:id="@+id/range"
-            	android:layout_width="wrap_content"
-    			android:layout_height="wrap_content" 
-    			android:layout_toRightOf="@id/label"
+                android:id="@+id/range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/label"
                 android:layout_toEndOf="@id/label"
-    			android:layout_alignParentTop="true"
-    			android:paddingLeft="12dp"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="12dp"
                 android:paddingStart="12dp"
-    			android:clickable="true" >
-    			<TextView
-    				android:id="@+id/start_week"
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:textColor="?attr/colorAccent"
-            		android:gravity="end"
-            		android:minEms="1"
-            		android:maxEms="2"/>
-				 <TextView
-                	android:id="@+id/to"
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content"
-                	android:paddingLeft="12dp"
-                	android:paddingRight="12dp"
-                	android:text="@string/to"
-               	 />
-           		<TextView
-    				android:id="@+id/end_week"
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:textColor="?attr/colorAccent"
-            		android:gravity="end"
-            		android:minEms="1"
-            		android:maxEms="2"/>
-            	<ImageView
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:tint="?attr/colorAccent"
-            		android:src="@drawable/ic_action_edit_holo_light"/>
-			</LinearLayout>
-			<LinearLayout
-				android:id="@+id/interval_container"
-            	android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-    			android:layout_alignParentLeft="true"
+                android:clickable="true">
+                <TextView
+                    android:id="@+id/start_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorAccent"
+                    android:gravity="end"
+                    android:minEms="1"
+                    android:maxEms="2" />
+                <TextView
+                    android:id="@+id/to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="@string/to" />
+                <TextView
+                    android:id="@+id/end_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorAccent"
+                    android:gravity="end"
+                    android:minEms="1"
+                    android:maxEms="2" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="?attr/colorAccent"
+                    android:src="@drawable/ic_action_edit_holo_light" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/interval_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-    			android:layout_below="@id/range"
-				>
-				<TextView
-        			android:id="@+id/interval_label"
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:text="@string/interval_weeks" />
-				<EditText
-            		android:id="@+id/interval"
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-            		android:inputType="number|none"
-            		android:minEms="2"
-            		android:maxEms="2"
-					android:maxLength="2"
-					android:digits="0123456789" />
-  			</LinearLayout>
-			</RelativeLayout>
+                android:layout_below="@id/range">
+                <TextView
+                    android:id="@+id/interval_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/interval_weeks" />
+                <EditText
+                    android:id="@+id/interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|none"
+                    android:minEms="2"
+                    android:maxEms="2"
+                    android:maxLength="2"
+                    android:digits="0123456789" />
+            </LinearLayout>
+        </RelativeLayout>
         <include layout="@layout/menu" />
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
