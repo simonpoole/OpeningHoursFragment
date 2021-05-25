@@ -20,9 +20,11 @@ jobs:
       with:
         api-level: 29
         script: ./gradlew connectedCheck
-    - name: Publish Unit Test Results
-      uses: asadmansr/android-test-report-action@v1.2.0
-      if: ${{ always() }}
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v2
+      with:
+         name: Test output
+         path: /Users/runner/work/OpeningHoursFragment/OpeningHoursFragment/lib/build/reports/androidTests/connected/flavors/debugAndroidTest
     - name: Generate coverage report
       run: ./gradlew jacocoTestReport
     - name: SonarCloud Scan
