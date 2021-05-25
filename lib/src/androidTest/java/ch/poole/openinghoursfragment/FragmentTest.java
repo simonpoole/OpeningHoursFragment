@@ -284,6 +284,7 @@ public class FragmentTest {
     public void addTimeRange5() {
         deleteTimeBars();
         clickAddTimeSpan();
+        TestUtils.scrollTo("Variable time-open end");
         Assert.assertTrue(TestUtils.clickText(device, false, "Variable time-open end", true));
         Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
         Assert.assertEquals("Mo-Fr dawn+; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
