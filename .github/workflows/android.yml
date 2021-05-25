@@ -31,6 +31,7 @@ jobs:
     - name: Generate coverage report
       run: ./gradlew jacocoTestReport
     - name: SonarCloud Scan
+      # note as we don't wait for processing to complete this will always succeed
       run: ./gradlew sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=simonpoole-github --info
       env:
          # Needed to get some information about the pull request, if any
