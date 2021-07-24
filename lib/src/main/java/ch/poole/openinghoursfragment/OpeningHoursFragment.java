@@ -63,6 +63,7 @@ import ch.poole.openinghoursfragment.pickers.SetDateRangeListener;
 import ch.poole.openinghoursfragment.pickers.SetRangeListener;
 import ch.poole.openinghoursfragment.pickers.SetTimeRangeListener;
 import ch.poole.openinghoursfragment.pickers.TimeRangePicker;
+import ch.poole.openinghoursfragment.pickers.ValuePicker;
 import ch.poole.openinghoursfragment.templates.TemplateDatabase;
 import ch.poole.openinghoursfragment.templates.TemplateDatabaseHelper;
 import ch.poole.openinghoursfragment.templates.TemplateDialog;
@@ -1321,7 +1322,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     dateRange.setStartDate(startDwo);
                 }));
 
-                MenuItem addYearRange = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_year_range);
+                SubMenu yearRangeMenu = menu.addSubMenu(Menu.NONE, Menu.NONE, Menu.NONE, R.string.spd_ohf_year_range_menu);
+                MenuItem addYearRange = yearRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.add_year_range);
                 addYearRange.setOnMenuItemClickListener(item -> {
                     List<YearRange> years = r.getYears();
                     if (years == null) {
@@ -1330,6 +1332,21 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                     YearRange yearRange = new YearRange();
                     yearRange.setStartYear(Calendar.getInstance().get(Calendar.YEAR));
+                    years.add(yearRange);
+                    updateString();
+                    watcher.afterTextChanged(null);
+                    return true;
+                });
+                MenuItem addYearRangeOpenEnded = yearRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.spd_ohf_add_year_range_openended);
+                addYearRangeOpenEnded.setOnMenuItemClickListener(item -> {
+                    List<YearRange> years = r.getYears();
+                    if (years == null) {
+                        r.setYears(new ArrayList<>());
+                        years = r.getYears();
+                    }
+                    YearRange yearRange = new YearRange();
+                    yearRange.setStartYear(Calendar.getInstance().get(Calendar.YEAR));
+                    yearRange.setOpenEnded(true);
                     years.add(yearRange);
                     updateString();
                     watcher.afterTextChanged(null);
@@ -2276,32 +2293,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     private void addYearRangeUI(@NonNull LinearLayout ll, @NonNull final Rule r, @NonNull final List<YearRange> years, @NonNull final YearRange yr) {
         LinearLayout yearLayout = (LinearLayout) inflater.inflate(R.layout.year_range, null);
+        final View intervalContainer = yearLayout.findViewById(R.id.interval_container);
         final int startYear = yr.getStartYear();
         final TextView startYearView = (TextView) yearLayout.findViewById(R.id.start_year);
         startYearView.setText(Integer.toString(startYear));
 
         final TextView endYearView = (TextView) yearLayout.findViewById(R.id.end_year);
-        final int endYear = yr.getEndYear();
-        if (endYear > 0) {
-            endYearView.setText(Integer.toString(endYear));
-        }
-        final View intervalContainer = yearLayout.findViewById(R.id.interval_container);
-        EditText yearIntervalEdit = (EditText) yearLayout.findViewById(R.id.interval);
-        if (yr.getInterval() > 0) {
-            intervalContainer.setVisibility(View.VISIBLE);
-            yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
-        } else {
-            intervalContainer.setVisibility(View.GONE);
-        }
-        setTextWatcher(yearIntervalEdit, value -> {
-            int interval = 0;
-            try {
-                interval = Integer.parseInt(value);
-            } catch (NumberFormatException nfex) {
-                // Empty
-            }
-            yr.setInterval(interval);
-        });
         Menu menu = addStandardMenuItems(yearLayout, () -> {
             years.remove(yr);
             if (years.isEmpty()) {
@@ -2310,7 +2307,33 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             updateString();
             watcher.afterTextChanged(null); // hack to force rebuild of form
         });
-        addShowIntervalItem(intervalContainer, menu);
+        if (yr.isOpenEnded()) {
+            intervalContainer.setVisibility(View.GONE);
+            yearLayout.findViewById(R.id.to).setVisibility(View.GONE);
+            ((TextView) yearLayout.findViewById(R.id.label)).setText(R.string.spd_ohf_starting);
+        } else {
+            final int endYear = yr.getEndYear();
+            if (endYear > 0) {
+                endYearView.setText(Integer.toString(endYear));
+            }
+            EditText yearIntervalEdit = (EditText) yearLayout.findViewById(R.id.interval);
+            if (yr.getInterval() > 0) {
+                intervalContainer.setVisibility(View.VISIBLE);
+                yearIntervalEdit.setText(Integer.toString(yr.getInterval()));
+            } else {
+                intervalContainer.setVisibility(View.GONE);
+            }
+            setTextWatcher(yearIntervalEdit, value -> {
+                int interval = 0;
+                try {
+                    interval = Integer.parseInt(value);
+                } catch (NumberFormatException nfex) {
+                    // Empty
+                }
+                yr.setInterval(interval);
+            });
+            addShowIntervalItem(intervalContainer, menu);
+        }
 
         LinearLayout range = (LinearLayout) yearLayout.findViewById(R.id.range);
         range.setOnClickListener(v -> {
@@ -2325,16 +2348,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             realSetRangeListener = (int start, int end) -> {
                 yr.setStartYear(start);
                 startYearView.setText(Integer.toString(start));
-                if (end != RangePicker.NOTHING_SELECTED) {
-                    endYearView.setText(Integer.toString(end));
-                    yr.setEndYear(end);
-                } else {
-                    endYearView.setText("");
-                    yr.setEndYear(YearRange.UNDEFINED_YEAR);
+                if (!yr.isOpenEnded()) {
+                    if (end != RangePicker.NOTHING_SELECTED) {
+                        endYearView.setText(Integer.toString(end));
+                        yr.setEndYear(end);
+                    } else {
+                        endYearView.setText("");
+                        yr.setEndYear(YearRange.UNDEFINED_YEAR);
+                    }
                 }
                 updateString();
             };
-            RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear);
+            if (yr.isOpenEnded()) {
+                ValuePicker.showDialog(OpeningHoursFragment.this, R.string.spd_ohf_starting_year, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear());
+            } else {
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear);
+            }
         });
         ll.addView(yearLayout);
     }

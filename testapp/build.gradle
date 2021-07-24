@@ -67,7 +67,7 @@ dependencies {
     implementation "androidx.annotation:annotation:1.0.0"
     implementation "androidx.core:core:1.0.0"
     implementation 'cn.carbswang.android:NumberPickerView:1.2.0'
-    implementation "ch.poole:OpeningHoursParser:0.23.4"
+    implementation "ch.poole:OpeningHoursParser:0.25.0"
     implementation "ch.poole.android:rangebar:0.1.6"
     implementation 'cn.carbswang.android:NumberPickerView:1.2.0'
     implementation "com.google.code.gson:gson:2.8.5"
