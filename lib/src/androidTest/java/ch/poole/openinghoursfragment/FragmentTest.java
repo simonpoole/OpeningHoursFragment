@@ -5,25 +5,23 @@
 
 package ch.poole.openinghoursfragment;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -186,7 +184,8 @@ public class FragmentTest {
         TestUtils.clickOverflowButton();
         Assert.assertTrue(TestUtils.clickText(device, false, "Delete", true));
         TestUtils.clickOverflowButton();
-        Assert.assertTrue(TestUtils.clickText(device, false, "Add year range", true));
+        Assert.assertTrue(TestUtils.clickText(device, false, fragment.getString(R.string.spd_ohf_year_range_menu), true));
+        Assert.assertTrue(TestUtils.clickTextExact(device, false, fragment.getString(R.string.add_year_range), true));
         UiSelector uiSelector = new UiSelector().description("More options").instance(1);
         UiObject overflowButton = device.findObject(uiSelector);
         try {
@@ -284,8 +283,9 @@ public class FragmentTest {
     public void addTimeRange5() {
         deleteTimeBars();
         clickAddTimeSpan();
-        TestUtils.scrollTo("Variable time-open end");
-        Assert.assertTrue(TestUtils.clickText(device, false, "Variable time-open end", true));
+        String text = fragment.getString(R.string.variable_time_open_end);
+        TestUtils.scrollTo(text);
+        Assert.assertTrue(TestUtils.clickText(device, false, text, true));
         Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
         Assert.assertEquals("Mo-Fr dawn+; Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
     }

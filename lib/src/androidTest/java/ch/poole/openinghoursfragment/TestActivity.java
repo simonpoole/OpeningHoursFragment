@@ -8,7 +8,6 @@ public class TestActivity extends AppCompatActivity implements OnSaveListener {
 
     @Override
     public void save(String key, String openingHours) {
-        System.out.println("save got " + openingHours + " for key " + key);
         result = openingHours;
     }
 

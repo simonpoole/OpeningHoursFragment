@@ -25,6 +25,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AutoCompleteTextView;
@@ -47,6 +49,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ActionMenuView;
@@ -473,12 +476,23 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             }
             modeGroup.setOnCheckedChangeListener((group, checkedId) -> {
                 openingHoursValue = text.getText().toString();
-                text.removeTextChangedListener(watcher);
                 text.removeTextChangedListener(textWatcher);
                 text.removeCallbacks(updateStringRunnable);
+                text.setOnEditorActionListener(null);
                 removeHighlight(text);
                 errorMessages.removeAllViews();
-                buildLayout(openingHoursLayout, openingHoursValue, -1);
+                final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
+                if (checkedId == useText.getId()) {
+                    buildLayout(openingHoursLayout, openingHoursValue, -1);
+                    fab.setVisibility(View.GONE);
+                    headerLine.setVisibility(View.VISIBLE);
+                } else if (checkedId == useOH.getId()) {
+                    text.setText(openingHoursValue);
+                    text.setOnEditorActionListener(editorActionListener);
+                    watcher.afterTextChanged(null);
+                    fab.setVisibility(View.VISIBLE);
+                    headerLine.setVisibility(View.GONE);
+                }
             });
             modeContainer.setVisibility(View.VISIBLE);
         } else {
@@ -623,6 +637,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     };
 
+    private OnEditorActionListener editorActionListener = (TextView view, int actionId, KeyEvent event) -> {
+        if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE
+                || (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+            watcher.afterTextChanged(null);
+        }
+        return true;
+    };
+
     /**
      * Build the parts of the layout that only need to be done once
      * 
@@ -631,168 +653,182 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param initialRule index of the rule to scroll to, currently ignored
      * @return a ScrollView
      */
+    @Nullable
     private ScrollView buildLayout(final @NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
         text = (AutoCompleteTextView) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
-        String keyDescription = key.getDescription();
-        if (keyDescription != null && !"".equals(keyDescription)) {
-            text.setHint(keyDescription);
-        }
-        final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
-        if (text != null && sv != null) {
-            sv.removeAllViews();
+        if (text != null) {
+            String keyDescription = key.getDescription();
+            if (keyDescription != null && !"".equals(keyDescription)) {
+                text.setHint(keyDescription);
+            }
+            final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
+            if (sv != null) {
+                sv.removeAllViews();
+                final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
 
-            final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
-
-            // non-OH support
-            if (textValues != null) {
-                final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
-                final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
-                if (useText.isChecked()) {
-                    text.removeTextChangedListener(watcher);
-                    text.removeCallbacks(updateStringRunnable);
-                    ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
-                    text.setAdapter(adapter);
-                    text.setOnClickListener(autocompleteOnClick);
-                    text.setOnItemClickListener((parent, view, position, id) -> {
-                        Object o = parent.getItemAtPosition(position);
-                        if (o instanceof ValueWithDescription) {
-                            text.setText(((ValueWithDescription) o).getValue());
-                        } else if (o instanceof String) {
-                            text.setText((String) o);
-                        }
-                    });
-
-                    text.setText(openingHoursValue);
-                    text.removeTextChangedListener(textWatcher);
-                    text.addTextChangedListener(textWatcher);
-                    fab.setVisibility(View.GONE);
-                    headerLine.setVisibility(View.VISIBLE);
-                    textMode = true;
-                    return sv;
-                } else {
-                    text.setAdapter(null);
-                    text.setOnClickListener(null);
-                    textMode = false;
-                    if ("".equals(openingHoursValue)) {
-                        if (!showTemplates) {
-                            loadDefault();
-                            if (!"".equals(openingHoursValue)) {
-                                ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
+                // non-OH support
+                if (textValues != null) {
+                    final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
+                    final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
+                    if (useText.isChecked()) {
+                        text.removeCallbacks(updateStringRunnable);
+                        ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
+                        text.setAdapter(adapter);
+                        text.setOnClickListener(autocompleteOnClick);
+                        text.setOnItemClickListener((parent, view, position, id) -> {
+                            Object o = parent.getItemAtPosition(position);
+                            if (o instanceof ValueWithDescription) {
+                                text.setText(((ValueWithDescription) o).getValue());
+                            } else if (o instanceof String) {
+                                text.setText((String) o);
                             }
-                        } else {
-                            showTemplates = false;
-                            TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
+                        });
+
+                        text.setText(openingHoursValue);
+                        text.setOnEditorActionListener(null);
+                        text.removeTextChangedListener(textWatcher);
+                        text.addTextChangedListener(textWatcher);
+                        fab.setVisibility(View.GONE);
+                        setupFab(sv, fab);
+                        headerLine.setVisibility(View.VISIBLE);
+                        textMode = true;
+                        return sv;
+                    } else {
+                        text.setOnEditorActionListener(editorActionListener);
+                        text.setAdapter(null);
+                        text.setOnClickListener(null);
+                        textMode = false;
+                        if ("".equals(openingHoursValue)) {
+                            if (!showTemplates) {
+                                loadDefault();
+                                if (!"".equals(openingHoursValue)) {
+                                    ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
+                                }
+                            } else {
+                                showTemplates = false;
+                                TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
+                            }
                         }
+                        headerLine.setVisibility(View.GONE);
                     }
-                    headerLine.setVisibility(View.GONE);
                 }
+                text.setText(openingHoursValue);
+                text.removeTextChangedListener(textWatcher);
+                fab.setVisibility(View.VISIBLE);
+
+                OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
+                try {
+                    rules = parser.rules(false);
+                    buildForm(sv, rules);
+                    removeHighlight(text);
+                } catch (OpeningHoursParseException pex) {
+                    Log.d(DEBUG_TAG, pex.getMessage());
+                    highlightParseError(text, pex);
+                } catch (TokenMgrError err) {
+                    // we currently can't do anything reasonable here except ignore
+                    Log.e(DEBUG_TAG, err.getMessage());
+                }
+                setupFab(sv, fab);
             }
-            text.setText(openingHoursValue);
-            text.removeTextChangedListener(textWatcher);
-            text.removeTextChangedListener(watcher);
-            text.addTextChangedListener(watcher);
-            fab.setVisibility(View.VISIBLE);
+            return sv;
+        }
+        Log.e(DEBUG_TAG, "text EditText not found");
+        return null;
+    }
 
-            OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
-            try {
-                rules = parser.rules(false);
-                buildForm(sv, rules);
-                removeHighlight(text);
-            } catch (OpeningHoursParseException pex) {
-                Log.d(DEBUG_TAG, pex.getMessage());
-                highlightParseError(text, pex);
-            } catch (TokenMgrError err) {
-                // we currently can't do anything reasonable here except ignore
-                Log.e(DEBUG_TAG, err.getMessage());
-            }
+    /**
+     * Configure the FAB
+     * 
+     * @param sv the main ScrollView
+     * @param fab the FAB
+     */
+    private void setupFab(@NonNull ScrollView sv, @NonNull FloatingActionButton fab) {
+        class AddRuleListener implements OnMenuItemClickListener {
+            String ruleString;
 
-            class AddRuleListener implements OnMenuItemClickListener {
-                String ruleString;
-
-                /**
-                 * Construct a new listener for creating Rules
-                 * 
-                 * @param rule a String containing a rule
-                 */
-                AddRuleListener(@NonNull String rule) {
-                    ruleString = rule;
-                }
-
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(ruleString.getBytes()));
-                    List<Rule> rules2 = null;
-                    try {
-                        rules2 = parser.rules(false);
-                    } catch (ParseException pex) {
-                        Log.e(DEBUG_TAG, pex.getMessage());
-                    } catch (TokenMgrError err) {
-                        Log.e(DEBUG_TAG, err.getMessage());
-                    }
-                    if (rules2 != null && !rules2.isEmpty()) {
-                        if (rules == null || hasParseError()) { // if there was an unparseable string it needs to be
-                                                                // fixed first
-                            ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
-                            return true;
-                        }
-                        rules.add(rules2.get(0));
-                        updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
-                        // scroll to bottom
-                        text.postDelayed(() -> ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false), 200);
-                    }
-                    return true;
-                }
+            /**
+             * Construct a new listener for creating Rules
+             * 
+             * @param rule a String containing a rule
+             */
+            AddRuleListener(@NonNull String rule) {
+                ruleString = rule;
             }
 
-            fab.setOnClickListener(v -> {
-                PopupMenu popup = new PopupMenu(context, fab);
-
-                // menu items for adding rules
-                MenuItem addRule = popup.getMenu().add(R.string.add_rule);
-                addRule.setOnMenuItemClickListener(new AddRuleListener("Mo 6:00-20:00"));
-                MenuItem addRulePH = popup.getMenu().add(R.string.add_rule_closed_on_holidays);
-                addRulePH.setOnMenuItemClickListener(new AddRuleListener("PH closed"));
-                MenuItem addRule247 = popup.getMenu().add(R.string.add_rule_247);
-                addRule247.setOnMenuItemClickListener(new AddRuleListener("24/7"));
-
-                MenuItem loadTemplate = popup.getMenu().add(R.string.load_template);
-                loadTemplate.setOnMenuItemClickListener(item -> {
-                    TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, region, object, text.getText().toString());
-                    return true;
-                });
-                MenuItem saveTemplate = popup.getMenu().add(R.string.save_to_template);
-                saveTemplate.setOnMenuItemClickListener(item -> {
-                    TemplateDialog.showDialog(OpeningHoursFragment.this, text.getText().toString(), key, false, -1);
-                    return true;
-                });
-                MenuItem manageTemplate = popup.getMenu().add(R.string.manage_templates);
-                manageTemplate.setOnMenuItemClickListener(item -> {
-                    TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, region, object, text.getText().toString());
-                    return true;
-                });
-                MenuItem refresh = popup.getMenu().add(R.string.refresh);
-                refresh.setOnMenuItemClickListener(item -> {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) { // NOSONAR
+                OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(ruleString.getBytes()));
+                List<Rule> rules2 = null;
+                try {
+                    rules2 = parser.rules(false);
+                } catch (ParseException pex) {
+                    Log.e(DEBUG_TAG, pex.getMessage());
+                } catch (TokenMgrError err) {
+                    Log.e(DEBUG_TAG, err.getMessage());
+                }
+                if (rules2 != null && !rules2.isEmpty()) {
+                    if (rules == null || hasParseError()) { // if there was an unparseable string it needs to be
+                                                            // fixed first
+                        ch.poole.openinghoursfragment.Util.toastTop(getActivity(), R.string.would_overwrite_invalid_value);
+                        return true;
+                    }
+                    rules.add(rules2.get(0));
                     updateString();
                     watcher.afterTextChanged(null); // hack to force rebuild of form
-                    return true;
-                });
-                MenuItem clear = popup.getMenu().add(R.string.clear);
-                clear.setOnMenuItemClickListener(item -> {
-                    if (rules != null) { // FIXME should likely disable the entry if there is actually nothing to clear
-                        rules.clear();
-                        updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
-                    } else {
-                        text.setText("");
-                        watcher.afterTextChanged(null);
-                    }
-                    return true;
-                });
-                popup.show();// showing popup menu
-            });
+                    // scroll to bottom
+                    text.postDelayed(() -> ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false), 200);
+                }
+                return true;
+            }
         }
-        return sv;
+
+        fab.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(context, fab);
+
+            // menu items for adding rules
+            MenuItem addRule = popup.getMenu().add(R.string.add_rule);
+            addRule.setOnMenuItemClickListener(new AddRuleListener("Mo 6:00-20:00"));
+            MenuItem addRulePH = popup.getMenu().add(R.string.add_rule_closed_on_holidays);
+            addRulePH.setOnMenuItemClickListener(new AddRuleListener("PH closed"));
+            MenuItem addRule247 = popup.getMenu().add(R.string.add_rule_247);
+            addRule247.setOnMenuItemClickListener(new AddRuleListener("24/7"));
+
+            MenuItem loadTemplate = popup.getMenu().add(R.string.load_template);
+            loadTemplate.setOnMenuItemClickListener(item -> {
+                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, region, object, text.getText().toString());
+                return true;
+            });
+            MenuItem saveTemplate = popup.getMenu().add(R.string.save_to_template);
+            saveTemplate.setOnMenuItemClickListener(item -> {
+                TemplateDialog.showDialog(OpeningHoursFragment.this, text.getText().toString(), key, false, -1);
+                return true;
+            });
+            MenuItem manageTemplate = popup.getMenu().add(R.string.manage_templates);
+            manageTemplate.setOnMenuItemClickListener(item -> {
+                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, region, object, text.getText().toString());
+                return true;
+            });
+            MenuItem refresh = popup.getMenu().add(R.string.refresh);
+            refresh.setOnMenuItemClickListener(item -> {
+                updateString();
+                watcher.afterTextChanged(null); // hack to force rebuild of form
+                return true;
+            });
+            MenuItem clear = popup.getMenu().add(R.string.clear);
+            clear.setOnMenuItemClickListener(item -> {
+                if (rules != null) { // FIXME should likely disable the entry if there is actually nothing to
+                                     // clear
+                    rules.clear();
+                    updateString();
+                    watcher.afterTextChanged(null); // hack to force rebuild of form
+                } else {
+                    text.setText("");
+                    watcher.afterTextChanged(null);
+                }
+                return true;
+            });
+            popup.show();// showing popup menu
+        });
     }
 
     /**
@@ -825,10 +861,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 first = false;
             }
         }
-        text.removeTextChangedListener(watcher); // avoid infinite loop
         text.setText(spannable, TextView.BufferType.SPANNABLE);
         text.setSelection(pos, Math.min(pos + 1, spannable.length()));
-        text.addTextChangedListener(watcher);
     }
 
     /**
@@ -842,13 +876,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         parseErrorFound = false;
         int pos = text.getSelectionStart();
         int prevLen = text.length();
-        text.removeTextChangedListener(watcher); // avoid infinite loop
         if (rules != null) {
             String t = ch.poole.openinghoursparser.Util.rulesToOpeningHoursString(rules);
             text.setText(t);
         }
         text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
-        text.addTextChangedListener(watcher);
     }
 
     /**
@@ -1967,6 +1999,14 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         ll.addView(dateRangeRow);
     }
 
+    /**
+     * Set date range values
+     * 
+     * @param start start date
+     * @param end end date
+     * @param dateRangeRow the row the range should be displayed on
+     * @param menu the menu
+     */
     private void setDateRangeValues(@NonNull final DateWithOffset start, @Nullable final DateWithOffset end, @NonNull LinearLayout dateRangeRow,
             @NonNull Menu menu) {
         TextView startYearView = (TextView) dateRangeRow.findViewById(R.id.startYear);
@@ -3017,11 +3057,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         if (rules != null) {
             int pos = text.getSelectionStart();
             int prevLen = text.length();
-            text.removeTextChangedListener(watcher);
             String oh = ch.poole.openinghoursparser.Util.rulesToOpeningHoursString(rules);
             text.setText(oh);
             text.setSelection(prevLen < text.length() ? text.length() : Math.min(pos, text.length()));
-            text.addTextChangedListener(watcher);
             enableSaveButton(oh);
             final int len = oh.length();
             if (len > OSM_MAX_TAG_LENGTH) {
@@ -3285,9 +3323,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
     @Override
     public void updateText(String newText) {
-        text.removeTextChangedListener(watcher);
         text.setText(newText);
-        text.addTextChangedListener(watcher);
         watcher.afterTextChanged(null);
     }
 }
