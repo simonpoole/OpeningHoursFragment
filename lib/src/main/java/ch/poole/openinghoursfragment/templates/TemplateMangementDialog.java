@@ -293,7 +293,6 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             }
             return "Invalid value";
         }
-
     }
 
     @Override
@@ -302,18 +301,15 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             Log.e(DEBUG_TAG, "null data in onActivityResult");
             return;
         }
-        if (requestCode == WRITE_CODE) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                try (SQLiteDatabase readableDb = new TemplateDatabaseHelper(getContext()).getReadableDatabase()) {
-                    TemplateDatabase.writeJSON(readableDb, getActivity().getContentResolver().openOutputStream(uri));
+        Uri uri = data.getData();
+        if (uri != null) {
+            if (requestCode == WRITE_CODE) {
+                try (SQLiteDatabase db = new TemplateDatabaseHelper(getContext()).getReadableDatabase()) {
+                    TemplateDatabase.writeJSON(db, getActivity().getContentResolver().openOutputStream(uri));
                 } catch (FileNotFoundException e) {
                     Log.e(DEBUG_TAG, "Uri " + uri + " not found for writing");
                 }
-            }
-        } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
-            Uri uri = data.getData();
-            if (uri != null) {
+            } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
                 boolean worked = false;
                 try (SQLiteDatabase writeableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
                     worked = TemplateDatabase.loadJson(writeableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);

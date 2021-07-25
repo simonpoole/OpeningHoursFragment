@@ -97,9 +97,7 @@ public class ValuePicker extends CancelableDialogFragment {
         npvStart.setMaxValue(max);
         npvStart.setValue(current);
 
-        builder.setPositiveButton(R.string.spd_ohf_ok, (DialogInterface dialog, int which) -> {
-            listener.setRange(npvStart.getValue(), -1);
-        });
+        builder.setPositiveButton(R.string.spd_ohf_ok, (DialogInterface dialog, int which) -> listener.setRange(npvStart.getValue(), -1));
         builder.setNeutralButton(R.string.spd_ohf_cancel, null);
 
         return builder.create();

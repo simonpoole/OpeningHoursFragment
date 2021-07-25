@@ -59,6 +59,8 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.DialogFragment;
+import ch.poole.android.rangebar.RangeBar;
+import ch.poole.android.rangebar.RangeBar.PinTextFormatter;
 import ch.poole.openinghoursfragment.pickers.DateRangePicker;
 import ch.poole.openinghoursfragment.pickers.OccurrenceInMonthPicker;
 import ch.poole.openinghoursfragment.pickers.RangePicker;
@@ -94,8 +96,6 @@ import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.WeekDayRange;
 import ch.poole.openinghoursparser.WeekRange;
 import ch.poole.openinghoursparser.YearRange;
-import ch.poole.android.rangebar.RangeBar;
-import ch.poole.android.rangebar.RangeBar.PinTextFormatter;
 
 /**
  * DialogFragment that implements an editor for OpenStreetMap opening_hours tags
@@ -489,7 +489,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 } else if (checkedId == useOH.getId()) {
                     text.setText(openingHoursValue);
                     text.setOnEditorActionListener(editorActionListener);
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     fab.setVisibility(View.VISIBLE);
                     headerLine.setVisibility(View.GONE);
                 }
@@ -572,7 +572,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @author simon
      *
      */
-    private class OhTextWatcher implements TextWatcher {
+    private class OhTextWatcher {
         final ScrollView scrollView;
 
         /**
@@ -584,8 +584,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             this.scrollView = scrollView;
         }
 
-        @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged() {
             Runnable rebuild = () -> {
                 OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(text.getText().toString().getBytes()));
                 try {
@@ -613,21 +612,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 enableSaveButton(text.getText().toString());
             };
             text.removeCallbacks(rebuild);
-            if (s != null) {
-                text.postDelayed(rebuild, 500);
-            } else {
-                text.postDelayed(rebuild, 100); // a direct post currently doesn't work
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // Empty
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // Empty
+            text.postDelayed(rebuild, 100); // a direct post currently doesn't work
         }
     }
 
@@ -640,7 +625,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private OnEditorActionListener editorActionListener = (TextView view, int actionId, KeyEvent event) -> {
         if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE
                 || (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-            watcher.afterTextChanged(null);
+            watcher.afterTextChanged();
         }
         return true;
     };
@@ -774,7 +759,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                     rules.add(rules2.get(0));
                     updateString();
-                    watcher.afterTextChanged(null); // hack to force rebuild of form
+                    watcher.afterTextChanged(); // hack to force rebuild of form
                     // scroll to bottom
                     text.postDelayed(() -> ch.poole.openinghoursfragment.Util.scrollToRow(sv, null, false, false), 200);
                 }
@@ -811,7 +796,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             MenuItem refresh = popup.getMenu().add(R.string.refresh);
             refresh.setOnMenuItemClickListener(item -> {
                 updateString();
-                watcher.afterTextChanged(null); // hack to force rebuild of form
+                watcher.afterTextChanged(); // hack to force rebuild of form
                 return true;
             });
             MenuItem clear = popup.getMenu().add(R.string.clear);
@@ -820,11 +805,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                                      // clear
                     rules.clear();
                     updateString();
-                    watcher.afterTextChanged(null); // hack to force rebuild of form
                 } else {
                     text.setText("");
-                    watcher.afterTextChanged(null);
                 }
+                watcher.afterTextChanged();
                 return true;
             });
             popup.show();// showing popup menu
@@ -926,7 +910,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         r.setFallBack(false);
                         r.setAdditive(false);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                     }
                 });
                 RadioButton additive = (RadioButton) groupHeader.findViewById(R.id.additive_rule);
@@ -939,7 +923,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         r.setFallBack(false);
                         r.setAdditive(true);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                     }
                 });
                 RadioButton fallback = (RadioButton) groupHeader.findViewById(R.id.fallback_rule);
@@ -954,7 +938,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         rules.remove(r); // move to last position
                         rules.add(r);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                     }
                 });
 
@@ -962,7 +946,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 Menu menu = addStandardMenuItems(groupHeader, () -> {
                     rules.remove(r);
                     updateString();
-                    watcher.afterTextChanged(null); // hack to force rebuild of form
+                    watcher.afterTextChanged(); // hack to force rebuild of form
                 });
 
                 if (r.getModifier() == null) {
@@ -972,7 +956,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         modifier.setModifier(Modifier.CLOSED);
                         r.setModifier(modifier);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                         return true;
                     });
                 }
@@ -988,7 +972,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     holiday.setType(Type.PH);
                     holidays.add(holiday);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1038,7 +1022,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                         ts.add(t);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                         return true;
                     }
                 }
@@ -1076,7 +1060,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     t.setOpenEnded(true);
                     ts.add(t);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1097,7 +1081,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     t.setOpenEnded(true);
                     ts.add(t);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1123,7 +1107,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                     wd.add(d);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1366,7 +1350,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     yearRange.setStartYear(Calendar.getInstance().get(Calendar.YEAR));
                     years.add(yearRange);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
                 MenuItem addYearRangeOpenEnded = yearRangeMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.spd_ohf_add_year_range_openended);
@@ -1381,7 +1365,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     yearRange.setOpenEnded(true);
                     years.add(yearRange);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1396,7 +1380,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     weekRange.setStartWeek(1);
                     weeks.add(weekRange);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1410,7 +1394,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     }
                     rules.add(Math.max(0, current + 1), duplicate);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                     return true;
                 });
 
@@ -1432,7 +1416,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         rules.remove(current);
                         rules.add(Math.max(0, current - 1), r);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                         return true;
                     });
                 }
@@ -1448,7 +1432,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         rules.remove(current);
                         rules.add(Math.min(size - 1, current + 1), r);
                         updateString();
-                        watcher.afterTextChanged(null);
+                        watcher.afterTextChanged();
                         return true;
                     });
                 }
@@ -1469,7 +1453,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     addStandardMenuItems(twentyFourSeven, () -> {
                         r.setTwentyfourseven(false);
                         updateString();
-                        watcher.afterTextChanged(null); // hack to force rebuild of form
+                        watcher.afterTextChanged(); // hack to force rebuild of form
                     });
                     ll.addView(twentyFourSeven);
                 }
@@ -1535,7 +1519,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 addStandardMenuItems(modifierLayout, () -> {
                     r.setModifier(null);
                     updateString();
-                    watcher.afterTextChanged(null); // hack to force rebuild of form
+                    watcher.afterTextChanged(); // hack to force rebuild of form
                 });
                 ll.addView(modifierLayout);
             }
@@ -1574,7 +1558,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             datesAdder.addDates(dateRange);
             mdr.add(dateRange);
             updateString();
-            watcher.afterTextChanged(null);
+            watcher.afterTextChanged();
             return true;
         }
     }
@@ -1597,7 +1581,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         });
         // menu item will be enabled/disabled depending on number of days etc.
         MenuItem nthMenuItem = menu.add(R.string.occurrence_in_month);
@@ -1677,7 +1661,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 menu = addStandardMenuItems(weekDayRowNth, () -> {
                     days.remove(d);
                     updateString();
-                    watcher.afterTextChanged(null); // hack to force rebuild of form
+                    watcher.afterTextChanged(); // hack to force rebuild of form
                 });
 
                 final View offsetContainer = weekDayRowNth.findViewById(R.id.offset_container);
@@ -1760,7 +1744,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 r.setDates(null);
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         });
 
         if (hasStartOffset || hasEndOffset || hasStartOccurrence || hasEndOccurrence) {
@@ -1838,7 +1822,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         setDateRangeValues(startDate, tempDwo, finalRow, menu);
                         updateString();
                         if (endDate == null) {
-                            text.postDelayed(() -> watcher.afterTextChanged(null), 100);
+                            text.postDelayed(() -> watcher.afterTextChanged(), 100);
                         }
                     };
                     DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, end.getYear(), end.getMonth(), end.getDay());
@@ -1919,7 +1903,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             updateString();
                             if (endDate == null) {
                                 // force endDate to be set
-                                text.postDelayed(() -> watcher.afterTextChanged(null), 100);
+                                text.postDelayed(() -> watcher.afterTextChanged(), 100);
                             }
                         };
                         DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getMonth(), start.getDay(),
@@ -1956,7 +1940,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             updateString();
                             if (endDate == null) {
                                 // force endDate to be set
-                                text.postDelayed(() -> watcher.afterTextChanged(null), 100);
+                                text.postDelayed(() -> watcher.afterTextChanged(), 100);
                             }
                         };
                         DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getVarDate(), tempEndYear,
@@ -2267,7 +2251,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 r.setHolidays(null);
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         });
 
         final CheckBox useAsWeekDay = (CheckBox) holidayRow.findViewById(R.id.checkBoxUseAsWeekDay);
@@ -2277,7 +2261,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 h.setUseAsWeekDay(isChecked);
             }
             updateString();
-            text.postDelayed(() -> watcher.afterTextChanged(null), 100);
+            text.postDelayed(() -> watcher.afterTextChanged(), 100);
         });
 
         final View useAsWeekDayContainer = holidayRow.findViewById(R.id.useAsWeekDay_container);
@@ -2345,7 +2329,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 r.setYears(null);
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         });
         if (yr.isOpenEnded()) {
             intervalContainer.setVisibility(View.GONE);
@@ -2466,7 +2450,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 r.setWeeks(null);
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         });
         addShowIntervalItem(intervalContainer, menu);
 
@@ -2546,7 +2530,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 // set to null?
             }
             updateString();
-            watcher.afterTextChanged(null); // hack to force rebuild of form
+            watcher.afterTextChanged(); // hack to force rebuild of form
         }
     }
 
@@ -2868,21 +2852,21 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     ts.setStart(startHour * 60 + startMinute);
                     ts.setEnd(endHour * 60 + endMinute);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60, interval);
             } else if (ts.getStartEvent() == null && (ts.getEndEvent() != null || end < 0)) { // t, t-, t-e
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
                     ts.setStart(startHour * 60 + startMinute);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
             } else if (ts.getStartEvent() != null && ts.getEndEvent() == null || end >= 0) { // e-t
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
                     ts.setEnd(startHour * 60 + startMinute);
                     updateString();
-                    watcher.afterTextChanged(null);
+                    watcher.afterTextChanged();
                 };
                 TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
             }
@@ -3324,6 +3308,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     @Override
     public void updateText(String newText) {
         text.setText(newText);
-        watcher.afterTextChanged(null);
+        watcher.afterTextChanged();
     }
 }
