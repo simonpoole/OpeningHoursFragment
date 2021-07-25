@@ -9,7 +9,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: "jacoco"
 
-version = '0.9.3'
+version = '0.10.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
