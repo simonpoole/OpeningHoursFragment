@@ -1,5 +1,9 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.10.1:
+- Always set the editor action listener
+- Set IME options to actionDone.
+
 0.10.0:
 - Don't automatically up date form from string, wait for "Enter" or the like.
 - Add support for open ended year ranges.
