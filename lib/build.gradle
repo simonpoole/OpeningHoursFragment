@@ -34,7 +34,7 @@ android {
         versionCode 100
         versionName "${project.version}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "${libName}-${project.version}")
+        setProperty("archivesBaseName", "${libName}")
     }
 
     compileOptions {
@@ -69,7 +69,19 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+    
+    // seems as if recent AGP version have borked output file name generation
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            if ("release".equals(variant.name)) {
+                outputFileName = "${libName}-${project.version}.aar"
+            } else {
+                outputFileName = "${libName}-${project.version}-${variant.name}.aar"
+            }
+        }
+    }
 }
+
 
 ext {
     androidxVersion = "1.0.0"
