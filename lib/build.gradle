@@ -34,7 +34,7 @@ android {
         versionCode 100
         versionName "${project.version}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "${libName}")
+        setProperty("archivesBaseName", "${libName}-${project.version}")
     }
 
     compileOptions {
