@@ -67,7 +67,8 @@
             android:completionThreshold="1"
             android:dropDownWidth="wrap_content"
             android:maxLines="1"
-            android:saveEnabled="false" />
+            android:saveEnabled="false"
+            android:imeOptions="actionDone" />
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

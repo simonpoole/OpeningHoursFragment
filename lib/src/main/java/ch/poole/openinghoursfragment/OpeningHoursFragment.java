@@ -696,6 +696,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                         headerLine.setVisibility(View.GONE);
                     }
+                } else {
+                    text.setOnEditorActionListener(editorActionListener);
                 }
                 text.setText(openingHoursValue);
                 text.removeTextChangedListener(textWatcher);
