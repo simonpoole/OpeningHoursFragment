@@ -7,7 +7,7 @@
     <string name="Done">Lokið</string>
     <string name="value_too_long">Lengd opnunartímagildisins er %1$d sem er lengra en hámarkslengdin 255.\n\nEndilega einfaldaðu strenginn áður en þú vistar!</string>
     <string name="would_overwrite_invalid_value">Ekki er hægt að bæta reglu við ógildan opnunartímastreng. Leiðréttu hann eða eyddu honum!</string>
-    
+
     <string name="add_rule">Bæta við reglu</string>
     <string name="add_rule_247">Bæta við reglu fyrir 24/7</string>
     <string name="add_rule_closed_on_holidays">Bæta við reglu fyrir frídaga</string>
@@ -24,44 +24,44 @@
     <string name="No">Nei</string>
     <string name="Start">Upphaf</string>
     <string name="End">Endar</string>
-    
+
     <string name="default_hint">Strengur fyrir opnunartíma</string>
-    
+
     <string name="text_values">Textagildi</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Breyta sniðmáti</string>
     <string name="name_legend">Nafn:</string>
     <string name="default_legend">Sjálfgefið:</string>
     <string name="key_legend">Lykill:</string>
-    
     <string name="is_default">%1$s (sjálfgefið)</string>
-    
-     <string name="all_keys">Allt</string>
-  	<string name="opening_hours_key">Opnunartímar</string>
-  	<string name="service_times_key">Þjónustutímar</string>
-  	<string name="collection_times_key">Losunartímar</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Virka daga með hádegislokun</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Allt</string>
+    <string name="opening_hours_key">Opnunartímar</string>
+    <string name="service_times_key">Þjónustutímar</string>
+    <string name="collection_times_key">Losunartímar</string>
+    <string name="supervised_key">Undir eftirliti</string>
+    <string name="lit_key">Upplýst</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Virka daga með hádegislokun</string>
     <string name="weekdays_with_lunch_late_shopping">Virka daga með hádegislokun og opið fram á kvöld</string>
-	<string name="weekdays">Virka daga</string>
+    <string name="weekdays">Virka daga</string>
     <string name="weekdays_late_shopping">Virka daga með opið fram á kvöld</string>
-	<string name="collection_times_weekdays">Einu sinni á hverjum virkum degi</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Einu sinni á hverjum virkum degi</string>
+
+    <!--	 -->
     <string name="group_header">Hópur %1$s</string>
     <string name="rule_header">Regla %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Hlóð inn sjálfgefnu sniðmáti</string>
-    
-<!--    menu items -->
-	<string name="Delete">Eyða</string>
-	<string name="add_modifier_comment">Bæta við breytivirkja/athugasemd</string>
-	<string name="add_year_range">Bæta við árabili</string>
-	<string name="add_week_range">Bæta við vikubili</string>
-	<string name="add_holiday">Bæta við frídögum</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Eyða</string>
+    <string name="add_modifier_comment">Bæta við breytivirkja/athugasemd</string>
+    <string name="add_week_range">Bæta við vikubili</string>
+    <string name="add_holiday">Bæta við frídögum</string>
+
     <string name="timespan_menu">Bæta við tímabili ...</string>
     <string name="time_time">Tími - klukkan</string>
     <string name="time_extended_time">Tími - lengdur tími</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">Breytilegir tímar</string>
     <string name="variable_time_open_end">Breytil. tími - opið án enda</string>
     <string name="start_at_midnight">Byrjar á miðnætti</string>
-    
+
     <string name="week_day_range">Bæta við vikudagabili</string>
     <string name="occurrence_in_month">Bæta við tilviki í mánuði</string>
-    
+
     <string name="daterange_menu">Bæta við dagabili ...</string>
     <string name="date_date">Dagsetning - dagur</string>
     <string name="variable_date_date">Breytil. dags - dagsetning</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">Dagsetning - tilvik í mánuði</string>
     <string name="occurrence_variable_date">Tilvik í mánuði - breytileg dagsetning</string>
     <string name="variable_date_occurrence">Breytileg dagsetning - tilvik í mánuði</string>
-    
+
     <string name="date_open_end">Dagsetning - opið án enda</string>
     <string name="variable_date_open_end">Breytil. dags - opið án enda</string>
     <string name="occurrence_open_end">Tilvik í mánuði - opið án enda</string>
 
     <string name="with_offsets">Með hliðrunum...</string>
+    
+    <string name="add_year_range">Bæta við árabili</string>
     <string name="rule_type">Sýna tegund reglu</string>
     <string name="duplicate_rule">Tvítaka</string>
     <string name="move_up">Færa upp</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">Sýna hliðrun við lok</string>
     <string name="show_interval">Sýna millibil</string>
     <string name="show_useAsWeekDay">Sýna notkun</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Venjulegt</string>
     <string name="additive_rule">Bætist við</string>
     <string name="fallback_rule">Til vara</string>
-    
+
     <string name="interval_minutes">Millibil (mínútur)</string>
     <string name="interval_years">Millibil (ár)</string>
     <string name="interval_weeks">Millibil (vikur)</string>
-    
+
     <string name="offset_mins">Hliðrun (±mínútur)</string>
     <string name="offset_days">Hliðrun (±dagar)</string>
-    
+
     <string name="date_range">Dagsetningasvið</string>
     <string name="date">Dagsetning</string>
     <string name="date_weekday_occurrence">Dagsetning (virkur dagur í mánuði)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">Vikur</string>
     <string name="year_range">Árabil</string>
     <string name="years">Ár</string>
-    
     <string name="modifier">Breytivirki</string>
     <string name="comment">Athugasemd</string>
-    
-    <string name="use_as_weekday">Nota eins og um virkan dag sé að ræða</string>
-    
-    <string name="twentyfourseven">24 stundir, 7 daga vikunnar</string>
-    
-    <string name="to">til</string>
-    
-    <string name="easter">Páskar</string>
-    
-    <string name="sunrise">Sólarupprás</string>
-  	<string name="sunset">Sólarlag</string>
-  	<string name="dawn">Dögun</string>
-  	<string name="dusk">Rökkurbyrjun</string>
-  	
-  	<string name="public_holidays">Almennir frídagar</string>
-  	<string name="school_holidays">Skólafrí</string>
-  	
-  	<string name="occurrence_in_month_title">Tilvik í mánuði</string>
-  	
-  	<string name="monday_short">Má</string>
-  	<string name="tuesday_short">Þr</string>
-  	<string name="wednesday_short">Mi</string>
-  	<string name="thursday_short">Fi</string>
-  	<string name="friday_short">Fö</string>
-  	<string name="saturday_short">La</string>
-  	<string name="sunday_short">Su</string>
 
-  	<string name="january">Jan</string>
-  	<string name="february">Feb</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Apr</string>
-  	<string name="may">Maí</string>
-  	<string name="june">Jún</string>
-  	<string name="july">Júl</string>
-  	<string name="august">Ágú</string>
-  	<string name="september">Sep</string>
-  	<string name="october">Okt</string>
-  	<string name="november">Nóv</string>
-  	<string name="december">Des</string>
-  	
-  	<string name="open">opið</string>
- 	<string name="closed">lokað</string>
-  	<string name="off">slökkt</string>
+    <string name="use_as_weekday">Nota eins og um virkan dag sé að ræða</string>
+
+    <string name="twentyfourseven">24 stundir, 7 daga vikunnar</string>
+
+    <string name="to">til</string>
+
+    <string name="easter">Páskar</string>
+
+    <string name="sunrise">Sólarupprás</string>
+    <string name="sunset">Sólarlag</string>
+    <string name="dawn">Dögun</string>
+    <string name="dusk">Rökkurbyrjun</string>
+
+    <string name="public_holidays">Almennir frídagar</string>
+    <string name="school_holidays">Skólafrí</string>
+
+    <string name="occurrence_in_month_title">Tilvik í mánuði</string>
+
+    <string name="monday_short">Má</string>
+    <string name="tuesday_short">Þr</string>
+    <string name="wednesday_short">Mi</string>
+    <string name="thursday_short">Fi</string>
+    <string name="friday_short">Fö</string>
+    <string name="saturday_short">La</string>
+    <string name="sunday_short">Su</string>
+
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Apr</string>
+    <string name="may">Maí</string>
+    <string name="june">Jún</string>
+    <string name="july">Júl</string>
+    <string name="august">Ágú</string>
+    <string name="september">Sep</string>
+    <string name="october">Okt</string>
+    <string name="november">Nóv</string>
+    <string name="december">Des</string>
+
+    <string name="open">opið</string>
+    <string name="closed">lokað</string>
+    <string name="off">slökkt</string>
     <string name="unknown">óþekkt</string>
-    
-  	<string name="before">fyrir</string>
+
+    <string name="before">fyrir</string>
     <string name="after">eftir</string>
-  	
-  	</resources>
+
+    </resources>

@@ -12,56 +12,58 @@
     <string name="No">Nej</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
-    
+
     <string name="all_keys">Alle</string>
-  	<!--    menu items -->
-	<string name="Delete">Delete</string>
-	<string name="rule_type">Vis regel type</string>
+    <string name="supervised_key">Overvåget</string>
+    <string name="lit_key">Gadebelysning</string>
+    <!--    menu items -->
+    <string name="Delete">Delete</string>
+    <string name="rule_type">Vis regel type</string>
     <string name="move_up">Flyt op</string>
     <string name="move_down">Flyt ned</string>
     <!--     opening hour elements -->
-         
+
     <string name="normal_rule">Normal</string>
     <string name="date_range">Datointerval</string>
     <string name="date">Dato</string>
     <string name="modifier">Modifikator</string>
     <string name="comment">Kommentar</string>
-    
-    <string name="to">til</string>
-    
-    <string name="easter">Påske</string>
-    
-    <string name="sunrise">Solopgang</string>
-  	<string name="sunset">Solnedgang</string>
-  	<string name="dawn">Daggry</string>
-  	<string name="dusk">Skumring</string>
-  	
-  	<string name="monday_short">Ma</string>
-  	<string name="tuesday_short">Ti</string>
-  	<string name="wednesday_short">On</string>
-  	<string name="thursday_short">To</string>
-  	<string name="friday_short">Fr</string>
-  	<string name="saturday_short">Lø</string>
-  	<string name="sunday_short">Sø</string>
 
-  	<string name="january">Jan</string>
-  	<string name="february">Feb</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Apr</string>
-  	<string name="may">Maj</string>
-  	<string name="june">Jun</string>
-  	<string name="july">Jul</string>
-  	<string name="august">Aug</string>
-  	<string name="september">Sep</string>
-  	<string name="october">Okt</string>
-  	<string name="november">Nov</string>
-  	<string name="december">Dec</string>
-  	
-  	<string name="open">åben</string>
- 	<string name="closed">lukket</string>
-  	<string name="unknown">ukendt</string>
-    
-  	<string name="before">før</string>
+    <string name="to">til</string>
+
+    <string name="easter">Påske</string>
+
+    <string name="sunrise">Solopgang</string>
+    <string name="sunset">Solnedgang</string>
+    <string name="dawn">Daggry</string>
+    <string name="dusk">Skumring</string>
+
+    <string name="monday_short">Ma</string>
+    <string name="tuesday_short">Ti</string>
+    <string name="wednesday_short">On</string>
+    <string name="thursday_short">To</string>
+    <string name="friday_short">Fr</string>
+    <string name="saturday_short">Lø</string>
+    <string name="sunday_short">Sø</string>
+
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Apr</string>
+    <string name="may">Maj</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Aug</string>
+    <string name="september">Sep</string>
+    <string name="october">Okt</string>
+    <string name="november">Nov</string>
+    <string name="december">Dec</string>
+
+    <string name="open">åben</string>
+    <string name="closed">lukket</string>
+    <string name="unknown">ukendt</string>
+
+    <string name="before">før</string>
     <string name="after">efter</string>
-  	
-  	</resources>
+
+    </resources>

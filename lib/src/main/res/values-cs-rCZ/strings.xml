@@ -7,7 +7,7 @@
     <string name="Done">Hotovo</string>
     <string name="value_too_long">Délka hodnoty otevírací doby je %1$d, což je více, než povolených 255.\n\nPřed uložením jej prosím zjednosušte!</string>
     <string name="would_overwrite_invalid_value">Nelze přidat pravidlo pro neplatný řetězec otevíracích hodin. Opravte jej nebo odstraňte!</string>
-    
+
     <string name="add_rule">Přidat pravidlo</string>
     <string name="add_rule_247">Přidat pravidlo pro 24/7</string>
     <string name="add_rule_closed_on_holidays">Přidat pravidlo pro svátky</string>
@@ -24,38 +24,38 @@
     <string name="No">Ne</string>
     <string name="Start">Začátek</string>
     <string name="End">Konec</string>
-    
+
     <!--	templates -->
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>
     <string name="default_legend">Výchozí:</string>
     <string name="key_legend">Klíč:</string>
-    
     <string name="is_default">%1$s (výchozí)</string>
-    
-     <string name="all_keys">Všem</string>
-  	<string name="opening_hours_key">Otevírací hodiny</string>
-  	<string name="service_times_key">Provozní doba</string>
-  	<string name="collection_times_key">Doba sběru</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Všem</string>
+    <string name="opening_hours_key">Otevírací hodiny</string>
+    <string name="service_times_key">Provozní doba</string>
+    <string name="collection_times_key">Doba sběru</string>
+    <string name="supervised_key">Hlídané</string>
+    <string name="lit_key">Osvětlení</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
     <string name="weekdays">Pracovní dny</string>
     <string name="collection_times_weekdays">Jednou v pracovní dny</string>
-    
-<!--	 -->
+
+    <!--	 -->
     <string name="group_header">Skupina %1$s</string>
     <string name="rule_header">Pravidlo %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Nahrát defaultní předlohu</string>
-    
-<!--    menu items -->
-	<string name="Delete">Smazat</string>
-	<string name="add_modifier_comment">Přidat poznámku</string>
-	<string name="add_year_range">Přidat rozsah let</string>
-	<string name="add_week_range">Přidat rozsah týdnů</string>
-	<string name="add_holiday">Přidat prázdniny</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Smazat</string>
+    <string name="add_modifier_comment">Přidat poznámku</string>
+    <string name="add_week_range">Přidat rozsah týdnů</string>
+    <string name="add_holiday">Přidat prázdniny</string>
+
     <string name="timespan_menu">Přidat rozsah času ...</string>
     <string name="time_time">Čas - čas</string>
     <string name="time_extended_time">Čas - prodloužený čas</string>
@@ -68,10 +68,10 @@
     <string name="variable_time">Proměnný čas</string>
     <string name="variable_time_open_end">Proměnný čas - neznámé</string>
     <string name="start_at_midnight">Zobrazit od půlnoci</string>
-    
+
     <string name="week_day_range">Přidat rozsah dnů v týdnu</string>
     <string name="occurrence_in_month">Přidat výskyt v měsíci</string>
-    
+
     <string name="daterange_menu">Přidat rozsah dat ...</string>
     <string name="date_date">Datum - datum</string>
     <string name="variable_date_date">Proměnné datum - datum</string>
@@ -82,12 +82,14 @@
     <string name="date_occurrence">Datum - výskyt v měsíci</string>
     <string name="occurrence_variable_date">Výskyt v měsíci - proměnné datum</string>
     <string name="variable_date_occurrence">Proměnné datum - výskyt v měsíci</string>
-    
+
     <string name="date_open_end">Datum - neznámé</string>
     <string name="variable_date_open_end">Proměnné datum - neznámé</string>
     <string name="occurrence_open_end">Výskyt v měsíci - neznámé</string>
 
     <string name="with_offsets">S ofsety...</string>
+    
+    <string name="add_year_range">Přidat rozsah let</string>
     <string name="rule_type">Zobrazit typ pravidla</string>
     <string name="duplicate_rule">Duplikovat</string>
     <string name="move_up">Přesunout výš</string>
@@ -101,20 +103,20 @@
     <string name="show_end_offset">Zobrazit koncový ofset</string>
     <string name="show_interval">Zobrazit interval</string>
     <string name="show_useAsWeekDay">Zobrazit použití</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Normální</string>
     <string name="additive_rule">Přísada</string>
     <string name="fallback_rule">Ustoupit</string>
-    
+
     <string name="interval_minutes">Interval (minut)</string>
     <string name="interval_years">Interval (let)</string>
     <string name="interval_weeks">Interval (týdnů)</string>
-    
+
     <string name="offset_mins">Ofset (±minut)</string>
     <string name="offset_days">Ofset (±dnů)</string>
-    
+
     <string name="date_range">Rozsah dat</string>
     <string name="date">Datum</string>
     <string name="date_weekday_occurrence">Datum (den v měsíci)</string>
@@ -122,55 +124,54 @@
     <string name="weeks">Týdny</string>
     <string name="year_range">Rozsah roku</string>
     <string name="years">Roky</string>
-    
     <string name="modifier">Modifikátor</string>
     <string name="comment">Poznámka</string>
-    
-    <string name="use_as_weekday">Jako den v týdu</string>
-    
-    <string name="twentyfourseven">24 hodin denně, 7 dní v týdnu</string>
-    
-    <string name="to">do</string>
-    
-    <string name="easter">Velikonoce</string>
-    
-    <string name="sunrise">Východ slunce</string>
-  	<string name="sunset">Západ slunce</string>
-  	<string name="dawn">Svítání</string>
-  	<string name="dusk">Soumrak</string>
-  	
-  	<string name="public_holidays">Státní svátky</string>
-  	<string name="school_holidays">Školní prázdniny</string>
-  	
-  	<string name="occurrence_in_month_title">Výskyt v měsíci</string>
-  	
-  	<string name="monday_short">Po</string>
-  	<string name="tuesday_short">Út</string>
-  	<string name="wednesday_short">St</string>
-  	<string name="thursday_short">Čt</string>
-  	<string name="friday_short">Pá</string>
-  	<string name="saturday_short">So</string>
-  	<string name="sunday_short">Ne</string>
 
-  	<string name="january">Led</string>
-  	<string name="february">Úno</string>
-  	<string name="march">Bře</string>
-  	<string name="april">Dub</string>
-  	<string name="may">Kvě</string>
-  	<string name="june">Čvn</string>
-  	<string name="july">Čvc</string>
-  	<string name="august">Srp</string>
-  	<string name="september">Zář</string>
-  	<string name="october">Říj</string>
-  	<string name="november">Lis</string>
-  	<string name="december">Pro</string>
-  	
-  	<string name="open">otevřeno</string>
- 	<string name="closed">zavřeno</string>
-  	<string name="off">uzavřeno</string>
+    <string name="use_as_weekday">Jako den v týdu</string>
+
+    <string name="twentyfourseven">24 hodin denně, 7 dní v týdnu</string>
+
+    <string name="to">do</string>
+
+    <string name="easter">Velikonoce</string>
+
+    <string name="sunrise">Východ slunce</string>
+    <string name="sunset">Západ slunce</string>
+    <string name="dawn">Svítání</string>
+    <string name="dusk">Soumrak</string>
+
+    <string name="public_holidays">Státní svátky</string>
+    <string name="school_holidays">Školní prázdniny</string>
+
+    <string name="occurrence_in_month_title">Výskyt v měsíci</string>
+
+    <string name="monday_short">Po</string>
+    <string name="tuesday_short">Út</string>
+    <string name="wednesday_short">St</string>
+    <string name="thursday_short">Čt</string>
+    <string name="friday_short">Pá</string>
+    <string name="saturday_short">So</string>
+    <string name="sunday_short">Ne</string>
+
+    <string name="january">Led</string>
+    <string name="february">Úno</string>
+    <string name="march">Bře</string>
+    <string name="april">Dub</string>
+    <string name="may">Kvě</string>
+    <string name="june">Čvn</string>
+    <string name="july">Čvc</string>
+    <string name="august">Srp</string>
+    <string name="september">Zář</string>
+    <string name="october">Říj</string>
+    <string name="november">Lis</string>
+    <string name="december">Pro</string>
+
+    <string name="open">otevřeno</string>
+    <string name="closed">zavřeno</string>
+    <string name="off">uzavřeno</string>
     <string name="unknown">neznámé</string>
-    
-  	<string name="before">před</string>
+
+    <string name="before">před</string>
     <string name="after">po</string>
-  	
-  	</resources>
+
+    </resources>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="spd_ohf_cancel">Avbryt</string>
+    <string name="spd_ohf_ok">OK</string>
+    <string name="Save">Lagre</string>
+    <string name="Done">Ferdig </string>
+    <string name="value_too_long">Lengden på åpningstidsverdien er %1$d som er lengre enn maksimum 255.\n\nVennligst forenkle strengen før du lagrer! </string>
+    <string name="would_overwrite_invalid_value">Kan ikke legge til regel i ugyldig åpningstidstreng. Vennligst rett eller slett! </string>
+
+    <string name="add_rule">Legg til regel</string>
+    <string name="add_rule_247">Legg til regel for 24/7</string>
+    <string name="add_rule_closed_on_holidays">Legg til regel for ferien</string>
+    <string name="load_template">Last inn mal</string>
+    <string name="save_to_template">Lagre til mal</string>
+    <string name="manage_templates">Administrer maler </string>
+    <string name="refresh">Oppdater</string>
+    <string name="clear">Slett alt</string>
+    <string name="load_templates_title">Last inn maler </string>
+    <string name="manage_templates_title">Administrer maler </string>
+    <string name="save_template">Lagre mal</string>
+    <string name="update_template">Oppdatere malverdi også? </string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nei</string>
+    <string name="Start">Start</string>
+    <string name="End">Slutt</string>
+
+    <string name="default_hint">Åpningstider streng </string>
+
+    <string name="text_values">Takstverdier</string>
+
+    <!--	templates -->
+    <string name="edit_template">Rediger mal</string>
+    <string name="name_legend">Navn:</string>
+    <string name="default_legend">Standard:</string>
+    <string name="key_legend">Nøkkel:</string>
+    <string name="is_default">%1$s (standard)</string>
+    <string name="all_keys">Alt</string>
+    <string name="opening_hours_key">Åpningstider</string>
+    <string name="service_times_key">Service tider</string>
+    <string name="collection_times_key">Hentetider </string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Hverdager med lunsj pause</string>
+    <string name="weekdays_with_lunch_late_shopping">Hverdager med lunsjpause og sen shopping </string>
+    <string name="weekdays">Hverdager </string>
+    <string name="weekdays_late_shopping">Hverdager med sen shopping </string>
+    <string name="collection_times_weekdays">En gang per ukedag </string>
+
+    <!--	 -->
+    <string name="group_header">Gruppe %1$s</string>
+    <string name="rule_header">Regel %1$s</string>
+
+    <!--	messages -->
+    <string name="loaded_default">Last standard mal</string>
+
+    <!--    menu items -->
+    <string name="Delete">Slett</string>
+    <string name="add_modifier_comment">Legg til modifikator / kommentar </string>
+    <string name="add_week_range">Legg til ukeområde </string>
+    <string name="add_holiday">Legg til ferie </string>
+
+    <string name="timespan_menu">Legg til tidsperiode ... </string>
+    <string name="time_time">Tid - tid </string>
+    <string name="time_extended_time">Tid - utvidet tid </string>
+    <string name="time">Tid</string>
+    <string name="time_open_end">Tidsåpent slutt </string>
+    <string name="variable_time">Variabel tid </string>
+    <string name="variable_time_open_end">Variabel tidsåpent slutt </string>
+    <string name="start_at_midnight">Start ved midnatt </string>
+
+    <string name="week_day_range">Legg til hverdagsområde</string>
+    <string name="occurrence_in_month">Legg til forekomst i måned </string>
+
+    <string name="daterange_menu">Legg til datoperiode ... </string>
+    <string name="date_date">Dato - dato </string>
+    <string name="variable_date_date">Variabel dato - dato </string>
+    <string name="date_variable_date">Dato - variabel dato </string>
+    <string name="variable_date_variable_date">Variabel dato - variabel dato </string>
+    <string name="occurrence_occurrence">Hendelse i måned - hendelse i måned</string>
+    <string name="occurrence_date">Hendelse i måned- datto</string>
+    <string name="date_occurrence">Dato - hendelse i måned</string>
+    <string name="occurrence_variable_date">Hendelse i måned -variabel dato</string>
+    <string name="variable_date_occurrence">Variabel dato - hendelse i måned</string>
+
+    <string name="date_open_end">Dato - åpen slutt</string>
+    <string name="variable_date_open_end">Variabel dato - åpen sluttt</string>
+    <string name="occurrence_open_end">Hendelse i måned - åpen slutt</string>
+
+    <string name="with_offsets">Med forskyvninger ... </string>
+    
+    <string name="add_year_range">Legg til årsområde</string>
+    <string name="rule_type">Vis regeltype </string>
+    <string name="duplicate_rule">Dupliser</string>
+    <string name="move_up">Flytt opp</string>
+    <string name="move_down">Flytt ned</string>
+    <string name="display_time_picker">Vis tidsvelger</string>
+    <string name="ticks_15_minute">Bytt til 15 minutt tikk</string>
+    <string name="ticks_5_minute">Bytt til 5 minutt tikk</string>
+    <string name="ticks_1_minute">Bytt til 1 minutt tikk</string>
+    <string name="show_offset">Vis forskyvning </string>
+    <string name="show_start_offset">Vis start forskyvning </string>
+    <string name="show_end_offset">Vis sluttforskyvning </string>
+    <string name="show_interval">Vis interval</string>
+    <string name="show_useAsWeekDay">Vis bruk</string>
+
+    <!--     opening hour elements -->
+
+    <string name="normal_rule">Normal</string>
+    <string name="additive_rule">Additiv</string>
+    <string name="fallback_rule">Tilbakefall</string>
+
+    <string name="interval_minutes">Interval (minutter)</string>
+    <string name="interval_years">Interval (år)</string>
+    <string name="interval_weeks">Interval (uker)</string>
+
+    <string name="offset_mins">Forskyvning (± minutter) </string>
+    <string name="offset_days">Forskyvning (±dager)</string>
+
+    <string name="date_range">Datoomrråde</string>
+    <string name="date">Dato</string>
+    <string name="date_weekday_occurrence">Dato (ukedag i måned)</string>
+    <string name="week_range">Ukeområde</string>
+    <string name="weeks">Uker</string>
+    <string name="year_range">Årsområde</string>
+    <string name="years">År</string>
+    <string name="modifier">Modifikator</string>
+    <string name="comment">Kommentar</string>
+
+    <string name="use_as_weekday">Bruk som hverdag</string>
+
+    <string name="twentyfourseven">24 timer, 7 dager i uke</string>
+
+    <string name="to">til</string>
+
+    <string name="easter">Påske</string>
+
+    <string name="sunrise">Soloppgang</string>
+    <string name="sunset">Solnedgang </string>
+    <string name="dawn">Soloppgang</string>
+    <string name="dusk">Skumring</string>
+
+    <string name="public_holidays">Felles ferie</string>
+    <string name="school_holidays">Skoleferie</string>
+
+    <string name="occurrence_in_month_title">Hendelse i måned</string>
+
+    <string name="monday_short">Man</string>
+    <string name="tuesday_short">Tir</string>
+    <string name="wednesday_short">Ons</string>
+    <string name="thursday_short">Tor</string>
+    <string name="friday_short">Fr</string>
+    <string name="saturday_short">Lør</string>
+    <string name="sunday_short">Søn</string>
+
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mar</string>
+    <string name="april">Apr</string>
+    <string name="may">Mai</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Aug</string>
+    <string name="september">Sep</string>
+    <string name="october">Okt</string>
+    <string name="november">Nov</string>
+    <string name="december">Des</string>
+
+    <string name="open">åpen</string>
+    <string name="closed">stengt</string>
+    <string name="off">av</string>
+    <string name="unknown">ukjent</string>
+
+    <string name="before">før</string>
+    <string name="after">etter</string>
+
+    </resources>

@@ -7,7 +7,7 @@
     <string name="Done">Gotowe</string>
     <string name="value_too_long">Długość wpisu godzin otwarcia wynosi %1$d, co przekracza masksmalną długość wynoszącą 255.\n\nUprość ten wpis przed zapisaniem!</string>
     <string name="would_overwrite_invalid_value">Nie można dodać reguły godzin otwarcia ze względu na błąd. Popraw ją lub usuń!</string>
-    
+
     <string name="add_rule">Dodaj regułę</string>
     <string name="add_rule_247">Dodaj regułę dla 24/7</string>
     <string name="add_rule_closed_on_holidays">Dodaj regułę dla dni świątecznych</string>
@@ -24,44 +24,44 @@
     <string name="No">Nie</string>
     <string name="Start">Początek</string>
     <string name="End">Koniec</string>
-    
+
     <string name="default_hint">Łańcuch godzin otwarcia</string>
-    
+
     <string name="text_values">Wartości tekstowe</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Edytuj szablon</string>
     <string name="name_legend">Nazwa:</string>
     <string name="default_legend">Domyślnie:</string>
     <string name="key_legend">Klucz:</string>
-    
     <string name="is_default">%1$s (domyślnie)</string>
-    
-     <string name="all_keys">Wszystkie</string>
-  	<string name="opening_hours_key">Godziny otwarcia</string>
-  	<string name="service_times_key">Godziny obsługi</string>
-  	<string name="collection_times_key">Godziny odbioru</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Dni tygodnia z przerwą na lunch</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Wszystkie</string>
+    <string name="opening_hours_key">Godziny otwarcia</string>
+    <string name="service_times_key">Godziny obsługi</string>
+    <string name="collection_times_key">Godziny odbioru</string>
+    <string name="supervised_key">Strzeżony</string>
+    <string name="lit_key">Oświetlony</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Dni tygodnia z przerwą na lunch</string>
     <string name="weekdays_with_lunch_late_shopping">Dni tygodnia z przerwą na lunch i późne zakupy</string>
-	<string name="weekdays">Dni tygodnia</string>
+    <string name="weekdays">Dni tygodnia</string>
     <string name="weekdays_late_shopping">Dni tygodnia z późnymi zakupami</string>
-	<string name="collection_times_weekdays">Raz dziennie</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Raz dziennie</string>
+
+    <!--	 -->
     <string name="group_header">Grupa %1$s</string>
     <string name="rule_header">Reguła %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Załadowano domyślny szablon</string>
-    
-<!--    menu items -->
-	<string name="Delete">Usuń</string>
-	<string name="add_modifier_comment">Dodaj modyfikator/komentarz</string>
-	<string name="add_year_range">Dodaj zakres roczny</string>
-	<string name="add_week_range">Dodaj zakres tygodniowy</string>
-	<string name="add_holiday">Dodaj dni wolne</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Usuń</string>
+    <string name="add_modifier_comment">Dodaj modyfikator/komentarz</string>
+    <string name="add_week_range">Dodaj zakres tygodniowy</string>
+    <string name="add_holiday">Dodaj dni wolne</string>
+
     <string name="timespan_menu">Dodaj okres czasu...</string>
     <string name="time_time">Czas - czas</string>
     <string name="time_extended_time">Czas - wydłużony czas</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">Zmienny czas</string>
     <string name="variable_time_open_end">Zmienny czas - bez końca</string>
     <string name="start_at_midnight">Początek o północy</string>
-    
+
     <string name="week_day_range">Dodaj zakres dni tygodnia</string>
     <string name="occurrence_in_month">Dodaj wystąpienie w miesiącu</string>
-    
+
     <string name="daterange_menu">Dodaj zakres dat...</string>
     <string name="date_date">Data - data</string>
     <string name="variable_date_date">Zmienna data - data</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">Data - wystąpienie w miesiącu</string>
     <string name="occurrence_variable_date">Wystąpienie w miesiącu - zmienna data</string>
     <string name="variable_date_occurrence">Zmienna data - wystąpienie w miesiącu</string>
-    
+
     <string name="date_open_end">Data - bez końca</string>
     <string name="variable_date_open_end">Zmienna data - bez końca</string>
     <string name="occurrence_open_end">Wystąpienie w miesiącu - bez końca</string>
 
     <string name="with_offsets">Z przesunięciami...</string>
+    
+    <string name="add_year_range">Dodaj zakres roczny</string>
     <string name="rule_type">Pokaż rodzaj reguły</string>
     <string name="duplicate_rule">Duplikuj</string>
     <string name="move_up">Przenieś w górę</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">Pokaż przesunięcie końca</string>
     <string name="show_interval">Pokaż interwał</string>
     <string name="show_useAsWeekDay">Pokaż użycie</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Normalna</string>
     <string name="additive_rule">Dodająca</string>
     <string name="fallback_rule">Awaryjna</string>
-    
+
     <string name="interval_minutes">Interwał (minuty)</string>
     <string name="interval_years">Interwał (lata)</string>
     <string name="interval_weeks">Interwał (tygodnie)</string>
-    
+
     <string name="offset_mins">Przesunięcie (±minuty)</string>
     <string name="offset_days">Przesunięcie (±dni)</string>
-    
+
     <string name="date_range">Zakres dat</string>
     <string name="date">Data</string>
     <string name="date_weekday_occurrence">Data (dni tygodnia w miesiącu)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">Tygodnie</string>
     <string name="year_range">Zakres lat</string>
     <string name="years">Lata</string>
-    
     <string name="modifier">Modyfikator</string>
     <string name="comment">Komentarz</string>
-    
-    <string name="use_as_weekday">Użyj, jako dni tygodnia</string>
-    
-    <string name="twentyfourseven">24 godziny, 7 dni w tygodniu</string>
-    
-    <string name="to">do</string>
-    
-    <string name="easter">Wielkanoc</string>
-    
-    <string name="sunrise">Wschód słońca</string>
-  	<string name="sunset">Zachód słońca</string>
-  	<string name="dawn">Świt</string>
-  	<string name="dusk">Zmierzch</string>
-  	
-  	<string name="public_holidays">Dni świąteczne</string>
-  	<string name="school_holidays">Wakacje/ferie szkolne</string>
-  	
-  	<string name="occurrence_in_month_title">Wystąpienie w miesiącu</string>
-  	
-  	<string name="monday_short">Pon.</string>
-  	<string name="tuesday_short">Wt.</string>
-  	<string name="wednesday_short">Śr.</string>
-  	<string name="thursday_short">Czw.</string>
-  	<string name="friday_short">Pt.</string>
-  	<string name="saturday_short">Sob.</string>
-  	<string name="sunday_short">Niedz.</string>
 
-  	<string name="january">Sty</string>
-  	<string name="february">Lut</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Kwi</string>
-  	<string name="may">Maj</string>
-  	<string name="june">Cze</string>
-  	<string name="july">Lip</string>
-  	<string name="august">Sie</string>
-  	<string name="september">Wrz</string>
-  	<string name="october">Paź</string>
-  	<string name="november">Lis</string>
-  	<string name="december">Gru</string>
-  	
-  	<string name="open">otwarte</string>
- 	<string name="closed">zamknięte</string>
-  	<string name="off">zamknięte</string>
+    <string name="use_as_weekday">Użyj, jako dni tygodnia</string>
+
+    <string name="twentyfourseven">24 godziny, 7 dni w tygodniu</string>
+
+    <string name="to">do</string>
+
+    <string name="easter">Wielkanoc</string>
+
+    <string name="sunrise">Wschód słońca</string>
+    <string name="sunset">Zachód słońca</string>
+    <string name="dawn">Świt</string>
+    <string name="dusk">Zmierzch</string>
+
+    <string name="public_holidays">Dni świąteczne</string>
+    <string name="school_holidays">Wakacje/ferie szkolne</string>
+
+    <string name="occurrence_in_month_title">Wystąpienie w miesiącu</string>
+
+    <string name="monday_short">Pon.</string>
+    <string name="tuesday_short">Wt.</string>
+    <string name="wednesday_short">Śr.</string>
+    <string name="thursday_short">Czw.</string>
+    <string name="friday_short">Pt.</string>
+    <string name="saturday_short">Sob.</string>
+    <string name="sunday_short">Niedz.</string>
+
+    <string name="january">Sty</string>
+    <string name="february">Lut</string>
+    <string name="march">Mar</string>
+    <string name="april">Kwi</string>
+    <string name="may">Maj</string>
+    <string name="june">Cze</string>
+    <string name="july">Lip</string>
+    <string name="august">Sie</string>
+    <string name="september">Wrz</string>
+    <string name="october">Paź</string>
+    <string name="november">Lis</string>
+    <string name="december">Gru</string>
+
+    <string name="open">otwarte</string>
+    <string name="closed">zamknięte</string>
+    <string name="off">zamknięte</string>
     <string name="unknown">nieznane</string>
-    
-  	<string name="before">przed</string>
+
+    <string name="before">przed</string>
     <string name="after">po</string>
-  	
-  	</resources>
+
+    </resources>

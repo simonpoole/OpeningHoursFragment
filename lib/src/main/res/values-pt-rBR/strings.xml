@@ -20,79 +20,78 @@
     <string name="No">Não</string>
     <string name="Start">Início</string>
     <string name="End">End</string>
-    
+
     <!--	templates -->
     <string name="edit_template">Editar modelo</string>
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>
     <string name="key_legend">Chave:</string>
-    
     <string name="is_default">%1$s (padrão)</string>
-    
-     <string name="all_keys">Tudo</string>
-  	<string name="opening_hours_key">Horário</string>
-  	<string name="collection_times_key">Tempos de coleta</string>
-  	<!--	 -->
+    <string name="all_keys">Tudo</string>
+    <string name="opening_hours_key">Horário</string>
+    <string name="collection_times_key">Tempos de coleta</string>
+    <string name="supervised_key">Supervisionado</string>
+    <string name="lit_key">Iluminado</string>
+    <!--	 -->
     <string name="group_header">Grupo%1$s</string>
     <string name="rule_header">Regra%1$s</string>
-    
-<string name="duplicate_rule">Duplicado</string>
+
+    <string name="duplicate_rule">Duplicado</string>
     <!--     opening hour elements -->
-         
+
     <string name="normal_rule">Normal</string>
     <string name="additive_rule">Aditivo</string>
     <string name="interval_minutes">Intervalo (minutos)</string>
     <string name="interval_years">Intervalo (anos)</string>
     <string name="interval_weeks">Intervalo (semanas)</string>
-    
+
     <string name="date_range">Intervalo de datas</string>
     <string name="date">Data</string>
     <string name="weeks">Semanas</string>
     <string name="years">Anos</string>
-    
     <string name="modifier">Modificador</string>
     <string name="comment">Comentário</string>
-    
-    <string name="twentyfourseven">24 horas, 7 dias por semana</string>
-    
-    <string name="to">até</string>
-    
-    <string name="easter">Páscoa</string>
-    
-    <string name="sunrise">Nascer do sol</string>
-  	<string name="sunset">Pôr do sol</string>
-  	<string name="dawn">Alvorada</string>
-  	<string name="dusk">Crepúsculo</string>
-  	
-  	<string name="public_holidays">Feriados públicos</string>
-  	<string name="school_holidays">Feriados escolares</string>
-  	
-  	<string name="monday_short">Seg</string>
-  	<string name="tuesday_short">Ter</string>
-  	<string name="wednesday_short">Qua</string>
-  	<string name="thursday_short">Qui</string>
-  	<string name="friday_short">Sex</string>
-  	<string name="saturday_short">Sáb</string>
-  	<string name="sunday_short">Dom</string>
 
-  	<string name="january">Jan</string>
-  	<string name="february">Fev</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Abr</string>
-  	<string name="may">Mai</string>
-  	<string name="june">Jun</string>
-  	<string name="july">Jul</string>
-  	<string name="august">Ago</string>
-  	<string name="september">Set</string>
-  	<string name="october">Out</string>
-  	<string name="november">Nov</string>
-  	<string name="december">Dez</string>
-  	
-  	<string name="open">aberto</string>
- 	<string name="closed">fechado</string>
-  	<string name="unknown">desconhecido</string>
-    
-  	<string name="before">antes</string>
+    <string name="twentyfourseven">24 horas, 7 dias por semana</string>
+
+    <string name="to">até</string>
+
+    <string name="easter">Páscoa</string>
+
+    <string name="sunrise">Nascer do sol</string>
+    <string name="sunset">Pôr do sol</string>
+    <string name="dawn">Alvorada</string>
+    <string name="dusk">Crepúsculo</string>
+
+    <string name="public_holidays">Feriados públicos</string>
+    <string name="school_holidays">Feriados escolares</string>
+
+    <string name="monday_short">Seg</string>
+    <string name="tuesday_short">Ter</string>
+    <string name="wednesday_short">Qua</string>
+    <string name="thursday_short">Qui</string>
+    <string name="friday_short">Sex</string>
+    <string name="saturday_short">Sáb</string>
+    <string name="sunday_short">Dom</string>
+
+    <string name="january">Jan</string>
+    <string name="february">Fev</string>
+    <string name="march">Mar</string>
+    <string name="april">Abr</string>
+    <string name="may">Mai</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Ago</string>
+    <string name="september">Set</string>
+    <string name="october">Out</string>
+    <string name="november">Nov</string>
+    <string name="december">Dez</string>
+
+    <string name="open">aberto</string>
+    <string name="closed">fechado</string>
+    <string name="unknown">desconhecido</string>
+
+    <string name="before">antes</string>
     <string name="after">depois</string>
-  	
-  	</resources>
+
+    </resources>

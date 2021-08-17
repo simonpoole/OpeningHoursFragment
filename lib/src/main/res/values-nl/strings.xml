@@ -7,7 +7,7 @@
     <string name="Done">Klaar</string>
     <string name="value_too_long">De lengte van de openingstijden waarde is %1$d, wat langer is dan het maximum van 255.\n\nVersimpel alsjeblieft de waarde voor het opslaan!</string>
     <string name="would_overwrite_invalid_value">Kan regel niet toevoegen aan ongeldige openingstijden waarde. Verbeter of verwijder alsjeblieft!</string>
-    
+
     <string name="add_rule">Regel toevoegen</string>
     <string name="add_rule_247">Regel toevoegen voor 24/7</string>
     <string name="add_rule_closed_on_holidays">Regel toevoegen voor feestdagen</string>
@@ -24,44 +24,44 @@
     <string name="No">Nee</string>
     <string name="Start">Begin</string>
     <string name="End">Einde</string>
-    
+
     <string name="default_hint">Openingstijden waarde</string>
-    
+
     <string name="text_values">Tekstwaarden</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Bewerk sjabloon</string>
     <string name="name_legend">Naam:</string>
     <string name="default_legend">Standaard:</string>
     <string name="key_legend">Sleutel:</string>
-    
     <string name="is_default">%1$s (standaard)</string>
-    
-     <string name="all_keys">Alle</string>
-  	<string name="opening_hours_key">Openingstijden</string>
-  	<string name="service_times_key">Diensttijden</string>
-  	<string name="collection_times_key">Lichtingstijden</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Doordeweekse dagen met lunchpauze</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Alle</string>
+    <string name="opening_hours_key">Openingstijden</string>
+    <string name="service_times_key">Diensttijden</string>
+    <string name="collection_times_key">Lichtingstijden</string>
+    <string name="supervised_key">Onder toezicht</string>
+    <string name="lit_key">Verlicht</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Doordeweekse dagen met lunchpauze</string>
     <string name="weekdays_with_lunch_late_shopping">Doordeweekse dagen met lunchpauze en koopavond</string>
-	<string name="weekdays">Doordeweekse dagen</string>
+    <string name="weekdays">Doordeweekse dagen</string>
     <string name="weekdays_late_shopping">Doordeweekse dagen met koopavond</string>
-	<string name="collection_times_weekdays">Eens per doordeweekse dag</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Eens per doordeweekse dag</string>
+
+    <!--	 -->
     <string name="group_header">Groep %1$s</string>
     <string name="rule_header">Regel %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Standaardsjabloon geladen</string>
-    
-<!--    menu items -->
-	<string name="Delete">Verwijder</string>
-	<string name="add_modifier_comment">Voeg bewerker/commentaar toe</string>
-	<string name="add_year_range">Voeg jaarbereik toe</string>
-	<string name="add_week_range">Voeg weekbereik toe</string>
-	<string name="add_holiday">Voeg vakantie toe</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Verwijder</string>
+    <string name="add_modifier_comment">Voeg bewerker/commentaar toe</string>
+    <string name="add_week_range">Voeg weekbereik toe</string>
+    <string name="add_holiday">Voeg vakantie toe</string>
+
     <string name="timespan_menu">Voeg tijdsbereik toe ...</string>
     <string name="time_time">Tijd - tijd</string>
     <string name="time_extended_time">Tijd - langere tijd</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">Variabele tijd</string>
     <string name="variable_time_open_end">Variabele tijd-open eind</string>
     <string name="start_at_midnight">Begin op middernacht</string>
-    
+
     <string name="week_day_range">Voeg dag van de week bereik toe</string>
     <string name="occurrence_in_month">Voeg voorkomen in maand toe</string>
-    
+
     <string name="daterange_menu">Voeg datumbereik toe ...</string>
     <string name="date_date">Datum - datum</string>
     <string name="variable_date_date">Variabele datum - datum</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">Datum - voorkomen in maand</string>
     <string name="occurrence_variable_date">Voorkomen in maand - variabele datum </string>
     <string name="variable_date_occurrence">Variabele datum - voorkomen in maand</string>
-    
+
     <string name="date_open_end">Datum - open eind</string>
     <string name="variable_date_open_end">Variabele datum - open eind</string>
     <string name="occurrence_open_end">Voorkomen in maand - open eind</string>
 
     <string name="with_offsets">Met verplaatsingen...</string>
+    
+    <string name="add_year_range">Voeg jaarbereik toe</string>
     <string name="rule_type">Toon regeltype</string>
     <string name="duplicate_rule">Dupliceer</string>
     <string name="move_up">Verplaats omhoog</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">Toon eindverplaatsing</string>
     <string name="show_interval">Toon interval</string>
     <string name="show_useAsWeekDay">Toon gebruik</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Normaal</string>
     <string name="additive_rule">Additief</string>
     <string name="fallback_rule">Terugval</string>
-    
+
     <string name="interval_minutes">Interval (minuten)</string>
     <string name="interval_years">Interval (jaren)</string>
     <string name="interval_weeks">Interval (weken)</string>
-    
+
     <string name="offset_mins">Verplaatsing (±minuten)</string>
     <string name="offset_days">Verplaatsing (±dagen)</string>
-    
+
     <string name="date_range">Datumbereik</string>
     <string name="date">Datum</string>
     <string name="date_weekday_occurrence">Datum (doordeweekse dagin maand)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">Weken</string>
     <string name="year_range">Jaarbereik</string>
     <string name="years">Jaren</string>
-    
     <string name="modifier">Bewerker</string>
     <string name="comment">Opmerking</string>
-    
-    <string name="use_as_weekday">Gebruik als doordeweekse dag</string>
-    
-    <string name="twentyfourseven">24 uur, 7 dagen per week</string>
-    
-    <string name="to">tot</string>
-    
-    <string name="easter">Pasen</string>
-    
-    <string name="sunrise">Zonsopkomst</string>
-  	<string name="sunset">Zonsondergang</string>
-  	<string name="dawn">Zonsopgang</string>
-  	<string name="dusk">Zonsondergang</string>
-  	
-  	<string name="public_holidays">Feestdagen</string>
-  	<string name="school_holidays">Schoolvakanties</string>
-  	
-  	<string name="occurrence_in_month_title">Voorkomen in maand</string>
-  	
-  	<string name="monday_short">Ma</string>
-  	<string name="tuesday_short">Di</string>
-  	<string name="wednesday_short">Wo</string>
-  	<string name="thursday_short">Do</string>
-  	<string name="friday_short">Vr</string>
-  	<string name="saturday_short">Za</string>
-  	<string name="sunday_short">Zo</string>
 
-  	<string name="january">Jan</string>
-  	<string name="february">Feb</string>
-  	<string name="march">Mrt</string>
-  	<string name="april">Apr</string>
-  	<string name="may">Mei</string>
-  	<string name="june">Jun</string>
-  	<string name="july">Jul</string>
-  	<string name="august">Aug</string>
-  	<string name="september">Sep</string>
-  	<string name="october">Okt</string>
-  	<string name="november">Nov</string>
-  	<string name="december">Dec</string>
-  	
-  	<string name="open">open</string>
- 	<string name="closed">gesloten</string>
-  	<string name="off">uit</string>
+    <string name="use_as_weekday">Gebruik als doordeweekse dag</string>
+
+    <string name="twentyfourseven">24 uur, 7 dagen per week</string>
+
+    <string name="to">tot</string>
+
+    <string name="easter">Pasen</string>
+
+    <string name="sunrise">Zonsopkomst</string>
+    <string name="sunset">Zonsondergang</string>
+    <string name="dawn">Zonsopgang</string>
+    <string name="dusk">Zonsondergang</string>
+
+    <string name="public_holidays">Feestdagen</string>
+    <string name="school_holidays">Schoolvakanties</string>
+
+    <string name="occurrence_in_month_title">Voorkomen in maand</string>
+
+    <string name="monday_short">Ma</string>
+    <string name="tuesday_short">Di</string>
+    <string name="wednesday_short">Wo</string>
+    <string name="thursday_short">Do</string>
+    <string name="friday_short">Vr</string>
+    <string name="saturday_short">Za</string>
+    <string name="sunday_short">Zo</string>
+
+    <string name="january">Jan</string>
+    <string name="february">Feb</string>
+    <string name="march">Mrt</string>
+    <string name="april">Apr</string>
+    <string name="may">Mei</string>
+    <string name="june">Jun</string>
+    <string name="july">Jul</string>
+    <string name="august">Aug</string>
+    <string name="september">Sep</string>
+    <string name="october">Okt</string>
+    <string name="november">Nov</string>
+    <string name="december">Dec</string>
+
+    <string name="open">open</string>
+    <string name="closed">gesloten</string>
+    <string name="off">uit</string>
     <string name="unknown">onbekend</string>
-    
-  	<string name="before">voor</string>
+
+    <string name="before">voor</string>
     <string name="after">na</string>
-  	
-  	</resources>
+
+    </resources>

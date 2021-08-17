@@ -7,7 +7,7 @@
     <string name="Done">Fet</string>
     <string name="value_too_long">La longitud del valor d\'horaris d\'obertura és %1$d, que excedeix el màxim de 255.\n\n Simplifiqueu la cadena abans de desar-la!</string>
     <string name="would_overwrite_invalid_value">No es pot afegir una cadena d\'horari d\'obertura invàlida. Corregiu-la o suprimiu-la!</string>
-    
+
     <string name="add_rule">Afegeix una regla</string>
     <string name="add_rule_247">Afegeix una regla 24/7</string>
     <string name="add_rule_closed_on_holidays">Afegeix una regla de vancances</string>
@@ -24,44 +24,44 @@
     <string name="No">No</string>
     <string name="Start">Inici</string>
     <string name="End">Fin</string>
-    
+
     <string name="default_hint">Cadena d\'horari d\'obertura</string>
-    
+
     <string name="text_values">Valors de text</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Edita la plantilla</string>
     <string name="name_legend">Nom:</string>
     <string name="default_legend">Per defecte:</string>
     <string name="key_legend">Clau:</string>
-    
     <string name="is_default">%1$s (per defecte)</string>
-    
-     <string name="all_keys">Tots</string>
-  	<string name="opening_hours_key">Horaris d\'obertura</string>
-  	<string name="service_times_key">Horari de servei</string>
-  	<string name="collection_times_key">Horari de recollides</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Dies de la setmana amb pausa per dinar</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Tots</string>
+    <string name="opening_hours_key">Horaris d\'obertura</string>
+    <string name="service_times_key">Horari de servei</string>
+    <string name="collection_times_key">Horari de recollides</string>
+    <string name="supervised_key">Supervisat</string>
+    <string name="lit_key">Il·luminació</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Dies de la setmana amb pausa per dinar</string>
     <string name="weekdays_with_lunch_late_shopping">Dies de la setmana amb pausa per dinar i compra tardana</string>
-	<string name="weekdays">Dies de la setmana</string>
+    <string name="weekdays">Dies de la setmana</string>
     <string name="weekdays_late_shopping">Dies de la setmana amb compra tardana</string>
-	<string name="collection_times_weekdays">Una vegada per dia de la setmana</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Una vegada per dia de la setmana</string>
+
+    <!--	 -->
     <string name="group_header">Grup %1$s</string>
     <string name="rule_header">Regla %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Carrega la plantilla predeterminada</string>
-    
-<!--    menu items -->
-	<string name="Delete">Suprimeix</string>
-	<string name="add_modifier_comment">Afegeix un modificador o comentari</string>
-	<string name="add_year_range">Afegeix un interval d\'anys</string>
-	<string name="add_week_range">Afegeix un interval de setmanes</string>
-	<string name="add_holiday">Afegeix vacances</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Suprimeix</string>
+    <string name="add_modifier_comment">Afegeix un modificador o comentari</string>
+    <string name="add_week_range">Afegeix un interval de setmanes</string>
+    <string name="add_holiday">Afegeix vacances</string>
+
     <string name="timespan_menu">Afegeix un interval de temps...</string>
     <string name="time_time">Hora - hora</string>
     <string name="time_extended_time">Hora - hora estimada</string>
@@ -72,15 +72,16 @@
     <string name="time">Hora</string>
     <string name="variable_time">Hora variable</string>
     <string name="start_at_midnight">Comença a mitjanit</string>
-    
+
     <string name="week_day_range">Afegeix un interval de dies setmanals</string>
     <string name="occurrence_in_month">Afegeix un ocurrència en el mes</string>
-    
+
     <string name="daterange_menu">Afegeix un interval de dates...</string>
     <string name="date_date">Data - data</string>
     <string name="variable_date_date">Data variable - data</string>
     <string name="date_variable_date">Data - data variable</string>
     <string name="variable_date_variable_date">Data variable - data variable</string>
+    <string name="add_year_range">Afegeix un interval d\'anys</string>
     <string name="rule_type">Mostra el tipus de regla</string>
     <string name="duplicate_rule">Duplica</string>
     <string name="move_up">Mou amunt</string>
@@ -88,15 +89,15 @@
     <string name="display_time_picker">Mostra el selector d\'hores</string>
     <string name="show_interval">Mostra l\'interval</string>
     <string name="show_useAsWeekDay">Mostra l\'ús</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Normal</string>
     <string name="additive_rule">Additiu</string>
     <string name="interval_minutes">Interval (minuts)</string>
     <string name="interval_years">Interval (anys)</string>
     <string name="interval_weeks">Interval (setmanes)</string>
-    
+
     <string name="date_range">Interval de dates</string>
     <string name="date">Data</string>
     <string name="date_weekday_occurrence">Data (dia de la setmana en el mes)</string>
@@ -104,55 +105,54 @@
     <string name="weeks">Setmanes</string>
     <string name="year_range">Interval d\'anys</string>
     <string name="years">Anys</string>
-    
     <string name="modifier">Modificador</string>
     <string name="comment">Comentari</string>
-    
-    <string name="use_as_weekday">Usa com a dia de la setmana</string>
-    
-    <string name="twentyfourseven">24 hores, 7 dies per setmana</string>
-    
-    <string name="to">a</string>
-    
-    <string name="easter">Setmana Santa</string>
-    
-    <string name="sunrise">Sortida de sol</string>
-  	<string name="sunset">Posta de sol</string>
-  	<string name="dawn">Alba</string>
-  	<string name="dusk">Crepuscle</string>
-  	
-  	<string name="public_holidays">Dies festius</string>
-  	<string name="school_holidays">Vacances escolars</string>
-  	
-  	<string name="occurrence_in_month_title">Ocurrència en el mes</string>
-  	
-  	<string name="monday_short">dl.</string>
-  	<string name="tuesday_short">dt.</string>
-  	<string name="wednesday_short">dc.</string>
-  	<string name="thursday_short">dj.</string>
-  	<string name="friday_short">dv.</string>
-  	<string name="saturday_short">ds.</string>
-  	<string name="sunday_short">dg.</string>
 
-  	<string name="january">gen.</string>
-  	<string name="february">feb.</string>
-  	<string name="march">març</string>
-  	<string name="april">abr.</string>
-  	<string name="may">maig</string>
-  	<string name="june">juny</string>
-  	<string name="july">jul.</string>
-  	<string name="august">ago.</string>
-  	<string name="september">set.</string>
-  	<string name="october">oct.</string>
-  	<string name="november">nov.</string>
-  	<string name="december">des.</string>
-  	
-  	<string name="open">obert</string>
- 	<string name="closed">tancat</string>
-  	<string name="off">tancat</string>
+    <string name="use_as_weekday">Usa com a dia de la setmana</string>
+
+    <string name="twentyfourseven">24 hores, 7 dies per setmana</string>
+
+    <string name="to">a</string>
+
+    <string name="easter">Setmana Santa</string>
+
+    <string name="sunrise">Sortida de sol</string>
+    <string name="sunset">Posta de sol</string>
+    <string name="dawn">Alba</string>
+    <string name="dusk">Crepuscle</string>
+
+    <string name="public_holidays">Dies festius</string>
+    <string name="school_holidays">Vacances escolars</string>
+
+    <string name="occurrence_in_month_title">Ocurrència en el mes</string>
+
+    <string name="monday_short">dl.</string>
+    <string name="tuesday_short">dt.</string>
+    <string name="wednesday_short">dc.</string>
+    <string name="thursday_short">dj.</string>
+    <string name="friday_short">dv.</string>
+    <string name="saturday_short">ds.</string>
+    <string name="sunday_short">dg.</string>
+
+    <string name="january">gen.</string>
+    <string name="february">feb.</string>
+    <string name="march">març</string>
+    <string name="april">abr.</string>
+    <string name="may">maig</string>
+    <string name="june">juny</string>
+    <string name="july">jul.</string>
+    <string name="august">ago.</string>
+    <string name="september">set.</string>
+    <string name="october">oct.</string>
+    <string name="november">nov.</string>
+    <string name="december">des.</string>
+
+    <string name="open">obert</string>
+    <string name="closed">tancat</string>
+    <string name="off">tancat</string>
     <string name="unknown">desconeguda</string>
-    
-  	<string name="before">abans</string>
+
+    <string name="before">abans</string>
     <string name="after">després</string>
-  	
-  	</resources>
+
+    </resources>

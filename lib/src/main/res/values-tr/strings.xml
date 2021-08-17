@@ -22,38 +22,40 @@
     <string name="No">Hayır</string>
     <string name="Start">Başla</string>
     <string name="End">End</string>
-    
+
     <string name="default_hint">Açılış saatleri dizisi</string>
-    
+
     <string name="text_values">Metin değerleri</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Şablonu düzenle</string>
     <string name="name_legend">İsim:</string>
     <string name="default_legend">Varsayılan:</string>
     <string name="key_legend">Anahtar:</string>
-    
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
     <string name="all_keys">Tüm</string>
-  	<string name="opening_hours_key">Açılış saatleri</string>
-  	<string name="service_times_key">Servis zamanları</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Hafta içi öğle yemeği molası</string>
+    <string name="opening_hours_key">Açılış saatleri</string>
+    <string name="service_times_key">Servis zamanları</string>
+    <string name="supervised_key">Denetimli</string>
+    <string name="lit_key">Işıklandırma</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Hafta içi öğle yemeği molası</string>
     <string name="weekdays">Hafta içi</string>
     <string name="collection_times_weekdays">Haftada bir kez</string>
-    
-<!--    menu items -->
-	<string name="Delete">Sil</string>
-	<string name="add_year_range">Yıl aralığı ekle</string>
-	<string name="add_week_range">Hafta aralığı ekle</string>
-	<string name="add_holiday">Tatil ekle</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Sil</string>
+    <string name="add_week_range">Hafta aralığı ekle</string>
+    <string name="add_holiday">Tatil ekle</string>
+
     <string name="timespan_menu">Zaman aralığı ekle ...</string>
     <string name="start_at_midnight">Gece yarısında başla</string>
-    
+
     <string name="week_day_range">Hafta içi gün aralığı ekle</string>
     <string name="daterange_menu">Tarih aralığı ekle ...</string>
     <string name="date_open_end">Tarih - açık uçlu</string>
     <string name="variable_date_open_end">Değişken tarih - açık  uçlu</string>
+    <string name="add_year_range">Yıl aralığı ekle</string>
     <string name="rule_type">Kural türünü göster</string>
     <string name="duplicate_rule">Tıpkısı</string>
     <string name="move_up">Yukarı taşı</string>
@@ -64,14 +66,14 @@
     <string name="ticks_1_minute">1 dakikalık işarete geç</string>
     <string name="show_interval">Aralığı göster</string>
     <string name="show_useAsWeekDay">Kullanımı göster</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Normal</string>
     <string name="interval_minutes">Aralık (dakika)</string>
     <string name="interval_years">Aralık (yıl)</string>
     <string name="interval_weeks">Aralık (hafta)</string>
-    
+
     <string name="date_range">Tarih aralığı</string>
     <string name="date">Tarih</string>
     <string name="date_weekday_occurrence">Tarih (ayın hafta içi)</string>
@@ -79,54 +81,53 @@
     <string name="weeks">Haftalar</string>
     <string name="year_range">Yıl aralığı</string>
     <string name="years">Yıllar</string>
-    
     <string name="comment">Yorum</string>
-    
-    <string name="use_as_weekday">Haftaiçi gibi kullanın</string>
-    
-    <string name="twentyfourseven">Haftada 7 gün 24 saat</string>
-    
-    <string name="to">a (e)</string>
-    
-    <string name="easter">Paskalya</string>
-    
-    <string name="sunrise">Gündoğumu</string>
-  	<string name="sunset">Gün batımı</string>
-  	<string name="dawn">Şafak</string>
-  	<string name="dusk">Alacakaranlık</string>
-  	
-  	<string name="public_holidays">Resmi tatil</string>
-  	<string name="school_holidays">Okul tatilleri</string>
-  	
-  	<string name="occurrence_in_month_title">Ay içinde meydana gelme</string>
-  	
-  	<string name="monday_short">Pzt</string>
-  	<string name="tuesday_short">Sa</string>
-  	<string name="wednesday_short">Ça</string>
-  	<string name="thursday_short">Pe</string>
-  	<string name="friday_short">Cu</string>
-  	<string name="saturday_short">Cmt</string>
-  	<string name="sunday_short">Pa</string>
 
-  	<string name="january">Oca</string>
-  	<string name="february">Şub</string>
-  	<string name="march">Mar</string>
-  	<string name="april">Nis</string>
-  	<string name="may">May</string>
-  	<string name="june">Haz</string>
-  	<string name="july">Tem</string>
-  	<string name="august">Ağu</string>
-  	<string name="september">Eyl</string>
-  	<string name="october">Eki</string>
-  	<string name="november">Kas</string>
-  	<string name="december">Ara</string>
-  	
-  	<string name="open">aç</string>
- 	<string name="closed">kapalı</string>
-  	<string name="off">devre dışı</string>
+    <string name="use_as_weekday">Haftaiçi gibi kullanın</string>
+
+    <string name="twentyfourseven">Haftada 7 gün 24 saat</string>
+
+    <string name="to">a (e)</string>
+
+    <string name="easter">Paskalya</string>
+
+    <string name="sunrise">Gündoğumu</string>
+    <string name="sunset">Gün batımı</string>
+    <string name="dawn">Şafak</string>
+    <string name="dusk">Alacakaranlık</string>
+
+    <string name="public_holidays">Resmi tatil</string>
+    <string name="school_holidays">Okul tatilleri</string>
+
+    <string name="occurrence_in_month_title">Ay içinde meydana gelme</string>
+
+    <string name="monday_short">Pzt</string>
+    <string name="tuesday_short">Sa</string>
+    <string name="wednesday_short">Ça</string>
+    <string name="thursday_short">Pe</string>
+    <string name="friday_short">Cu</string>
+    <string name="saturday_short">Cmt</string>
+    <string name="sunday_short">Pa</string>
+
+    <string name="january">Oca</string>
+    <string name="february">Şub</string>
+    <string name="march">Mar</string>
+    <string name="april">Nis</string>
+    <string name="may">May</string>
+    <string name="june">Haz</string>
+    <string name="july">Tem</string>
+    <string name="august">Ağu</string>
+    <string name="september">Eyl</string>
+    <string name="october">Eki</string>
+    <string name="november">Kas</string>
+    <string name="december">Ara</string>
+
+    <string name="open">aç</string>
+    <string name="closed">kapalı</string>
+    <string name="off">devre dışı</string>
     <string name="unknown">bilinmeyen</string>
-    
-  	<string name="before">önce</string>
+
+    <string name="before">önce</string>
     <string name="after">sonra</string>
-  	
-  	</resources>
+
+    </resources>

@@ -7,7 +7,7 @@
     <string name="Done">Valmis</string>
     <string name="value_too_long">Aukioloajan määrityksestä tulee %1$d merkkiä pitkä, joten se ylittää ylärajan 255 merkkiä.\n\nYritä tehdä siitä yksinkertaisempi ja tallentaa uudelleen.</string>
     <string name="would_overwrite_invalid_value">Sääntöjä ei voi lisätä virheelliseen aukioloaikamääritykseen. Korjaa tai poista se ensin.</string>
-    
+
     <string name="add_rule">Lisää sääntö</string>
     <string name="add_rule_247">Lisää sääntö 24/7</string>
     <string name="add_rule_closed_on_holidays">Lisää sääntö vapaapäiville</string>
@@ -24,44 +24,44 @@
     <string name="No">Ei</string>
     <string name="Start">Alku</string>
     <string name="End">Loppu</string>
-    
+
     <string name="default_hint">Aukioloajan merkkijono</string>
-    
+
     <string name="text_values">Tekstiarvot</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Muokkaa mallinetta</string>
     <string name="name_legend">Nimi:</string>
     <string name="default_legend">Oletus:</string>
     <string name="key_legend">Avain:</string>
-    
     <string name="is_default">%1$s (oletus)</string>
-    
-     <string name="all_keys">Kaikki</string>
-  	<string name="opening_hours_key">Aukioloajat</string>
-  	<string name="service_times_key">Palveluajat</string>
-  	<string name="collection_times_key">Keräysajat</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Arkipäivisin lounastauon kanssa</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Kaikki</string>
+    <string name="opening_hours_key">Aukioloajat</string>
+    <string name="service_times_key">Palveluajat</string>
+    <string name="collection_times_key">Keräysajat</string>
+    <string name="supervised_key">Valvonta</string>
+    <string name="lit_key">Valaistu</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Arkipäivisin lounastauon kanssa</string>
     <string name="weekdays_with_lunch_late_shopping">Arkipäivisin + lounastauko + pitkät aukioloajat</string>
-	<string name="weekdays">Arkipäivisin</string>
+    <string name="weekdays">Arkipäivisin</string>
     <string name="weekdays_late_shopping">Arkipäivisin + pitkät aukioloajat</string>
-	<string name="collection_times_weekdays">Kerran joka arkipäivä</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Kerran joka arkipäivä</string>
+
+    <!--	 -->
     <string name="group_header">Ryhmä %1$s</string>
     <string name="rule_header">Sääntö %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Oletusmalline ladattiin</string>
-    
-<!--    menu items -->
-	<string name="Delete">Poista</string>
-	<string name="add_modifier_comment">Lisää määre/kommentti</string>
-	<string name="add_year_range">Lisää vuosijakso</string>
-	<string name="add_week_range">Lisää viikkojakso</string>
-	<string name="add_holiday">Lisää vapaapäivä</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Poista</string>
+    <string name="add_modifier_comment">Lisää määre/kommentti</string>
+    <string name="add_week_range">Lisää viikkojakso</string>
+    <string name="add_holiday">Lisää vapaapäivä</string>
+
     <string name="timespan_menu">Lisää ajanjakso</string>
     <string name="time_time">Aika–aika</string>
     <string name="time_extended_time">Aika–jatkettu aika</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">Vaihteleva aika</string>
     <string name="variable_time_open_end">Vaihteleva aika–avoin loppu</string>
     <string name="start_at_midnight">Aloita keskiyöstä</string>
-    
+
     <string name="week_day_range">Lisää viikonpäiväjakso</string>
     <string name="occurrence_in_month">Lisää esiintymiskerta kuun sisällä</string>
-    
+
     <string name="daterange_menu">Lisää päivämääräjakso...</string>
     <string name="date_date">Pvm–pvm</string>
     <string name="variable_date_date">Vaihteleva pvm–pvm</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">Pvm–esiintymiskerta kuussa</string>
     <string name="occurrence_variable_date">Esiintymiskerta kuussa–vaiht. pvm</string>
     <string name="variable_date_occurrence">Vaiht. pvm–esiintymiskerta kuussa</string>
-    
+
     <string name="date_open_end">Pvm–avoin loppu</string>
     <string name="variable_date_open_end">Vaihteleva pvm–avoin loppu</string>
     <string name="occurrence_open_end">Esiintymiskerta kuussa–avoin loppu</string>
 
     <string name="with_offsets">Poikkeama...</string>
+    
+    <string name="add_year_range">Lisää vuosijakso</string>
     <string name="rule_type">Näytä sääntötyyppi</string>
     <string name="duplicate_rule">Kahdenna</string>
     <string name="move_up">Siirrä ylöspäin</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">Loppuajan poikkeama</string>
     <string name="show_interval">Näytä välistys</string>
     <string name="show_useAsWeekDay">Näytä käyttö</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Tavallinen</string>
     <string name="additive_rule">Lisäys</string>
     <string name="fallback_rule">Vara</string>
-    
+
     <string name="interval_minutes">Monen minuutin välein</string>
     <string name="interval_years">Monen vuoden välein</string>
     <string name="interval_weeks">Monen viikon välein</string>
-    
+
     <string name="offset_mins">Poikkeama (±minuuttia)</string>
     <string name="offset_days">Poikkeama (±päivää)</string>
-    
+
     <string name="date_range">Päivämääräjakso</string>
     <string name="date">Päivämäärä</string>
     <string name="date_weekday_occurrence">Päivämäärä (viikonpäivä kuussa)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">Viikot</string>
     <string name="year_range">Vuosijakso</string>
     <string name="years">Vuodet</string>
-    
     <string name="modifier">Määre</string>
     <string name="comment">Kommentti</string>
-    
-    <string name="use_as_weekday">Käytä viikonpäivän tapaan</string>
-    
-    <string name="twentyfourseven">Kellon ympäri, joka päivä</string>
-    
-    <string name="to">–</string>
-    
-    <string name="easter">Pääsiäinen</string>
-    
-    <string name="sunrise">Auringonnousu</string>
-  	<string name="sunset">Auringonlasku</string>
-  	<string name="dawn">Aamuhämärä</string>
-  	<string name="dusk">Iltahämärä</string>
-  	
-  	<string name="public_holidays">Yleiset vapaapäivät</string>
-  	<string name="school_holidays">Koulujen vapaapäivät</string>
-  	
-  	<string name="occurrence_in_month_title">Esiintymiskera kuussa</string>
-  	
-  	<string name="monday_short">Ma</string>
-  	<string name="tuesday_short">Ti</string>
-  	<string name="wednesday_short">Ke</string>
-  	<string name="thursday_short">To</string>
-  	<string name="friday_short">Pe</string>
-  	<string name="saturday_short">La</string>
-  	<string name="sunday_short">Su</string>
 
-  	<string name="january">Tammi</string>
-  	<string name="february">Helmi</string>
-  	<string name="march">Maalis</string>
-  	<string name="april">Huhti</string>
-  	<string name="may">Touko</string>
-  	<string name="june">Kesä</string>
-  	<string name="july">Heinä</string>
-  	<string name="august">Elo</string>
-  	<string name="september">Syys</string>
-  	<string name="october">Loka</string>
-  	<string name="november">Marras</string>
-  	<string name="december">Joulu</string>
-  	
-  	<string name="open">auki</string>
- 	<string name="closed">kiinni</string>
-  	<string name="off">poissa</string>
+    <string name="use_as_weekday">Käytä viikonpäivän tapaan</string>
+
+    <string name="twentyfourseven">Kellon ympäri, joka päivä</string>
+
+    <string name="to">–</string>
+
+    <string name="easter">Pääsiäinen</string>
+
+    <string name="sunrise">Auringonnousu</string>
+    <string name="sunset">Auringonlasku</string>
+    <string name="dawn">Aamuhämärä</string>
+    <string name="dusk">Iltahämärä</string>
+
+    <string name="public_holidays">Yleiset vapaapäivät</string>
+    <string name="school_holidays">Koulujen vapaapäivät</string>
+
+    <string name="occurrence_in_month_title">Esiintymiskera kuussa</string>
+
+    <string name="monday_short">Ma</string>
+    <string name="tuesday_short">Ti</string>
+    <string name="wednesday_short">Ke</string>
+    <string name="thursday_short">To</string>
+    <string name="friday_short">Pe</string>
+    <string name="saturday_short">La</string>
+    <string name="sunday_short">Su</string>
+
+    <string name="january">Tammi</string>
+    <string name="february">Helmi</string>
+    <string name="march">Maalis</string>
+    <string name="april">Huhti</string>
+    <string name="may">Touko</string>
+    <string name="june">Kesä</string>
+    <string name="july">Heinä</string>
+    <string name="august">Elo</string>
+    <string name="september">Syys</string>
+    <string name="october">Loka</string>
+    <string name="november">Marras</string>
+    <string name="december">Joulu</string>
+
+    <string name="open">auki</string>
+    <string name="closed">kiinni</string>
+    <string name="off">poissa</string>
     <string name="unknown">tuntematon</string>
-    
-  	<string name="before">ennen</string>
+
+    <string name="before">ennen</string>
     <string name="after">jälkeen</string>
-  	
-  	</resources>
+
+    </resources>

@@ -7,7 +7,7 @@
     <string name="Done">Готово</string>
     <string name="value_too_long">Довжина значення теґу %1$d, що більше ніж максимум у 255.\n\nСпростіть його перед збереженням!</string>
     <string name="would_overwrite_invalid_value">Неможливо додати правило до помилкового рядка opening hours. Виправте або вилучіть його!</string>
-    
+
     <string name="add_rule">Додати правило</string>
     <string name="add_rule_247">Додати правило для 24/7</string>
     <string name="add_rule_closed_on_holidays">Додати правило для святкових днів</string>
@@ -24,44 +24,44 @@
     <string name="No">Ні</string>
     <string name="Start">Початок</string>
     <string name="End">Кінець</string>
-    
+
     <string name="default_hint">Рядок годин роботи</string>
-    
+
     <string name="text_values">Текстове значення</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">Редагувати шаблон</string>
     <string name="name_legend">Назва:</string>
     <string name="default_legend">Типово:</string>
     <string name="key_legend">Ключ:</string>
-    
     <string name="is_default">%1$s (типово)</string>
-    
-     <string name="all_keys">Загальний</string>
-  	<string name="opening_hours_key">Часи роботи</string>
-  	<string name="service_times_key">Розклад</string>
-  	<string name="collection_times_key">Час виїмки пошти</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">Робочі дні з перервою на обід</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">Загальний</string>
+    <string name="opening_hours_key">Часи роботи</string>
+    <string name="service_times_key">Розклад</string>
+    <string name="collection_times_key">Час виїмки пошти</string>
+    <string name="supervised_key">Під наглядом</string>
+    <string name="lit_key">Освітлення</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">Робочі дні з перервою на обід</string>
     <string name="weekdays_with_lunch_late_shopping">У будні дні з перервами на обід і пізні покупки</string>
-	<string name="weekdays">Робочі дні</string>
+    <string name="weekdays">Робочі дні</string>
     <string name="weekdays_late_shopping">Будні з пізніми покупками</string>
-	<string name="collection_times_weekdays">Раз на день</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">Раз на день</string>
+
+    <!--	 -->
     <string name="group_header">Група %1$s</string>
     <string name="rule_header">Правило %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">Завантажено типовий шаблон</string>
-    
-<!--    menu items -->
-	<string name="Delete">Вилучити</string>
-	<string name="add_modifier_comment">Додати модифікатор/коментар</string>
-	<string name="add_year_range">Додати роки</string>
-	<string name="add_week_range">Додати тижні</string>
-	<string name="add_holiday">Додати свято</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">Вилучити</string>
+    <string name="add_modifier_comment">Додати модифікатор/коментар</string>
+    <string name="add_week_range">Додати тижні</string>
+    <string name="add_holiday">Додати свято</string>
+
     <string name="timespan_menu">Додати часовий інтервал …</string>
     <string name="time_time">Час - час</string>
     <string name="time_extended_time">Час - розширений час</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">Змінний час</string>
     <string name="variable_time_open_end">Змінний час-без кінця</string>
     <string name="start_at_midnight">Починається о півночі</string>
-    
+
     <string name="week_day_range">Додати діапазон днів тижня</string>
     <string name="occurrence_in_month">Кількість на місяц</string>
-    
+
     <string name="daterange_menu">Додати діапазон дат …</string>
     <string name="date_date">Дата - дата</string>
     <string name="variable_date_date">Змінна дата - дата</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">Дата - кількість разів на місяць</string>
     <string name="occurrence_variable_date">Кількість разів на місяць - змінна дата</string>
     <string name="variable_date_occurrence">Змінна дата - кількість разів на місяць</string>
-    
+
     <string name="date_open_end">Дата - без кінця</string>
     <string name="variable_date_open_end">Змінна дата - без кінця</string>
     <string name="occurrence_open_end">Кількість разів на місяць - без кінця</string>
 
     <string name="with_offsets">Із сувом…</string>
+    
+    <string name="add_year_range">Додати роки</string>
     <string name="rule_type">Показати тип правила</string>
     <string name="duplicate_rule">Дублювати</string>
     <string name="move_up">Вгору</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">Показати зсув закінчення</string>
     <string name="show_interval">Показати інтервал</string>
     <string name="show_useAsWeekDay">Показати використання</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">Звичайно</string>
     <string name="additive_rule">Добавки</string>
     <string name="fallback_rule">На випадок збою</string>
-    
+
     <string name="interval_minutes">Інтервал (хвилини)</string>
     <string name="interval_years">Інтервал (роки)</string>
     <string name="interval_weeks">Інтервал (тижні)</string>
-    
+
     <string name="offset_mins">Зсув (±хвилин)</string>
     <string name="offset_days">Зсув (±днів)</string>
-    
+
     <string name="date_range">Діапазон дат</string>
     <string name="date">Дата</string>
     <string name="date_weekday_occurrence">Дата (робочі дні в місяці)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">Тижні</string>
     <string name="year_range">Діапазон років</string>
     <string name="years">Роки</string>
-    
     <string name="modifier">Модифікатор</string>
     <string name="comment">Коментар</string>
-    
-    <string name="use_as_weekday">Використовувати як робочі дні</string>
-    
-    <string name="twentyfourseven">24 години, 7 днів на тиждень</string>
-    
-    <string name="to">до</string>
-    
-    <string name="easter">Великдень</string>
-    
-    <string name="sunrise">Схід сонця</string>
-  	<string name="sunset">Захід сонця</string>
-  	<string name="dawn">Світанок</string>
-  	<string name="dusk">Сутінки</string>
-  	
-  	<string name="public_holidays">Державні свята</string>
-  	<string name="school_holidays">Шкільні канікули</string>
-  	
-  	<string name="occurrence_in_month_title">Кількість разів на місяць</string>
-  	
-  	<string name="monday_short">Пн</string>
-  	<string name="tuesday_short">Вт</string>
-  	<string name="wednesday_short">Ср</string>
-  	<string name="thursday_short">Чт</string>
-  	<string name="friday_short">Пт</string>
-  	<string name="saturday_short">Сб</string>
-  	<string name="sunday_short">Нд</string>
 
-  	<string name="january">Січ</string>
-  	<string name="february">Лют</string>
-  	<string name="march">Бер</string>
-  	<string name="april">Кві</string>
-  	<string name="may">Тра</string>
-  	<string name="june">Чер</string>
-  	<string name="july">Лип</string>
-  	<string name="august">Сер</string>
-  	<string name="september">Вер</string>
-  	<string name="october">Жов</string>
-  	<string name="november">Лис</string>
-  	<string name="december">Гру</string>
-  	
-  	<string name="open">відкрито</string>
- 	<string name="closed">закрито</string>
-  	<string name="off">не працює</string>
+    <string name="use_as_weekday">Використовувати як робочі дні</string>
+
+    <string name="twentyfourseven">24 години, 7 днів на тиждень</string>
+
+    <string name="to">до</string>
+
+    <string name="easter">Великдень</string>
+
+    <string name="sunrise">Схід сонця</string>
+    <string name="sunset">Захід сонця</string>
+    <string name="dawn">Світанок</string>
+    <string name="dusk">Сутінки</string>
+
+    <string name="public_holidays">Державні свята</string>
+    <string name="school_holidays">Шкільні канікули</string>
+
+    <string name="occurrence_in_month_title">Кількість разів на місяць</string>
+
+    <string name="monday_short">Пн</string>
+    <string name="tuesday_short">Вт</string>
+    <string name="wednesday_short">Ср</string>
+    <string name="thursday_short">Чт</string>
+    <string name="friday_short">Пт</string>
+    <string name="saturday_short">Сб</string>
+    <string name="sunday_short">Нд</string>
+
+    <string name="january">Січ</string>
+    <string name="february">Лют</string>
+    <string name="march">Бер</string>
+    <string name="april">Кві</string>
+    <string name="may">Тра</string>
+    <string name="june">Чер</string>
+    <string name="july">Лип</string>
+    <string name="august">Сер</string>
+    <string name="september">Вер</string>
+    <string name="october">Жов</string>
+    <string name="november">Лис</string>
+    <string name="december">Гру</string>
+
+    <string name="open">відкрито</string>
+    <string name="closed">закрито</string>
+    <string name="off">не працює</string>
     <string name="unknown">невідомо</string>
-    
-  	<string name="before">перед</string>
+
+    <string name="before">перед</string>
     <string name="after">після</string>
-  	
-  	</resources>
+
+    </resources>

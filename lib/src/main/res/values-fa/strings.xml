@@ -7,7 +7,7 @@
     <string name="Done">تمام</string>
     <string name="value_too_long">طول مقدار ساعت کاری %1$d است که از بیشینهٔ مجاز ۲۵۵ نویسه فراتر است.\n\nلطفاً پیش از ذخیره‌سازی، رشته را ساده کنید!</string>
     <string name="would_overwrite_invalid_value">به ساعت کاری نامعتبر نمی‌توان قاعده‌ای افزود. لطفاً اصلاح یا حذفش کنید!</string>
-    
+
     <string name="add_rule">افزودن قاعده</string>
     <string name="add_rule_247">افزودن قاعدهٔ ۲۴/۷</string>
     <string name="add_rule_closed_on_holidays">افزودن قاعدهٔ تعطیلات</string>
@@ -24,44 +24,44 @@
     <string name="No">خیر</string>
     <string name="Start">آغاز</string>
     <string name="End">پایان</string>
-    
+
     <string name="default_hint">رشتهٔ ساعت کاری</string>
-    
+
     <string name="text_values">مقدارهای متنی</string>
-    
- <!--	templates -->
+
+    <!--	templates -->
     <string name="edit_template">ویرایش الگو</string>
     <string name="name_legend">نام:</string>
     <string name="default_legend">پیشفرض:</string>
     <string name="key_legend">کلید:</string>
-    
     <string name="is_default">‏%1$s (پیشفرض)</string>
-    
-     <string name="all_keys">همه</string>
-  	<string name="opening_hours_key">ساعت کاری</string>
-  	<string name="service_times_key">زمان خدمت</string>
-  	<string name="collection_times_key">زمان جمع‌آوری</string>
-  	<!--	default template entries -->
-	<string name="weekdays_with_lunch">روزهای کاری با استراحت ناهار</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="all_keys">همه</string>
+    <string name="opening_hours_key">ساعت کاری</string>
+    <string name="service_times_key">زمان خدمت</string>
+    <string name="collection_times_key">زمان جمع‌آوری</string>
+    <string name="supervised_key">نظارت</string>
+    <string name="lit_key">روشنایی</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">روزهای کاری با استراحت ناهار</string>
     <string name="weekdays_with_lunch_late_shopping">روزهای کاری با استراحت ناهار و خرید آخروقت</string>
-	<string name="weekdays">روزهای کاری</string>
+    <string name="weekdays">روزهای کاری</string>
     <string name="weekdays_late_shopping">روزهای کاری با خرید آخروقت</string>
-	<string name="collection_times_weekdays">یک بار در روز کاری</string>
-    
-<!--	 -->
+    <string name="collection_times_weekdays">یک بار در روز کاری</string>
+
+    <!--	 -->
     <string name="group_header">گروه %1$s</string>
     <string name="rule_header">قاعدهٔ %1$s</string>
-    
-<!--	messages -->
+
+    <!--	messages -->
     <string name="loaded_default">الگوی پیشفرض بار شد</string>
-    
-<!--    menu items -->
-	<string name="Delete">حذف</string>
-	<string name="add_modifier_comment">افزودن اصلاحگر/توضیح</string>
-	<string name="add_year_range">افزودن بازهٔ سال</string>
-	<string name="add_week_range">افزودن بازهٔ هفته</string>
-	<string name="add_holiday">افزودن تعطیلات</string>
-	
+
+    <!--    menu items -->
+    <string name="Delete">حذف</string>
+    <string name="add_modifier_comment">افزودن اصلاحگر/توضیح</string>
+    <string name="add_week_range">افزودن بازهٔ هفته</string>
+    <string name="add_holiday">افزودن تعطیلات</string>
+
     <string name="timespan_menu">افزودن بازهٔ زمان...</string>
     <string name="time_time">زمان - زمان</string>
     <string name="time_extended_time">زمان - زمان گسترده</string>
@@ -74,10 +74,10 @@
     <string name="variable_time">زمان متغیر </string>
     <string name="variable_time_open_end">زمان متغیر-پایان باز</string>
     <string name="start_at_midnight">آغاز از نیمه‌شب</string>
-    
+
     <string name="week_day_range">افزودن بازهٔ روز هفته</string>
     <string name="occurrence_in_month">افزودن وقوع در ماه</string>
-    
+
     <string name="daterange_menu">افزودن بازهٔ تاریخ ...</string>
     <string name="date_date">تاریخ - تاریخ</string>
     <string name="variable_date_date">تاریخ متغیر - تاریخ</string>
@@ -88,12 +88,14 @@
     <string name="date_occurrence">تاریخ - وقوع در ماه</string>
     <string name="occurrence_variable_date">وقوع در ماه - تاریخ متغیر</string>
     <string name="variable_date_occurrence">تاریخ متغیر - وقوع در ماه</string>
-    
+
     <string name="date_open_end">تاریخ - پایان باز</string>
     <string name="variable_date_open_end">تاریخ متغیر - پایان باز</string>
     <string name="occurrence_open_end">وقوع در ماه - پایان باز</string>
 
     <string name="with_offsets">با آفست...</string>
+    
+    <string name="add_year_range">افزودن بازهٔ سال</string>
     <string name="rule_type">نمایش نوع قاعده</string>
     <string name="duplicate_rule">تکرار</string>
     <string name="move_up">برو بالا</string>
@@ -107,20 +109,20 @@
     <string name="show_end_offset">نمایش آفست پایان</string>
     <string name="show_interval">نمایش دوره</string>
     <string name="show_useAsWeekDay">نمایش استفاده</string>
-    
-<!--     opening hour elements -->
-         
+
+    <!--     opening hour elements -->
+
     <string name="normal_rule">عادی</string>
     <string name="additive_rule">افزودنی</string>
     <string name="fallback_rule">Fallback</string>
-    
+
     <string name="interval_minutes">دوره (دقیقه)</string>
     <string name="interval_years">دوره (سال)</string>
     <string name="interval_weeks">دوره (هفته)</string>
-    
+
     <string name="offset_mins">آفست (±دقیقه‌ها)</string>
     <string name="offset_days">آفست (±روزها)</string>
-    
+
     <string name="date_range">بازهٔ تاریخ</string>
     <string name="date">تاریخ</string>
     <string name="date_weekday_occurrence">تاریخ (روز کاری در ماه)</string>
@@ -128,55 +130,54 @@
     <string name="weeks">هفته‌ها</string>
     <string name="year_range">بازهٔ سال</string>
     <string name="years">سال‌ها</string>
-    
     <string name="modifier">اصلاحگر</string>
     <string name="comment">توضیح</string>
-    
-    <string name="use_as_weekday">استفاده مانند روز کاری</string>
-    
-    <string name="twentyfourseven">۲۴ساعته، ۷ روز هفته</string>
-    
-    <string name="to">تا</string>
-    
-    <string name="easter">عید پاک</string>
-    
-    <string name="sunrise">طلوع</string>
-  	<string name="sunset">غروب</string>
-  	<string name="dawn">فلق</string>
-  	<string name="dusk">شفق</string>
-  	
-  	<string name="public_holidays">تعطیلات عمومی</string>
-  	<string name="school_holidays">تعطیلات مدارس</string>
-  	
-  	<string name="occurrence_in_month_title">وقوع در ماه</string>
-  	
-  	<string name="monday_short">د</string>
-  	<string name="tuesday_short">س</string>
-  	<string name="wednesday_short">چ</string>
-  	<string name="thursday_short">پ</string>
-  	<string name="friday_short">ج</string>
-  	<string name="saturday_short">ش</string>
-  	<string name="sunday_short">ی</string>
 
-  	<string name="january">ژانویه</string>
-  	<string name="february">فوریه</string>
-  	<string name="march">مارس</string>
-  	<string name="april">آوریل</string>
-  	<string name="may">مه</string>
-  	<string name="june">ژوئن</string>
-  	<string name="july">ژوئیه</string>
-  	<string name="august">اوت</string>
-  	<string name="september">سپتامبر</string>
-  	<string name="october">اکتبر</string>
-  	<string name="november">نوامبر</string>
-  	<string name="december">دسامبر</string>
-  	
-  	<string name="open">باز</string>
- 	<string name="closed">بسته</string>
-  	<string name="off">تعطیل</string>
+    <string name="use_as_weekday">استفاده مانند روز کاری</string>
+
+    <string name="twentyfourseven">۲۴ساعته، ۷ روز هفته</string>
+
+    <string name="to">تا</string>
+
+    <string name="easter">عید پاک</string>
+
+    <string name="sunrise">طلوع</string>
+    <string name="sunset">غروب</string>
+    <string name="dawn">فلق</string>
+    <string name="dusk">شفق</string>
+
+    <string name="public_holidays">تعطیلات عمومی</string>
+    <string name="school_holidays">تعطیلات مدارس</string>
+
+    <string name="occurrence_in_month_title">وقوع در ماه</string>
+
+    <string name="monday_short">د</string>
+    <string name="tuesday_short">س</string>
+    <string name="wednesday_short">چ</string>
+    <string name="thursday_short">پ</string>
+    <string name="friday_short">ج</string>
+    <string name="saturday_short">ش</string>
+    <string name="sunday_short">ی</string>
+
+    <string name="january">ژانویه</string>
+    <string name="february">فوریه</string>
+    <string name="march">مارس</string>
+    <string name="april">آوریل</string>
+    <string name="may">مه</string>
+    <string name="june">ژوئن</string>
+    <string name="july">ژوئیه</string>
+    <string name="august">اوت</string>
+    <string name="september">سپتامبر</string>
+    <string name="october">اکتبر</string>
+    <string name="november">نوامبر</string>
+    <string name="december">دسامبر</string>
+
+    <string name="open">باز</string>
+    <string name="closed">بسته</string>
+    <string name="off">تعطیل</string>
     <string name="unknown">نامعلوم</string>
-    
-  	<string name="before">پیش از</string>
+
+    <string name="before">پیش از</string>
     <string name="after">پس از</string>
-  	
-  	</resources>
+
+    </resources>
