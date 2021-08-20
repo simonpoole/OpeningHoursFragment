@@ -9,8 +9,8 @@ import ch.poole.openinghoursfragment.R;
 
 public class TemplateDatabaseHelper extends SQLiteOpenHelper {
     private static final String DEBUG_TAG        = "TemplateDatabase";
-    private static final String DATABASE_NAME    = "openinghours_templates";
-    private static final int    DATABASE_VERSION = 4;
+    static final String         DATABASE_NAME    = "openinghours_templates";
+    private static final int    DATABASE_VERSION = 5;
 
     private final Context context;
 
@@ -37,8 +37,8 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
             TemplateDatabase.add(db, null, context.getString(R.string.weekdays_late_shopping), false,
                     "Mo,Tu,Th,Fr 09:00-18:30;We 09:00-20:00;Sa 09:00-17:00;PH closed", null, null);
             TemplateDatabase.add(db, null, context.getString(R.string.twentyfourseven), false, "24/7", null, null);
-            TemplateDatabase.add(db, "collection_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed", null,
-                    null);
+            TemplateDatabase.add(db, "collection\\_times", context.getString(R.string.collection_times_weekdays), true, "Mo-Fr 09:00; Sa 07:00; PH closed",
+                    null, null);
         } catch (SQLException e) {
             Log.w(DEBUG_TAG, "Problem creating database", e);
         }
@@ -62,6 +62,10 @@ public class TemplateDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion <= 3 && newVersion >= 4) {
             db.execSQL("ALTER TABLE templates ADD COLUMN region TEXT DEFAULT NULL");
             db.execSQL("ALTER TABLE templates ADD COLUMN object TEXT DEFAULT NULL");
+        }
+        if (oldVersion <= 4 && newVersion >= 5) {
+            db.rawQuery("SELECT REPLACE('key','_','\\_')", null);
+            db.rawQuery("SELECT REPLACE('key',':','\\:')", null);
         }
     }
 }

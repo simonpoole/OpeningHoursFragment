@@ -277,6 +277,14 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             }
         }
 
+        /**
+         * Find the nice and translatable String for the stored key value
+         * 
+         * @param valuesId resource id for the values
+         * @param entriesId resource id for the entries
+         * @param value the key value
+         * @return the mapped value or if nothing found the original
+         */
         private String valueToEntry(int valuesId, int entriesId, @Nullable String value) {
             Resources res = getResources();
             final TypedArray values = res.obtainTypedArray(valuesId);
@@ -291,7 +299,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
                 values.recycle();
                 entries.recycle();
             }
-            return "Invalid value";
+            return value;
         }
     }
 

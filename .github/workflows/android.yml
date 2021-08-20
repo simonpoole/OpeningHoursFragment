@@ -21,9 +21,10 @@ jobs:
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 29
+        api-level: 28
         script: ./gradlew connectedCheck
     - name: Upload Test Results
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
          name: Test output

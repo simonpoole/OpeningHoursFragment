@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -95,6 +97,7 @@ public class TemplateDialog extends CancelableDialogFragment {
         final CheckBox defaultCheck = (CheckBox) templateView.findViewById(R.id.is_default);
         final EditText nameEdit = (EditText) templateView.findViewById(R.id.template_name);
         final Spinner keySpinner = (Spinner) templateView.findViewById(R.id.template_key);
+        final EditText custom = (EditText) templateView.findViewById(R.id.template_custom_key);
         final Spinner regionSpinner = (Spinner) templateView.findViewById(R.id.template_region);
         final EditText objectEdit = (EditText) templateView.findViewById(R.id.template_object);
 
@@ -108,20 +111,20 @@ public class TemplateDialog extends CancelableDialogFragment {
         String templateRegion = null;
         String templateObject = null;
         if (existing) {
-            Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[] { Integer.toString(id) });
-            if (cursor.moveToFirst()) {
-                boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
-                defaultCheck.setChecked(isDefault);
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
-                nameEdit.setText(name);
-                template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
-                templateKey = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
-                templateRegion = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.REGION_FIELD));
-                templateObject = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.OBJECT_FIELD));
-            } else {
-                Log.e(DEBUG_TAG, "template id " + Integer.toString(id) + " not found");
+            try (Cursor cursor = db.rawQuery(TemplateDatabase.QUERY_BY_ROWID, new String[] { Integer.toString(id) })) {
+                if (cursor.moveToFirst()) {
+                    boolean isDefault = cursor.getInt(cursor.getColumnIndexOrThrow(TemplateDatabase.DEFAULT_FIELD)) == 1;
+                    defaultCheck.setChecked(isDefault);
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.NAME_FIELD));
+                    nameEdit.setText(name);
+                    template = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.TEMPLATE_FIELD));
+                    templateKey = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.KEY_FIELD));
+                    templateRegion = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.REGION_FIELD));
+                    templateObject = cursor.getString(cursor.getColumnIndexOrThrow(TemplateDatabase.OBJECT_FIELD));
+                } else {
+                    Log.e(DEBUG_TAG, "template id " + Integer.toString(id) + " not found");
+                }
             }
-            cursor.close();
 
             alertDialog.setTitle(R.string.edit_template);
             alertDialog.setNeutralButton(R.string.Delete, (dialog, which) -> {
@@ -138,6 +141,26 @@ public class TemplateDialog extends CancelableDialogFragment {
 
         keySpinner.setSelection(0);
         Util.setSpinnerInitialEntryValue(getResources(), R.array.key_values, keySpinner, templateKey);
+        // hack for custom keys -- requires that the custom key resource is last
+        final TypedArray keyValues = getContext().getResources().obtainTypedArray(R.array.key_values);
+        final int customKeyPos = keyValues.length() - 1;
+        if (templateKey != null && keySpinner.getSelectedItemPosition() == 0) {
+            keySpinner.setSelection(customKeyPos);
+            custom.setText(templateKey);
+        }
+
+        keySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                custom.setVisibility(position == customKeyPos ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
 
         // setting up the region spinner is a bit involved as we want to be able to sort it
         final TypedArray values = getResources().obtainTypedArray(R.array.region_values);
@@ -166,9 +189,8 @@ public class TemplateDialog extends CancelableDialogFragment {
 
         final String finalTemplate = template;
         alertDialog.setPositiveButton(R.string.Save, (dialog, which) -> {
-            final TypedArray keyValues = getContext().getResources().obtainTypedArray(R.array.key_values);
             int spinnerPos = keySpinner.getSelectedItemPosition();
-            final String spinnerKey = spinnerPos == 0 ? null : keyValues.getString(spinnerPos);
+            final String spinnerKey = spinnerPos == 0 ? null : spinnerPos == customKeyPos ? custom.getText().toString() : keyValues.getString(spinnerPos);
             keyValues.recycle();
             spinnerPos = regionSpinner.getSelectedItemPosition();
             final String spinnerRegion = spinnerPos == 0 ? null : regions.get(spinnerPos).getValue();
