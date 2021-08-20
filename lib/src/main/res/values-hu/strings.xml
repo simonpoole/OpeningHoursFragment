@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Sablonok kezelése</string>
     <string name="save_template">Sablon mentése</string>
     <string name="update_template">Frissíti a sablon értékét is?</string>
+    <string name="spd_ohf_show_all">Összes megjelenítése</string>
+    <string name="spd_ohf_save_to_file">Mentés fájlba</string>
+    <string name="spd_ohf_load_from_file">Betöltés fájlból</string>
+    <string name="spd_ohf_load_from_file_replace">Betöltés fájlból (csere)</string>
     <string name="Yes">Van</string>
     <string name="No">Nincs</string>
     <string name="Start">Kezdés</string>
@@ -34,14 +38,23 @@
     <string name="name_legend">Név:</string>
     <string name="default_legend">Alapértelmezett:</string>
     <string name="key_legend">Kulcs:</string>
+    <string name="spd_ohf_region_legend">Régió:</string>
+    <string name="spd_ohf_object_legend">Objektum:</string>
+    <string name="spd_ohf_toast_file_read_failure">Nem sikerült beolvasni a fájlt.</string>
+
+    <string name="spd_ohf_meta">Kulcs: %1$s</string>
     <string name="is_default">%1$s (alapértelmezett)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Régió: %1$s</string>
+
     <string name="all_keys">Minden</string>
     <string name="opening_hours_key">Nyitva tartás</string>
     <string name="service_times_key">Istentiszteletek ideje</string>
     <string name="collection_times_key">Ürítési idő</string>
+    <string name="fee_key">Díjköteles</string>
     <string name="supervised_key">Felügyelt</string>
     <string name="lit_key">Kivilágított</string>
+    <string name="delivery_key">Szállítási idők</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Hétköznap ebédidővel</string>
     <string name="weekdays_with_lunch_late_shopping">Hétköznap ebédidővel és kései bevásárlással</string>
@@ -95,7 +108,11 @@
 
     <string name="with_offsets">Eltolásokkal…</string>
     
-    <string name="add_year_range">Évtartomány megadása</string>
+    <string name="spd_ohf_year_range_menu">Évtartomány hozzáadása…</string>
+    <string name="add_year_range">Évtartomány hozzáadása</string>
+    <string name="spd_ohf_add_year_range_openended">Kezdő év hozzáadása</string>
+    
+    
     <string name="rule_type">Szabálytípus megjelenítése</string>
     <string name="duplicate_rule">Másolat készítése</string>
     <string name="move_up">Mozgatás felfelé</string>
@@ -130,6 +147,9 @@
     <string name="weeks">Hét</string>
     <string name="year_range">Évtartomány</string>
     <string name="years">Év</string>
+    <string name="spd_ohf_starting">Kezdés</string>
+    <string name="spd_ohf_starting_year">Kezdő év</string>
+
     <string name="modifier">Módosító</string>
     <string name="comment">Megjegyzés</string>
 
@@ -180,4 +200,5 @@
     <string name="before">ez előtt:</string>
     <string name="after">ez után:</string>
 
-    </resources>
+    <string name="title_activity_test">TesztTevékenység</string>
+</resources>

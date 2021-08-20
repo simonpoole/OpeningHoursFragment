@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Vorlagen verwalten</string>
     <string name="save_template">Vorlage speichern</string>
     <string name="update_template">Vorlage auch ändern?</string>
+    <string name="spd_ohf_show_all">Alle anzeigen</string>
+    <string name="spd_ohf_save_to_file">In Datei speichern</string>
+    <string name="spd_ohf_load_from_file">Von Datei laden</string>
+    <string name="spd_ohf_load_from_file_replace">Von Dateil laden (ersetzen)</string>
     <string name="Yes">Ja</string>
     <string name="No">Nein</string>
     <string name="Start">Start</string>
@@ -34,14 +38,24 @@
     <string name="name_legend">Name:</string>
     <string name="default_legend">Standard:</string>
     <string name="key_legend">Schlüssel:</string>
+    <string name="spd_ohf_region_legend">Region:</string>
+    <string name="spd_ohf_object_legend">Objekt:</string>
+    <string name="spd_ohf_toast_file_read_failure">Datei kann nicht gelesen werden!</string>
+
+    <string name="spd_ohf_meta">Schlüssel: %1$s</string>
     <string name="is_default">%1$s (standard)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Region: %1$s</string>
+
     <string name="all_keys">Alle</string>
     <string name="opening_hours_key">Öffnungszeiten</string>
     <string name="service_times_key">Betriebszeiten</string>
     <string name="collection_times_key">Leerungszeiten</string>
+    <string name="fee_key">Gebühr</string>
     <string name="supervised_key">Überwacht</string>
     <string name="lit_key">Beleuchtung</string>
+    <string name="delivery_key">Lieferzeiten</string>
+    <string name="spd_ohf_custom_key">Benutzerdefinierter Schlüssel</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Wochentage mit Mittagspause</string>
     <string name="weekdays_with_lunch_late_shopping">Wochentage mit Mittagspause und Late-Night-Shopping</string>
@@ -95,7 +109,11 @@
 
     <string name="with_offsets">Mit Verschiebungen...</string>
     
+    <string name="spd_ohf_year_range_menu">Jahresbereich hinzufügen ...</string>
     <string name="add_year_range">Jahresbereich hinzufügen</string>
+    <string name="spd_ohf_add_year_range_openended">Startjahr hinzufügen</string>
+    
+    
     <string name="rule_type">Regeltyp anzeigen</string>
     <string name="duplicate_rule">Verdoppeln</string>
     <string name="move_up">Nach oben verschieben</string>
@@ -130,6 +148,9 @@
     <string name="weeks">Wochen</string>
     <string name="year_range">Jahresbereich</string>
     <string name="years">Jahre</string>
+    <string name="spd_ohf_starting">Beginnend</string>
+    <string name="spd_ohf_starting_year">Startjahr</string>
+
     <string name="modifier">Zustand</string>
     <string name="comment">Kommentar</string>
 

@@ -2,6 +2,7 @@ Please see the github repository for a complete list of changes: https://github.
 
 0.11.0:
 - Support custom key values in templates with SQL wild cards
+- Update translations
 
 0.10.1:
 - Always set the editor action listener
