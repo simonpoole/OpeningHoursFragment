@@ -49,13 +49,14 @@
 
     <string-array name="key_values" translatable="false">
         <item></item>
-        <item>opening_hours</item>
-        <item>service_times</item>
-        <item>collection_times</item>
+        <item>opening\_hours</item>
+        <item>service\_times</item>
+        <item>collection\_times</item>
         <item>fee</item>
         <item>supervised</item>
         <item>lit</item>
         <item>delivery</item>
+        <item></item>
     </string-array>
 
     <string name="all_keys">All</string>
@@ -66,6 +67,7 @@
     <string name="supervised_key">Supervised</string>
     <string name="lit_key">Lit</string>
     <string name="delivery_key">Delivery times</string>
+    <string name="spd_ohf_custom_key">Custom key</string>
     <string-array name="key_entries" translatable="false">
         <item>@string/all_keys</item>
         <item>@string/opening_hours_key</item>
@@ -75,6 +77,7 @@
         <item>@string/supervised_key</item>
         <item>@string/lit_key</item>
         <item>@string/delivery_key</item>
+        <item>@string/spd_ohf_custom_key</item> <!-- this needs to be the last item!! -->
     </string-array>
 
     <!--	default template entries -->

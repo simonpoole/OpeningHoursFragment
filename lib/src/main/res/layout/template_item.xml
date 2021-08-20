@@ -3,14 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="?attr/dialogPreferredPadding">
+    android:paddingTop="?attr/dialogPreferredPadding"
+    android:paddingLeft="?attr/dialogPreferredPadding"
+    android:paddingStart="?attr/dialogPreferredPadding"
+    android:paddingRight="?attr/dialogPreferredPadding"
+    android:paddingEnd="?attr/dialogPreferredPadding">>
     <TextView
         android:id="@+id/template_name_legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginStart="?attr/dialogPreferredPadding"
         android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/name_legend" />
@@ -18,18 +20,16 @@
         android:id="@+id/template_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginRight="?attr/dialogPreferredPadding"
-        android:layout_alignTop="@id/template_name_legend"
+        android:layout_alignBaseline="@id/template_name_legend"
         android:layout_toRightOf="@id/template_name_legend"
         android:layout_toEndOf="@id/template_name_legend"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/default_legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginStart="?attr/dialogPreferredPadding"
         android:paddingTop="10dp"
         android:layout_below="@id/template_name"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -52,8 +52,6 @@
         android:id="@+id/key_legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginStart="?attr/dialogPreferredPadding"
         android:paddingTop="10dp"
         android:layout_below="@id/is_default"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -71,14 +69,22 @@
         android:saveEnabled="false"
         android:drawSelectorOnTop="true"
         android:entries="@array/key_entries" />
+    <EditText
+        android:id="@+id/template_custom_key"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/template_key"
+        android:layout_alignLeft="@id/template_key"
+        android:layout_alignStart="@id/template_key"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"
+        android:hint="@string/spd_ohf_custom_key" />
     <TextView
         android:id="@+id/region_legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginStart="?attr/dialogPreferredPadding"
         android:paddingTop="10dp"
-        android:layout_below="@id/key_legend"
+        android:layout_below="@id/template_custom_key"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/spd_ohf_region_legend" />
     <Spinner
@@ -98,8 +104,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:layout_marginLeft="?attr/dialogPreferredPadding"
-        android:layout_marginStart="?attr/dialogPreferredPadding"
         android:layout_below="@id/region_legend"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/spd_ohf_object_legend" />
@@ -107,7 +111,7 @@
         android:id="@+id/template_object"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="?attr/dialogPreferredPadding"
+        android:layout_marginRight="0dp"
         android:layout_alignTop="@id/template_object_legend"
         android:layout_alignLeft="@id/template_name"
         android:layout_alignStart="@id/template_name"
