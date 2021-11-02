@@ -9,7 +9,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: "jacoco"
 
-version = '0.11.0'
+version = '0.12.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -97,7 +97,7 @@ dependencies {
     implementation "com.google.android.material:material:$androidxVersion"
     implementation "androidx.annotation:annotation:$androidxVersion"
     implementation "androidx.core:core:$androidxVersion"
-    implementation "ch.poole:OpeningHoursParser:0.25.0"
+    implementation "ch.poole:OpeningHoursParser:0.26.0"
     implementation "ch.poole.android:rangebar:0.1.6"
     implementation 'cn.carbswang.android:NumberPickerView:1.2.0'
     implementation "com.google.code.gson:gson:2.8.5"
