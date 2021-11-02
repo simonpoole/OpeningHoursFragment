@@ -1,5 +1,8 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.12.0:
+- Update parser dependency
+
 0.11.0:
 - Support custom key values in templates with SQL wild cards
 - Update translations
