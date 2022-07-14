@@ -5,6 +5,8 @@
 
 package ch.poole.openinghoursfragment;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -195,7 +197,7 @@ public class FragmentTest {
         }
         Assert.assertTrue(TestUtils.clickText(device, false, "Show interval", true));
         Assert.assertTrue(TestUtils.clickText(device, false, "Save", true));
-        Assert.assertEquals("2021 Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
+        Assert.assertEquals(Integer.toString(1900 + new Date().getYear()) + " Sa 09:00-17:00; PH closed", mActivityRule.getActivity().getResult());
     }
 
     @Test
