@@ -8,14 +8,26 @@
     <string name="add_rule">Tilføj regel</string>
     <string name="add_rule_247">Tilføj regel for 24/7</string>
     <string name="add_rule_closed_on_holidays">Tilføj regel for ferie</string>
+    <string name="load_template">Indlæs skabelon</string>
+    <string name="save_to_template">Gem til skabelon</string>
+    <string name="manage_templates">Håndtér skabeloner</string>
+    <string name="load_templates_title">Indlæs skabeloner</string>
+    <string name="manage_templates_title">Håndtér skabeloner</string>
+    <string name="save_template">Gem skabelon</string>
     <string name="Yes">Ja</string>
     <string name="No">Nej</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
 
+    <!--	templates -->
+    <string name="edit_template">Rediger skabelon</string>
+    <string name="default_legend">Standard:</string>
     <string name="all_keys">Alle</string>
     <string name="supervised_key">Overvåget</string>
     <string name="lit_key">Gadebelysning</string>
+    <!--	messages -->
+    <string name="loaded_default">Indlæst standard skabelon</string>
+
     <!--    menu items -->
     <string name="Delete">Delete</string>
     <string name="rule_type">Vis regel type</string>

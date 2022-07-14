@@ -5,12 +5,12 @@
     <string name="spd_ohf_ok">تأیید</string>
     <string name="Save">ذخیره</string>
     <string name="Done">تمام</string>
-    <string name="value_too_long">طول مقدار ساعت کاری %1$d است که از بیشینهٔ مجاز ۲۵۵ نویسه فراتر است.\n\nلطفاً پیش از ذخیره‌سازی، رشته را ساده کنید!</string>
-    <string name="would_overwrite_invalid_value">به ساعت کاری نامعتبر نمی‌توان قاعده‌ای افزود. لطفاً اصلاح یا حذفش کنید!</string>
+    <string name="value_too_long">طول مقدار ساعات کار %1$d بیشتر از حداکثر 255 است.\n\n لطفاً قبل از ذخیره رشته را ساده کنید!</string>
+    <string name="would_overwrite_invalid_value">نمی توان قانون را به رشته ساعات کار نامعتبر اضافه کرد. لطفا اصلاح یا حذف کنید!</string>
 
-    <string name="add_rule">افزودن قاعده</string>
-    <string name="add_rule_247">افزودن قاعدهٔ ۲۴/۷</string>
-    <string name="add_rule_closed_on_holidays">افزودن قاعدهٔ تعطیلات</string>
+    <string name="add_rule">افزودن قانون</string>
+    <string name="add_rule_247">اضافه کردن قانون برای 24/7</string>
+    <string name="add_rule_closed_on_holidays">اضافه کردن قانون برای تعطیلات</string>
     <string name="load_template">بارکردن الگو</string>
     <string name="save_to_template">ذخیره در الگو</string>
     <string name="manage_templates">مدیریت الگو‌ها</string>
@@ -19,10 +19,14 @@
     <string name="load_templates_title">بارکردن الگوها</string>
     <string name="manage_templates_title">مدیریت الگوها</string>
     <string name="save_template">ذخیره‌سازی الگو</string>
-    <string name="update_template">مقدار الگو نیز روزآمد شود؟</string>
+    <string name="update_template">مقدار الگو نیز به روز شود؟</string>
+    <string name="spd_ohf_show_all">نمایش همه</string>
+    <string name="spd_ohf_save_to_file">ذخیره در فایل</string>
+    <string name="spd_ohf_load_from_file">بارگیری از فایل</string>
+    <string name="spd_ohf_load_from_file_replace">بارگیری از فایل (جایگزینی)</string>
     <string name="Yes">بله</string>
     <string name="No">خیر</string>
-    <string name="Start">آغاز</string>
+    <string name="Start">شروع</string>
     <string name="End">پایان</string>
 
     <string name="default_hint">رشتهٔ ساعت کاری</string>
@@ -34,19 +38,29 @@
     <string name="name_legend">نام:</string>
     <string name="default_legend">پیشفرض:</string>
     <string name="key_legend">کلید:</string>
+    <string name="spd_ohf_region_legend">منطقه:</string>
+    <string name="spd_ohf_object_legend">موضوع:</string>
+    <string name="spd_ohf_toast_file_read_failure">فایل قابل خواندن نیست!</string>
+
+    <string name="spd_ohf_meta">کلید: %1$s</string>
     <string name="is_default">‏%1$s (پیشفرض)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">منطقه: %1$s</string>
+
     <string name="all_keys">همه</string>
     <string name="opening_hours_key">ساعت کاری</string>
     <string name="service_times_key">زمان خدمت</string>
     <string name="collection_times_key">زمان جمع‌آوری</string>
+    <string name="fee_key">هزینه مورد نیاز</string>
     <string name="supervised_key">نظارت</string>
     <string name="lit_key">روشنایی</string>
+    <string name="delivery_key">زمان تحویل</string>
+    <string name="spd_ohf_custom_key">کلید سفارشی</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">روزهای کاری با استراحت ناهار</string>
-    <string name="weekdays_with_lunch_late_shopping">روزهای کاری با استراحت ناهار و خرید آخروقت</string>
+    <string name="weekdays_with_lunch_late_shopping">روزهای کاری با استراحت ناهار و خرید آخر وقت</string>
     <string name="weekdays">روزهای کاری</string>
-    <string name="weekdays_late_shopping">روزهای کاری با خرید آخروقت</string>
+    <string name="weekdays_late_shopping">روزهای کاری با خرید آخر وقت</string>
     <string name="collection_times_weekdays">یک بار در روز کاری</string>
 
     <!--	 -->
@@ -58,7 +72,7 @@
 
     <!--    menu items -->
     <string name="Delete">حذف</string>
-    <string name="add_modifier_comment">افزودن اصلاحگر/توضیح</string>
+    <string name="add_modifier_comment">افزودن اصلاح/توضیح</string>
     <string name="add_week_range">افزودن بازهٔ هفته</string>
     <string name="add_holiday">افزودن تعطیلات</string>
 
@@ -95,16 +109,20 @@
 
     <string name="with_offsets">با آفست...</string>
     
-    <string name="add_year_range">افزودن بازهٔ سال</string>
+    <string name="spd_ohf_year_range_menu">اضافه کردن محدوده سال ...</string>
+    <string name="add_year_range">افزودن محدوده سال</string>
+    <string name="spd_ohf_add_year_range_openended">افزودن سال شروع</string>
+    
+    
     <string name="rule_type">نمایش نوع قاعده</string>
     <string name="duplicate_rule">تکرار</string>
     <string name="move_up">برو بالا</string>
     <string name="move_down">برو پایین</string>
     <string name="display_time_picker">نمایش انتخابگر زمان</string>
-    <string name="ticks_15_minute">پرش به خط‌نشان‌های ۱۵ دقیقه‌ای</string>
-    <string name="ticks_5_minute">پرش به خط‌نشان‌های ۵ دقیقه‌ای</string>
-    <string name="ticks_1_minute">پرش به خط‌نشان‌های ۱ دقیقه‌ای</string>
-    <string name="show_offset">نمایش آفست...</string>
+    <string name="ticks_15_minute">پرش به خط‌نشان‌های 15 دقیقه‌ای</string>
+    <string name="ticks_5_minute">پرش به خط‌نشان‌های 5 دقیقه‌ای</string>
+    <string name="ticks_1_minute">پرش به خط‌نشان‌های 1 دقیقه‌ای</string>
+    <string name="show_offset">نمایش آفست</string>
     <string name="show_start_offset">نمایش آفست آغاز</string>
     <string name="show_end_offset">نمایش آفست پایان</string>
     <string name="show_interval">نمایش دوره</string>
@@ -114,7 +132,7 @@
 
     <string name="normal_rule">عادی</string>
     <string name="additive_rule">افزودنی</string>
-    <string name="fallback_rule">Fallback</string>
+    <string name="fallback_rule">عقب نشینی</string>
 
     <string name="interval_minutes">دوره (دقیقه)</string>
     <string name="interval_years">دوره (سال)</string>
@@ -123,28 +141,31 @@
     <string name="offset_mins">آفست (±دقیقه‌ها)</string>
     <string name="offset_days">آفست (±روزها)</string>
 
-    <string name="date_range">بازهٔ تاریخ</string>
+    <string name="date_range">محدوده تاریخ</string>
     <string name="date">تاریخ</string>
     <string name="date_weekday_occurrence">تاریخ (روز کاری در ماه)</string>
     <string name="week_range">بازهٔ هفته</string>
     <string name="weeks">هفته‌ها</string>
     <string name="year_range">بازهٔ سال</string>
     <string name="years">سال‌ها</string>
+    <string name="spd_ohf_starting">راه افتادن</string>
+    <string name="spd_ohf_starting_year">سال شروع</string>
+
     <string name="modifier">اصلاحگر</string>
     <string name="comment">توضیح</string>
 
     <string name="use_as_weekday">استفاده مانند روز کاری</string>
 
-    <string name="twentyfourseven">۲۴ساعته، ۷ روز هفته</string>
+    <string name="twentyfourseven">24 ساعت، 7 روز هفته</string>
 
     <string name="to">تا</string>
 
     <string name="easter">عید پاک</string>
 
-    <string name="sunrise">طلوع</string>
-    <string name="sunset">غروب</string>
-    <string name="dawn">فلق</string>
-    <string name="dusk">شفق</string>
+    <string name="sunrise">طلوع خورشید</string>
+    <string name="sunset">غروب خورشید</string>
+    <string name="dawn">سپیده دم</string>
+    <string name="dusk">غروب</string>
 
     <string name="public_holidays">تعطیلات عمومی</string>
     <string name="school_holidays">تعطیلات مدارس</string>
@@ -177,7 +198,8 @@
     <string name="off">تعطیل</string>
     <string name="unknown">نامعلوم</string>
 
-    <string name="before">پیش از</string>
-    <string name="after">پس از</string>
+    <string name="before">قبل از</string>
+    <string name="after">بعد از</string>
 
-    </resources>
+    <string name="title_activity_test">فعالیت آزمایشی</string>
+</resources>

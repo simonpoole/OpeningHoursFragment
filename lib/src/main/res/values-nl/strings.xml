@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="spd_ohf_cancel">Annuleren</string>
+    <string name="spd_ohf_cancel">Annuleer</string>
     <string name="spd_ohf_ok">OK</string>
-    <string name="Save">Opslaan</string>
+    <string name="Save">Sla op</string>
     <string name="Done">Klaar</string>
     <string name="value_too_long">De lengte van de openingstijden waarde is %1$d, wat langer is dan het maximum van 255.\n\nVersimpel alsjeblieft de waarde voor het opslaan!</string>
     <string name="would_overwrite_invalid_value">Kan regel niet toevoegen aan ongeldige openingstijden waarde. Verbeter of verwijder alsjeblieft!</string>
 
-    <string name="add_rule">Regel toevoegen</string>
-    <string name="add_rule_247">Regel toevoegen voor 24/7</string>
-    <string name="add_rule_closed_on_holidays">Regel toevoegen voor feestdagen</string>
+    <string name="add_rule">Voeg regel toe</string>
+    <string name="add_rule_247">Voeg regel toe voor 24/7</string>
+    <string name="add_rule_closed_on_holidays">Voeg regel toe voor feestdagen</string>
     <string name="load_template">Laad sjabloon</string>
     <string name="save_to_template">Sla op naar sjabloon</string>
     <string name="manage_templates">Beheer sjablonen</string>
-    <string name="refresh">Verversen</string>
+    <string name="refresh">Ververs</string>
     <string name="clear">Verwijder alle</string>
     <string name="load_templates_title">Laad sjablonen</string>
     <string name="manage_templates_title">Beheer sjablonen</string>
     <string name="save_template">Sla sjabloon op</string>
     <string name="update_template">Update ook sjabloonwaarde?</string>
+    <string name="spd_ohf_show_all">Toon alles</string>
+    <string name="spd_ohf_save_to_file">Sla op naar bestand</string>
+    <string name="spd_ohf_load_from_file">Laad vanaf bestand</string>
+    <string name="spd_ohf_load_from_file_replace">Laad vanaf bestand (vervangen)</string>
     <string name="Yes">Ja</string>
     <string name="No">Nee</string>
     <string name="Start">Begin</string>
@@ -34,14 +38,24 @@
     <string name="name_legend">Naam:</string>
     <string name="default_legend">Standaard:</string>
     <string name="key_legend">Sleutel:</string>
+    <string name="spd_ohf_region_legend">Regio:</string>
+    <string name="spd_ohf_object_legend">Object:</string>
+    <string name="spd_ohf_toast_file_read_failure">Kan bestand niet lezen!</string>
+
+    <string name="spd_ohf_meta">Sleutel: %1$s</string>
     <string name="is_default">%1$s (standaard)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Regio: %1$s</string>
+
     <string name="all_keys">Alle</string>
     <string name="opening_hours_key">Openingstijden</string>
     <string name="service_times_key">Diensttijden</string>
     <string name="collection_times_key">Lichtingstijden</string>
+    <string name="fee_key">Transactiekosten vereist</string>
     <string name="supervised_key">Onder toezicht</string>
     <string name="lit_key">Verlicht</string>
+    <string name="delivery_key">Bezorgtijden</string>
+    <string name="spd_ohf_custom_key">Maatwerksleutel</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Doordeweekse dagen met lunchpauze</string>
     <string name="weekdays_with_lunch_late_shopping">Doordeweekse dagen met lunchpauze en koopavond</string>
@@ -95,7 +109,11 @@
 
     <string name="with_offsets">Met verplaatsingen...</string>
     
+    <string name="spd_ohf_year_range_menu">Voeg jaarbereik toe...</string>
     <string name="add_year_range">Voeg jaarbereik toe</string>
+    <string name="spd_ohf_add_year_range_openended">Voeg startjaar toe</string>
+    
+    
     <string name="rule_type">Toon regeltype</string>
     <string name="duplicate_rule">Dupliceer</string>
     <string name="move_up">Verplaats omhoog</string>
@@ -130,6 +148,9 @@
     <string name="weeks">Weken</string>
     <string name="year_range">Jaarbereik</string>
     <string name="years">Jaren</string>
+    <string name="spd_ohf_starting">Begin</string>
+    <string name="spd_ohf_starting_year">Beginjaar</string>
+
     <string name="modifier">Bewerker</string>
     <string name="comment">Opmerking</string>
 
@@ -180,4 +201,5 @@
     <string name="before">voor</string>
     <string name="after">na</string>
 
-    </resources>
+    <string name="title_activity_test">TestActiviteit</string>
+</resources>

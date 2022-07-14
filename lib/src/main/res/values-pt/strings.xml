@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Gerir modelos</string>
     <string name="save_template">Gravar modelo</string>
     <string name="update_template">Atualizar também o valor do modelo?</string>
+    <string name="spd_ohf_show_all">Mostrar tudo</string>
+    <string name="spd_ohf_save_to_file">Guardar num ficheiro</string>
+    <string name="spd_ohf_load_from_file">Carregar de um ficheiro</string>
+    <string name="spd_ohf_load_from_file_replace">Carregar de um ficheiro (substituir)</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
     <string name="Start">Inicia</string>
@@ -34,14 +38,24 @@
     <string name="name_legend">Nome:</string>
     <string name="default_legend">Padrão:</string>
     <string name="key_legend">Chave:</string>
+    <string name="spd_ohf_region_legend">Região:</string>
+    <string name="spd_ohf_object_legend">Objeto:</string>
+    <string name="spd_ohf_toast_file_read_failure">Não foi possível ler o ficheiro!</string>
+
+    <string name="spd_ohf_meta">Chave: %1$s</string>
     <string name="is_default">%1$s (padrão)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Região: %1$s</string>
+
     <string name="all_keys">Tudo</string>
     <string name="opening_hours_key">Horário de abertura</string>
     <string name="service_times_key">Horário de serviços</string>
     <string name="collection_times_key">Horário de recolha</string>
+    <string name="fee_key">Necessário pagar</string>
     <string name="supervised_key">Vigiado</string>
     <string name="lit_key">Iluminado</string>
+    <string name="delivery_key">Horários de entregas</string>
+    <string name="spd_ohf_custom_key">Chave personalizada</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Dias semana c/pausa p/almoço</string>
     <string name="weekdays_with_lunch_late_shopping">Dias semana c/pausa p/almoço e compras tardias</string>
@@ -95,7 +109,11 @@
 
     <string name="with_offsets">Com deslocamentos...</string>
     
+    <string name="spd_ohf_year_range_menu">Adicionar intervalo de anos...</string>
     <string name="add_year_range">Adicionar intervalo de anos</string>
+    <string name="spd_ohf_add_year_range_openended">Adicionar ano de início</string>
+    
+    
     <string name="rule_type">Mostrar tipo de regra</string>
     <string name="duplicate_rule">Duplicar</string>
     <string name="move_up">Mover para cima</string>
@@ -130,6 +148,9 @@
     <string name="weeks">Semanas</string>
     <string name="year_range">Intervalo de anos</string>
     <string name="years">Anos</string>
+    <string name="spd_ohf_starting">Início</string>
+    <string name="spd_ohf_starting_year">Ano de início</string>
+
     <string name="modifier">Estado</string>
     <string name="comment">Comentário</string>
 
@@ -180,4 +201,5 @@
     <string name="before">antes de</string>
     <string name="after">depois de</string>
 
-    </resources>
+    <string name="title_activity_test">TestarAtividade</string>
+</resources>

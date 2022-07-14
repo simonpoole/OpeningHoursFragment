@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Administrer maler </string>
     <string name="save_template">Lagre mal</string>
     <string name="update_template">Oppdatere malverdi også? </string>
+    <string name="spd_ohf_show_all">Vis alt</string>
+    <string name="spd_ohf_save_to_file">Lagre til fil</string>
+    <string name="spd_ohf_load_from_file">Last fra fil</string>
+    <string name="spd_ohf_load_from_file_replace">Last fra fil (erstatt)</string>
     <string name="Yes">Ja</string>
     <string name="No">Nei</string>
     <string name="Start">Start</string>
@@ -34,11 +38,24 @@
     <string name="name_legend">Navn:</string>
     <string name="default_legend">Standard:</string>
     <string name="key_legend">Nøkkel:</string>
+    <string name="spd_ohf_region_legend">Region:</string>
+    <string name="spd_ohf_object_legend">Objekt:</string>
+    <string name="spd_ohf_toast_file_read_failure">Kan ikke lese filen!</string>
+
+    <string name="spd_ohf_meta">Nøkkel: %1$s</string>
     <string name="is_default">%1$s (standard)</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Region: %1$s</string>
+
     <string name="all_keys">Alt</string>
     <string name="opening_hours_key">Åpningstider</string>
     <string name="service_times_key">Service tider</string>
     <string name="collection_times_key">Hentetider </string>
+    <string name="fee_key">Gebyr kreves</string>
+    <string name="supervised_key">Overvåket</string>
+    <string name="lit_key">Belyst</string>
+    <string name="delivery_key">Leveringstider</string>
+    <string name="spd_ohf_custom_key">Egendefinert nøkkel</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Hverdager med lunsj pause</string>
     <string name="weekdays_with_lunch_late_shopping">Hverdager med lunsjpause og sen shopping </string>
@@ -88,7 +105,11 @@
 
     <string name="with_offsets">Med forskyvninger ... </string>
     
+    <string name="spd_ohf_year_range_menu">Legg til årsområde ...</string>
     <string name="add_year_range">Legg til årsområde</string>
+    <string name="spd_ohf_add_year_range_openended">Legg til startår</string>
+    
+    
     <string name="rule_type">Vis regeltype </string>
     <string name="duplicate_rule">Dupliser</string>
     <string name="move_up">Flytt opp</string>
@@ -123,6 +144,9 @@
     <string name="weeks">Uker</string>
     <string name="year_range">Årsområde</string>
     <string name="years">År</string>
+    <string name="spd_ohf_starting">Starter</string>
+    <string name="spd_ohf_starting_year">Startår</string>
+
     <string name="modifier">Modifikator</string>
     <string name="comment">Kommentar</string>
 
@@ -173,4 +197,5 @@
     <string name="before">før</string>
     <string name="after">etter</string>
 
-    </resources>
+    <string name="title_activity_test">TestAktivitet</string>
+</resources>
