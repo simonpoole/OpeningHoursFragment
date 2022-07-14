@@ -59,6 +59,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import ch.poole.android.rangebar.RangeBar;
 import ch.poole.android.rangebar.RangeBar.PinTextFormatter;
 import ch.poole.openinghoursfragment.pickers.DateRangePicker;
@@ -506,7 +507,12 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         cancel.setOnClickListener(v -> dismiss());
 
         if (useFragmentCallback) {
-            saveListener = (OnSaveListener) getParentFragment();
+            Fragment fragment = getParentFragment();
+            // we may be nested one or two levels deep
+            if (!(fragment instanceof OnSaveListener)) {
+                fragment = fragment.getParentFragment();
+            }
+            saveListener = (OnSaveListener) fragment;
         }
 
         saveButton = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);
