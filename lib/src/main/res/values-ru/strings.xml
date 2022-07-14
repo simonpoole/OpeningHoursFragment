@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Управлять шаблонами</string>
     <string name="save_template">Сохранить шаблон</string>
     <string name="update_template">Обновить также значение из шаблона?</string>
+    <string name="spd_ohf_show_all">Показать все</string>
+    <string name="spd_ohf_save_to_file">Сохранить в файл</string>
+    <string name="spd_ohf_load_from_file">Загрузить из файла</string>
+    <string name="spd_ohf_load_from_file_replace">Загрузить из файла с заменой</string>
     <string name="Yes">Да</string>
     <string name="No">Нет</string>
     <string name="Start">Начало</string>
@@ -34,14 +38,21 @@
     <string name="name_legend">Название:</string>
     <string name="default_legend">По умолчанию:</string>
     <string name="key_legend">Ключ:</string>
+    <string name="spd_ohf_region_legend">Регион:</string>
+    <string name="spd_ohf_object_legend">Объект:</string>
+    <string name="spd_ohf_toast_file_read_failure">Невозможно прочесть файл!</string>
+
     <string name="is_default">%1$s(по умолчанию)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Регион: %1$s</string>
+
     <string name="all_keys">Всем</string>
     <string name="opening_hours_key">Время работы</string>
     <string name="service_times_key">Время обслуживания</string>
     <string name="collection_times_key">Время задержки для сбора</string>
     <string name="supervised_key">Охраняемая(-ый)</string>
     <string name="lit_key">Освещённая</string>
+    <string name="delivery_key">Время доставки</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Будние дни с перерывом на обед</string>
     <string name="weekdays_with_lunch_late_shopping">Будние дни с перерывом на обед и поздним закрытием</string>
@@ -95,7 +106,11 @@
 
     <string name="with_offsets">Со смещениями...</string>
     
+    <string name="spd_ohf_year_range_menu">Добавить интервал лет...</string>
     <string name="add_year_range">Добавить диапазон лет</string>
+    <string name="spd_ohf_add_year_range_openended">Добавить год начала</string>
+    
+    
     <string name="rule_type">Показать тип правила</string>
     <string name="duplicate_rule">Продублировать</string>
     <string name="move_up">Переместить вверх</string>
@@ -130,6 +145,9 @@
     <string name="weeks">Недели</string>
     <string name="year_range">Диапазон лет</string>
     <string name="years">Годы</string>
+    <string name="spd_ohf_starting">Начиная с</string>
+    <string name="spd_ohf_starting_year">Год начала</string>
+
     <string name="modifier">Модификатор</string>
     <string name="comment">Комментарий</string>
 
@@ -180,4 +198,5 @@
     <string name="before">раньше</string>
     <string name="after">позже</string>
 
-    </resources>
+    <string name="title_activity_test">Проверка</string>
+</resources>

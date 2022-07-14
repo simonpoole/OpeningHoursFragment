@@ -55,6 +55,7 @@
     <string name="supervised_key">Felügyelt</string>
     <string name="lit_key">Kivilágított</string>
     <string name="delivery_key">Szállítási idők</string>
+    <string name="spd_ohf_custom_key">Egyéni kulcs</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Hétköznap ebédidővel</string>
     <string name="weekdays_with_lunch_late_shopping">Hétköznap ebédidővel és kései bevásárlással</string>

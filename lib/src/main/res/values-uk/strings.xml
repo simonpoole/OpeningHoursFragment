@@ -20,6 +20,10 @@
     <string name="manage_templates_title">Керування шаблонами</string>
     <string name="save_template">Зберегти шаблон</string>
     <string name="update_template">Оновити також значення шаблона?</string>
+    <string name="spd_ohf_show_all">Показати все</string>
+    <string name="spd_ohf_save_to_file">Зберегти у файл</string>
+    <string name="spd_ohf_load_from_file">Завантажити з файлу</string>
+    <string name="spd_ohf_load_from_file_replace">Завантажити з файлу (с заміною)</string>
     <string name="Yes">Так</string>
     <string name="No">Ні</string>
     <string name="Start">Початок</string>
@@ -34,14 +38,24 @@
     <string name="name_legend">Назва:</string>
     <string name="default_legend">Типово:</string>
     <string name="key_legend">Ключ:</string>
+    <string name="spd_ohf_region_legend">Регіон:</string>
+    <string name="spd_ohf_object_legend">Об\'єкт:</string>
+    <string name="spd_ohf_toast_file_read_failure">Неможливо прочитати файл!</string>
+
+    <string name="spd_ohf_meta">Ключ: %1$s</string>
     <string name="is_default">%1$s (типово)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
-    <string name="all_keys">Загальний</string>
-    <string name="opening_hours_key">Часи роботи</string>
+    <string name="spd_ohf_region">Регіон: %1$s</string>
+
+    <string name="all_keys">Всі</string>
+    <string name="opening_hours_key">Час роботи</string>
     <string name="service_times_key">Розклад</string>
     <string name="collection_times_key">Час виїмки пошти</string>
+    <string name="fee_key">Стягується плата</string>
     <string name="supervised_key">Під наглядом</string>
     <string name="lit_key">Освітлення</string>
+    <string name="delivery_key">Час доставки</string>
+    <string name="spd_ohf_custom_key">Власний ключ</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Робочі дні з перервою на обід</string>
     <string name="weekdays_with_lunch_late_shopping">У будні дні з перервами на обід і пізні покупки</string>
@@ -95,7 +109,11 @@
 
     <string name="with_offsets">Із сувом…</string>
     
+    <string name="spd_ohf_year_range_menu">Додати діапазон років …</string>
     <string name="add_year_range">Додати роки</string>
+    <string name="spd_ohf_add_year_range_openended">Додати рік початку</string>
+    
+    
     <string name="rule_type">Показати тип правила</string>
     <string name="duplicate_rule">Дублювати</string>
     <string name="move_up">Вгору</string>
@@ -130,6 +148,9 @@
     <string name="weeks">Тижні</string>
     <string name="year_range">Діапазон років</string>
     <string name="years">Роки</string>
+    <string name="spd_ohf_starting">Початок</string>
+    <string name="spd_ohf_starting_year">Рік початку</string>
+
     <string name="modifier">Модифікатор</string>
     <string name="comment">Коментар</string>
 
@@ -180,4 +201,5 @@
     <string name="before">перед</string>
     <string name="after">після</string>
 
-    </resources>
+    <string name="title_activity_test">Перевірка</string>
+</resources>

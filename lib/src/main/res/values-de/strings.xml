@@ -201,4 +201,5 @@
     <string name="before">vor dem</string>
     <string name="after">nach dem</string>
 
-    </resources>
+    <string name="title_activity_test">Testaktivität</string>
+</resources>

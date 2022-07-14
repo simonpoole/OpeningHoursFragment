@@ -20,6 +20,10 @@
     <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
     <string name="update_template">也更新模版數值？</string>
+    <string name="spd_ohf_show_all">顯示全部</string>
+    <string name="spd_ohf_save_to_file">儲存至檔案</string>
+    <string name="spd_ohf_load_from_file">從檔案讀取</string>
+    <string name="spd_ohf_load_from_file_replace">從檔案讀取(取代)</string>
     <string name="Yes">可以</string>
     <string name="No">不行</string>
     <string name="Start">開始</string>
@@ -34,14 +38,24 @@
     <string name="name_legend">名稱：</string>
     <string name="default_legend">預設：</string>
     <string name="key_legend">鍵：</string>
+    <string name="spd_ohf_region_legend">地區：</string>
+    <string name="spd_ohf_object_legend">物件：</string>
+    <string name="spd_ohf_toast_file_read_failure">無法讀取檔案！</string>
+
+    <string name="spd_ohf_meta">鍵：%1$s</string>
     <string name="is_default">%1$s (預設)</string>
     <string name="spd_ohf_with_object">%1$s%2$s</string>
+    <string name="spd_ohf_region">地區：%1$s</string>
+
     <string name="all_keys">全部</string>
     <string name="opening_hours_key">營業時間 </string>
     <string name="service_times_key">服務時間</string>
     <string name="collection_times_key">收集時間</string>
+    <string name="fee_key">需要費用</string>
     <string name="supervised_key">受管理的</string>
     <string name="lit_key">照明</string>
+    <string name="delivery_key">投遞時間</string>
+    <string name="spd_ohf_custom_key">客製化鍵</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">平日午餐休息</string>
     <string name="weekdays_with_lunch_late_shopping">平常日有中午休息時段，以及傍晚消費</string>
@@ -95,7 +109,11 @@
 
     <string name="with_offsets">有偏差...</string>
     
+    <string name="spd_ohf_year_range_menu">新增年份範圍</string>
     <string name="add_year_range">增加年間範圍</string>
+    <string name="spd_ohf_add_year_range_openended">新增開始年份</string>
+    
+    
     <string name="rule_type">顯示規則種類</string>
     <string name="duplicate_rule">重覆</string>
     <string name="move_up">往上移動</string>
@@ -130,6 +148,9 @@
     <string name="weeks">週</string>
     <string name="year_range">年間</string>
     <string name="years">年</string>
+    <string name="spd_ohf_starting">開始</string>
+    <string name="spd_ohf_starting_year">開始年份</string>
+
     <string name="modifier">修改</string>
     <string name="comment">評論</string>
 
@@ -180,4 +201,5 @@
     <string name="before">之前</string>
     <string name="after">之後</string>
 
-    </resources>
+    <string name="title_activity_test">測試活動</string>
+</resources>

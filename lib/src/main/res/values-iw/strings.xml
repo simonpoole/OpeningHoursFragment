@@ -55,6 +55,7 @@
     <string name="supervised_key">פיקוח</string>
     <string name="lit_key">מואר</string>
     <string name="delivery_key">זמני משלוחים</string>
+    <string name="spd_ohf_custom_key">מפתח בהתאמה אישית</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">ימי השבוע עם הפסקת צהריים</string>
     <string name="weekdays_with_lunch_late_shopping">ימי השבוע עם הפסקות צהריים וקניות מאוחרות</string>
