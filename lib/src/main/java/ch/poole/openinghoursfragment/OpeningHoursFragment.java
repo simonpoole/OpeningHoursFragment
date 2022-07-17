@@ -379,19 +379,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(DEBUG_TAG, "onAttach");
-        if (!useFragmentCallback) {
-            try {
-                saveListener = (OnSaveListener) context;
-            } catch (ClassCastException e) {
-                throw new ClassCastException(context.toString() + " must implement OnSaveListener");
-            }
-        }
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(DEBUG_TAG, "onCreate");
@@ -412,6 +399,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     @SuppressLint("InflateParams")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(DEBUG_TAG, "onCreateView");
         int initialRule = -1;
         if (savedInstanceState != null) {
             Log.d(DEBUG_TAG, "Restoring from saved state");
@@ -506,13 +494,20 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
         cancel.setOnClickListener(v -> dismiss());
 
-        if (useFragmentCallback) {
-            Fragment fragment = getParentFragment();
-            // we may be nested one or two levels deep
-            if (!(fragment instanceof OnSaveListener)) {
-                fragment = fragment.getParentFragment();
+        Object listener = null;
+        try {
+            if (useFragmentCallback) {
+                listener = getParentFragment();
+                // we may be nested one or two levels deep
+                if (!(listener instanceof OnSaveListener)) {
+                    listener = ((Fragment) listener).getParentFragment();
+                }
+            } else {
+                listener = getContext();
             }
-            saveListener = (OnSaveListener) fragment;
+            saveListener = (OnSaveListener) listener;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(listener != null ? listener.getClass().getCanonicalName() + " must implement OnSaveListener" : "OnSaveListener is null");
         }
 
         saveButton = (AppCompatButton) openingHoursLayout.findViewById(R.id.save);

@@ -1,5 +1,8 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.13.2:
+- Fix fragment mode if onAttach is called before onCreateView
+
 0.13.0:
 - Support running as a 1 level deep nested Fragment
 - Update translations
