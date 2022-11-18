@@ -1,17 +1,17 @@
 [main]
 host = https://www.transifex.com
 
-[openinghoursfragment.stringsxml]
-file_filter = src/main/res/values-<lang>/strings.xml
-lang_map = cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh_CN: zh-rCN, sv_SE: sv-rSE, id: in, he: iw 
-source_file = src/main/res/values/strings.xml
-source_lang = en
-minimum_perc = 20
-
-[openinghoursfragment.opening-hoursmd]
-file_filter = documentation/docs/help/<lang>/Opening hours.md
-lang_map = cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh_CN: zh-rCN, sv_SE: sv-rSE, id: in, he: iw 
-source_file = documentation/docs/help/en/Opening hours.md
-source_lang = en
+[o:openstreetmap:p:openinghoursfragment:r:opening-hoursmd]
+file_filter  = documentation/docs/help/<lang>/Opening hours.md
+source_file  = documentation/docs/help/en/Opening hours.md
+source_lang  = en
 minimum_perc = 50
+lang_map     = zh_TW: zh-rTW, pt_BR: pt-rBR, zh_CN: zh-rCN, sv_SE: sv-rSE, id: in, he: iw, cs: cs-rCZ
+
+[o:openstreetmap:p:openinghoursfragment:r:stringsxml]
+file_filter  = src/main/res/values-<lang>/strings.xml
+source_file  = src/main/res/values/strings.xml
+source_lang  = en
+minimum_perc = 20
+lang_map     = id: in, he: iw, cs: cs-rCZ, zh_TW: zh-rTW, pt_BR: pt-rBR, zh_CN: zh-rCN, sv_SE: sv-rSE
 
