@@ -13,7 +13,8 @@
         <activity
             android:name=".Test"
             android:label="OHFragmentTest" 
-            android:configChanges="orientation|screenSize|keyboardHidden|density|screenLayout|uiMode" >
+            android:configChanges="orientation|screenSize|keyboardHidden|density|screenLayout|uiMode" 
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

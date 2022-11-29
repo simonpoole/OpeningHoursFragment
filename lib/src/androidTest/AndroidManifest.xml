@@ -20,6 +20,7 @@
         <activity
             android:name=".TestActivity"
             android:label="Test"
+            android:exported="true"
             >
         </activity>
     </application>
