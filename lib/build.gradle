@@ -222,8 +222,6 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
     additionalSourceDirs.from = files(coverageSourceDirs)
     sourceDirectories.from = files(coverageSourceDirs)
     executionData.from     = files([
-                // see https://stackoverflow.com/questions/67530173/upgrade-to-agp-4-2-0-unable-to-generate-jacoco-code-coverage-report
-                "$project.projectDir/jacoco.exec",
                 fileTree(
                     dir     : "$buildDir",
                     include : ['jacoco.exec', 'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/*coverage.ec', 'spoon-output/currentDebug/coverage/merged-coverage.ec'])
