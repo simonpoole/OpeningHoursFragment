@@ -3241,6 +3241,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         outState.putSerializable(ORIGINAL_VALUE_KEY, originalOpeningHoursValue);
         outState.putInt(STYLE_KEY, styleRes);
         outState.putSerializable(LOCALE_KEY, locale);
+        outState.putBoolean(FRAGMENT_KEY, useFragmentCallback);
     }
 
     @Override
