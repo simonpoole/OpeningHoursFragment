@@ -1,4 +1,16 @@
 // Project level build file starts here
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.breadmoirai:github-release:2.5.2"
+    }
+}
+
 plugins {
     id "org.sonarqube" version "3.1"
 }
@@ -8,8 +20,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: "jacoco"
+apply plugin: "com.github.breadmoirai.github-release"
 
-version = '0.13.3'
+version = '0.13.4'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -88,6 +101,7 @@ android {
 ext {
     androidxVersion = "1.0.0"
     adb = android.getAdbExe().toString()
+    githubToken = System.getenv('GITHUB_TOKEN')
 }
 
 dependencies {
@@ -299,4 +313,19 @@ publishing {
 
 signing {
     sign publishing.publications.openinghoursfragment
+}
+
+githubRelease {
+    token project.ext.githubToken == null ? "" : project.ext.githubToken  
+    repo = "OpeningHoursFragment"  
+    owner = "simonpoole"
+    tagName = project.version
+    releaseName = project.version
+    targetCommitish = "master" 
+    generateReleaseNotes = true 
+    overwrite = true
+}
+
+afterEvaluate {
+    publishOpeninghoursfragmentPublicationToSonatypeRepository.dependsOn tasks.githubRelease
 }
