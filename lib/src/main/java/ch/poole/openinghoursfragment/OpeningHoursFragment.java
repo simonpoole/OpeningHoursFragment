@@ -90,6 +90,7 @@ import ch.poole.openinghoursparser.Rule;
 import ch.poole.openinghoursparser.RuleModifier;
 import ch.poole.openinghoursparser.RuleModifier.Modifier;
 import ch.poole.openinghoursparser.TimeSpan;
+import ch.poole.openinghoursparser.Token;
 import ch.poole.openinghoursparser.TokenMgrError;
 import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.VariableTime;
@@ -841,7 +842,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         boolean first = true;
         int pos = 0;
         for (OpeningHoursParseException pex : ohpex.getExceptions()) {
-            int c = pex.currentToken.next.beginColumn - 1; // starts at 1
+            Token current = pex.currentToken;
+            if (current == null || current.next == null ) {
+                continue;
+            }
+            int c = current.next.beginColumn - 1; // starts at 1
             spannable.setSpan(new ForegroundColorSpan(Color.RED), c, Math.max(c, Math.min(c + 1, spannable.length())), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             if (first) {
                 pos = c;
