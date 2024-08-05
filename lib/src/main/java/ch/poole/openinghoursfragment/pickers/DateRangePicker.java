@@ -19,8 +19,8 @@ import ch.poole.openinghoursparser.DateWithOffset;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.VarDate;
 import ch.poole.openinghoursparser.YearRange;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView.OnValueChangeListener;
+import ch.poole.android.numberpickerview.library.NumberPickerView;
+import ch.poole.android.numberpickerview.library.NumberPickerView.OnValueChangeListener;
 
 /**
  * Display a dialog allowing the user to select values for a start date and optionally an end date

@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import ch.poole.android.numberpickerview.library.NumberPickerView;
 
 /**
  * Display a dialog allowing the user to set a single numeric value

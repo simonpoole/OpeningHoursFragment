@@ -10,7 +10,7 @@
 	    android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 	    >
-		<cn.carbswang.android.numberpickerview.library.NumberPickerView
+		<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/year"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -23,7 +23,7 @@
         	app:npv_TextSizeNormal="16sp"
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true"/>
-    	<cn.carbswang.android.numberpickerview.library.NumberPickerView
+    	<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/month"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -37,7 +37,7 @@
         	app:npv_TextSizeNormal="16sp"
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true"/>
-       	<cn.carbswang.android.numberpickerview.library.NumberPickerView
+       	<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/weekday"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -51,7 +51,7 @@
         	app:npv_TextSizeNormal="16sp"
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true"/>
-       	<cn.carbswang.android.numberpickerview.library.NumberPickerView
+       	<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/occurrence"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"

@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
         android:orientation="horizontal"
 	    >
-		<cn.carbswang.android.numberpickerview.library.NumberPickerView
+		<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/startHour"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -27,7 +27,7 @@
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true"
         	app:npv_HintText=":" />
-    	<cn.carbswang.android.numberpickerview.library.NumberPickerView
+    	<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/startMinute"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -42,7 +42,7 @@
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true" />
 
-        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        <ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/endHour"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"
@@ -60,7 +60,7 @@
         	app:npv_TextSizeSelected="20sp"
         	app:npv_WrapSelectorWheel="true"
         	app:npv_HintText=":" />
-    	<cn.carbswang.android.numberpickerview.library.NumberPickerView
+    	<ch.poole.android.numberpickerview.library.NumberPickerView
         	android:id="@+id/endMinute"
         	android:layout_width="wrap_content"
         	android:layout_height="240dp"

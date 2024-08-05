@@ -18,7 +18,7 @@ import ch.poole.openinghoursfragment.R;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.YearRange;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import ch.poole.android.numberpickerview.library.NumberPickerView;
 
 /**
  * Display a dialog allowing the user to select values for a start date and optionally an end date
