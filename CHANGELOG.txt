@@ -1,5 +1,14 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.13.5:
+- Migrate to hard fork of NumberPickerView
+
+0.13.4:
+- Check that token is actually present in exceptions
+
+0.13.3:
+- Save the value of useFragmentCallback
+
 0.13.2:
 - Fix fragment mode if onAttach is called before onCreateView
 

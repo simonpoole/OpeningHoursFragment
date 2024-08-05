@@ -22,7 +22,7 @@ apply plugin: 'signing'
 apply plugin: "jacoco"
 apply plugin: "com.github.breadmoirai.github-release"
 
-version = '0.13.4'
+version = '0.13.5'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
