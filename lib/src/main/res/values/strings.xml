@@ -28,6 +28,7 @@
     <string name="No">No</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
+    <string name="spd_ohf_update_hint">Press enter to update form</string>
 
     <string name="default_hint">Opening hours string</string>
 
