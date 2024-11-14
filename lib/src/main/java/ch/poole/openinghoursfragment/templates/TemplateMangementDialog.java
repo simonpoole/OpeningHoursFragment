@@ -7,6 +7,7 @@ import java.util.Map;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,7 +41,7 @@ import ch.poole.openinghoursfragment.Util;
 import ch.poole.openinghoursfragment.ValueWithDescription;
 
 public class TemplateMangementDialog extends CancelableDialogFragment implements UpdateCursorListener {
-    public static final String DEBUG_TAG = "TemplateMangementDialog";
+    public static final String DEBUG_TAG = TemplateMangementDialog.class.getSimpleName();
 
     private static final String MANAGE_KEY  = "manage";
     private static final String KEY_KEY     = "key";
@@ -52,6 +54,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
     private static final int READ_CODE         = 23456;
     private static final int READ_REPLACE_CODE = 34567;
     private static final int WRITE_CODE        = 24679;
+
+    private static final String INVALID_FILE = "(invalid)";
 
     /**
      * Template database related methods and fields
@@ -310,27 +314,59 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             return;
         }
         Uri uri = data.getData();
-        if (uri != null) {
-            if (requestCode == WRITE_CODE) {
-                try (SQLiteDatabase db = new TemplateDatabaseHelper(getContext()).getReadableDatabase()) {
-                    TemplateDatabase.writeJSON(db, getActivity().getContentResolver().openOutputStream(uri));
-                } catch (FileNotFoundException e) {
-                    Log.e(DEBUG_TAG, "Uri " + uri + " not found for writing");
-                }
-            } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
-                boolean worked = false;
-                try (SQLiteDatabase writeableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
-                    worked = TemplateDatabase.loadJson(writeableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);
-                } catch (FileNotFoundException e) {
-                    Log.e(DEBUG_TAG, "Uri " + uri + " not found for reading");
-                } finally {
-                    newCursor(readableDb);
-                }
-                if (!worked) {
-                    Util.toastTop(getContext(), R.string.spd_ohf_toast_file_read_failure);
-                }
+        if (uri == null) {
+            Log.w(DEBUG_TAG, "Null uri");
+            return;
+        }
+        if (requestCode == WRITE_CODE) {
+            ContentResolver resolver = getActivity().getContentResolver();
+            String displayName = getDisplayName(resolver, uri);
+            Log.e(DEBUG_TAG, "Display name " + displayName);
+            if (displayName == null || displayName.contains(INVALID_FILE)) {
+                // it would be nice if we could delete here but it doesn't seem to work
+                Util.toastTop(getContext(), R.string.spd_ohf_toast_no_file_selected);
+                return;
+            }
+            try (SQLiteDatabase db = new TemplateDatabaseHelper(getContext()).getReadableDatabase()) {
+                TemplateDatabase.writeJSON(db, resolver.openOutputStream(uri));
+            } catch (FileNotFoundException e) {
+                Log.e(DEBUG_TAG, "Uri " + uri + " not found for writing");
+            }
+        } else if (requestCode == READ_CODE || requestCode == READ_REPLACE_CODE) {
+            boolean worked = false;
+            try (SQLiteDatabase writeableDb = new TemplateDatabaseHelper(getContext()).getWritableDatabase()) {
+                worked = TemplateDatabase.loadJson(writeableDb, getActivity().getContentResolver().openInputStream(uri), requestCode == READ_REPLACE_CODE);
+            } catch (FileNotFoundException e) {
+                Log.e(DEBUG_TAG, "Uri " + uri + " not found for reading");
+            } finally {
+                newCursor(readableDb);
+            }
+            if (!worked) {
+                Util.toastTop(getContext(), R.string.spd_ohf_toast_file_read_failure);
             }
         }
+    }
+
+    /**
+     * Get the value of a column for this Uri. This is useful for MediaStore Uris, and other file-based
+     * ContentProviders.
+     *
+     * @param resolver a ContentResolver
+     * @param uri The Uri to query.
+     * @return The value of the column or null
+     */
+    @Nullable
+    private static String getDisplayName(@NonNull ContentResolver resolver, @NonNull Uri uri) {
+        final String[] projection = { MediaStore.MediaColumns.DISPLAY_NAME };
+        try (Cursor cursor = resolver.query(uri, projection, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME);
+                return cursor.getString(column_index);
+            }
+        } catch (Exception ex) {
+            Log.e(DEBUG_TAG, ex.getMessage());
+        }
+        return null;
     }
 
     @Override

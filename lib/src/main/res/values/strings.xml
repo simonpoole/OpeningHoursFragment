@@ -24,6 +24,7 @@
     <string name="spd_ohf_save_to_file">Save to file</string>
     <string name="spd_ohf_load_from_file">Load from file</string>
     <string name="spd_ohf_load_from_file_replace">Load from file (replace)</string>
+    <string name="spd_ohf_toast_no_file_selected">No target file selected!</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Start">Start</string>
