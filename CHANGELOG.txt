@@ -1,5 +1,13 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.14.0:
+
+- Improve messaging when updating template
+- Improve behaviour when entering/correcting OH text directly
+- Fix CI
+- Display a message if the user didn't select a file
+- Update translations
+
 0.13.5:
 - Migrate to hard fork of NumberPickerView
 
