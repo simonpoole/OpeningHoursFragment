@@ -32,7 +32,7 @@ import ch.poole.openinghoursfragment.ValueWithDescription;
 
 public class TemplateDialog extends CancelableDialogFragment {
 
-    private static final String DEBUG_TAG = "TemplateDialog";
+    private static final String DEBUG_TAG = TemplateDialog.class.getSimpleName();
 
     private static final String EXISTING_KEY = "existing";
     private static final String ID_KEY       = "id";
@@ -199,32 +199,42 @@ public class TemplateDialog extends CancelableDialogFragment {
                 TemplateDatabase.add(db, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);
                 db.close();
             } else {
-                if (!current.equals(finalTemplate)) {
+                if (!current.equals(finalTemplate) && !"".equals(current)) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                    alert.setTitle(R.string.update_template);
-                    alert.setPositiveButton(R.string.Yes, (d, w) -> {
-                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, spinnerRegion, object);
-                        if (updateListener != null) {
-                            updateListener.newCursor(db);
-                        }
-                    });
-                    alert.setNegativeButton(R.string.No, (d, w) -> {
-                        TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate, spinnerRegion,
-                                object);
-                        if (updateListener != null) {
-                            updateListener.newCursor(db);
-                        }
-                    });
+                    alert.setTitle(R.string.spd_ohf_update_template);
+                    alert.setPositiveButton(R.string.Yes, (d, w) -> updateTemplate(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
+                            current, spinnerRegion, object, updateListener));
+                    alert.setNegativeButton(R.string.No, (d, w) -> updateTemplate(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
+                            finalTemplate, spinnerRegion, object, updateListener));
                     alert.show();
                 } else {
-                    TemplateDatabase.update(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), current, null, null);
-                    if (updateListener != null) {
-                        updateListener.newCursor(db);
-                    }
+                    updateTemplate(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(), finalTemplate, spinnerRegion, object,
+                            updateListener);
                 }
             }
         });
 
         return alertDialog.create();
+    }
+
+    /**
+     * Update an entry in the template database
+     * 
+     * @param db the database
+     * @param id entry id
+     * @param key optional OSM key this applies to
+     * @param templateName the name of the template
+     * @param defaultTemplate if true use this as default
+     * @param template the template string
+     * @param region optional region
+     * @param object optional object
+     * @param updateListener optional listener
+     */
+    private void updateTemplate(@NonNull SQLiteDatabase db, int id, @Nullable String key, @NonNull String templateName, boolean defaultTemplate,
+            @NonNull String template, @Nullable String region, @Nullable String object, @Nullable UpdateCursorListener updateListener) {
+        TemplateDatabase.update(db, id, key, templateName, defaultTemplate, template, region, object);
+        if (updateListener != null) {
+            updateListener.newCursor(db);
+        }
     }
 }
