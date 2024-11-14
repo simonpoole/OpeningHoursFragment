@@ -19,7 +19,6 @@
     <string name="load_templates_title">Завантажити шаблони</string>
     <string name="manage_templates_title">Керування шаблонами</string>
     <string name="save_template">Зберегти шаблон</string>
-    <string name="update_template">Оновити також значення шаблона?</string>
     <string name="spd_ohf_show_all">Показати все</string>
     <string name="spd_ohf_save_to_file">Зберегти у файл</string>
     <string name="spd_ohf_load_from_file">Завантажити з файлу</string>
@@ -28,7 +27,6 @@
     <string name="No">Ні</string>
     <string name="Start">Початок</string>
     <string name="End">Кінець</string>
-
     <string name="default_hint">Рядок годин роботи</string>
 
     <string name="text_values">Текстове значення</string>

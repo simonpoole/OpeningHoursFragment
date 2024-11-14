@@ -19,28 +19,46 @@
     <string name="load_templates_title">Načíst předlohy</string>
     <string name="manage_templates_title">Spravovat šablony</string>
     <string name="save_template">Uložit předlohu</string>
-    <string name="update_template">Aktualizovat i hodnotu šablony?</string>
+    <string name="spd_ohf_show_all">Zobrazit vše</string>
+    <string name="spd_ohf_save_to_file">Uložit do souboru</string>
+    <string name="spd_ohf_load_from_file">Načíst ze souboru</string>
+    <string name="spd_ohf_load_from_file_replace">Načíst ze souboru (nahradit)</string>
     <string name="Yes">Ano</string>
     <string name="No">Ne</string>
     <string name="Start">Začátek</string>
     <string name="End">Konec</string>
+    <string name="default_hint">Řetězce otevíracích hodin</string>
+
+    <string name="text_values">Hodnoty textu</string>
 
     <!--	templates -->
     <string name="edit_template">Upravit předlohu</string>
     <string name="name_legend">Název:</string>
     <string name="default_legend">Výchozí:</string>
     <string name="key_legend">Klíč:</string>
+    <string name="spd_ohf_region_legend">Kraj:</string>
+    <string name="spd_ohf_object_legend">Objekt:</string>
+    <string name="spd_ohf_toast_file_read_failure">Soubor nelze přečíst!</string>
+
+    <string name="spd_ohf_meta">Klíč: %1$s</string>
     <string name="is_default">%1$s (výchozí)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Kraj: %1$s</string>
+
     <string name="all_keys">Všem</string>
     <string name="opening_hours_key">Otevírací hodiny</string>
     <string name="service_times_key">Provozní doba</string>
     <string name="collection_times_key">Doba sběru</string>
+    <string name="fee_key">Poplatek vyžadován</string>
     <string name="supervised_key">Hlídané</string>
     <string name="lit_key">Osvětlení</string>
+    <string name="delivery_key">Dodací lhůty</string>
+    <string name="spd_ohf_custom_key">Vlastní klíč</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Pracovní dny s přestávkou na oběd</string>
+    <string name="weekdays_with_lunch_late_shopping">Víkendy s přestávkou na oběd a pozdními nákupy</string>
     <string name="weekdays">Pracovní dny</string>
+    <string name="weekdays_late_shopping">Víkendy s pozdními nákupy</string>
     <string name="collection_times_weekdays">Jednou v pracovní dny</string>
 
     <!--	 -->
@@ -89,7 +107,11 @@
 
     <string name="with_offsets">S ofsety...</string>
     
+    <string name="spd_ohf_year_range_menu">Přidat rozsah let …</string>
     <string name="add_year_range">Přidat rozsah let</string>
+    <string name="spd_ohf_add_year_range_openended">Přidat počáteční rok</string>
+    
+    
     <string name="rule_type">Zobrazit typ pravidla</string>
     <string name="duplicate_rule">Duplikovat</string>
     <string name="move_up">Přesunout výš</string>
@@ -124,6 +146,9 @@
     <string name="weeks">Týdny</string>
     <string name="year_range">Rozsah roku</string>
     <string name="years">Roky</string>
+    <string name="spd_ohf_starting">Počáteční</string>
+    <string name="spd_ohf_starting_year">Počáteční rok</string>
+
     <string name="modifier">Modifikátor</string>
     <string name="comment">Poznámka</string>
 
@@ -174,4 +199,5 @@
     <string name="before">před</string>
     <string name="after">po</string>
 
-    </resources>
+    <string name="title_activity_test">TestActivity</string>
+</resources>

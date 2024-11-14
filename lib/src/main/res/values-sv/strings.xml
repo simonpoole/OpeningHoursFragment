@@ -18,16 +18,15 @@
     <string name="save_template">Spara mall</string>
     <string name="spd_ohf_show_all">Visa alla</string>
     <string name="spd_ohf_save_to_file">Spara till fil</string>
-    <string name="spd_ohf_load_from_file">Ladda frÃ¥n fil</string>
-    <string name="spd_ohf_load_from_file_replace">Ladda frÃ¥n fil (ersÃ¤tt)</string>
+    <string name="spd_ohf_load_from_file">Ladda från fil</string>
+    <string name="spd_ohf_load_from_file_replace">Ladda från fil (ersätt)</string>
     <string name="Yes">Ja</string>
     <string name="No">Nej</string>
     <string name="Start">Start</string>
     <string name="End">Slut</string>
+    <string name="default_hint">Öppettider, text</string>
 
-    <string name="default_hint">Ãppettider, strÃ¤ng</string>
-
-    <string name="text_values">TextvÃ¤rden</string>
+    <string name="text_values">Textvärden</string>
 
     <!--	templates -->
     <string name="edit_template">Redigera mall</string>
@@ -36,7 +35,7 @@
     <string name="key_legend">Nyckel:</string>
     <string name="spd_ohf_region_legend">Region:</string>
     <string name="spd_ohf_object_legend">Objekt:</string>
-    <string name="spd_ohf_toast_file_read_failure">Kunde inte lÃ¤sa fil!</string>
+    <string name="spd_ohf_toast_file_read_failure">Kunde inte läsa fil!</string>
 
     <string name="spd_ohf_meta">Nyckel: %1$s</string>
     <string name="is_default">%1$s(standard)</string>
@@ -46,13 +45,15 @@
     <string name="all_keys">Alla</string>
     <string name="opening_hours_key">Öppettider</string>
     <string name="collection_times_key">Insamlingstid</string>
-    <string name="fee_key">Avgift krÃ¤vs</string>
+    <string name="fee_key">Avgift krävs</string>
     <string name="supervised_key">Övervakad</string>
     <string name="lit_key">Belysning</string>
     <string name="delivery_key">Leveranstider</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Veckodagar med lunchrast</string>
+    <string name="weekdays_with_lunch_late_shopping">Veckodagar med lunchrast och sen shopping</string>
     <string name="weekdays">Veckodagar</string>
+    <string name="weekdays_late_shopping">Veckodagar med sen shopping</string>
     <string name="collection_times_weekdays">Dagligen veckodagar</string>
 
     <!--	 -->
@@ -64,6 +65,7 @@
 
     <!--    menu items -->
     <string name="Delete">Radera</string>
+    <string name="add_modifier_comment">Lätt till status/kommentar</string>
     <string name="add_week_range">Lägg till veckospann</string>
     <string name="add_holiday">Lägg till helg</string>
 
@@ -71,22 +73,33 @@
     <string name="time_time">Tid - tid</string>
     <string name="time_extended_time">Tid - utökad tid</string>
     <string name="variable_time_time">Var. tid - tid</string>
+    <string name="variable_time_extended_time">Var. tid - utökad tid</string>
     <string name="time_variable_time">Tid - var. tid</string>
     <string name="variable_time_variable_time">Var. tid - var. tid</string>
     <string name="time">Tid</string>
-    <string name="time_open_end">Ãppettid slut</string>
+    <string name="time_open_end">Tid-öppet slut</string>
     <string name="variable_time">Variabel tid</string>
+    <string name="variable_time_open_end">Variabel tid-öppet slut</string>
     <string name="start_at_midnight">Börjar vid midnatt</string>
+
+    <string name="week_day_range">Lägg till veckodagsspann</string>
+    <string name="occurrence_in_month">Lägg till tillfällen per månad</string>
 
     <string name="daterange_menu">Lägg till datumspann...</string>
     <string name="date_date">Datum - datum</string>
     <string name="variable_date_date">Variabelt datum - datum</string>
     <string name="date_variable_date">Datum - variabelt datum</string>
     <string name="variable_date_variable_date">Variabelt datum - variabelt datum</string>
+    <string name="spd_ohf_year_range_menu">Lägg till årsspann...</string>
     <string name="add_year_range">Lägg till årsspann</string>
+    <string name="spd_ohf_add_year_range_openended">Lägg till startår</string>
+    
+    
     <string name="rule_type">Visa regeltyp</string>
+    <string name="duplicate_rule">Duplicera</string>
     <string name="move_up">Flytta upp</string>
     <string name="move_down">Flytta ned</string>
+    <string name="display_time_picker">Visa tidsväljare</string>
     <string name="ticks_15_minute">Flytta till närmaste 15 minuter</string>
     <string name="ticks_5_minute">Flytta till närmaste 5 minuter</string>
     <string name="ticks_1_minute">Flytta till närmaste 1 minut</string>
@@ -103,10 +116,15 @@
 
     <string name="date_range">Datumspann</string>
     <string name="date">Datum</string>
+    <string name="date_weekday_occurrence">Datum (veckodag i månad)</string>
     <string name="week_range">Veckospann</string>
     <string name="weeks">Veckor</string>
     <string name="year_range">Årsspann</string>
     <string name="years">År</string>
+    <string name="spd_ohf_starting">Börjar</string>
+    <string name="spd_ohf_starting_year">Startår</string>
+
+    <string name="modifier">Status</string>
     <string name="comment">Kommentar</string>
 
     <string name="twentyfourseven">24 timmar, 7 dagar i veckan</string>
@@ -144,12 +162,12 @@
     <string name="november">Nov</string>
     <string name="december">Dec</string>
 
-    <string name="open">Ã¶ppet</string>
-    <string name="closed">stÃ¤ngt</string>
+    <string name="open">öppet</string>
+    <string name="closed">stängt</string>
     <string name="off">av</string>
     <string name="unknown">okänd</string>
 
-    <string name="before">innan</string>
+    <string name="before">före</string>
     <string name="after">efter</string>
 
     </resources>

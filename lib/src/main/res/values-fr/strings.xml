@@ -19,7 +19,6 @@
     <string name="load_templates_title">Charger des modèles</string>
     <string name="manage_templates_title">Gérer les modèles</string>
     <string name="save_template">Enregistrer le modèle</string>
-    <string name="update_template">Mettre aussi à jour la valeur du modèle ?</string>
     <string name="spd_ohf_show_all">Montrer tout</string>
     <string name="spd_ohf_save_to_file">Sauvegarder dans un fichier</string>
     <string name="spd_ohf_load_from_file">Charger depuis un fichier</string>
@@ -28,7 +27,6 @@
     <string name="No">Non</string>
     <string name="Start">Début</string>
     <string name="End">Fin</string>
-
     <string name="default_hint">Chaîne des horaires d\'ouverture</string>
 
     <string name="text_values">Valeur textuelle</string>
@@ -201,4 +199,5 @@
     <string name="before">avant</string>
     <string name="after">après</string>
 
-    </resources>
+    <string name="title_activity_test">Tester l\'activité</string>
+</resources>

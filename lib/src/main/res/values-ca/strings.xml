@@ -19,12 +19,14 @@
     <string name="load_templates_title">Carrega les plantilles</string>
     <string name="manage_templates_title">Gestiona les plantilles</string>
     <string name="save_template">Desa la plantilla</string>
-    <string name="update_template">Voleu actualitzar també el valor de plantilla?</string>
+    <string name="spd_ohf_show_all">Mostra tot</string>
+    <string name="spd_ohf_save_to_file">Desa a un fitxer</string>
+    <string name="spd_ohf_load_from_file">Carrega des d\'un fitxer</string>
+    <string name="spd_ohf_load_from_file_replace">Carrega des d\'un fitxer (reemplaça)</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
     <string name="Start">Inici</string>
     <string name="End">Fin</string>
-
     <string name="default_hint">Cadena d\'horari d\'obertura</string>
 
     <string name="text_values">Valors de text</string>
@@ -34,14 +36,24 @@
     <string name="name_legend">Nom:</string>
     <string name="default_legend">Per defecte:</string>
     <string name="key_legend">Clau:</string>
+    <string name="spd_ohf_region_legend">Regió:</string>
+    <string name="spd_ohf_object_legend">Objecte:</string>
+    <string name="spd_ohf_toast_file_read_failure">No s\'ha pogut llegir el fitxer!</string>
+
+    <string name="spd_ohf_meta">Clau: %1$s</string>
     <string name="is_default">%1$s (per defecte)</string>
     <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">Regió: %1$s</string>
+
     <string name="all_keys">Tots</string>
     <string name="opening_hours_key">Horaris d\'obertura</string>
     <string name="service_times_key">Horari de servei</string>
     <string name="collection_times_key">Horari de recollides</string>
+    <string name="fee_key">Tarifa requerida</string>
     <string name="supervised_key">Supervisat</string>
     <string name="lit_key">Il·luminació</string>
+    <string name="delivery_key">Temps de lliurament</string>
+    <string name="spd_ohf_custom_key">Clau personalitzada</string>
     <!--	default template entries -->
     <string name="weekdays_with_lunch">Dies de la setmana amb pausa per dinar</string>
     <string name="weekdays_with_lunch_late_shopping">Dies de la setmana amb pausa per dinar i compra tardana</string>
@@ -105,6 +117,8 @@
     <string name="weeks">Setmanes</string>
     <string name="year_range">Interval d\'anys</string>
     <string name="years">Anys</string>
+    <string name="spd_ohf_starting_year">Any inicial</string>
+
     <string name="modifier">Modificador</string>
     <string name="comment">Comentari</string>
 

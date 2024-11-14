@@ -17,12 +17,10 @@
     <string name="load_templates_title">템플릿 불러오기</string>
     <string name="manage_templates_title">템플릿 관리</string>
     <string name="save_template">템플릿 저장</string>
-    <string name="update_template">템플릿 값도 업데이트하겠습니까?</string>
     <string name="Yes">예</string>
     <string name="No">아니오</string>
     <string name="Start">시작</string>
     <string name="End">끝</string>
-
     <!--	templates -->
     <string name="edit_template">템플릿 편집</string>
     <string name="name_legend">이름:</string>

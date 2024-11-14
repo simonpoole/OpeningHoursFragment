@@ -19,7 +19,6 @@
     <string name="load_templates_title">Carregar modelos</string>
     <string name="manage_templates_title">Gerir modelos</string>
     <string name="save_template">Gravar modelo</string>
-    <string name="update_template">Atualizar também o valor do modelo?</string>
     <string name="spd_ohf_show_all">Mostrar tudo</string>
     <string name="spd_ohf_save_to_file">Guardar num ficheiro</string>
     <string name="spd_ohf_load_from_file">Carregar de um ficheiro</string>
@@ -28,7 +27,6 @@
     <string name="No">Não</string>
     <string name="Start">Inicia</string>
     <string name="End">Termina</string>
-
     <string name="default_hint">Expressão de horário de abertura</string>
 
     <string name="text_values">Valores de texto</string>

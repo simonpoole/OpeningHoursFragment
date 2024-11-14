@@ -19,12 +19,10 @@
     <string name="load_templates_title">Hlaða inn sniðmátum</string>
     <string name="manage_templates_title">Sýsla með sniðmát</string>
     <string name="save_template">Vista sniðmát</string>
-    <string name="update_template">Uppfæra einnig gildi í sniðmáti?</string>
     <string name="Yes">Já</string>
     <string name="No">Nei</string>
     <string name="Start">Upphaf</string>
     <string name="End">Endar</string>
-
     <string name="default_hint">Strengur fyrir opnunartíma</string>
 
     <string name="text_values">Textagildi</string>

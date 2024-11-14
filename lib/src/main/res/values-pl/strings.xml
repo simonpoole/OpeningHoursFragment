@@ -19,12 +19,10 @@
     <string name="load_templates_title">Wczytaj szablony</string>
     <string name="manage_templates_title">Zarządzaj szablonami</string>
     <string name="save_template">Zapisz szablony</string>
-    <string name="update_template">Zaktualizować również wartość w szablonie?</string>
     <string name="Yes">Tak</string>
     <string name="No">Nie</string>
     <string name="Start">Początek</string>
     <string name="End">Koniec</string>
-
     <string name="default_hint">Łańcuch godzin otwarcia</string>
 
     <string name="text_values">Wartości tekstowe</string>

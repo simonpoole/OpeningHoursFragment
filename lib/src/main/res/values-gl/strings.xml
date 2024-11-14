@@ -19,12 +19,10 @@
     <string name="load_templates_title">Cargar modelos</string>
     <string name="manage_templates_title">Xestionar modelos</string>
     <string name="save_template">Gardar modelos</string>
-    <string name="update_template">Actualizar tamén o valor do modelo?</string>
     <string name="Yes">Si</string>
     <string name="No">Non</string>
     <string name="Start">Comezar</string>
     <string name="End">Final</string>
-
     <string name="default_hint">Cadea de horarios de apertura</string>
 
     <string name="text_values">Valores do texto</string>

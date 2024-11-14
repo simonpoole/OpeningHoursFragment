@@ -19,7 +19,6 @@
     <string name="load_templates_title">Last inn maler </string>
     <string name="manage_templates_title">Administrer maler </string>
     <string name="save_template">Lagre mal</string>
-    <string name="update_template">Oppdatere malverdi også? </string>
     <string name="spd_ohf_show_all">Vis alt</string>
     <string name="spd_ohf_save_to_file">Lagre til fil</string>
     <string name="spd_ohf_load_from_file">Last fra fil</string>
@@ -28,7 +27,6 @@
     <string name="No">Nei</string>
     <string name="Start">Start</string>
     <string name="End">Slutt</string>
-
     <string name="default_hint">Åpningstider streng </string>
 
     <string name="text_values">Takstverdier</string>
@@ -79,6 +77,7 @@
     <string name="timespan_menu">Legg til tidsperiode ... </string>
     <string name="time_time">Tid - tid </string>
     <string name="time_extended_time">Tid - utvidet tid </string>
+    <string name="variable_time_time"> </string>
     <string name="time">Tid</string>
     <string name="time_open_end">Tidsåpent slutt </string>
     <string name="variable_time">Variabel tid </string>

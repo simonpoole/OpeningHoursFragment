@@ -19,12 +19,10 @@
     <string name="load_templates_title">Käytä mallinetta</string>
     <string name="manage_templates_title">Hallitse mallineita</string>
     <string name="save_template">Tallenna malline</string>
-    <string name="update_template">Päivitetäänkö myös mallineen arvo?</string>
     <string name="Yes">Kyllä</string>
     <string name="No">Ei</string>
     <string name="Start">Alku</string>
     <string name="End">Loppu</string>
-
     <string name="default_hint">Aukioloajan merkkijono</string>
 
     <string name="text_values">Tekstiarvot</string>

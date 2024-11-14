@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="spd_ohf_cancel">Nullañ</string>
+    <string name="spd_ohf_ok">Mat eo</string>
+    <string name="Save">Enrollañ</string>
+    <string name="add_rule">Ouzhpennañ ur reolenn</string>
+    <string name="refresh">Freskaat</string>
+    <string name="Yes">Ya</string>
+    <string name="No">Ket</string>
+    <string name="name_legend">Anv:</string>
+    <string name="default_legend">Dre ziouer:</string>
+    <string name="is_default">%1$s (dre ziouer)</string>
+    <string name="opening_hours_key">Eurioù digeriñ</string>
+    <string name="rule_header">Reolenn %1$s</string>
+
+    <!--    menu items -->
+    <string name="Delete">Diverkañ</string>
+    <string name="fallback_rule">Dre ziouer</string>
+
+    <string name="years">Bloavezhioù</string>
+    <string name="comment">Kemennadenn</string>
+
+    <string name="sunrise">Sav-heol</string>
+    <string name="sunset">Kuzh-heol</string>
+    <string name="dawn">Deroù-deiz</string>
+    <string name="public_holidays">Vakañsoù foran</string>
+    <string name="monday_short">Lu</string>
+    <string name="tuesday_short">Meu</string>
+    <string name="wednesday_short">Mer</string>
+    <string name="thursday_short">Ya</string>
+    <string name="friday_short">Gw</string>
+    <string name="saturday_short">Sa</string>
+    <string name="sunday_short">Su</string>
+
+    <string name="january">Gwe</string>
+    <string name="february">C\'hw</string>
+    <string name="march">Meu</string>
+    <string name="april">Ebr</string>
+    <string name="may">Mae</string>
+    <string name="june">Mez</string>
+    <string name="july">Goue</string>
+    <string name="august">Eost</string>
+    <string name="september">Gwen</string>
+    <string name="october">Here</string>
+    <string name="november">Du</string>
+    <string name="december">Ker</string>
+
+    <string name="closed">Serret</string>
+    <string name="unknown">dianav</string>
+
+    </resources>

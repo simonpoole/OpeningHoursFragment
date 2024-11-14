@@ -19,7 +19,6 @@
     <string name="load_templates_title">Загрузить шаблоны</string>
     <string name="manage_templates_title">Управлять шаблонами</string>
     <string name="save_template">Сохранить шаблон</string>
-    <string name="update_template">Обновить также значение из шаблона?</string>
     <string name="spd_ohf_show_all">Показать все</string>
     <string name="spd_ohf_save_to_file">Сохранить в файл</string>
     <string name="spd_ohf_load_from_file">Загрузить из файла</string>
@@ -28,7 +27,6 @@
     <string name="No">Нет</string>
     <string name="Start">Начало</string>
     <string name="End">Конец</string>
-
     <string name="default_hint">Строка времени работы</string>
 
     <string name="text_values">Текстовые значения</string>

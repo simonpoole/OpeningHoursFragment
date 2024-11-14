@@ -19,7 +19,6 @@
     <string name="load_templates_title">טעינת תבניות</string>
     <string name="manage_templates_title">ניהול תבניות</string>
     <string name="save_template">שמירת תבנית</string>
-    <string name="update_template">לעדכן גם את הערך בתבנית?</string>
     <string name="spd_ohf_show_all">הצגה של הכול</string>
     <string name="spd_ohf_save_to_file">שמירה לקובץ</string>
     <string name="spd_ohf_load_from_file">טעינה מקובץ</string>
@@ -28,7 +27,6 @@
     <string name="No">לא</string>
     <string name="Start">התחלה</string>
     <string name="End">סיום</string>
-
     <string name="default_hint">מחרוזת שעות פתיחה</string>
 
     <string name="text_values">ערכי טקסט</string>

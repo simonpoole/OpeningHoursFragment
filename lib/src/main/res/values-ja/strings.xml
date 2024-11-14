@@ -5,28 +5,133 @@
     <string name="spd_ohf_ok">OK</string>
     <string name="Save">保存</string>
     <string name="Done">完了</string>
+    <string name="value_too_long">営業時間の値の長さが %1$d 文字ですが、上限は255文字です。\n\n保存前に値を簡略化してください。</string>
+    <string name="would_overwrite_invalid_value">営業時間の値が不正なため、ルールの追加ができません。修正するか削除してください。</string>
+
+    <string name="add_rule">ルールの追加</string>
+    <string name="add_rule_247">24/7のルールを追加</string>
+    <string name="add_rule_closed_on_holidays">祝休日のルールを追加</string>
+    <string name="load_template">テンプレートの読込</string>
+    <string name="save_to_template">テンプレートの保存</string>
+    <string name="manage_templates">テンプレートの管理</string>
+    <string name="refresh">リフレッシュ</string>
+    <string name="clear">すべて削除</string>
+    <string name="load_templates_title">テンプレートの読込</string>
+    <string name="manage_templates_title">テンプレートの管理</string>
+    <string name="save_template">テンプレートの保存</string>
+    <string name="spd_ohf_show_all">すべて表示</string>
+    <string name="spd_ohf_save_to_file">ファイルに保存</string>
+    <string name="spd_ohf_load_from_file">ファイルから読込</string>
+    <string name="spd_ohf_load_from_file_replace">ファイルから読込 (置換)</string>
     <string name="Yes">はい</string>
     <string name="No">いいえ</string>
     <string name="Start">開始</string>
     <string name="End">終了</string>
+    <string name="default_hint">営業時間文字列</string>
+
+    <string name="text_values">テキスト値</string>
 
     <!--	templates -->
-    <string name="edit_template">編集テンプレート</string>
+    <string name="edit_template">テンプレートの編集</string>
     <string name="name_legend">名称:</string>
     <string name="default_legend">デフォルト:</string>
     <string name="key_legend">キー:</string>
+    <string name="spd_ohf_region_legend">地域:</string>
+    <string name="spd_ohf_object_legend">オブジェクト:</string>
+    <string name="spd_ohf_toast_file_read_failure">ファイルを読み込めません!</string>
+
+    <string name="spd_ohf_meta">キー: %1$s</string>
     <string name="is_default">%1$s (デフォルト)</string>
+    <string name="spd_ohf_with_object">%1$s %2$s</string>
+    <string name="spd_ohf_region">地域: %1$s</string>
+
     <string name="all_keys">すべて</string>
-    <string name="opening_hours_key">オープン時間</string>
+    <string name="opening_hours_key">営業時間</string>
+    <string name="service_times_key">サービス提供時間</string>
+    <string name="collection_times_key">収集時刻</string>
+    <string name="fee_key">要使用料</string>
     <string name="supervised_key">監視</string>
     <string name="lit_key">照明</string>
+    <string name="delivery_key">配達時刻</string>
+    <string name="spd_ohf_custom_key">カスタムキー</string>
+    <!--	default template entries -->
+    <string name="weekdays_with_lunch">曜日 (昼休憩あり)</string>
+    <string name="weekdays_with_lunch_late_shopping">曜日 (昼休憩と営業時間延長)</string>
+    <string name="weekdays">曜日</string>
+    <string name="weekdays_late_shopping">曜日 (営業時間延長)</string>
+    <string name="collection_times_weekdays">平日に一度</string>
+
+    <!--	 -->
+    <string name="group_header">グループ %1$s</string>
+    <string name="rule_header">ルール %1$s</string>
+
+    <!--	messages -->
+    <string name="loaded_default">読込済デフォルトテンプレート</string>
+
     <!--    menu items -->
-    <string name="Delete">Delete</string>
+    <string name="Delete">削除</string>
+    <string name="add_modifier_comment">修飾子/コメント追加</string>
+    <string name="add_week_range">週範囲追加</string>
+    <string name="add_holiday">祝休日追加</string>
+
+    <string name="timespan_menu">時間範囲追加 ...</string>
+    <string name="time_time">時刻 - 時刻</string>
+    <string name="time_extended_time">時刻 - 延長時刻</string>
+    <string name="variable_time_time">変動時刻 - 時刻</string>
+    <string name="variable_time_extended_time">変動時刻 - 延長時刻</string>
+    <string name="time_variable_time">時刻 - 変動時刻</string>
+    <string name="variable_time_variable_time">変動時刻 - 変動時刻</string>
+    <string name="time">時刻</string>
+    <string name="time_open_end">時刻 - 無期限</string>
+    <string name="variable_time">変動時刻</string>
+    <string name="variable_time_open_end">変動時刻 - 無期限</string>
+    <string name="start_at_midnight">深夜0時開始</string>
+
+    <string name="week_day_range">曜日範囲追加</string>
+    <string name="occurrence_in_month">月内曜日の追加</string>
+
+    <string name="daterange_menu">日付範囲の追加 ...</string>
+    <string name="date_date">日付 - 日付</string>
+    <string name="variable_date_date">変動日付 - 日付</string>
+    <string name="date_variable_date">日付 - 変動日付</string>
+    <string name="variable_date_variable_date">変動日付 - 変動日付</string>
+    <string name="occurrence_occurrence">月内曜日 - 月内曜日</string>
+    <string name="occurrence_date">月内曜日 - 日付</string>
+    <string name="date_occurrence">日付 - 月内曜日</string>
+    <string name="occurrence_variable_date">月内曜日 - 変動日付</string>
+    <string name="variable_date_occurrence">変動日付 - 月内曜日</string>
+
+    <string name="date_open_end">日付 - 無期限</string>
+    <string name="variable_date_open_end">変動日付 - 無期限</string>
+    <string name="occurrence_open_end">月内曜日 - 無期限</string>
+
+    <string name="with_offsets">オフセットを含む ...</string>
+    
+    <string name="spd_ohf_year_range_menu">年範囲を追加 ...</string>
+    <string name="add_year_range">年範囲を追加</string>
+    <string name="spd_ohf_add_year_range_openended">開始年を追加</string>
+    
+    
+    <string name="rule_type">ルールタイプを表示</string>
+    <string name="duplicate_rule">複製</string>
     <string name="move_up">上に移動</string>
     <string name="move_down">下に移動</string>
+    <string name="display_time_picker">時刻ピッカーを表示</string>
+    <string name="ticks_15_minute">15分刻みに切り替え</string>
+    <string name="ticks_5_minute">5分刻みに切り替え</string>
+    <string name="ticks_1_minute">1分刻みに切り替え</string>
+    <string name="show_offset">オフセットを表示</string>
+    <string name="show_start_offset">開始オフセットを表示</string>
+    <string name="show_end_offset">終了オフセットを表示</string>
+    <string name="show_interval">間隔を表示</string>
+    <string name="show_useAsWeekDay">利用法を表示</string>
+
     <!--     opening hour elements -->
 
     <string name="normal_rule">通常</string>
+    <string name="additive_rule">付加的</string>
+    <string name="fallback_rule">フォールバック</string>
+
     <string name="interval_minutes">間隔 (分)</string>
     <string name="interval_years">間隔 (年)</string>
     <string name="interval_weeks">間隔 (週)</string>
@@ -41,18 +146,29 @@
     <string name="weeks">週</string>
     <string name="year_range">年範囲</string>
     <string name="years">年</string>
+    <string name="spd_ohf_starting">開始</string>
+    <string name="spd_ohf_starting_year">開始年</string>
+
+    <string name="modifier">修飾子</string>
     <string name="comment">コメント</string>
+
+    <string name="use_as_weekday">曜日と同様に利用</string>
 
     <string name="twentyfourseven">24時間、週7日</string>
 
-    <string name="to">to</string>
+    <string name="to">から</string>
 
     <string name="easter">イースター</string>
 
     <string name="sunrise">日出</string>
     <string name="sunset">日没</string>
+    <string name="dawn">夜明け</string>
+    <string name="dusk">夕暮れ</string>
+
     <string name="public_holidays">祝日</string>
     <string name="school_holidays">学校休日</string>
+
+    <string name="occurrence_in_month_title">月内曜日</string>
 
     <string name="monday_short">月</string>
     <string name="tuesday_short">火</string>
@@ -75,10 +191,13 @@
     <string name="november">11月</string>
     <string name="december">12月</string>
 
-    <string name="closed">閉店中</string>
+    <string name="open">営業</string>
+    <string name="closed">休業</string>
+    <string name="off">休業</string>
     <string name="unknown">不明</string>
 
     <string name="before">前</string>
     <string name="after">後</string>
 
-    </resources>
+    <string name="title_activity_test">TestActivity</string>
+</resources>

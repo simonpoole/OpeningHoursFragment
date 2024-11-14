@@ -18,12 +18,10 @@
     <string name="load_templates_title">Tải các bản mẫu</string>
     <string name="manage_templates_title">Quản lý các bản mẫu</string>
     <string name="save_template">Lưu bản mẫu</string>
-    <string name="update_template">Cũng cập nhật giá trị bản mẫu?</string>
     <string name="Yes">Có Bán</string>
     <string name="No">Không Bán</string>
     <string name="Start">Bắt đầu</string>
     <string name="End">End</string>
-
     <!--	templates -->
     <string name="edit_template">Sửa đổi bản mẫu</string>
     <string name="name_legend">Tên:</string>

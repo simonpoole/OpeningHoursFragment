@@ -19,7 +19,6 @@
     <string name="load_templates_title">載入模版</string>
     <string name="manage_templates_title">管理模版</string>
     <string name="save_template">儲存模版</string>
-    <string name="update_template">也更新模版數值？</string>
     <string name="spd_ohf_show_all">顯示全部</string>
     <string name="spd_ohf_save_to_file">儲存至檔案</string>
     <string name="spd_ohf_load_from_file">從檔案讀取</string>
@@ -28,7 +27,6 @@
     <string name="No">不行</string>
     <string name="Start">開始</string>
     <string name="End">結束</string>
-
     <string name="default_hint">開放時間字串</string>
 
     <string name="text_values">文字數值</string>

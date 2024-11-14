@@ -18,11 +18,11 @@
     <string name="No">Nej</string>
     <string name="Start">Start</string>
     <string name="End">End</string>
-
     <!--	templates -->
     <string name="edit_template">Rediger skabelon</string>
     <string name="default_legend">Standard:</string>
     <string name="all_keys">Alle</string>
+    <string name="opening_hours_key">Åbningstider</string>
     <string name="supervised_key">Overvåget</string>
     <string name="lit_key">Gadebelysning</string>
     <!--	messages -->

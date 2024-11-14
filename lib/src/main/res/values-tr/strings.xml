@@ -17,12 +17,10 @@
     <string name="load_templates_title">Şablonları yükle</string>
     <string name="manage_templates_title">Şablonları yönet</string>
     <string name="save_template">Şablonu kaydet </string>
-    <string name="update_template">Şablon değeri de güncellensin mi?</string>
     <string name="Yes">Evet</string>
     <string name="No">Hayır</string>
     <string name="Start">Başla</string>
     <string name="End">End</string>
-
     <string name="default_hint">Açılış saatleri dizisi</string>
 
     <string name="text_values">Metin değerleri</string>

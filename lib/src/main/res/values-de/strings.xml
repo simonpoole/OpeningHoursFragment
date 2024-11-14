@@ -19,15 +19,17 @@
     <string name="load_templates_title">Vorlage laden</string>
     <string name="manage_templates_title">Vorlagen verwalten</string>
     <string name="save_template">Vorlage speichern</string>
-    <string name="update_template">Vorlage auch ändern?</string>
+    <string name="spd_ohf_update_template">Vorlage mit aktuellem Öffnungszeitenwert ersetzen?</string>
     <string name="spd_ohf_show_all">Alle anzeigen</string>
     <string name="spd_ohf_save_to_file">In Datei speichern</string>
     <string name="spd_ohf_load_from_file">Von Datei laden</string>
-    <string name="spd_ohf_load_from_file_replace">Von Dateil laden (ersetzen)</string>
+    <string name="spd_ohf_load_from_file_replace">Von Datei laden (ersetzen)</string>
+    <string name="spd_ohf_toast_no_file_selected">Keine Zieldatei ausgewählt!</string>
     <string name="Yes">Ja</string>
     <string name="No">Nein</string>
     <string name="Start">Start</string>
     <string name="End">Ende</string>
+    <string name="spd_ohf_update_hint">Enter drücken um Formular neu anzuzeigen</string>
 
     <string name="default_hint">Öffnungszeitenwert</string>
 

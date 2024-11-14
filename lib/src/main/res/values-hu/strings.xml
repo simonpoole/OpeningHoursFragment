@@ -19,7 +19,6 @@
     <string name="load_templates_title">Sablonok betöltése</string>
     <string name="manage_templates_title">Sablonok kezelése</string>
     <string name="save_template">Sablon mentése</string>
-    <string name="update_template">Frissíti a sablon értékét is?</string>
     <string name="spd_ohf_show_all">Összes megjelenítése</string>
     <string name="spd_ohf_save_to_file">Mentés fájlba</string>
     <string name="spd_ohf_load_from_file">Betöltés fájlból</string>
@@ -28,7 +27,6 @@
     <string name="No">Nincs</string>
     <string name="Start">Kezdés</string>
     <string name="End">Zárás</string>
-
     <string name="default_hint">Nyitva tartás karakterlánc</string>
 
     <string name="text_values">Szöveges értékek</string>

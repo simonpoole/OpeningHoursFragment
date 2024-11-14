@@ -19,7 +19,6 @@
     <string name="load_templates_title">بارکردن الگوها</string>
     <string name="manage_templates_title">مدیریت الگوها</string>
     <string name="save_template">ذخیره‌سازی الگو</string>
-    <string name="update_template">مقدار الگو نیز به روز شود؟</string>
     <string name="spd_ohf_show_all">نمایش همه</string>
     <string name="spd_ohf_save_to_file">ذخیره در فایل</string>
     <string name="spd_ohf_load_from_file">بارگیری از فایل</string>
@@ -28,7 +27,6 @@
     <string name="No">خیر</string>
     <string name="Start">شروع</string>
     <string name="End">پایان</string>
-
     <string name="default_hint">رشتهٔ ساعت کاری</string>
 
     <string name="text_values">مقدارهای متنی</string>
