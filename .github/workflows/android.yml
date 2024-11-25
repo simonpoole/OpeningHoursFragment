@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
          name: Test output
-         path: /Users/runner/work/OpeningHoursFragment/OpeningHoursFragment/lib/build/reports/androidTests/connected/flavors/debugAndroidTest
+         path: /Users/runner/work/OpeningHoursFragment/OpeningHoursFragment/lib/build/reports/androidTests/connected
     - name: Generate coverage report
       run: ./gradlew jacocoTestReport
     - name: SonarCloud Scan

@@ -20,7 +20,6 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -391,7 +390,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-
         // request a window without the title
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
@@ -405,27 +403,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         int initialRule = -1;
         if (savedInstanceState != null) {
             Log.d(DEBUG_TAG, "Restoring from saved state");
-            key = (ValueWithDescription) savedInstanceState.getSerializable(KEY_KEY);
-            region = savedInstanceState.getString(REGION_KEY);
-            object = savedInstanceState.getString(OBJECT_KEY);
-            openingHoursValue = savedInstanceState.getString(VALUE_KEY);
-            originalOpeningHoursValue = savedInstanceState.getString(ORIGINAL_VALUE_KEY);
-            styleRes = savedInstanceState.getInt(STYLE_KEY);
-            useFragmentCallback = savedInstanceState.getBoolean(FRAGMENT_KEY);
-            textValues = (List<ValueWithDescription>) savedInstanceState.getSerializable(TEXTVALUES_KEY);
-            locale = (Locale) savedInstanceState.getSerializable(LOCALE_KEY);
+            getStateFromBundle(savedInstanceState);
         } else {
-            key = (ValueWithDescription) getArguments().getSerializable(KEY_KEY);
-            region = getArguments().getString(REGION_KEY);
-            object = getArguments().getString(OBJECT_KEY);
-            openingHoursValue = getArguments().getString(VALUE_KEY);
-            originalOpeningHoursValue = openingHoursValue;
-            styleRes = getArguments().getInt(STYLE_KEY);
+            getStateFromBundle(getArguments());
             initialRule = getArguments().getInt(RULE_KEY);
             showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
-            useFragmentCallback = getArguments().getBoolean(FRAGMENT_KEY);
-            textValues = (List<ValueWithDescription>) getArguments().getSerializable(TEXTVALUES_KEY);
-            locale = (Locale) getArguments().getSerializable(LOCALE_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
@@ -443,6 +425,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         final LinearLayout openingHoursLayout = (LinearLayout) inflater.inflate(R.layout.openinghours, null);
 
         final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
+        text = (AutoCompleteTextView) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
         watcher = new OhTextWatcher(sv);
         textWatcher = new TextTextWatcher();
         rebuilder = new Rebuilder(sv);
@@ -450,53 +433,52 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         // set parser locale singleton
         I18n.setLocale(locale != null ? locale : Locale.getDefault());
 
-        // check if this is a mixed value tag
-        final LinearLayout modeContainer = (LinearLayout) openingHoursLayout.findViewById(R.id.modeContainer);
+        final View modeContainer = openingHoursLayout.findViewById(R.id.modeContainer);
         headerLine = openingHoursLayout.findViewById(R.id.headerLine);
         errorMessages = (LinearLayout) openingHoursLayout.findViewById(R.id.openinghours_error_messages);
-        if (textValues != null) {
+
+        // check if this is a mixed value tag
+        final boolean hasTextValues = textValues != null;
+        textMode = hasTextValues
+                && (textValues.contains(new ValueWithDescription(openingHoursValue, null)) || openingHoursValue == null || "".equals(openingHoursValue));
+        buildLayout(openingHoursLayout, openingHoursValue == null ? "" : openingHoursValue, initialRule);
+        if (hasTextValues) {
             final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
             final RadioButton useOH = (RadioButton) modeGroup.findViewById(R.id.use_oh);
             final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
-            if (textValues.contains(new ValueWithDescription(openingHoursValue, null)) || openingHoursValue == null || "".equals(openingHoursValue)) {
+            if (textMode) {
                 useText.setChecked(true);
-                textMode = true;
-                headerLine.setVisibility(View.VISIBLE);
+                setUpTextMode();
             } else {
                 useOH.setChecked(true);
-                headerLine.setVisibility(View.GONE);
+                rebuilder.rebuild();
             }
             modeGroup.setOnCheckedChangeListener((group, checkedId) -> {
                 openingHoursValue = text.getText().toString();
-                text.removeTextChangedListener(watcher);
-                text.removeTextChangedListener(textWatcher);
-                text.removeCallbacks(updateStringRunnable);
-                text.setOnEditorActionListener(null);
                 removeHighlight(text);
                 errorMessages.removeAllViews();
-                final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
+                removeWatchers();
+                final View fab = openingHoursLayout.findViewById(R.id.more);
                 if (checkedId == useText.getId()) {
+                    textMode = true;
                     buildLayout(openingHoursLayout, openingHoursValue, -1);
                     fab.setVisibility(View.GONE);
-                    headerLine.setVisibility(View.VISIBLE);
+                    setUpTextMode();
                 } else if (checkedId == useOH.getId()) {
+                    textMode = false;
                     text.setText(openingHoursValue);
-                    text.setOnEditorActionListener(editorActionListener);
-                    text.addTextChangedListener(watcher);
                     rebuilder.rebuild();
                     fab.setVisibility(View.VISIBLE);
-                    headerLine.setVisibility(View.GONE);
+                    setUpOHMode();
                 }
             });
             modeContainer.setVisibility(View.VISIBLE);
         } else {
             modeContainer.setVisibility(View.GONE);
-            headerLine.setVisibility(View.GONE);
         }
-        buildLayout(openingHoursLayout, openingHoursValue == null ? "" : openingHoursValue, initialRule);
 
         // add callbacks for the buttons
-        AppCompatButton cancel = (AppCompatButton) openingHoursLayout.findViewById(R.id.cancel);
+        View cancel = openingHoursLayout.findViewById(R.id.cancel);
         cancel.setOnClickListener(v -> dismiss());
 
         Object listener = null;
@@ -527,6 +509,55 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     /**
+     * Remove watchers on the EditText
+     */
+    private void removeWatchers() {
+        text.removeTextChangedListener(watcher);
+        text.removeTextChangedListener(textWatcher);
+    }
+
+    /**
+     * Get state/arguments from a bundle
+     * 
+     * @param bundle the Bundle
+     */
+    private void getStateFromBundle(@NonNull Bundle bundle) {
+        key = (ValueWithDescription) bundle.getSerializable(KEY_KEY);
+        region = bundle.getString(REGION_KEY);
+        object = bundle.getString(OBJECT_KEY);
+        openingHoursValue = bundle.getString(VALUE_KEY);
+        originalOpeningHoursValue = bundle.getString(ORIGINAL_VALUE_KEY);
+        styleRes = bundle.getInt(STYLE_KEY);
+        useFragmentCallback = bundle.getBoolean(FRAGMENT_KEY);
+        textValues = (List<ValueWithDescription>) bundle.getSerializable(TEXTVALUES_KEY);
+        locale = (Locale) bundle.getSerializable(LOCALE_KEY);
+    }
+
+    /**
+     * Setup listeners for text mode
+     */
+    private void setUpTextMode() {
+        text.removeCallbacks(updateStringRunnable);
+        headerLine.setVisibility(View.VISIBLE);
+        text.setOnEditorActionListener(null);
+        removeWatchers();
+        text.addTextChangedListener(textWatcher);
+    }
+
+    /**
+     * Setup listeners for OH mode
+     */
+    private void setUpOHMode() {
+        text.removeCallbacks(updateStringRunnable);
+        text.setAdapter(null);
+        text.setOnClickListener(null);
+        headerLine.setVisibility(View.GONE);
+        text.setOnEditorActionListener(editorActionListener);
+        removeWatchers();
+        text.addTextChangedListener(watcher);
+    }
+
+    /**
      * Try to locate a reasonable default value
      */
     private void loadDefault() {
@@ -546,18 +577,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         Dialog dialog = getDialog();
         if (dialog != null) {
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-    }
-
-    private abstract class DefaultTextWatcher implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // empty
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // empty
         }
     }
 
@@ -637,6 +656,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             this.scrollView = scrollView;
         }
 
+        /**
+         * Actually rebuild
+         */
         private void rebuild() {
             Runnable rebuildRunnable = () -> {
                 text.removeTextChangedListener(watcher);
@@ -660,6 +682,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
+    /**
+     * Display any parse errors
+     * 
+     * @param pex a parse exceptions
+     */
     private void displayParseErrors(@NonNull OpeningHoursParseException pex) {
         Log.d(DEBUG_TAG, pex.getMessage());
         highlightParseError(text, pex);
@@ -699,91 +726,75 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      */
     @Nullable
     private ScrollView buildLayout(final @NonNull LinearLayout openingHoursLayout, @NonNull String openingHoursValue, final int initialRule) {
-        text = (AutoCompleteTextView) openingHoursLayout.findViewById(R.id.openinghours_string_edit);
-        if (text != null) {
-            String keyDescription = key.getDescription();
-            if (keyDescription != null && !"".equals(keyDescription)) {
-                text.setHint(keyDescription);
-            }
-            final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
-            if (sv != null) {
-                sv.removeAllViews();
-                final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
-
-                // non-OH support
-                if (textValues != null) {
-                    final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
-                    final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
-                    if (useText.isChecked()) {
-                        text.removeCallbacks(updateStringRunnable);
-                        ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
-                        text.setAdapter(adapter);
-                        text.setOnClickListener(autocompleteOnClick);
-                        text.setOnItemClickListener((parent, view, position, id) -> {
-                            Object o = parent.getItemAtPosition(position);
-                            if (o instanceof ValueWithDescription) {
-                                text.setText(((ValueWithDescription) o).getValue());
-                            } else if (o instanceof String) {
-                                text.setText((String) o);
-                            }
-                        });
-
-                        text.setText(openingHoursValue);
-                        text.setOnEditorActionListener(null);
-                        text.removeTextChangedListener(textWatcher);
-                        text.addTextChangedListener(textWatcher);
-                        fab.setVisibility(View.GONE);
-                        setupFab(sv, fab);
-                        headerLine.setVisibility(View.VISIBLE);
-                        textMode = true;
-                        return sv;
-                    } else {
-                        text.setOnEditorActionListener(editorActionListener);
-                        text.removeTextChangedListener(watcher);
-                        text.addTextChangedListener(watcher);
-                        text.setAdapter(null);
-                        text.setOnClickListener(null);
-                        textMode = false;
-                        if ("".equals(openingHoursValue)) {
-                            if (!showTemplates) {
-                                loadDefault();
-                                if (!"".equals(openingHoursValue)) {
-                                    ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
-                                }
-                            } else {
-                                showTemplates = false;
-                                TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
-                            }
-                        }
-                        headerLine.setVisibility(View.GONE);
-                    }
-                } else {
-                    text.setOnEditorActionListener(editorActionListener);
-                    text.removeTextChangedListener(watcher);
-                    text.addTextChangedListener(watcher);
-                }
-                text.setText(openingHoursValue);
-                text.removeTextChangedListener(textWatcher);
-                fab.setVisibility(View.VISIBLE);
-
-                OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
-                try {
-                    rules = parser.rules(false);
-                    buildForm(sv, rules);
-                    removeHighlight(text);
-                } catch (OpeningHoursParseException pex) {
-                    Log.d(DEBUG_TAG, pex.getMessage());
-                    highlightParseError(text, pex);
-                } catch (TokenMgrError err) {
-                    // we currently can't do anything reasonable here except ignore
-                    Log.e(DEBUG_TAG, err.getMessage());
-                }
-                setupFab(sv, fab);
-            }
-            return sv;
+        final ScrollView sv = (ScrollView) openingHoursLayout.findViewById(R.id.openinghours_view);
+        if (text == null || sv == null) {
+            Log.e(DEBUG_TAG, "ScrollView or EditText not found");
+            return null;
         }
-        Log.e(DEBUG_TAG, "text EditText not found");
-        return null;
+        String keyDescription = key.getDescription();
+        if (keyDescription != null && !"".equals(keyDescription)) {
+            text.setHint(keyDescription);
+        }
+
+        sv.removeAllViews();
+        final FloatingActionButton fab = (FloatingActionButton) openingHoursLayout.findViewById(R.id.more);
+
+        // non-OH support
+        if (textValues != null) {
+            final RadioGroup modeGroup = (RadioGroup) openingHoursLayout.findViewById(R.id.modeGroup);
+            final RadioButton useText = (RadioButton) modeGroup.findViewById(R.id.use_text);
+            if (textMode) {
+                ValueArrayAdapter adapter = new ValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, textValues);
+                text.setAdapter(adapter);
+                text.setOnClickListener(autocompleteOnClick);
+                text.setOnItemClickListener((parent, view, position, id) -> {
+                    Object o = parent.getItemAtPosition(position);
+                    if (o instanceof ValueWithDescription) {
+                        text.setText(((ValueWithDescription) o).getValue());
+                    } else if (o instanceof String) {
+                        text.setText((String) o);
+                    }
+                });
+                text.setText(openingHoursValue);
+                setUpTextMode();
+                fab.setVisibility(View.GONE);
+                setupFab(sv, fab);
+                return sv;
+            } else {
+                setUpOHMode();
+                if ("".equals(openingHoursValue)) {
+                    if (!showTemplates) {
+                        loadDefault();
+                        if (!"".equals(openingHoursValue)) {
+                            ch.poole.openinghoursfragment.Util.toastTop(getActivity(), getString(R.string.loaded_default));
+                        }
+                    } else {
+                        showTemplates = false;
+                        TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
+                    }
+                }
+            }
+        } else {
+            setUpOHMode();
+        }
+        textMode = false;
+        text.setText(openingHoursValue);
+        fab.setVisibility(View.VISIBLE);
+
+        OpeningHoursParser parser = new OpeningHoursParser(new ByteArrayInputStream(openingHoursValue.getBytes()));
+        try {
+            rules = parser.rules(false);
+            buildForm(sv, rules);
+            removeHighlight(text);
+        } catch (OpeningHoursParseException pex) {
+            Log.d(DEBUG_TAG, pex.getMessage());
+            highlightParseError(text, pex);
+        } catch (TokenMgrError err) {
+            // we currently can't do anything reasonable here except ignore
+            Log.e(DEBUG_TAG, err.getMessage());
+        }
+        setupFab(sv, fab);
+        return sv;
     }
 
     /**
@@ -2563,16 +2574,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @param listener listener to call when afterTextChanged is called
      */
     private void setTextWatcher(@NonNull final EditText edit, @NonNull final SetValue listener) {
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Empty
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Empty
-            }
+        edit.addTextChangedListener(new DefaultTextWatcher() {
 
             @Override
             public void afterTextChanged(Editable s) {
