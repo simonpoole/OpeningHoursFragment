@@ -19,14 +19,18 @@
     <string name="load_templates_title">טעינת תבניות</string>
     <string name="manage_templates_title">ניהול תבניות</string>
     <string name="save_template">שמירת תבנית</string>
+    <string name="spd_ohf_update_template">להחליף את התבנית בערך שעות הפתיחה הנוכחי?</string>
     <string name="spd_ohf_show_all">הצגה של הכול</string>
     <string name="spd_ohf_save_to_file">שמירה לקובץ</string>
     <string name="spd_ohf_load_from_file">טעינה מקובץ</string>
     <string name="spd_ohf_load_from_file_replace">טעינה מקובץ (החלפה)</string>
+    <string name="spd_ohf_toast_no_file_selected">לא נבחר קובץ יעד!</string>
     <string name="Yes">כן</string>
     <string name="No">לא</string>
     <string name="Start">התחלה</string>
     <string name="End">סיום</string>
+    <string name="spd_ohf_update_hint">לחיצה על אנטר תעדכן את הטופס</string>
+
     <string name="default_hint">מחרוזת שעות פתיחה</string>
 
     <string name="text_values">ערכי טקסט</string>
