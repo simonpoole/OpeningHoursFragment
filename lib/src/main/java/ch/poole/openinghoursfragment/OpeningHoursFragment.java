@@ -475,6 +475,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             modeContainer.setVisibility(View.VISIBLE);
         } else {
             modeContainer.setVisibility(View.GONE);
+            rebuilder.rebuild();
         }
 
         // add callbacks for the buttons

@@ -19,14 +19,18 @@
     <string name="load_templates_title">Cargar plantillas</string>
     <string name="manage_templates_title">Administrar plantillas</string>
     <string name="save_template">Guardar plantilla</string>
+    <string name="spd_ohf_update_template">¿Reemplazar la plantilla con el valor actual de horario de apertura?</string>
     <string name="spd_ohf_show_all">Mostrar todo</string>
     <string name="spd_ohf_save_to_file">Guardar en archivo</string>
     <string name="spd_ohf_load_from_file">Cargar desde archivo</string>
     <string name="spd_ohf_load_from_file_replace">Cargar desde archivo (reemplazar)</string>
+    <string name="spd_ohf_toast_no_file_selected">No se seleccionó un archivo de destino</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
     <string name="Start">Inicio</string>
     <string name="End">Fin</string>
+    <string name="spd_ohf_update_hint">Presiona enter para actualizar el formulario</string>
+
     <string name="default_hint">Cadena de horario de apertura</string>
 
     <string name="text_values">Valores de texto</string>
