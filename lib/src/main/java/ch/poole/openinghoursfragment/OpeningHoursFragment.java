@@ -697,8 +697,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             message.setSingleLine();
             message.setText(ex.getMessage());
             message.setTextColor(ContextCompat.getColor(getContext(), R.color.error_text));
-            final int column = ex.getColumn() + 1;
-            message.setOnClickListener(v -> text.setSelection(column, Math.min(column + 1, message.length())));
+            final int column = Math.min(ex.getColumn() + 1, message.length() - 1);
+            message.setOnClickListener(v -> text.setSelection(column, column));
             errorMessages.addView(message);
         }
     }
