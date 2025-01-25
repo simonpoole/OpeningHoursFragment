@@ -1,5 +1,17 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.14.3:
+
+- Properly constrain selection position when clicking on error message
+
+0.14.2:
+
+- Always run rebuild
+
+0.14.1:
+
+- Fix regression where changes in OH mode wouldn't update the value
+
 0.14.0:
 
 - Improve messaging when updating template
