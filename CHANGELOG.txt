@@ -1,5 +1,10 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.15.0:
+
+- Bump the minimum API to 21 and target API 35.
+- Fix for default template loading.
+
 0.14.3:
 
 - Properly constrain selection position when clicking on error message

@@ -54,7 +54,7 @@ public class TextInputTest {
 
         ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
 
-        fragment = OpeningHoursFragment.newInstance(key, null, null, null, R.style.Theme_AppCompat_Dialog_Alert, 5, false, null, null);
+        fragment = OpeningHoursFragment.newInstance(key, null, null, null, R.style.Theme_DialogLight, 5, false, null, null);
         fragment.show(fm, "fragment_openinghours");
         UiSelector uiSelector = new UiSelector().resourceIdMatches(".*more.*");
         UiObject fab = device.findObject(uiSelector);

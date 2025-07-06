@@ -22,7 +22,7 @@ apply plugin: 'signing'
 apply plugin: "jacoco"
 apply plugin: "com.github.breadmoirai.github-release"
 
-version = '0.14.3'
+version = '0.15.0'
 def libName = "OpeningHoursFragment"
 
 task updateTranslations(type: Exec) {
@@ -39,11 +39,13 @@ apply from: 'https://raw.githubusercontent.com/simonpoole/gradle-tasks/master/ec
 // apply from: '../../gradle-tasks/eclipse-android-3-lib'
 
 android {
-    compileSdkVersion 28
+    namespace "ch.poole.openinghoursfragment"
+    
+    compileSdkVersion 35
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 31
+        minSdkVersion 21
+        targetSdkVersion 35
         versionCode 100
         versionName "${project.version}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -99,34 +101,34 @@ android {
 
 
 ext {
-    androidxVersion = "1.0.0"
     adb = android.getAdbExe().toString()
     githubToken = System.getenv('GITHUB_TOKEN')
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidxVersion"
-    implementation "androidx.preference:preference:$androidxVersion"
-    implementation "com.google.android.material:material:$androidxVersion"
-    implementation "androidx.annotation:annotation:$androidxVersion"
-    implementation "androidx.core:core:$androidxVersion"
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.appcompat:appcompat-resources:1.7.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.preference:preference:1.2.1"
+    implementation "com.google.android.material:material:1.8.0"
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.core:core:1.16.0"
     implementation "ch.poole:OpeningHoursParser:0.26.0"
     implementation "ch.poole.android:rangebar:0.1.6"
     implementation 'ch.poole.android:numberpickerview:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
  
     // Instrumentation tests
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
-    androidTestImplementation "org.hamcrest:hamcrest-library:1.3"  
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation "org.hamcrest:hamcrest-library:2.2"
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.3.0'
     
     // Unit tests
-    testImplementation "junit:junit:4.13"
-    testImplementation 'org.robolectric:robolectric:4.8.1'
-    testImplementation 'androidx.test.ext:junit:1.1.3'
-    testImplementation 'androidx.test:rules:1.4.0'
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.robolectric:robolectric:4.15.1"
+    testImplementation 'androidx.test.ext:junit:1.2.1'
+    testImplementation 'androidx.test:rules:1.6.1'
 }
 
 android.libraryVariants.all { variant ->
@@ -181,7 +183,7 @@ sonarqube {
     properties {
         property "sonar.java.source","1.8"
         property "sonar.sourceEncoding","UTF-8"
-        property "sonar.java.binaries", "build/intermediates/compile_library_classes_jar/debug/classes.jar"
+        property "sonar.java.binaries", "build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar"
         property "sonar.coverage.jacoco.xmlReportPaths","build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
         property "sonar.projectName","OpeningHoursFragment"
     }
@@ -195,11 +197,11 @@ ext {
 
 task sourcesJar(type: Jar) {
     from releaseSource
-    classifier = 'sources'
+    archiveClassifier = 'sources'
 }
 
 task javadocJar(type: Jar, dependsOn: 'generateReleaseJavadoc') {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from releaseJavadoc
     //	options.encoding = 'UTF-8'
 }
@@ -241,8 +243,8 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
                     include : ['jacoco.exec', 'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/*coverage.ec', 'spoon-output/currentDebug/coverage/merged-coverage.ec'])
                 ])
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     sourceDirectories.from = files(coverageSourceDirs)
@@ -302,8 +304,8 @@ publishing {
                         username System.getenv('SONATYPE_USER')
                         password System.getenv('SONATYPE_PASSWORD')
                     }
-                    def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                    def releasesRepoUrl = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+                    def snapshotsRepoUrl = "https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots/"
                     url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
                 }
             }
