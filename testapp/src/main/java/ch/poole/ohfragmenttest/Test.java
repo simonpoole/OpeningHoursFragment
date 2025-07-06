@@ -38,7 +38,8 @@ public class Test extends AppCompatActivity implements OnSaveListener {
 
         // ValueWithDescription key = new ValueWithDescription("opening_hours", "Opening hours");
         ValueWithDescription key = new ValueWithDescription("collection_times", "Collection times");
-        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance(key, null, R.style.Theme_AppCompat_Light_Dialog_Alert, 5, true, textValues);
+        OpeningHoursFragment openingHoursDialog = OpeningHoursFragment.newInstance(key, null, ch.poole.openinghoursfragment.R.style.Theme_DialogLight, 5, true,
+                textValues);
         openingHoursDialog.show(fm, "fragment_openinghours");
     }
 

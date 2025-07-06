@@ -105,6 +105,7 @@ import ch.poole.openinghoursparser.YearRange;
  *
  */
 public class OpeningHoursFragment extends DialogFragment implements SetDateRangeListener, SetRangeListener, SetTimeRangeListener, UpdateTextListener {
+
     private static final String DEBUG_TAG = OpeningHoursFragment.class.getSimpleName();
 
     private static final String VALUE_KEY          = "value";
@@ -118,6 +119,9 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     private static final String TEXTVALUES_KEY     = "text_values";
     private static final String FRAGMENT_KEY       = "fragment";
     private static final String LOCALE_KEY         = "locale";
+
+    private static final String UNSUPPORTED_DATE       = "Unsupported date ";
+    private static final String RULE_MISSING_FROM_LIST = "Rule missing from list!";
 
     protected static final int OSM_MAX_TAG_LENGTH = 255;
 
@@ -151,8 +155,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     List<String> weekDays = WeekDay.nameValues();
 
     List<String> months = Month.nameValues();
-
-    private SQLiteDatabase mDatabase;
 
     private boolean loadedDefault = false;
 
@@ -380,13 +382,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(DEBUG_TAG, "onCreate");
-        mDatabase = new TemplateDatabaseHelper(getContext()).getReadableDatabase();
-    }
-
-    @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -410,7 +405,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
         }
         if (styleRes == 0) {
-            styleRes = R.style.AlertDialog_AppCompat_Light; // fallback
+            styleRes = R.style.Theme_DialogLight; // fallback
         }
         if (openingHoursValue == null || "".equals(openingHoursValue)) {
             if (!showTemplates) {
@@ -505,7 +500,6 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             saveListener.save(key.getValue(), text.getText().toString());
             dismiss();
         });
-
         return openingHoursLayout;
     }
 
@@ -562,14 +556,19 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * Try to locate a reasonable default value
      */
     private void loadDefault() {
-        String[][] values = new String[][] { { region, object }, { null, object }, { region, null } };
-        for (String[] v : values) {
-            openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), region, object);
-            if (openingHoursValue != null) {
-                return;
+        TemplateDatabaseHelper helper = new TemplateDatabaseHelper(getContext());
+        try (SQLiteDatabase mDatabase = helper.getReadableDatabase()) {
+            String[][] values = new String[][] { { region, object }, { null, object }, { region, null } };
+            for (String[] v : values) {
+                openingHoursValue = TemplateDatabase.getDefault(mDatabase, key.getValue(), v[0], v[1]);
+                if (openingHoursValue != null) {
+                    return;
+                }
             }
+            openingHoursValue = TemplateDatabase.getDefault(mDatabase, null, null, null);
+        } finally {
+            helper.close();
         }
-        openingHoursValue = TemplateDatabase.getDefault(mDatabase, null, null, null);
     }
 
     @Override
@@ -577,7 +576,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            final Window window = dialog.getWindow();
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, window.getAttributes().height);
         }
     }
 
@@ -587,7 +587,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
      * @author simon
      *
      */
-    private class TextTextWatcher extends DefaultTextWatcher {
+    private final class TextTextWatcher extends DefaultTextWatcher {
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -1469,7 +1469,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     Rule duplicate = r.copy();
                     int current = rules.indexOf(r);
                     if (current < 0) { // not found shouldn't happen
-                        Log.e(DEBUG_TAG, "Rule missing from list!");
+                        Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                         return true;
                     }
                     rules.add(Math.max(0, current + 1), duplicate);
@@ -1490,7 +1490,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     moveUp.setOnMenuItemClickListener(item -> {
                         int current = rules.indexOf(r);
                         if (current < 0) { // not found shouldn't happen
-                            Log.e(DEBUG_TAG, "Rule missing from list!");
+                            Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                             return true;
                         }
                         rules.remove(current);
@@ -1505,7 +1505,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     moveDown.setOnMenuItemClickListener(item -> {
                         int current = rules.indexOf(r);
                         if (current < 0) { // not found shouldn't happen
-                            Log.e(DEBUG_TAG, "Rule missing from list!");
+                            Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                             return true;
                         }
                         int size = rules.size();
@@ -1867,7 +1867,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, start.getYear(), start.getMonth(),
                             start.getNthWeekDay(), start.getNth());
                 } else {
-                    Log.e(DEBUG_TAG, "Unsupported date " + start);
+                    Log.e(DEBUG_TAG, UNSUPPORTED_DATE + start);
                 }
             });
             endDateLayout.setOnClickListener(v -> {
@@ -1931,7 +1931,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, endDate.getYear(), endDate.getMonth(),
                             endDate.getNthWeekDay(), endDate.getNth());
                 } else {
-                    Log.e(DEBUG_TAG, "Unsupported date " + endDate);
+                    Log.e(DEBUG_TAG, UNSUPPORTED_DATE + endDate);
                 }
             });
         } else {
@@ -2121,7 +2121,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 startDayView.setText("");
             }
         } else {
-            Log.e(DEBUG_TAG, "Unsupported date " + start);
+            Log.e(DEBUG_TAG, UNSUPPORTED_DATE + start);
         }
         // offset stuff
         RelativeLayout startWeekDayContainer = (RelativeLayout) dateRangeRow.findViewById(R.id.startWeekDayContainer);
@@ -2209,7 +2209,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     endDayView.setText("");
                 }
             } else {
-                Log.e(DEBUG_TAG, "Unsupported date " + end);
+                Log.e(DEBUG_TAG, UNSUPPORTED_DATE + end);
             }
             Log.d(DEBUG_TAG, "month " + end.getMonth() + " day " + end.getDay() + " var date " + end.getVarDate());
             if ((end.getMonth() != null && end.getDay() != DateWithOffset.UNDEFINED_MONTH_DAY) || end.getVarDate() != null || end.getNthWeekDay() != null) {
@@ -3162,6 +3162,15 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
     }
 
+    /**
+     * Setup the listeners for the weekday UI
+     * 
+     * @param container container layout
+     * @param days
+     * @param inContainer
+     * @param justOne true if just one weekday
+     * @param nthMenuItem menuitem for Nth
+     */
     private void setWeekDayListeners(@NonNull final RelativeLayout container, @NonNull final List<WeekDayRange> days,
             @NonNull final List<WeekDayRange> inContainer, final boolean justOne, @NonNull final MenuItem nthMenuItem) {
         OnCheckedChangeListener listener = (buttonView, isChecked) -> {
@@ -3184,7 +3193,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         }
                     }
-                    ((CheckBox) buttonView).setChecked(true);
+                    buttonView.setChecked(true);
                 }
             } else {
                 List<WeekDayRange> temp = new ArrayList<>(days);
@@ -3242,7 +3251,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     }
                 }
-                ((CheckBox) buttonView).setChecked(false);
+                buttonView.setChecked(false);
                 dwo.setWeekDayOffset((WeekDay) null);
             }
             updateString();

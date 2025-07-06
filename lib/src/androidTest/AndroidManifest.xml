@@ -4,8 +4,8 @@
     package="ch.poole.openinghoursfragment.test" >
 	
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="28" 
+        android:minSdkVersion="21"
+        android:targetSdkVersion="35" 
         tools:overrideLibrary="android_libs.ub_uiautomator" />
 
     <instrumentation
