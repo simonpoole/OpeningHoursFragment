@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
+import ch.poole.openinghoursfragment.Util;
 import ch.poole.android.numberpickerview.library.NumberPickerView;
 
 /**
@@ -28,6 +28,7 @@ public class TimeRangePicker extends CancelableDialogFragment {
     private static final String END_HOUR     = "endHour";
     private static final String END_MINUTE   = "endMinute";
     private static final String INCREMENT    = "increment";
+    private static final String STYLE_RES    = "styleRes";
 
     private static final String TAG = "fragment_timepicker";
 
@@ -44,12 +45,14 @@ public class TimeRangePicker extends CancelableDialogFragment {
      * @param endHour initial end hour
      * @param endMinute initial end minute
      * @param increment minute tick size
+     * @param styleRes resource id for style/theme
      */
-    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute, int increment) {
+    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int endHour, int endMinute, int increment,
+            int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute, increment);
+        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, false, endHour, endMinute, increment, styleRes);
         timePickerFragment.show(fm, TAG);
     }
 
@@ -61,12 +64,13 @@ public class TimeRangePicker extends CancelableDialogFragment {
      * @param startHour initial start hour
      * @param startMinute initial start minute
      * @param increment minute tick size
+     * @param styleRes resource id for style/theme
      */
-    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment) {
+    public static void showDialog(@NonNull Fragment parentFragment, int title, int startHour, int startMinute, int increment, int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED, NOTHING_SELECTED, increment);
+        TimeRangePicker timePickerFragment = newInstance(title, startHour, startMinute, true, NOTHING_SELECTED, NOTHING_SELECTED, increment, styleRes);
         timePickerFragment.show(fm, TAG);
     }
 
@@ -80,9 +84,11 @@ public class TimeRangePicker extends CancelableDialogFragment {
      * @param endHour initial end hour
      * @param endMinute initial end minute
      * @param increment minute tick size
+     * @param styleRes resource id for style/theme
      * @return an instance of TimeRangePicker
      */
-    private static TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly, int endHour, int endMinute, int increment) {
+    private static TimeRangePicker newInstance(int title, int startHour, int startMinute, boolean startOnly, int endHour, int endMinute, int increment,
+            int styleRes) {
         TimeRangePicker f = new TimeRangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -92,6 +98,7 @@ public class TimeRangePicker extends CancelableDialogFragment {
         args.putInt(END_HOUR, endHour);
         args.putInt(END_MINUTE, endMinute);
         args.putInt(INCREMENT, increment);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -115,7 +122,7 @@ public class TimeRangePicker extends CancelableDialogFragment {
 
         final SetTimeRangeListener listener = (SetTimeRangeListener) getParentFragment();
 
-        Builder builder = new AlertDialog.Builder(getActivity());
+        Builder builder = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
         builder.setTitle(title);
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();

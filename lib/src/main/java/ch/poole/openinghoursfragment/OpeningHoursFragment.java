@@ -405,7 +405,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
         }
         if (styleRes == 0) {
-            styleRes = R.style.Theme_DialogLight; // fallback
+            styleRes = R.style.Theme_AlertDialog; // fallback
         }
         if (openingHoursValue == null || "".equals(openingHoursValue)) {
             if (!showTemplates) {
@@ -771,7 +771,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         }
                     } else {
                         showTemplates = false;
-                        TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString());
+                        TemplateMangementDialog.showDialog(this, false, key, null, null, text.getText().toString(), styleRes);
                     }
                 }
             }
@@ -857,17 +857,17 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
 
             MenuItem loadTemplate = popup.getMenu().add(R.string.load_template);
             loadTemplate.setOnMenuItemClickListener(item -> {
-                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, region, object, text.getText().toString());
+                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, false, key, region, object, text.getText().toString(), styleRes);
                 return true;
             });
             MenuItem saveTemplate = popup.getMenu().add(R.string.save_to_template);
             saveTemplate.setOnMenuItemClickListener(item -> {
-                TemplateDialog.showDialog(OpeningHoursFragment.this, text.getText().toString(), key, false, -1);
+                TemplateDialog.showDialog(OpeningHoursFragment.this, text.getText().toString(), key, false, -1, styleRes);
                 return true;
             });
             MenuItem manageTemplate = popup.getMenu().add(R.string.manage_templates);
             manageTemplate.setOnMenuItemClickListener(item -> {
-                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, region, object, text.getText().toString());
+                TemplateMangementDialog.showDialog(OpeningHoursFragment.this, true, key, region, object, text.getText().toString(), styleRes);
                 return true;
             });
             MenuItem refresh = popup.getMenu().add(R.string.refresh);
@@ -1843,7 +1843,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         setDateRangeValues(start, null, finalRow, menu);
                         updateString();
                     };
-                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay());
+                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay(), styleRes);
                 } else if (start.getVarDate() != null && start.getNthWeekDay() == null) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                             Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -1853,7 +1853,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         setDateRangeValues(start, null, finalRow, menu);
                         updateString();
                     };
-                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate());
+                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate(), styleRes);
                 } else if (start.getNthWeekDay() != null) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                             Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -1865,7 +1865,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     };
                     OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, start.getYear(), start.getMonth(),
-                            start.getNthWeekDay(), start.getNth());
+                            start.getNthWeekDay(), start.getNth(), styleRes);
                 } else {
                     Log.e(DEBUG_TAG, UNSUPPORTED_DATE + start);
                 }
@@ -1905,7 +1905,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             text.postDelayed(() -> rebuilder.rebuild(), 100);
                         }
                     };
-                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, end.getYear(), end.getMonth(), end.getDay());
+                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, end.getYear(), end.getMonth(), end.getDay(), styleRes);
                 } else if (endDate.getVarDate() != null && endDate.getNthWeekDay() == null) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                             Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -1917,7 +1917,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         setDateRangeValues(startDate, endDate, finalRow, menu);
                         updateString();
                     };
-                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, endDate.getYear(), endDate.getVarDate());
+                    DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, endDate.getYear(), endDate.getVarDate(), styleRes);
                 } else if (endDate.getNthWeekDay() != null) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                             Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -1929,7 +1929,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     };
                     OccurrenceInMonthPicker.showDialog(OpeningHoursFragment.this, R.string.date_weekday_occurrence, endDate.getYear(), endDate.getMonth(),
-                            endDate.getNthWeekDay(), endDate.getNth());
+                            endDate.getNthWeekDay(), endDate.getNth(), styleRes);
                 } else {
                     Log.e(DEBUG_TAG, UNSUPPORTED_DATE + endDate);
                 }
@@ -1961,7 +1961,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             setDateRangeValues(start, null, finalRow, menu);
                             updateString();
                         };
-                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay());
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getMonth(), start.getDay(), styleRes);
                     } else {
                         realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                                 Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -1987,7 +1987,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         };
                         DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getMonth(), start.getDay(),
-                                tempEndYear, tempEndMonth, tempEndDay);
+                                tempEndYear, tempEndMonth, tempEndDay, styleRes);
                     }
                 } else if (start.getVarDate() != null && (end == null || end.getVarDate() == null)) {
                     if (start.isOpenEnded()) {
@@ -1999,7 +1999,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             setDateRangeValues(start, null, finalRow, menu);
                             updateString();
                         };
-                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate());
+                        DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date, start.getYear(), start.getVarDate(), styleRes);
                     } else {
                         realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                                 Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -2024,7 +2024,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                             }
                         };
                         DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getVarDate(), tempEndYear,
-                                tempEndMonth, tempEndDay);
+                                tempEndMonth, tempEndDay, styleRes);
                     }
                 } else if (start.getVarDate() == null && (end != null && end.getVarDate() != null)) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
@@ -2041,7 +2041,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     };
                     DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getMonth(), start.getDay(), tempEndYear,
-                            end.getVarDate());
+                            end.getVarDate(), styleRes);
                 } else if (start.getVarDate() != null && (end != null && end.getVarDate() != null)) {
                     realDateRangeListener = (int startYear, Month startMonth, WeekDay startWeekday, int startDay, VarDate startVarDate, int endYear,
                             Month endMonth, WeekDay endWeekday, int endDay, VarDate endVarDate) -> {
@@ -2056,7 +2056,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         updateString();
                     };
                     DateRangePicker.showDialog(OpeningHoursFragment.this, R.string.date_range, start.getYear(), start.getVarDate(), tempEndYear,
-                            end.getVarDate());
+                            end.getVarDate(), styleRes);
                 }
             });
         }
@@ -2464,9 +2464,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 updateString();
             };
             if (yr.isOpenEnded()) {
-                ValuePicker.showDialog(OpeningHoursFragment.this, R.string.spd_ohf_starting_year, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear());
+                ValuePicker.showDialog(OpeningHoursFragment.this, R.string.spd_ohf_starting_year, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(),
+                        styleRes);
             } else {
-                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear);
+                RangePicker.showDialog(OpeningHoursFragment.this, R.string.year_range, YearRange.FIRST_VALID_YEAR, rangeEnd, yr.getStartYear(), tempEndYear,
+                        styleRes);
             }
         });
         ll.addView(yearLayout);
@@ -2553,7 +2555,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 }
                 updateString();
             };
-            RangePicker.showDialog(OpeningHoursFragment.this, R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK, w.getStartWeek(), tempEndWeek);
+            RangePicker.showDialog(OpeningHoursFragment.this, R.string.week_range, WeekRange.MIN_WEEK, WeekRange.MAX_WEEK, w.getStartWeek(), tempEndWeek,
+                    styleRes);
         });
         ll.addView(weekLayout);
     }
@@ -2925,21 +2928,21 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     updateString();
                     rebuilder.rebuild();
                 };
-                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60, interval);
+                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, end / 60, end % 60, interval, styleRes);
             } else if (ts.getStartEvent() == null && (ts.getEndEvent() != null || end < 0)) { // t, t-, t-e
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
                     ts.setStart(startHour * 60 + startMinute);
                     updateString();
                     rebuilder.rebuild();
                 };
-                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
+                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval, styleRes);
             } else if (ts.getStartEvent() != null && ts.getEndEvent() == null || end >= 0) { // e-t
                 realSetTimeRangeListener = (int startHour, int startMinute, int endHour, int endMinute) -> {
                     ts.setEnd(startHour * 60 + startMinute);
                     updateString();
                     rebuilder.rebuild();
                 };
-                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval);
+                TimeRangePicker.showDialog(OpeningHoursFragment.this, R.string.time, start / 60, start % 60, interval, styleRes);
             }
             return true;
         };
@@ -3333,7 +3336,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
         }
         if ((openingHoursValue == null || "".equals(openingHoursValue)) && showTemplates && !textMode) {
             showTemplates = false;
-            TemplateMangementDialog.showDialog(this, false, key, region, object, text.getText().toString());
+            TemplateMangementDialog.showDialog(this, false, key, region, object, text.getText().toString(), styleRes);
         }
     }
 

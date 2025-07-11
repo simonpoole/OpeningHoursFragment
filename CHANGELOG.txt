@@ -1,5 +1,10 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.16.0:
+
+- Use the provided style for AlertDialog creation 
+- Add method method for displaying the template management modal with a provided style/theme id. 
+
 0.15.0:
 
 - Bump the minimum API to 21 and target API 35.

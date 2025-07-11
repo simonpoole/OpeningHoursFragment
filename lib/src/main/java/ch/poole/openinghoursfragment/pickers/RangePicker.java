@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
+import ch.poole.openinghoursfragment.Util;
 import ch.poole.android.numberpickerview.library.NumberPickerView;
 
 /**
@@ -27,6 +27,7 @@ public class RangePicker extends CancelableDialogFragment {
     private static final String MAX           = "max";
     private static final String START_CURRENT = "startCurrent";
     private static final String END_CURRENT   = "endCurrent";
+    private static final String STYLE_RES     = "styleRes";
 
     private static final String TAG = "fragment_rangepicker";
 
@@ -39,12 +40,13 @@ public class RangePicker extends CancelableDialogFragment {
      * @param max maximum range value
      * @param startCurrent initial start value
      * @param endCurrent initial end value
+     * @param styleRes resource id for style/theme
      */
-    public static void showDialog(Fragment parentFragment, int title, int min, int max, int startCurrent, int endCurrent) {
+    public static void showDialog(Fragment parentFragment, int title, int min, int max, int startCurrent, int endCurrent, int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent);
+        RangePicker rangePickerFragment = newInstance(title, min, max, startCurrent, endCurrent, styleRes);
         rangePickerFragment.show(fm, TAG);
     }
 
@@ -56,9 +58,10 @@ public class RangePicker extends CancelableDialogFragment {
      * @param max maximum range value
      * @param startCurrent initial start value
      * @param endCurrent initial end value
+     * @param styleRes resource id for style/theme
      * @return an instance of RangePicker
      */
-    private static RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent) {
+    private static RangePicker newInstance(int title, int min, int max, int startCurrent, int endCurrent, int styleRes) {
         RangePicker f = new RangePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -66,6 +69,7 @@ public class RangePicker extends CancelableDialogFragment {
         args.putInt(MAX, max);
         args.putInt(START_CURRENT, startCurrent);
         args.putInt(END_CURRENT, endCurrent);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -84,7 +88,7 @@ public class RangePicker extends CancelableDialogFragment {
         int endCurrent = getArguments().getInt(END_CURRENT);
         final SetRangeListener listener = (SetRangeListener) getParentFragment();
 
-        Builder builder = new AlertDialog.Builder(getActivity());
+        Builder builder = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
         builder.setTitle(title);
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();

@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
+import ch.poole.openinghoursfragment.Util;
 import ch.poole.openinghoursparser.Month;
 import ch.poole.openinghoursparser.WeekDay;
 import ch.poole.openinghoursparser.YearRange;
@@ -34,6 +34,7 @@ public class OccurrenceInMonthPicker extends CancelableDialogFragment {
     private static final String MONTH      = "startMonth";
     private static final String WEEKDAY    = "weekday";
     private static final String OCCURRENCE = "occurrence";
+    private static final String STYLE_RES  = "styleRes";
 
     private static final String TAG = "fragment_occurrenceinmonthpicker";
 
@@ -46,12 +47,13 @@ public class OccurrenceInMonthPicker extends CancelableDialogFragment {
      * @param month initial month
      * @param weekday initial weekday
      * @param occurrence initial occurrence
+     * @param styleRes resource id for style/theme
      */
-    public static void showDialog(Fragment parentFragment, int title, int year, @NonNull Month month, @NonNull WeekDay weekday, int occurrence) {
+    public static void showDialog(Fragment parentFragment, int title, int year, @NonNull Month month, @NonNull WeekDay weekday, int occurrence, int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        OccurrenceInMonthPicker occurrenceInMontPickerFragment = newInstance(title, year, month, weekday, occurrence);
+        OccurrenceInMonthPicker occurrenceInMontPickerFragment = newInstance(title, year, month, weekday, occurrence, styleRes);
         occurrenceInMontPickerFragment.show(fm, TAG);
     }
 
@@ -63,9 +65,10 @@ public class OccurrenceInMonthPicker extends CancelableDialogFragment {
      * @param month initial month
      * @param weekday initial weekday
      * @param occurrence initial occurrence
+     * @param styleRes resource id for style/theme
      * @return an instance of OccurrenceInMonthPicker
      */
-    private static OccurrenceInMonthPicker newInstance(int title, int year, @Nullable Month month, @Nullable WeekDay weekday, int occurrence) {
+    private static OccurrenceInMonthPicker newInstance(int title, int year, @Nullable Month month, @Nullable WeekDay weekday, int occurrence, int styleRes) {
         OccurrenceInMonthPicker f = new OccurrenceInMonthPicker();
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
@@ -73,6 +76,7 @@ public class OccurrenceInMonthPicker extends CancelableDialogFragment {
         args.putSerializable(MONTH, month);
         args.putSerializable(WEEKDAY, weekday);
         args.putInt(OCCURRENCE, occurrence);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -93,7 +97,7 @@ public class OccurrenceInMonthPicker extends CancelableDialogFragment {
 
         final SetDateRangeListener listener = (SetDateRangeListener) getParentFragment();
 
-        Builder builder = new AlertDialog.Builder(getActivity());
+        Builder builder = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
         builder.setTitle(title);
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();

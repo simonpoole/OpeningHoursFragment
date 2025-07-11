@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import ch.poole.openinghoursfragment.CancelableDialogFragment;
 import ch.poole.openinghoursfragment.R;
+import ch.poole.openinghoursfragment.Util;
 import ch.poole.android.numberpickerview.library.NumberPickerView;
 
 /**
@@ -26,6 +26,7 @@ public class ValuePicker extends CancelableDialogFragment {
     private static final String MIN_KEY     = "min";
     private static final String MAX_KEY     = "max";
     private static final String CURRENT_KEY = "current";
+    private static final String STYLE_RES   = "styleRes";
 
     private static final String TAG = "fragment_valuepicker";
 
@@ -37,12 +38,13 @@ public class ValuePicker extends CancelableDialogFragment {
      * @param min minimum range value
      * @param max maximum range value
      * @param current initial value
+     * @param styleRes resource id for style/theme
      */
-    public static void showDialog(Fragment parentFragment, int title, int min, int max, int current) {
+    public static void showDialog(Fragment parentFragment, int title, int min, int max, int current, int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        ValuePicker valuePickerFragment = newInstance(title, min, max, current);
+        ValuePicker valuePickerFragment = newInstance(title, min, max, current, styleRes);
         valuePickerFragment.show(fm, TAG);
     }
 
@@ -53,15 +55,17 @@ public class ValuePicker extends CancelableDialogFragment {
      * @param min minimum range value
      * @param max maximum range value
      * @param current initial value
+     * @param styleRes resource id for style/theme
      * @return an instance of ValuePicker
      */
-    private static ValuePicker newInstance(int title, int min, int max, int current) {
+    private static ValuePicker newInstance(int title, int min, int max, int current, int styleRes) {
         ValuePicker f = new ValuePicker();
         Bundle args = new Bundle();
         args.putInt(TITLE_KEY, title);
         args.putInt(MIN_KEY, min);
         args.putInt(MAX_KEY, max);
         args.putInt(CURRENT_KEY, current);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -79,7 +83,7 @@ public class ValuePicker extends CancelableDialogFragment {
         int current = getArguments().getInt(CURRENT_KEY);
         final SetRangeListener listener = (SetRangeListener) getParentFragment();
 
-        Builder builder = new AlertDialog.Builder(getActivity());
+        Builder builder = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
         builder.setTitle(title);
 
         final LayoutInflater inflater = getActivity().getLayoutInflater();

@@ -18,4 +18,9 @@
     <style
         name="Theme.DialogLight"
         parent="@style/Theme.AppCompat.Light.Dialog" />
+    <style
+        name="Theme.AlertDialog"
+        parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
 </resources>

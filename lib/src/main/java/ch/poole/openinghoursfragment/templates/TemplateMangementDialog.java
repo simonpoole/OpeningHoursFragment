@@ -48,6 +48,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
     private static final String REGION_KEY  = "region";
     private static final String OBJECT_KEY  = "object";
     private static final String CURRENT_KEY = "current";
+    private static final String STYLE_RES   = "styleRes";
 
     private static final String TAG = "management_fragment";
 
@@ -70,6 +71,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
 
     private SQLiteDatabase readableDb;
 
+    private int styleRes = -1;
+
     /**
      * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
      * it
@@ -84,9 +87,27 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
      */
     public static void showDialog(@NonNull Fragment parentFragment, boolean manage, @Nullable ValueWithDescription key, @Nullable String region,
             @Nullable String object, @NonNull String currentText) {
+        showDialog(parentFragment, manage, key, region, object, currentText, -1);
+    }
+
+    /**
+     * Show a list of the templates in the database, selection will either load a template or start the edit dialog on
+     * it
+     * 
+     * @param parentFragment the calling fragment
+     * @param manage if true the template editor will be started otherwise the template will replace the current OH
+     *            value
+     * @param key the key to search for templates for in the DB, if null all
+     * @param region the region to search for for values
+     * @param object an object id, typically an OSM tag, to search for
+     * @param currentText the current contents of the OH string
+     * @param styleRes resource id for style/theme
+     */
+    public static void showDialog(@NonNull Fragment parentFragment, boolean manage, @Nullable ValueWithDescription key, @Nullable String region,
+            @Nullable String object, @NonNull String currentText, int styleRes) {
         dismissDialog(parentFragment, TAG);
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TemplateMangementDialog templateDialog = newInstance(manage, key, region, object, currentText);
+        TemplateMangementDialog templateDialog = newInstance(manage, key, region, object, currentText, styleRes);
         templateDialog.show(fm, TAG);
     }
 
@@ -99,10 +120,11 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
      * @param region the region to search for for values
      * @param object an object id, typically an OSM tag, to search for
      * @param currentText the current contents of the OH string
+     * @param styleRes resource id for style/theme
      * @return a TemplateMangementDialog instance
      */
     private static TemplateMangementDialog newInstance(boolean manage, @Nullable ValueWithDescription key, String region, String object,
-            @NonNull String currentText) {
+            @NonNull String currentText, int styleRes) {
         TemplateMangementDialog f = new TemplateMangementDialog();
         Bundle args = new Bundle();
         args.putBoolean(MANAGE_KEY, manage);
@@ -110,6 +132,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         args.putString(REGION_KEY, region);
         args.putString(OBJECT_KEY, object);
         args.putString(CURRENT_KEY, currentText);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -132,8 +155,8 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
         if (!manage && updateListener == null) {
             throw new IllegalStateException("parent must implement UpdateTextListener");
         }
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        styleRes = getArguments().getInt(STYLE_RES);
+        AlertDialog.Builder alertDialog = Util.getAlertDialogBuilder(getContext(), styleRes);
         final LayoutInflater inflater = getActivity().getLayoutInflater();
         View templateView = inflater.inflate(R.layout.template_list, null);
         final FloatingActionButton fab = (FloatingActionButton) templateView.findViewById(R.id.more);
@@ -271,7 +294,7 @@ public class TemplateMangementDialog extends CancelableDialogFragment implements
             if (manage) {
                 view.setOnClickListener(v -> {
                     Integer localId = (Integer) view.getTag();
-                    TemplateDialog.showDialog(TemplateMangementDialog.this, current, key, true, localId != null ? localId.intValue() : -1);
+                    TemplateDialog.showDialog(TemplateMangementDialog.this, current, key, true, localId != null ? localId.intValue() : -1, styleRes);
                 });
             } else {
                 view.setOnClickListener(v -> {

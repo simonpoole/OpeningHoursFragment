@@ -38,6 +38,7 @@ public class TemplateDialog extends CancelableDialogFragment {
     private static final String ID_KEY       = "id";
     private static final String CURRENT_KEY  = "current";
     private static final String KEY_KEY      = "key";
+    private static final String STYLE_RES    = "styleRes";
 
     private static final String TAG = "templatedialog_fragment";
 
@@ -49,13 +50,14 @@ public class TemplateDialog extends CancelableDialogFragment {
      * @param key the key current is for
      * @param existing true if this is not a new template
      * @param id the rowid of the template in the database or -1 if not saved yet
+     * @param styleRes resource id for style/theme
      */
     public static void showDialog(@NonNull Fragment parentFragment, @NonNull final String current, @NonNull final ValueWithDescription key,
-            final boolean existing, final int id) {
+            final boolean existing, final int id, int styleRes) {
         dismissDialog(parentFragment, TAG);
 
         FragmentManager fm = parentFragment.getChildFragmentManager();
-        TemplateDialog templateDialog = newInstance(current, key, existing, id);
+        TemplateDialog templateDialog = newInstance(current, key, existing, id, styleRes);
         templateDialog.show(fm, TAG);
     }
 
@@ -66,15 +68,18 @@ public class TemplateDialog extends CancelableDialogFragment {
      * @param key the key current is for
      * @param existing true if this is not a new template
      * @param id the rowid of the template in the database or -1 if not saved yet
+     * @param styleRes resource id for style/theme
      * @return a TemplateDialog instance
      */
-    private static TemplateDialog newInstance(@NonNull final String current, @Nullable final ValueWithDescription key, final boolean existing, final int id) {
+    private static TemplateDialog newInstance(@NonNull final String current, @Nullable final ValueWithDescription key, final boolean existing, final int id,
+            int styleRes) {
         TemplateDialog f = new TemplateDialog();
         Bundle args = new Bundle();
         args.putString(CURRENT_KEY, current);
         args.putSerializable(KEY_KEY, key);
         args.putBoolean(EXISTING_KEY, existing);
         args.putInt(ID_KEY, id);
+        args.putInt(STYLE_RES, styleRes);
 
         f.setArguments(args);
         f.setShowsDialog(true);
@@ -91,7 +96,7 @@ public class TemplateDialog extends CancelableDialogFragment {
         final UpdateCursorListener updateListener = getParentFragment() instanceof UpdateCursorListener ? (UpdateCursorListener) getParentFragment() : null;
         final LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alertDialog = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
         View templateView = inflater.inflate(R.layout.template_item, null);
         alertDialog.setView(templateView);
         final CheckBox defaultCheck = (CheckBox) templateView.findViewById(R.id.is_default);
@@ -200,7 +205,7 @@ public class TemplateDialog extends CancelableDialogFragment {
                 db.close();
             } else {
                 if (!current.equals(finalTemplate) && !"".equals(current)) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    AlertDialog.Builder alert = Util.getAlertDialogBuilder(getContext(), getArguments().getInt(STYLE_RES));
                     alert.setTitle(R.string.spd_ohf_update_template);
                     alert.setPositiveButton(R.string.Yes, (d, w) -> updateTemplate(db, id, spinnerKey, nameEdit.getText().toString(), defaultCheck.isChecked(),
                             current, spinnerRegion, object, updateListener));

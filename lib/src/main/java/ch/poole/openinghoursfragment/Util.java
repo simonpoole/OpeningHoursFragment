@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.widget.NestedScrollView;
+
 
 public final class Util {
     protected static final String DEBUG_TAG = "Util";
@@ -121,5 +124,16 @@ public final class Util {
             }
         }
         values.recycle();
+    }
+    
+    /**
+     * Get a correctly themed AlerDialog.Builder
+     * 
+     * @param context an Android Context
+     * @param themeRes theme to use, if -1 fallback to default
+     * @return a AlerDialog.Builder
+     */
+    public static AlertDialog.Builder getAlertDialogBuilder(@NonNull Context context, int themeRes) {
+        return new AlertDialog.Builder(new ContextThemeWrapper(context, themeRes > 0 ? themeRes : R.style.Theme_AlertDialog));
     }
 }
