@@ -1,5 +1,9 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.17.0:
+
+- Make database and table name for the template database public (for backup purposes)
+
 0.16.0:
 
 - Use the provided style for AlertDialog creation 

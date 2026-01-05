@@ -27,13 +27,13 @@ import android.util.Log;
 public final class TemplateDatabase {
     private static final String DEBUG_TAG = "TemplateDatabase";
 
-    private static final String TEMPLATES_TABLE = "templates";
-    static final String         TEMPLATE_FIELD  = "template";
-    static final String         DEFAULT_FIELD   = "is_default";
-    static final String         NAME_FIELD      = "name";
-    static final String         KEY_FIELD       = "key";
-    static final String         REGION_FIELD    = "region";
-    static final String         OBJECT_FIELD    = "object";
+    public static final String TEMPLATES_TABLE = "templates";
+    static final String        TEMPLATE_FIELD  = "template";
+    static final String        DEFAULT_FIELD   = "is_default";
+    static final String        NAME_FIELD      = "name";
+    static final String        KEY_FIELD       = "key";
+    static final String        REGION_FIELD    = "region";
+    static final String        OBJECT_FIELD    = "object";
 
     static final String         QUERY_ALL         = "SELECT rowid as _id, key, name, is_default, template, region, object FROM templates";
     static final String         QUERY_BY_ROWID    = "SELECT key, name, is_default, template, region, object FROM templates WHERE rowid=?";

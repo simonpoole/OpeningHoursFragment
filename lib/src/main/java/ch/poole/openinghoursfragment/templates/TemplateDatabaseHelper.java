@@ -8,9 +8,10 @@ import android.util.Log;
 import ch.poole.openinghoursfragment.R;
 
 public class TemplateDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DEBUG_TAG        = "TemplateDatabase";
-    static final String         DATABASE_NAME    = "openinghours_templates";
-    private static final int    DATABASE_VERSION = 5;
+    private static final String DEBUG_TAG = "TemplateDatabase";
+
+    public static final String DATABASE_NAME    = "openinghours_templates";
+    private static final int   DATABASE_VERSION = 5;
 
     private final Context context;
 
