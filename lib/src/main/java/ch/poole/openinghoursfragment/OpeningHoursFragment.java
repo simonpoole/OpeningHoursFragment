@@ -400,9 +400,11 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
             Log.d(DEBUG_TAG, "Restoring from saved state");
             getStateFromBundle(savedInstanceState);
         } else {
-            getStateFromBundle(getArguments());
-            initialRule = getArguments().getInt(RULE_KEY);
-            showTemplates = getArguments().getBoolean(SHOWTEMPLATES_KEY);
+            final Bundle arguments = getArguments();
+            getStateFromBundle(arguments);
+            initialRule = arguments.getInt(RULE_KEY);
+            showTemplates = arguments.getBoolean(SHOWTEMPLATES_KEY);
+            originalOpeningHoursValue = arguments.getString(VALUE_KEY);
         }
         if (styleRes == 0) {
             styleRes = R.style.Theme_AlertDialog; // fallback
