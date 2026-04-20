@@ -1,5 +1,11 @@
 Please see the github repository for a complete list of changes: https://github.com/simonpoole/OpeningHoursFragment/commits/master
 
+0.18.0:
+
+- Improve button styling
+- Fix OH string not retained regression
+- Fix position confusion after duplication of rule
+
 0.17.0:
 
 - Make database and table name for the template database public (for backup purposes)
