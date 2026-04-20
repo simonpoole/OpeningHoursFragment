@@ -1469,7 +1469,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 MenuItem duplicateRule = menu.add(R.string.duplicate_rule);
                 duplicateRule.setOnMenuItemClickListener(item -> {
                     Rule duplicate = r.copy();
-                    int current = rules.indexOf(r);
+                    int current = instancePos(rules, r);
                     if (current < 0) { // not found shouldn't happen
                         Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                         return true;
@@ -1480,7 +1480,8 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     return true;
                 });
 
-                if (!r.equals(rules.get(0))) { // don't show this for the first rule as it is meaningless
+                int currentPos = instancePos(rules, r);
+                if (currentPos != 0) { // don't show this for the first rule as it is meaningless
                     final View typeView = groupHeader.findViewById(R.id.rule_type_group);
                     MenuItem showRuleType = menu.add(R.string.rule_type);
                     showRuleType.setOnMenuItemClickListener(item -> {
@@ -1490,7 +1491,7 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                     });
                     MenuItem moveUp = menu.add(R.string.move_up);
                     moveUp.setOnMenuItemClickListener(item -> {
-                        int current = rules.indexOf(r);
+                        int current = instancePos(rules, r);
                         if (current < 0) { // not found shouldn't happen
                             Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                             return true;
@@ -1502,10 +1503,10 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                         return true;
                     });
                 }
-                if (!r.equals(rules.get(rules.size() - 1))) {
+                if (currentPos != (rules.size() - 1)) {
                     MenuItem moveDown = menu.add(R.string.move_down);
                     moveDown.setOnMenuItemClickListener(item -> {
-                        int current = rules.indexOf(r);
+                        int current = instancePos(rules, r);
                         if (current < 0) { // not found shouldn't happen
                             Log.e(DEBUG_TAG, RULE_MISSING_FROM_LIST);
                             return true;
@@ -1606,6 +1607,22 @@ public class OpeningHoursFragment extends DialogFragment implements SetDateRange
                 ll.addView(modifierLayout);
             }
         }
+    }
+
+    /**
+     * Get the position of o in the list
+     * 
+     * @param list a List of the objects
+     * @param o the object we want the position for
+     * @return the position of o in list or -1
+     */
+    private static <T extends Object> int instancePos(@NonNull final List<T> list, @NonNull final T o) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == o) { // NOSONAR, need to find the specific instance so don't use equals
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
